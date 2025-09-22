@@ -26,8 +26,10 @@ Thumbs.db
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-public/uploads/*
+public/uploads/*/*
 !public/uploads/*/.gitkeep
+!public/uploads/*/thumbnail/
+public/uploads/*/thumbnail/*
 !public/uploads/*/thumbnail/.gitkeep
 !public/uploads/users/none_female.png
 !public/uploads/users/none_male.png
