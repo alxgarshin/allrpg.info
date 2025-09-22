@@ -1,0 +1,21 @@
+{
+  "global": {
+    "title": "Banco de juegos: recursos"
+  },
+  "fraym_model": {
+    "object_name": "resource",
+    "object_messages": [
+      "Recurso creado correctamente.",
+      "Recursos modificados correctamente",
+      "Recurso eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "default_one": {
+        "shownName": "Recurso predeterminado"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+form#form_search {
+    font-size: 1rem;
+}
+
+ol.searchresult li {
+    font-size: 1.2em;
+    margin-bottom: 1%;
+    margin-left: 1em;
+}
+
+ol.searchresult li li {
+    font-size: 100%;
+    margin-bottom: 0;
+}

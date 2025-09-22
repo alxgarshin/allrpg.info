@@ -1,0 +1,17 @@
+{
+  "global": {
+    "title": "Almacén",
+    "exchange_categorys": "Categorías",
+    "add_item": "Añadir un artículo",
+    "my_items": "Mis artículos",
+    "search": "Buscar por nombre o descripción",
+    "edit": "Editar",
+    "city": "Ciudad",
+    "publish_date": "Fecha de publicación",
+    "price_lease": "Precio de alquiler",
+    "price_buy": "Precio de compra",
+    "additional": "Aclaraciones importantes",
+    "about": "¿Qué es «Almacén»?",
+    "about_text": "«Almacén»: Buscador de artículos de LARP para gamemasters y equipos de mazmorras. Puedes publicar ofertas de cualquier tipo, desde vender hasta regalar por besos. A continuación, encontrarás una búsqueda por categoría, región, nombre y descripción. Puedes contactar al vendedor inmediatamente a través de allrpg.info."
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "global": {
+    "title": "Edición de noticias",
+    "messages": {
+      "no_quote_if_no_img": "No se mostrará la cita si falta la imagen de la noticia.",
+      "news_posted_to_networks": "La noticia se ha publicado en redes sociales."
+    }
+  },
+  "fraym_model": {
+    "object_name": "Noticias",
+    "object_messages": [
+      "Noticias añadidas correctamente.",
+      "Noticias modificadas correctamente.",
+      "Noticias eliminadas correctamente."
+    ],
+    "elements": {
+      "type": {
+        "shownName": "¿Noticias o evento?",
+        "values": [
+          [
+            "0",
+            "Noticias"
+          ],
+          [
+            "1",
+            "evento"
+          ]
+        ]
+      },
+      "name": {
+        "shownName": "Título",
+        "helpText": "No más de 255 símbolos."
+      },
+      "active": {
+        "shownName": "Mostrar noticias/eventos"
+      },
+      "show_date": {
+        "shownName": "Mostrar en 'Hoy'"
+      },
+      "from_date": {
+        "shownName": "Mostrar en 'Hoy' desde"
+      },
+      "to_date": {
+        "shownName": "Mostrar en 'Hoy' hasta"
+      },
+      "data_came_from": {
+        "shownName": "Fuente",
+        "helpText": "No más de 255 símbolos."
+      },
+      "attachments": {
+        "shownName": "Imagen de la noticia",
+        "helpText": "Mostrado en 'Hoy'. 360 píxeles de ancho, 240 píxeles de alto."
+      },
+      "quote": {
+        "shownName": "Pie de foto",
+        "helpText": "Mostrado en 'Hoy' si tiene imagen."
+      },
+      "annotation": {
+        "shownName": "Resumen"
+      },
+      "attachments2": {
+        "shownName": "Imágenes o archivos de texto completo"
+      },
+      "content": {
+        "shownName": "Texto completo",
+        "helpText": "Texto al pulsar \"Más...\""
+      },
+      "tags": {
+        "shownName": "Etiquetas",
+        "values": null
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      },
+      "publish_in_social_networks": {
+        "shownName": "Publicación en redes sociales"
+      }
+    }
+  }
+}

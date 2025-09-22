@@ -1,0 +1,45 @@
+{
+  "global": {
+    "title": "Juego banco: transacciones",
+    "messages": {
+      "too_small_amount": "Hasta how much should be over 0."
+    }
+  },
+  "fraym_model": {
+    "object_name": "transacción",
+    "object_messages": [
+      "Transacción created successfully.",
+      "Transacciones changed successfully",
+      "Transacción deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Subject"
+      },
+      "from_project_application_id": {
+        "shownName": "Desde solicitud"
+      },
+      "to_project_application_id": {
+        "shownName": "Hasta solicitud"
+      },
+      "amount_from": {
+        "shownName": "How much"
+      },
+      "currency_from_id": {
+        "shownName": "What"
+      },
+      "amount": {
+        "shownName": "Hasta how much"
+      },
+      "bank_currency_id": {
+        "shownName": "Hasta what"
+      },
+      "created_at": {
+        "shownName": "Fecha"
+      },
+      "updated_at": {
+        "shownName": "Último change"
+      }
+    }
+  }
+}

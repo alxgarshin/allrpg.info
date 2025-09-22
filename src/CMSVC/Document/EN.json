@@ -1,0 +1,34 @@
+{
+  "global": {
+    "title": "Documents generator",
+    "generate_documents": "Generate documents",
+    "list_of_roles_name": "Applications",
+    "pagebreak": "<br><br>Please, use &lt;p class=\"pagebreak\">&lt;\/p> tag in HTML template edit mode to force a page break during printing..",
+    "messages": {
+      "no_application_selected": "Please, select at least one application."
+    }
+  },
+  "fraym_model": {
+    "object_name": "template",
+    "object_messages": [
+      "Template created successfully.",
+      "Template changed successfully.",
+      "Template deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "possible_fields": {
+        "shownName": "Possible fields"
+      },
+      "content": {
+        "shownName": "Template"
+      },
+      "outer_css": {
+        "shownName": "External CSS-file",
+        "helpText": "is automatically included during document generation."
+      }
+    }
+  }
+}

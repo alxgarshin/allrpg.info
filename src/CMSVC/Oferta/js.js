@@ -1,0 +1,5 @@
+/** Оферта */
+
+if (withDocumentEvents) {
+
+}

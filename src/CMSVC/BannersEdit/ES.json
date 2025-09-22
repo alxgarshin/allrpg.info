@@ -1,0 +1,50 @@
+{
+  "global": {
+    "title": "Editando banners"
+  },
+  "fraym_model": {
+    "object_name": "banner",
+    "object_messages": [
+      "Banner subido correctamente.",
+      "Banners modificados correctamente",
+      "Banner eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      },
+      "description": {
+        "shownName": "Descripción"
+      },
+      "link": {
+        "shownName": "Enlace",
+        "helpText": "¿A qué página lleva este banner?"
+      },
+      "img": {
+        "shownName": "Imagen",
+        "helpText": "No más de 1600 píxeles de ancho y 520 de alto."
+      },
+      "type": {
+        "shownName": "Tipo",
+        "helpText": "Si coloca varios banners del mismo tipo, se mostrarán en orden aleatorio.",
+        "values": [
+          [
+            "1",
+            "fondo de la página principal"
+          ],
+          [
+            "2",
+            "otro banner"
+          ]
+        ]
+      },
+      "active": {
+        "shownName": "Actividad",
+        "helpText": "Si desmarca esta casilla, desactivará temporalmente la visualización de este banner en el sitio web, pero la configuración se conservará y la imagen no se eliminará."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

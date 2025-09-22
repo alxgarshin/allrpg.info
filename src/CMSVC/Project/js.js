@@ -1,0 +1,15 @@
+/** Проекты */
+
+if (withDocumentEvents) {
+    _arSuccess('load_projects_communities_list', function (jsonData, params, target) {
+        target.parent().append(jsonData['response_text']);
+
+        target.remove();
+    })
+
+    _arSuccess('switch_project_status', function (jsonData, params, target) {
+        showMessageFromJsonData(jsonData);
+
+        _('a[action_request="project/switch_project_status"]').text(jsonData['response_data']);
+    })
+}

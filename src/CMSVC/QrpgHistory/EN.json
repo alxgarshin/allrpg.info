@@ -1,0 +1,33 @@
+{
+  "global": {
+    "title": "QRpg: scans history"
+  },
+  "fraym_model": {
+    "object_name": "QRpg-transaction",
+    "object_messages": [
+      "",
+      "",
+      ""
+    ],
+    "elements": {
+      "creator_id": {
+        "shownName": "Scanned by"
+      },
+      "qrpg_code_id": {
+        "shownName": "QRpg-code"
+      },
+      "codes_successes": {
+        "shownName": "Successes"
+      },
+      "remove_copies_successes": {
+        "shownName": "Codes copies remove"
+      },
+      "currencies_successes": {
+        "shownName": "Resource gather"
+      },
+      "created_at": {
+        "shownName": "Date"
+      }
+    }
+  }
+}

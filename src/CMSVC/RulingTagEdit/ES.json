@@ -1,0 +1,27 @@
+{
+  "global": {
+    "title": "Regla: etiquetas"
+  },
+  "fraym_model": {
+    "object_name": "etiqueta",
+    "object_messages": [
+      "Etiqueta añadida correctamente.",
+      "Etiqueta actualizada correctamente.",
+      "Etiqueta eliminada correctamente.",
+      "Etiqueta y todas sus subetiquetas eliminadas correctamente."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Etiqueta principal",
+        "helpText": "Al mostrarse, se agregan todas las subetiquetas."
+      },
+      "name": {
+        "shownName": "Nombre",
+        "helpText": "No más de 255 caracteres."
+      },
+      "show_in_cloud": {
+        "shownName": "Mostrar en la nube de etiquetas"
+      }
+    }
+  }
+}

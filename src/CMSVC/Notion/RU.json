@@ -1,0 +1,14 @@
+{
+  "global": {
+    "placeholders": {
+      "edit": "Редактировать",
+      "hide": "Скрыть",
+      "show": "Показать"
+    },
+    "messages": {
+      "notion_add_success": "Отзыв успешно добавлен.",
+      "notion_save_success": "Отзыв успешно изменен.",
+      "notion_delete_success": "Отзыв успешно удален."
+    }
+  }
+}

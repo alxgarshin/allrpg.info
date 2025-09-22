@@ -1,0 +1,34 @@
+{
+  "global": {
+    "title": "Generador de documentos",
+    "generate_documents": "Generar documentos",
+    "list_of_roles_name": "Aplicaciones",
+    "pagebreak": "<br><br>Por favor, utilice la etiqueta &lt;p class=\"pagebreak\">&lt;\/p> en el modo de edición de plantillas HTML para forzar un salto de página durante la impresión..",
+    "messages": {
+      "no_application_selected": "Por favor, seleccione al menos una aplicación."
+    }
+  },
+  "fraym_model": {
+    "object_name": "plantilla",
+    "object_messages": [
+      "Plantilla creada correctamente.",
+      "Plantilla modificada correctamente.",
+      "Plantilla eliminada correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      },
+      "possible_fields": {
+        "shownName": "Posibles campos"
+      },
+      "content": {
+        "shownName": "Plantilla"
+      },
+      "outer_css": {
+        "shownName": "Archivo CSS externo",
+        "helpText": "se incluye automáticamente durante la generación del documento."
+      }
+    }
+  }
+}

@@ -1,0 +1,600 @@
+{
+  "meta_author": "©еть",
+  "sitename": "allrpg.info",
+  "bottom_sitename": "allrpg.info",
+  "admin_mail": "notify@allrpg.info",
+  "meta_description": "Портал для и о ролевых играх живого действия",
+  "meta_keywords": "Ролевые игры, система заявок, календарь игр",
+  "header_social_network": "allrpg.info",
+  "about": "Об allrpg.info",
+  "language": "Язык",
+  "server": "Сервер",
+  "your_questions_and_issues": "Помощь",
+  "contacts": "Контактная информация",
+  "offlineMessage": "Похоже, Ваше соединение с Интернет разорвано. Данное сообщение пропадёт, как только соединение будет восстановлено.",
+  "in_development": "В разработке",
+  "exit": "Выход",
+  "back": "Назад",
+  "login_word": "Войти",
+  "gplus_init": "войти через Google+",
+  "fb_init": "войти через Facebook",
+  "vk_init": "войти через вКонтакте",
+  "nothing_found": "Ничего не найдено. Введите 3+ символа",
+  "show_hidden": "показать все",
+  "show_next": "показать еще",
+  "show_item": "Показать",
+  "save_item": "Загрузить",
+  "loading": "Загрузка",
+  "deleted_user": "Пользователь удалён",
+  "user_id": "id",
+  "no_file_app_on_device": "К сожалению, на Вашем устройстве не обнаружено ни одно приложение, позволяющее выбрать файл.",
+  "input_fio_id_for_search": "введите текст для поиска по имени или id",
+  "em_or_social_needed": "Необходимо подтвердить email или указать корректные аккаунты социальных сетей в <a href=\"\/profile\/\">профиле<\/a>.",
+  "actions_list_text": "Действия",
+  "published_by": "Опубликовал",
+  "mobile": "Мобильное приложение",
+  "search": "Поиск",
+  "subscription": {
+    "author_name": "allrpg.info",
+    "author_email": "notify@allrpg.info",
+    "subscription_new_message_text": "Добрый день!<br><br>У Вас новое сообщение.<br><br>%s<br><br>С уважением,<br>allrpg.info.",
+    "subscribe": "подписаться",
+    "unsubscribe": "отписаться",
+    "messages": {
+      "subscribe_success": "Вы успешно подписались на обновления.",
+      "unsubscribe_success": "Вы успешно отписались от обновлений."
+    },
+    "name": "Оповещения",
+    "conversation": "Диалог",
+    "subscription_new_message_name": "У Вас новые личные сообщения",
+    "obj_types": {
+      "project": "проект",
+      "community": "группу",
+      "task": "задачу",
+      "event": "событие",
+      "project_application": "заявку"
+    },
+    "send_invitation": "приглашает Вас в",
+    "send_invitation_room": "приглашает Вас к совместному проживанию в «%s» на «<a href=\"\/project\/%s\/\">%s<\/a>».",
+    "get_access": "запрашивает доступ в",
+    "become_friends": "просит подтвердить, что Вы друзья."
+  },
+  "achievement": {
+    "names": {
+      "1": "Разработчик allrpg.info",
+      "2": "Помощник allrpg.info",
+      "3": "Бета-тестер allrpg.info",
+      "4": "Тестировал allrpg.info и выжил",
+      "5": "Посещено 50+ проектов",
+      "6": "Посещено 25+ проектов",
+      "7": "Посещено 10+ проектов",
+      "8": "Мастер 25+ проектов",
+      "9": "Мастер 15+ проектов",
+      "10": "Мастер 5+ проектов",
+      "11": "Написано 25+ отчетов",
+      "12": "Написано 15+ отчетов",
+      "13": "Написано 5+ отчетов",
+      "14": "Профиль заполнен"
+    }
+  },
+  "apps": {
+    "download": "скачать приложение",
+    "google": "Загрузить из Google Play",
+    "apple": "Загрузить из Apple iTunes",
+    "windows": "Загрузить из Windows Store"
+  },
+  "banners": {
+    "know_more": "УЗНАТЬ БОЛЬШЕ"
+  },
+  "conversation": {
+    "invitation_email": {
+      "name": "Приглашение в allrpg.info"
+    }
+  },
+  "disk": {
+    "title": "Материалы"
+  },
+  "pwa": {
+    "already_installed": "Уже установлено? <a class=\"PWAsuccess\">Перейти<\/a>.",
+    "success_btn": "Перейти в приложение",
+    "description": "Установите allrpg.info в виде приложения: еще быстрее, еще удобнее.",
+    "android": {
+      "install": "Установить"
+    },
+    "ios": {
+      "install": "Для установки нажмите на <span><\/span> и выберите «На экран «Домой»"
+    },
+    "undefined": {
+      "help": "<ul><li><b>iOS<\/b>: переключитесь на обновленный браузер Safari.<\/li><li><b>Иначе<\/b>: воспользуйтесь обновленными браузерами Chrome или Firefox.<\/li><\/ul>"
+    }
+  },
+  "global_links": {
+    "FAQ": "faq/",
+    "about": "publication/4/",
+    "contacts": "",
+    "your_questions_and_issues": "faq/"
+  },
+  "main_menu": [
+    {
+      "class": "item1",
+      "kind": [
+        "login"
+      ],
+      "name": "Войти",
+      "visibility": "not_logged"
+    },
+    {
+      "class": "item2",
+      "kind": [
+        "register"
+      ],
+      "name": "Регистрация",
+      "visibility": "not_logged"
+    },
+    {
+      "class": "item3",
+      "kind": [
+        "start"
+      ],
+      "name": "Главная"
+    },
+    {
+      "class": "item4",
+      "kind": [
+        "myapplication"
+      ],
+      "name": "Заявки",
+      "subitems": [
+        {
+          "kind": [
+            "myapplication"
+          ],
+          "params": [
+            "act=add"
+          ],
+          "name": "Подать заявку"
+        },
+        {
+          "kind": [
+            "myapplication"
+          ],
+          "name": "Все мои заявки",
+          "not_params": [
+            "act=add"
+          ],
+          "add": "myapplication/act=add"
+        },
+        {
+          "kind": [
+            "ingame"
+          ],
+          "name": "Модуль игрока"
+        },
+        {
+          "list": "project_application",
+          "people": "roles/{project_id}/"
+        }
+      ]
+    },
+    {
+      "class": "item5",
+      "kind": [
+        "conversation"
+      ],
+      "name": "Диалоги",
+      "counter": "new_messages_counter"
+    },
+    {
+      "class": "item6",
+      "kind": [
+        "project"
+      ],
+      "name": "Проекты",
+      "counter": "new_applications_counter",
+      "subitems": [
+        {
+          "kind": [
+            "project"
+          ],
+          "name": "Все проекты",
+          "not_id": [
+            "any"
+          ],
+          "add": "project/act=add"
+        },
+        {
+          "list": "project",
+          "edit": "project/{id}/act=edit"
+        }
+      ]
+    },
+    {
+      "class": "item7",
+      "kind": [
+        "calendar"
+      ],
+      "name": "Календарь",
+      "subitems": [
+        {
+          "kind": [
+            "calendar"
+          ],
+          "name": "На ближайший год"
+        },
+        {
+          "kind": [
+            "calendar_event"
+          ],
+          "name": "Мои события",
+          "add": "calendar_event/act=add"
+        },
+        {
+          "kind": [
+            "area"
+          ],
+          "name": "Мои полигоны",
+          "add": "area/act=add"
+        },
+        {
+          "kind": [
+            "portfolio"
+          ],
+          "name": "Моё портфолио",
+          "add": "portfolio/act=add"
+        }
+      ]
+    },
+    {
+      "class": "item8",
+      "kind": [
+        "community"
+      ],
+      "name": "Группы",
+      "subitems": [
+        {
+          "kind": [
+            "community"
+          ],
+          "name": "Все группы",
+          "add": "community/act=add"
+        },
+        {
+          "list": "community",
+          "edit": "community/{id}/act=edit"
+        }
+      ]
+    },
+    {
+      "class": "item9",
+      "kind": [
+        "exchange"
+      ],
+      "name": "Склад",
+      "subitems": [
+        {
+          "kind": [
+            "exchange"
+          ],
+          "name": "Аренда / продажа"
+        },
+        {
+          "kind": [
+            "exchange_item_edit"
+          ],
+          "name": "Мои предметы",
+          "add": "exchange_item_edit/act=add"
+        }
+      ]
+    },
+    {
+      "class": "item10",
+      "kind": [
+        "ruling"
+      ],
+      "name": "Рулёжка",
+      "subitems": [
+        {
+          "kind": [
+            "ruling"
+          ],
+          "not_params": [
+            "view_all=1"
+          ],
+          "name": "Сгенерировать правила"
+        },
+        {
+          "kind": [
+            "ruling"
+          ],
+          "params": [
+            "view_all=1"
+          ],
+          "name": "Изучить и обсудить модели"
+        },
+        {
+          "kind": [
+            "ruling_tag_edit"
+          ],
+          "name": "Теги",
+          "visibility": "ruling_admin",
+          "add": "ruling_tag_edit/act=add"
+        },
+        {
+          "kind": [
+            "ruling_edit"
+          ],
+          "name": "Вопросы и модели",
+          "visibility": "ruling_admin"
+        },
+        {
+          "kind": [
+            "ruling_question_edit"
+          ],
+          "name": "Вопросы",
+          "visibility": "ruling_admin",
+          "add": "ruling_question_edit/act=add"
+        },
+        {
+          "kind": [
+            "ruling_item_edit"
+          ],
+          "name": "Модели",
+          "visibility": "ruling_admin",
+          "add": "ruling_item_edit/act=add"
+        }
+      ]
+    },
+    {
+      "class": "item11",
+      "kind": [
+        "publication"
+      ],
+      "name": "База знаний",
+      "subitems": [
+        {
+          "kind": [
+            "publication"
+          ],
+          "name": "Статьи",
+          "edit": "publications_edit/"
+        },
+        {
+          "kind": [
+            "report"
+          ],
+          "name": "Отчеты",
+          "edit": "report/action=setFilters&search_creator_id[{user_id}]=on"
+        },
+        {
+          "kind": [
+            "gamemaster"
+          ],
+          "name": "Мастерские группы"
+        }
+      ]
+    },
+    {
+      "class": "item13",
+      "link": "https://rolladie.allrpg.info",
+      "name": "Roll-a-die"
+    },
+    {
+      "class": "item12",
+      "kind": [
+        "publication"
+      ],
+      "id": [
+        155
+      ],
+      "name": "Помощь"
+    }
+  ],
+  "project_control_items": {
+    "tab1": [
+      "Основное",
+      "{admin} {gamemaster} {budget} {fee} {newsmaker}"
+    ],
+    "roles/{id}": [
+      "Сетка ролей",
+      "{admin} {gamemaster} {budget} {fee} {newsmaker}"
+    ],
+    "application": [
+      "Список заявок",
+      "{admin} {application}"
+    ],
+    "plot": [
+      "Сюжеты и завязки",
+      "{admin} {plot}"
+    ],
+    "org": [
+      "Мастера / организаторы",
+      "{admin}"
+    ],
+    "setup": [
+      "Форма заявки",
+      "{admin} {setup}"
+    ],
+    "filterset": [
+      "Наборы фильтров",
+      "{admin} {filterset}"
+    ],
+    "tab2": [
+      "Финансы",
+      "{admin} {budget} {fee}"
+    ],
+    "budget": [
+      "Бюджет",
+      "{admin} {budget}"
+    ],
+    "fee": [
+      "Настройка взносов",
+      "{admin} {fee}"
+    ],
+    "payment_type": [
+      "Методы оплаты",
+      "{admin} {fee}"
+    ],
+    "transaction": [
+      "История взносов",
+      "{admin} {budget} {fee}"
+    ],
+    "tab3": [
+      "Модули",
+      "{admin} {tab3}"
+    ],
+    "rooms": [
+      "Поселение",
+      "{admin} {rooms}"
+    ],
+    "document": [
+      "Генератор документов",
+      "{admin} {document}"
+    ],
+    "registration": [
+      "Регистрация на месте",
+      "{admin} {registration}"
+    ],
+    "tab4": [
+      "Модуль игрока",
+      "{admin} {tab4}"
+    ],
+    "qrpg_key": [
+      "QRpg: ключи, предметы и свойства",
+      "{admin} {qrpg_key}"
+    ],
+    "qrpg_code": [
+      "QRpg: коды",
+      "{admin} {qrpg_code}"
+    ],
+    "qrpg_history": [
+      "QRpg: история считываний",
+      "{admin} {qrpg_history}"
+    ],
+    "geoposition": [
+      "Геопозиция игроков",
+      "{admin} {geoposition}"
+    ],
+    "bank_transaction": [
+      "Игровой банк: транзакции",
+      "{admin} {bank_transaction}"
+    ],
+    "bank_currency": [
+      "Игровой банк: ресурсы",
+      "{admin} {bank_currency}"
+    ],
+    "bank_rule": [
+      "Игровой банк: правила переводов",
+      "{admin} {bank_rule}"
+    ],
+    "tab5": [
+      "Списки и импорт",
+      "{admin} {tab5}"
+    ],
+    "character": [
+      "Список персонажей",
+      "{admin} {character}"
+    ],
+    "group": [
+      "Группы персонажей",
+      "{admin} {group}"
+    ],
+    "csvimport": [
+      "Импорт из CSV",
+      "{admin}"
+    ]
+  },
+  "user_logged_menu": [
+    {
+      "class": "menu_item1",
+      "kind": [
+        "people"
+      ],
+      "id": [
+        "{user_sid}"
+      ],
+      "name": "Ваш профиль"
+    },
+    {
+      "class": "menu_item2",
+      "kind": [
+        "portfolio"
+      ],
+      "name": "Портфолио",
+      "add": "portfolio/act=add"
+    },
+    {
+      "class": "menu_item3",
+      "kind": [
+        "people"
+      ],
+      "id": [
+        "{user_sid}"
+      ],
+      "params": [
+        "#reports"
+      ],
+      "name": "Отчеты",
+      "add": "report/act=add"
+    },
+    {
+      "class": "menu_item4",
+      "kind": [
+        "people"
+      ],
+      "id": [
+        "{user_sid}"
+      ],
+      "params": [
+        "#friends"
+      ],
+      "name": "Друзья"
+    },
+    {
+      "class": "menu_item5",
+      "kind": [
+        "tasklist"
+      ],
+      "name": "Задачи",
+      "add": "task/task/act=add&obj_type=project&obj_id=all",
+      "counter": "new_tasks_counter"
+    },
+    {
+      "class": "menu_item6",
+      "kind": [
+        "wall"
+      ],
+      "name": "Стена",
+      "counter": "new_wall_counter"
+    },
+    {
+      "class": "menu_item7",
+      "kind": [
+        "wall2"
+      ],
+      "name": "Обсуждения",
+      "counter": "new_conversations_counter"
+    },
+    {
+      "class": "menu_item8",
+      "kind": [
+        "faq"
+      ],
+      "name": "Помощь"
+    },
+    {
+      "class": "menu_item9",
+      "kind": [
+        "stats"
+      ],
+      "name": "Отчеты",
+      "visibility": "admin"
+    },
+    {
+      "class": "menu_item10 no_dynamic_content",
+      "kind": [
+        "logout"
+      ],
+      "name": "Выход"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "global": {
+    "range": "Event dates",
+    "published": "Posted",
+    "read_more": "Read more",
+    "title": "News",
+    "edit_current_news": "Edit news",
+    "edit_news": "Edit news",
+    "header": "News and events",
+    "tags": "Tags",
+    "source": "Source"
+  }
+}

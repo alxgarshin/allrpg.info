@@ -1,0 +1,16 @@
+{
+  "global": {
+    "title": "Resgistration on site",
+    "type_data_to_search": "Search: type in a participant id, name or nickname or a main application field text",
+    "th_header_application": "Application",
+    "th_header_user": "Player",
+    "th_header_money": "Fee",
+    "th_header_eco_money": "Eco fee",
+    "th_header_comments": "Comments",
+    "th_header_distributed_ids": "Distribution",
+    "th_header_rooms_data": "Settlement",
+    "th_header_register": "Register",
+    "payment_type_name": "Registration: ",
+    "eco_money_name": "Eco fee"
+  }
+}

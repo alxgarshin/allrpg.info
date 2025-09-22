@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Settlement",
+    "taken_of": "%s of %s",
+    "switch_to_list": "List all rooms",
+    "switch_to_all": "Back to the table"
+  },
+  "fraym_model": {
+    "object_name": "settlement type \/ room",
+    "object_messages": [
+      "Settlement type \/ room created successfully.",
+      "Settlement type \/ room changed successfully",
+      "Settlement type \/ room deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title",
+        "helpText": "if you use semicolon while inputting names f.e.: Building 1: 1 floor: #7 - system will break everything down correcly into a list on a switch to the list view."
+      },
+      "one_place_price": {
+        "shownName": "One place price"
+      },
+      "places_count": {
+        "shownName": "Places total"
+      },
+      "allow_player_select": {
+        "shownName": "Player can select this settlement type",
+        "helpText": "otherwise only gamemasters will be able to assign it."
+      },
+      "description": {
+        "shownName": "Description"
+      },
+      "room_neighboors": {
+        "shownName": "Settlement residents"
+      },
+      "id": {
+        "shownName": "Taken of places total"
+      }
+    }
+  }
+}

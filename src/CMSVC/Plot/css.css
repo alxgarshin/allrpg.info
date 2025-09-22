@@ -1,0 +1,32 @@
+@import url('/css/components/plot.min.css');
+
+div.maincontent_data.autocreated form#form_plot div[id^="field_search_groups_by_name"] {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+form#form_plot input[name="action"][value="create"]~div[id="field_go_back_after_save[0]"],
+form#form_plot_plot input[name="action"][value="create"]~div[id="field_go_back_after_save[0]"] {
+    display: none;
+}
+
+form#form_plot_plot div[id^="field_applications"] a.edit,
+form#form_plot div[id^="field_project_character_ids"] a.edit {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: center center url(/design/user_menu_edit.svg) no-repeat;
+    background-size: 0.9em;
+    border: 0;
+    z-index: 1;
+    margin: .05em .3em 0 .5em;
+    padding: 0;
+    vertical-align: top;
+}
+
+div.maincontent_data.autocreated div.fieldvalue.read[id^="div_plots_data"] {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}

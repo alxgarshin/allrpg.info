@@ -1,0 +1,38 @@
+{
+  "global": {
+    "title": "Configuración de la tarifa",
+    "base_name": "Opción de tarifa principal",
+    "nullify_fee": "Se anulan todas las tarifas",
+    "messages": {
+      "money_change": "Se modificó la tarifa de participación en todas las aplicaciones sin la opción «Tarifa pagada» establecida.",
+      "nullify_fees": "Se anularon todas las tarifas. Los presupuestos de los tipos de pago también se anularon."
+    }
+  },
+  "fraym_model": {
+    "object_name": "opción de tarifa",
+    "object_messages": [
+      "Opción de tarifa creada correctamente.",
+      "Opción de tarifa modificada correctamente.",
+      "Opción de tarifa eliminada correctamente.",
+      "Opción de tarifa y todas las fechas de inicio eliminadas correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      },
+      "add_to_unpaid_applications": {
+        "shownName": "Añadir a solicitudes no pagadas"
+      },
+      "do_not_use_in_budget": {
+        "shownName": "No añadir al campo \"Configurar\" del presupuesto"
+      },
+      "project_room_ids": {
+        "shownName": "Conectar la opción de tarifa a tipos de liquidación específicos (salas)",
+        "helpText": "<a href=\"/rooms/\" target=\"_blank\">configurar liquidación</a>"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

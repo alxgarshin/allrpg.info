@@ -1,0 +1,25 @@
+{
+  "fraym_model": {
+    "object_name": "starting date",
+    "object_messages": [
+      "Starting date created successfully.",
+      "Starting date changed successfully.",
+      "Starting date deleted successfully."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Fee option"
+      },
+      "cost": {
+        "shownName": "Price",
+        "helpText": "if you change it, it will be automatically replaced in all applications that had it and that do not have «Fee paid» set."
+      },
+      "date_from": {
+        "shownName": "Starting date"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

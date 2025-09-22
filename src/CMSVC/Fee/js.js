@@ -1,0 +1,5 @@
+/** Настройка взносов */
+
+if (withDocumentEvents) {
+
+}

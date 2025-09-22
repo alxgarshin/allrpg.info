@@ -1,0 +1,77 @@
+{
+  "global": {
+    "title": "Registro",
+    "button_replace_text": "Añadir usuario",
+    "button_replace_text_to": "Registrarse",
+    "captcha": "Código de registro",
+    "captcha_help": "Introduzca el código de registro que se ve en la imagen. No importa si se trata de mayúsculas o minúsculas.",
+    "messages": {
+      "wrong_birthdate": "Fecha de nacimiento incorrecta.",
+      "email_already_registered": "El correo electrónico ya está registrado. Utilice la función de recuperación de contraseña o contacte con el soporte.",
+      "social_network_account_already_present": "La cuenta de la red social actual ya está registrada. Si cree que es un error, contacte con el soporte.",
+      "wrong_captcha": "El código de registro se ha introducido incorrectamente. Inténtelo de nuevo.",
+      "you_will_be_able_to_update_your_info_after_registration": "Podrá actualizar su cuenta Información después del registro.",
+      "look_like_bot": "Por favor, haz clic <a id=\"approvement_link\">aquí<\/a> para confirmar que no eres un bot."
+    }
+  },
+  "fraym_model": {
+    "object_name": "usuario",
+    "object_messages": [
+      "Registro completado correctamente. ¡Gracias!"
+    ],
+    "elements": {
+      "through_social_network": {
+        "shownName": "A través de una red social"
+      },
+      "list_of_social_networks": {
+        "shownName": " ",
+        "defaultValue": "<div class=\"or_use_social_network_list\"><a href=\"\/vkauth\/\" title=\"Ingresar usando Vkontakte\" class=\"social_1\"><span class=\"sbi sbi-vk\"></span></a><a href=\"\/fbauth\/\" title=\"Ingresar usando Facebook\" class=\"social_2\"><span class=\"sbi sbi-fb\"></span></a></div>"
+      },
+      "or_by_inputting_data": {
+        "shownName": "O completa la información"
+      },
+      "em": {
+        "shownName": "Correo electrónico"
+      },
+      "login": {
+        "shownName": "Iniciar sesión"
+      },
+      "pass": {
+        "shownName": "Contraseña",
+        "helpText": "Mínimo de 3 y máximo de 20 símbolos."
+      },
+      "pass2": {
+        "shownName": "Repetir contraseña"
+      },
+      "fio": {
+        "shownName": "Nombre completo"
+      },
+      "phone": {
+        "shownName": "Teléfono"
+      },
+      "birth": {
+        "shownName": "Fecha de nacimiento"
+      },
+      "city": {
+        "shownName": "Ciudad"
+      },
+      "gender": {
+        "shownName": "Sexo",
+        "values": [
+          [
+            "1",
+            "Masculino"
+          ],
+          [
+            "2",
+            "Femenino"
+          ]
+        ]
+      },
+      "photo": {
+        "shownName": "Foto",
+        "helpText": "Formato: gif, jpeg, png. Tamaño: no más de 400 píxeles."
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "global": {
+    "title": "News edit",
+    "messages": {
+      "no_quote_if_no_img": "Quote will not be shown if news image is missing.",
+      "news_posted_to_networks": "News has been posted in social networks."
+    }
+  },
+  "fraym_model": {
+    "object_name": "News",
+    "object_messages": [
+      "News added successfully.",
+      "News changed successfully.",
+      "News deleted successfully."
+    ],
+    "elements": {
+      "type": {
+        "shownName": "News or event?",
+        "values": [
+          [
+            "0",
+            "News"
+          ],
+          [
+            "1",
+            "event"
+          ]
+        ]
+      },
+      "name": {
+        "shownName": "Title",
+        "helpText": "no more than 255 symbols."
+      },
+      "active": {
+        "shownName": "Show news\/event"
+      },
+      "show_date": {
+        "shownName": "Show in ‘Today’"
+      },
+      "from_date": {
+        "shownName": "Show in ‘today’ starting from"
+      },
+      "to_date": {
+        "shownName": "Show in 'Today' till"
+      },
+      "data_came_from": {
+        "shownName": "Source",
+        "helpText": "no more than 255 symbols."
+      },
+      "attachments": {
+        "shownName": "News image",
+        "helpText": "Shown in 'Today'. 360 pixels wide, 240 pixels high."
+      },
+      "quote": {
+        "shownName": "Image caption",
+        "helpText": "shown in 'Today' if has picture."
+      },
+      "annotation": {
+        "shownName": "Summary"
+      },
+      "attachments2": {
+        "shownName": "Images or files of full text"
+      },
+      "content": {
+        "shownName": "Full text",
+        "helpText": "Text if press ‘More…’"
+      },
+      "tags": {
+        "shownName": "Tags",
+        "values": null
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      },
+      "publish_in_social_networks": {
+        "shownName": "Post in social networks"
+      }
+    }
+  }
+}

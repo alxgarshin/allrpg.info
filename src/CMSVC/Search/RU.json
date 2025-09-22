@@ -1,0 +1,39 @@
+{
+  "global": {
+    "title": "Поиск",
+    "find": "Найти",
+    "no_matches": "Совпадений не найдено",
+    "tag": "Тег: ",
+    "messages": {
+      "need_more_symbols": "Требуется более 3 символов.",
+      "publication_co_author": "со-автор статьи",
+      "publication_author": "автор статьи",
+      "tags": "Теги",
+      "publication_text": "Текст статьи",
+      "publication": "Статья",
+      "user": "Пользователь",
+      "project": "Проект",
+      "project_text": "Аннотация проекта",
+      "community": "Группа",
+      "community_text": "Аннотация группы",
+      "task": "Задача",
+      "task_text": "Аннотация задачи",
+      "event": "Событие",
+      "event_text": "Аннотация события",
+      "calendar_event": "Событие",
+      "calendar_event_text": "Описание события",
+      "area": "Полигон",
+      "gamemaster": "Мастерская группа"
+    }
+  },
+  "fraym_model": {
+    "elements": {
+      "qwerty": {
+        "shownName": "Текст для поиска"
+      },
+      "region": {
+        "shownName": "Регион"
+      }
+    }
+  }
+}

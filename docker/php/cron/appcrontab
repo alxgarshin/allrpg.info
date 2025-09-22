@@ -1,0 +1,1 @@
+0 0 * * * /usr/local/bin/php /var/www/src/Cron/fee_update.php >> /var/www/var/log/cron/cron.log 2>&1

@@ -1,0 +1,24 @@
+<svg id="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #82878c;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #a7abaf;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M430.091,902H413.909A2.9,2.9,0,0,1,411,899.107V879.786L416.818,874h13.273A2.9,2.9,0,0,1,433,876.892v22.215A2.9,2.9,0,0,1,430.091,902Z" transform="translate(-411 -874)"/>
+  <path class="cls-2" d="M414.7,880.509H411l5.818-5.785v3.681A2.11,2.11,0,0,1,414.7,880.509Z" transform="translate(-411 -874)"/>
+  <path id="ZIP" class="cls-3" d="M420.574,897.739v-0.98h-2.71l2.639-4.793v-0.9h-3.994v0.97h2.629l-2.629,4.783v0.92h4.065Zm2.167,0v-6.673H421.61v6.673h1.131Zm2.434,0v-2.521h1.181a2.077,2.077,0,0,0,0-4.152h-2.312v6.673h1.131Zm1.049-3.5h-1.049v-2.2h1.049A1.107,1.107,0,0,1,426.224,894.238Z" transform="translate(-411 -874)"/>
+</svg>

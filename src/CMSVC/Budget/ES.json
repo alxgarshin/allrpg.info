@@ -1,0 +1,61 @@
+{
+  "global": {
+    "title": "Presupuesto",
+    "total": "Total de gastos planificados",
+    "total10": "+10%",
+    "player_count": "Número de jugadores",
+    "recommended": "Comisión recomendada (+20%)",
+    "set": "Comisión mínima establecida",
+    "overdraft": "Sobregiro",
+    "paid": "Comisiones pagadas",
+    "paid_application": "Por el campo «Pagado» en las solicitudes",
+    "comission": "Comisiones e impuestos",
+    "not_paid": "Comisiones a pagar",
+    "needed": "Comisiones necesarias actualmente",
+    "spent": "Gastado",
+    "remaining": "Restante",
+    "from_fee": "De las comisiones",
+    "options": "Gestión",
+    "nullify_fees": "Anular todas las comisiones"
+  },
+  "fraym_model": {
+    "object_name": "posición",
+    "object_messages": [
+      "Puesto creado correctamente.",
+      "Puestos modificados correctamente.",
+      "Puesto eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      },
+      "price": {
+        "shownName": "Precio"
+      },
+      "quantity_needed": {
+        "shownName": "Necesidad"
+      },
+      "quantity": {
+        "shownName": "Pagado"
+      },
+      "description": {
+        "shownName": "Comentarios"
+      },
+      "responsible_id": {
+        "shownName": "Responsable"
+      },
+      "bought_by": {
+        "shownName": "A cargo del cliente"
+      },
+      "distributed_item": {
+        "helpText": "Artículo distribuido."
+      },
+      "is_category": {
+        "helpText": "Esta es la categoría."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

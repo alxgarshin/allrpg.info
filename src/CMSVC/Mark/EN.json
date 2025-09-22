@@ -1,0 +1,17 @@
+{
+  "global": {
+    "important_button": {
+      "marked_message": "interesting",
+      "unmarked_message": "interesting",
+      "marking_error": "marking error."
+    },
+    "messages": {
+      "message_marked_need_response_success": "The message marked as solution needed successfully.",
+      "message_marked_need_response_fail": "The message was not marked as solution needed.",
+      "message_marked_has_response_success": "The message marked as solution received successfully.",
+      "message_marked_has_response_fail": "The message was not marked as solution received.",
+      "message_marked_read_success": "The message marked as read successfully.",
+      "message_marked_read_fail": "The message was not marked as read."
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "fraym_model": {
+    "object_name": "plot",
+    "object_messages": [
+      "Plot created successfully.",
+      "Plot changed successfully.",
+      "Plot deleted successfully."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Is a part of story",
+        "helpText": "<a id=\"go_to_plot\" href=\"\">to the story<\/a>"
+      },
+      "name": {
+        "shownName": "Title",
+        "helpText": "for gamemasters only."
+      },
+      "applications_1_side_ids": {
+        "shownName": "For"
+      },
+      "applications_2_side_ids": {
+        "shownName": "About"
+      },
+      "hideother": {
+        "shownName": "Hide «About» information",
+        "helpText": "hide from players seeing this plot what characters and players it is about."
+      },
+      "content": {
+        "shownName": "Plot",
+        "helpText": "link to a specific group \/ character \/ an application player profile: input @ and start typing a name from the «About» field selections, then input space. The text before brackets will be visible as a link to the object in the story description."
+      },
+      "code": {
+        "shownName": "Show order",
+        "helpText": "the more the number the earlier information is shown in plots list."
+      },
+      "todo": {
+        "shownName": "ToDo in plot",
+        "helpText": "if any text is present, plot and all of its stories are hidden from players."
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

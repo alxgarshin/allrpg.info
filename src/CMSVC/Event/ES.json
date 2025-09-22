@@ -1,0 +1,108 @@
+{
+  "global": {
+    "title": "Eventos",
+    "author": "Autor",
+    "was_registered": "Creado",
+    "modal_header_event_members": "Miembros del evento",
+    "modal_group_admin": "autor",
+    "modal_group_admin_first_letter": "Autor",
+    "modal_group_member": "Participante",
+    "modal_group_member_first_letter": "p",
+    "edit_event_capitalized": "Editar evento",
+    "members_management_capitalized": "Administrar derechos",
+    "leave_event_capitalized": "Abandonar evento",
+    "place": "Lugar",
+    "foresight_map": "Mapa de Foresight",
+    "event_members": "Miembros",
+    "members": "Miembros del evento",
+    "members_alt": "Derechos de los miembros",
+    "group_authors": "Autores",
+    "group_members": "Miembros",
+    "edit_event": "Editar evento",
+    "invite_into_event": "Invitar al evento",
+    "create_event_chat": "Crear una conversación de evento",
+    "open_event_chat": "Abrir una conversación de evento",
+    "create_foresight_map": "Crear un mapa de previsión",
+    "edit_foresight_map": "Editar mapa de previsión",
+    "show_qr_code": "Mostrar código QR",
+    "materials": "Materiales",
+    "documents": "Documentos",
+    "starting_dcouments": "Documentos entrantes",
+    "upload": "Subir",
+    "add_a_link": "Añadir un enlace",
+    "stories": "Casos de prueba",
+    "story_add": "Añadir un caso de prueba",
+    "history": "Historial",
+    "input_message": "Introducir un mensaje",
+    "get_access": "Unirse al evento",
+    "request_access_capitalized": "Solicitar acceso",
+    "rerequest_access_capitalized": "Solicitar acceso de nuevo",
+    "project": "Proyecto",
+    "community": "Grupo",
+    "messages": {
+      "successfully_joined": "Te has unido correctamente al evento.",
+      "project": "Proyecto",
+      "event_change_message_1": "Hola.<br><br>%s cambió%s el evento<a href=\"%sevent\/%s\/\">%s<\/a>.<br><br><b>Fecha y hora de inicio:<\/b> %s<br><b>Fecha y hora de finalización:<\/b> %s<br><b>Descripción:<\/b><br>",
+      "event_change_message_2": "Evento cambiado",
+      "event_change_message_3": "Hola.<br><br>%s te ha asignado la responsabilidad de%s El evento <a href=\"%sevent\/%s\/\">%s<\/a>.",
+      "event_change_message_4": "Se le ha asignado la responsabilidad del evento.",
+      "have_no_rights": "No tiene derechos para gestionar los eventos del proyecto especificado.",
+      "have_no_rights_project": "Proyecto",
+      "have_no_rights_community": "Grupo",
+      "remove_access_success": "Ha abandonado el evento correctamente.",
+      "remove_access_fail": "No se pudieron eliminar los derechos de acceso a este evento.",
+      "get_access_word": "Evento",
+      "have_no_rights_in_this_event": "No tiene derechos para gestionar este evento.",
+      "dates_changed_successfully": "Fechas modificadas correctamente.",
+      "dates_change_message": "Fechas que se están modificando. Fecha y hora de inicio: %s. Fecha y hora de finalización: %s."
+    }
+  },
+  "fraym_model": {
+    "object_name": "event",
+    "object_messages": [
+      "Evento creado correctamente.",
+      "Evento modificado correctamente.",
+      "Evento eliminado correctamente."
+    ],
+    "elements": {
+      "user_id": {
+        "shownName": "Participantes"
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "place": {
+        "shownName": "Ubicación"
+      },
+      "description": {
+        "shownName": "Descripción"
+      },
+      "date_from": {
+        "shownName": "Fecha y hora de inicio"
+      },
+      "date_to": {
+        "shownName": "Fecha y hora de finalización"
+      },
+      "attachments": {
+        "shownName": "Adjuntos"
+      },
+      "competences": {
+        "shownName": "Certifica competencias"
+      },
+      "tags": {
+        "shownName": "Etiquetas",
+        "values": null
+      },
+      "foresight_map_id": {
+        "shownName": "IDs de mapas de Foresight",
+        "helpText": "Puedes Obtenga los ID de los mapas de Foresight aquí: <a href='%s' target='_blank'>http:\/\/www.foresightmaps.ru\/<\/a>. Puede proporcionar más de un ID separándolos con el símbolo «;»."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      },
+      "back_to_project": {
+        "shownName": "Volver al proyecto \/ grupo después de guardar"
+      }
+    }
+  }
+}

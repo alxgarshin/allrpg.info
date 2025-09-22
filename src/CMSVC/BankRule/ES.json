@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Banco de juegos: reglas de transferencias"
+  },
+  "fraym_model": {
+    "object_name": "rule",
+    "object_messages": [
+      "Se añadió una regla correctamente.",
+      "Las reglas se cambiaron correctamente",
+      "Se eliminó una regla correctamente."
+    ],
+    "elements": {
+      "qrpg_keys_from_ids": {
+        "shownName": "De",
+        "helpText": "Para transferir este recurso, un jugador necesita cualquiera de estas claves. Si eliminas todo en este campo, cualquier jugador podrá transferirlo.",
+        "default_values": [
+          [
+            "none",
+            "bloquear a todos los jugadores"
+          ]
+        ]
+      },
+      "currency_from_id": {
+        "shownName": "Qué"
+      },
+      "amount_from": {
+        "shownName": "Cuánto"
+      },
+      "qrpg_keys_to_ids": {
+        "shownName": "A",
+        "helpText": "Para recibir este recurso, un jugador necesita cualquiera de estas claves. Si eliminas todo en este campo, cualquier jugador podrá recibirlo."
+      },
+      "currency_to_id": {
+        "shownName": "¿A cuánto?"
+      },
+      "amount_to": {
+        "shownName": "¿A cuánto?"
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+/** Склад: категории */
+
+if (withDocumentEvents) {
+
+}

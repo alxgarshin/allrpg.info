@@ -1,0 +1,29 @@
+{
+  "global": {
+    "title": "Lista de roles",
+    "noname": "Sin título",
+    "description_above": "Ir a la descripción anterior",
+    "all": "Lista de roles",
+    "apply": "Aplicar",
+    "up_to": "(hasta %s)",
+    "question": "?",
+    "team_up_to": "(Formar equipo con %s participantes)",
+    "error_on_quantity": "(%s de %s solicitudes)",
+    "taken": "Aplicadas: %s",
+    "maybetaken": "Posibles solicitudes: %s",
+    "show_roleslist_helper": "Incluir la lista de roles en su sitio web: <a id=\"switch_show_roleslist_helper\">código<\/a>.",
+    "helper": "Para incluir la lista de roles en su sitio web, inserte el siguiente código HTML:",
+    "show_roleslist": "La lista de roles es visible %s: <a id=\"switch_show_roleslist\">switch<\/a>.",
+    "view_roleslist_mode": "Visualizando la lista de roles en modo %s: <a id=\"switch_view_roleslist_mode\">switch<\/a>.",
+    "view_roleslist_modes": {
+      "gamemaster": "maestro del juego",
+      "player": "jugador"
+    },
+    "edit": "editar",
+    "first_group": "crear un grupo de personajes",
+    "add_group": "crear un subgrupo",
+    "add_character": "crear un personaje",
+    "change_order": "mover",
+    "filter": "introduce un texto aquí para buscar una ubicación \/grupo \/personaje"
+  }
+}

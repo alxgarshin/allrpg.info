@@ -1,0 +1,13 @@
+{
+  "global": {
+    "range": "Fechas del evento",
+    "published": "Publicado",
+    "read_more": "Leer más",
+    "title": "Noticias",
+    "edit_current_news": "Editar noticias",
+    "edit_news": "Editar noticias",
+    "header": "Noticias y eventos",
+    "tags": "Etiquetas",
+    "source": "Fuente"
+  }
+}

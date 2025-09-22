@@ -1,0 +1,16 @@
+{
+  "global": {
+    "title": "Tasks",
+    "filter_tasks_and_events": "Filter tasks and events:",
+    "obj_filters": {
+      "all": "all",
+      "personal": "personal",
+      "global": "global"
+    },
+    "obj_filters_additional": {
+      "project": "Projects",
+      "community": "Groups",
+      "responsible": "Responsible"
+    }
+  }
+}

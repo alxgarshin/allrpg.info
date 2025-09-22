@@ -1,0 +1,16 @@
+{
+  "global": {
+    "title": "Registro en el sitio",
+    "type_data_to_search": "Buscar: escriba el ID, nombre o apodo del participante o el texto del campo principal de la solicitud",
+    "th_header_application": "Solicitud",
+    "th_header_user": "Jugador",
+    "th_header_money": "Cuota",
+    "th_header_eco_money": "Cuota ecológica",
+    "th_header_comments": "Comentarios",
+    "th_header_distributed_ids": "Distribución",
+    "th_header_rooms_data": "Liquidación",
+    "th_header_register": "Registro",
+    "payment_type_name": "Registro: ",
+    "eco_money_name": "Cuota ecológica"
+  }
+}

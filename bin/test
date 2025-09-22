@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+./vendor/bin/phpstan analyze --memory-limit=512M
+./vendor/bin/psalm --memory-limit=2G --no-cache
+./bin/phpunit

@@ -1,0 +1,18 @@
+{
+  "global": {
+    "title": "CSV import",
+    "import_characters_btn": "Import characters and groups",
+    "import_applications_btn": "Import applications",
+    "import_characters_text": "To import characters and groups you need a csv-file with following columns:<ul>\r\n<li><b>Character<\/b> - contains character name.<\/li>\r\n<li>Groups - optional field with character groups divived by vertical line: Location 1 | Location 2 | Group 3<\/li>\r\n<li>Description - optional field with a character text description.<\/li>\r\n<\/ul>\r\nTo import file, please, use the following form.",
+    "import_applications_text": "To import applications you need a csv-file with following columns:<ul>\r\n<li>Name - optional field with a character name to look for it in roles list.<\/li>\r\n<li>Status - optional field with an application status, possible values: «Accepted», «Processed», «Sent», «Declined».<\/li>\r\n<li>Updated - optional field with a last update date.<\/li>\r\n<li>Created - optional field with a creation date.<\/li>\r\n<li>Left - optional field with a sum yet to pay as a fee.<\/li>\r\n<li>Paid - optional field with a sum already paid as a fee.<\/li>\r\n<li>Email - optional field with a player email, by which allrpg.info will try to find him \/ her and propose the application immediately.<\/li>\r\n<li><b>Character name<\/b> - an application name.<\/li>\r\n<\/ul>\r\nMoreover csv can contain any columns, which names are precisely the same as setted in «<a href=\"\/setup\/\" target=\"_blank\">Application setup<\/a>» section. In this case allrpg.info will fill in all this fields automatically. For example: «Backstory».<br>\r\nTo import file, please, use the following form.",
+    "messages": {
+      "no_file_selected": "No file selected for import.",
+      "import_success": "Import successful.",
+      "upload_error": "File upload error.",
+      "character_no_name": "Mandatory field «Character» not set in string %s.",
+      "character_already_present": "A character with such name from string %s is already present in project: <a href=\"\/character\/%s\/\" target=\"_blank\">%s<\/a>.",
+      "application_no_name": "Mandatory field «Character name» not set in string %s.",
+      "application_already_present": "An application with such name from string %s is already present in project: <a href=\"\/application\/%s\/\" target=\"_blank\">%s<\/a>."
+    }
+  }
+}

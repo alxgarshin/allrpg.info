@@ -1,0 +1,102 @@
+{
+  "global": {
+    "switch_to_mine": "mis personajes",
+    "switch_to_free": "personajes gratuitos",
+    "switch_to_all": "todos los personajes",
+    "switch_to_different_groups_in_applications": "diferentes grupos en las aplicaciones",
+    "link_to_roles_default": "abierto"
+  },
+  "fraym_model": {
+    "object_name": "personaje",
+    "object_messages": [
+      "Personaje creado correctamente.",
+      "Personaje modificado correctamente.",
+      "Personaje eliminado correctamente."
+    ],
+    "elements": {
+      "link_to_roles": {
+        "shownName": "Ver en la lista de roles"
+      },
+      "project_group_ids": {
+        "shownName": "Grupos",
+        "helpText": "Si el campo no está configurado, la aplicación para este personaje no obtendrá el grupo principal automáticamente. Puedes configurar grupos en la sección «<a href=\"\/group\/\">Grupos de personajes<\/a>»."
+      },
+      "setparentgroups": {
+        "shownName": "Añadir grupos de padres automáticamente"
+      },
+      "disallow_applications": {
+        "shownName": "No aceptar solicitudes"
+      },
+      "team_character": {
+        "shownName": "Tipo",
+        "helpText": "Si no has configurado el campo de solicitud<\/a> de tipo concurrente, los usuarios no podrán solicitar este personaje.",
+        "values": [
+          [
+            "0",
+            "personal"
+          ],
+          [
+            "1",
+            "team"
+          ]
+        ]
+      },
+      "name": {
+        "shownName": "Nombre"
+      },
+      "applications_needed_count": {
+        "shownName": "Cantidad de solicitudes necesarias",
+        "helpText": "¿Cuántas solicitudes te gustaría tener para este personaje?"
+      },
+      "auto_new_character_creation": {
+        "shownName": "Creación automática de nuevo personaje",
+        "helpText": "Si la cantidad de solicitudes necesarias es superior a 1, la solicitud para este personaje se transferirá a un personaje recién creado en el mismo grupo cuando reciba el estado \"procesado\" o \"aceptado\"."
+      },
+      "team_applications_needed_count": {
+        "shownName": "Cantidad de personas necesarias en el equipo",
+        "helpText": "Para contar la cantidad de personas en la solicitud de equipo, por favor, indique la cantidad en este campo al crear un personaje de grupo. Este número se mostrará automáticamente junto al nombre del personaje en la lista de roles."
+      },
+      "maybetaken": {
+        "shownName": "Aceptado preliminarmente",
+        "helpText": "Puede proporcionar aquí los nombres de las personas (separados por comas) que aceptaron preliminarmente este personaje, pero que aún no se han postulado a través de allrpg.info."
+      },
+      "taken": {
+        "shownName": "Aceptado",
+        "helpText": "Puede proporcionar aquí los nombres de las personas (separados por comas) que aceptaron este carácter, pero que aún no han solicitado a través de allrpg.info."
+      },
+      "id": {
+        "shownName": "Cantidad de solicitudes necesarias/aceptadas"
+      },
+      "taken_details": {
+        "shownName": "Cantidad de solicitudes necesarias/aceptadas"
+      },
+      "hide_applications": {
+        "shownName": "Mostrar la cantidad de solicitudes en lugar de las solicitudes en la lista de roles"
+      },
+      "content": {
+        "shownName": "Descripción",
+        "helpText": "Para la lista de roles. Puede formatear el texto con: <b>**para negrita**<\/b>, <i>__para cursiva__<\/i>, [para la dirección http de la imagen]."
+      },
+      "comments": {
+        "shownName": "Comentarios del Gamemaster",
+        "helpText": "Oculto para los jugadores."
+      },
+      "code": {
+        "shownName": "Prioridad",
+        "helpText": "Opcional. El campo con prioridad 0 se mostrará al principio de la lista de roles."
+      },
+      "plots": {
+        "shownName": "Parcelas"
+      },
+      "plots_data": {
+        "shownName": "Lista completa de parcelas"
+      },
+      "link_to_applications": {
+        "shownName": "Aplicaciones de personajes"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

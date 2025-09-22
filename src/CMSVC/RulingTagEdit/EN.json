@@ -1,0 +1,27 @@
+{
+  "global": {
+    "title": "Ruling: tags"
+  },
+  "fraym_model": {
+    "object_name": "tag",
+    "object_messages": [
+      "Tag added successfully.",
+      "Tag updated successfully.",
+      "Tag deleted successfully.",
+      "Tag and all of its subtags deleted successfully."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Parent tag",
+        "helpText": "when shown agregates all subtags."
+      },
+      "name": {
+        "shownName": "Name",
+        "helpText": "no more than 255 characters."
+      },
+      "show_in_cloud": {
+        "shownName": "Show in tags cloud"
+      }
+    }
+  }
+}

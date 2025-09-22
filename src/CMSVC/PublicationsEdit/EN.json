@@ -1,0 +1,49 @@
+{
+  "global": {
+    "title": "Articles editing"
+  },
+  "fraym_model": {
+    "object_name": "article",
+    "object_messages": [
+      "Post added successfully.",
+      "Post changed successfully.",
+      "Post deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title",
+        "helpText": "No more than 255 symbols."
+      },
+      "author": {
+        "shownName": "Author(s)",
+        "helpText": "You can only set your friends as authors."
+      },
+      "annotation": {
+        "shownName": "Summary"
+      },
+      "content": {
+        "shownName": "Content"
+      },
+      "attachments": {
+        "shownName": "Attachments"
+      },
+      "agreement": {
+        "shownName": "I agree to publication rules",
+        "helpText": "I understand that information will be posted in the Internet and will be available to Social network participants and confirm that materials provided and posted by me keep author rights, otherwise there is a permission to use and post these materials."
+      },
+      "active": {
+        "shownName": "Posting available"
+      },
+      "nocomments": {
+        "shownName": "Switch off commenting for this post"
+      },
+      "tags": {
+        "shownName": "Tags",
+        "values": null
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

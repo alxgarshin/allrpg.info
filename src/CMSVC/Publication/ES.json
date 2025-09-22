@@ -1,0 +1,24 @@
+{
+  "global": {
+    "title": "Artículos",
+    "author": "Autor",
+    "authors": "Autores",
+    "author_not_provided": "No definido",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "become_friends": "Añadir a amigos",
+    "send_a_message": "Insertar un mensaje",
+    "publish_date": "Última actualización",
+    "tags": "Etiquetas",
+    "conversation": "Publicar discusión",
+    "input_message": "Introducir un mensaje",
+    "show_more": "Mostrar artículos anteriores",
+    "my_publications": "Mis artículos",
+    "all_publications": "Todos los artículos",
+    "add_publication": "Añadir un artículo",
+    "search": "Buscar artículos por título, resumen y contenido",
+    "no_name": "Sin título",
+    "event": "Evento",
+    "go_to_event": "Ver evento"
+  }
+}

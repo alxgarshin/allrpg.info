@@ -1,0 +1,9 @@
+{
+  "global": {
+    "publish_date": "Posted",
+    "publish_time_separator": "at",
+    "authors": "Author(s)",
+    "tags": "Tags",
+    "edit_pages": "Edit pages"
+  }
+}

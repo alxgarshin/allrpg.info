@@ -1,0 +1,5 @@
+/** Регистрация */
+
+if (withDocumentEvents) {
+
+}

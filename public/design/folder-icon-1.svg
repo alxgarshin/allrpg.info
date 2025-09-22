@@ -1,0 +1,16 @@
+<svg id="icon" xmlns="http://www.w3.org/2000/svg" width="27" height="23" viewBox="0 0 27 23">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #cdd1d6;
+      }
+
+      .cls-2 {
+        fill: #e1e5e9;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <rect id="Rounded_Rectangle_2790" data-name="Rounded Rectangle 2790" class="cls-1" width="17" height="11" rx="3" ry="3"/>
+  <path class="cls-2" d="M436,470.091A2.9,2.9,0,0,1,433.107,473H411.892A2.9,2.9,0,0,1,409,470.091V458.818h0v-2.909A2.9,2.9,0,0,1,411.893,453h21.214A2.9,2.9,0,0,1,436,455.909v2.909h0v11.273Z" transform="translate(-409 -450)"/>
+</svg>

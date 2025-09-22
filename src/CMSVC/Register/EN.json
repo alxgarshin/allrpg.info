@@ -1,0 +1,77 @@
+{
+  "global": {
+    "title": "Registration",
+    "button_replace_text": "Add user",
+    "button_replace_text_to": "Register",
+    "captcha": "Registration code",
+    "captcha_help": "Enter the registration code that you can see in the picture. Letter case does not matter.",
+    "messages": {
+      "wrong_birthdate": "Incorrect birthdate.",
+      "email_already_registered": "Email already registered. Please use password recovery function or contact support.",
+      "social_network_account_already_present": "Current social network account is already registered. If you think it's a mistake, please, contact the support.",
+      "wrong_captcha": "Registration code was entered incorrectly. Please, try again.",
+      "you_will_be_able_to_update_your_info_after_registration": "You will be be able to update your account information info after registration.",
+      "look_like_bot": "Please, click <a id=\"approvement_link\">here<\/a> to confirm that you're not a bot."
+    }
+  },
+  "fraym_model": {
+    "object_name": "user",
+    "object_messages": [
+      "Registration completed successfully. Thank you!"
+    ],
+    "elements": {
+      "through_social_network": {
+        "shownName": "Via a social network"
+      },
+      "list_of_social_networks": {
+        "shownName": " ",
+        "defaultValue": "<div class=\"or_use_social_network_list\"><a href=\"\/vkauth\/\" title=\"enter using Vkontakte\" class=\"social_1\"><span class=\"sbi sbi-vk\"></span></a><a href=\"\/fbauth\/\" title=\"enter using Facebook\" class=\"social_2\"><span class=\"sbi sbi-fb\"></span></a></div>"
+      },
+      "or_by_inputting_data": {
+        "shownName": "Or fill in the information"
+      },
+      "em": {
+        "shownName": "Email"
+      },
+      "login": {
+        "shownName": "Login"
+      },
+      "pass": {
+        "shownName": "Password",
+        "helpText": "No less than 3 and no more than 20 symbols."
+      },
+      "pass2": {
+        "shownName": "Repeat password"
+      },
+      "fio": {
+        "shownName": "Full name"
+      },
+      "phone": {
+        "shownName": "Telephone"
+      },
+      "birth": {
+        "shownName": "Birthdate"
+      },
+      "city": {
+        "shownName": "City"
+      },
+      "gender": {
+        "shownName": "Sex",
+        "values": [
+          [
+            "1",
+            "Male"
+          ],
+          [
+            "2",
+            "Female"
+          ]
+        ]
+      },
+      "photo": {
+        "shownName": "Photo",
+        "helpText": "Format: gif, jpeg, png. Size: no more than 400 pixels."
+      }
+    }
+  }
+}

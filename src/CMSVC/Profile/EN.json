@@ -1,0 +1,26 @@
+{
+  "global": {
+    "title": "My account",
+    "header": "Your account",
+    "messages": {
+      "already_registered_email": "User with this email is already registered. Please, use password remind function or contact support for help. If there is a mistake, please, contact support. Thank you.",
+      "email_cannot_be_empty": "You are using an email and a password to access the website. Email cannot be empty.",
+      "verification_link_sent": "A link to verify email has been successfully sent to %s",
+      "verification_link_not_sent": "An error occured while trying to send a verification link to %s",
+      "verification_link_good": "Email verified successfully.",
+      "verification_link_bad": "Wrong data provided to verify an email."
+    },
+    "verify_em": {
+      "name": "Email verification on a website «%s»",
+      "base_text": "Good day!<br><br>We've received a request to register a user with your email on a website «%s».<br><br>To verify current email, please, follow the link: <a href=\"%s\">%s</a>.<br><br>If you haven't registered on the website, please, ignore the current message.<br><br>Have a nice day."
+    }
+  },
+  "fraym_model": {
+    "object_name": "account information",
+    "object_messages": [
+      "",
+      "Account information changed successfully.",
+      "Account information deleted successfully."
+    ]
+  }
+}

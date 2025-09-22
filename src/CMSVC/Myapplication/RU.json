@@ -1,0 +1,123 @@
+{
+  "global": {
+    "add_application": "подать заявку",
+    "provide_payment": "сообщить об оплате",
+    "provide_payment2": "оплатить \/ сообщить об оплате",
+    "yk_description": "Оплата по заявке №%s",
+    "paw_description": "Оплата по заявке №%s",
+    "pm_description": "Оплата по заявке №%s",
+    "pk_description": "Оплата по заявке №%s",
+    "payment": "оплату",
+    "fee_payment": "Оплата взноса",
+    "group_request": "Пожалуйста, добавьте меня в группу: %s",
+    "comments": "Комментарии",
+    "change_comments_order": "в календарном порядке",
+    "title": "Мои заявки",
+    "conversation_text": "Прокомментировать",
+    "conversation_sub_obj_types": [
+      [
+        "{from_player}",
+        "мастерам"
+      ]
+    ],
+    "titles_conversation_sub_obj_types": {
+      "to_player": "Вам",
+      "from_player": "мастерам"
+    },
+    "show_all_conversations": "показать еще комментарии",
+    "switch_to_deleted": "удаленные заявки",
+    "switch_to_all": "все заявки",
+    "changes_history": "история изменений",
+    "back_to_application": "обратно к заявке",
+    "prev_change": "раньше",
+    "next_change": "позже",
+    "send_individual_application": "Подать индивидуальную заявку",
+    "send_team_application": "Подать командную заявку",
+    "sent_applications": "Поданные заявки",
+    "roles_list": "Сетка ролей",
+    "website": "Сайт",
+    "project": "Проект",
+    "ingame": "модуль игрока",
+    "accept_application": "Принять заявку",
+    "decline_application": "Отказаться от заявки",
+    "to_comments": "К комментариям",
+    "check_contacts": "Пожалуйста, проверьте контактные данные",
+    "messages": {
+      "payment_provided_successfully": "Спасибо. Информация об оплате отправлена мастерам.",
+      "paykeeper": {
+        "token_error": "Ошибка получения токена.",
+        "invoice_id_error": "Ошибка получения id счета."
+      },
+      "application_deleted_by_gamemaster": "Заявка была удалена мастерами.",
+      "application_create_to_gamemasters_subject": "Игроком «%s» подана заявка «%s» на проект «%s»",
+      "application_create_to_gamemasters_message": "Добрый день.<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Заявка «%s»<\/a> была подана игроком <a href=\"%speople\/%s\/\">«%s»<\/a>.",
+      "application_change_to_gamemasters_subject": "Игроком изменена заявка «%s» проекта «%s»",
+      "application_change_to_gamemasters_message": "Добрый день.<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Заявка «%s»<\/a> игрока <a href=\"%speople\/%s\/\">«%s»<\/a> была изменена игроком.",
+      "field_changed": " (изменено)",
+      "application_deleted_success": "Заявка успешно удалена из списка заявок, мастерам отправлено e-mail оповещение.",
+      "application_delete_to_gamemasters_subject": "Игроком удалена заявка «%s» проекта «%s»",
+      "application_delete_to_gamemasters_message": "Добрый день.<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Заявка «%s»<\/a> игрока <a href=\"%speople\/%s\/\">«%s»<\/a> была удалена игроком.",
+      "oneorderfromplayer": "Мастера отключили возможность подачи более одной заявки одним пользователем на данный проект.",
+      "gamemasters_offer_application": "Мастера предлагают Вам принять на себя данную заявку.",
+      "application_accepted": "Вы приняли заявку.",
+      "application_declined": "Вы отклонили предложение.",
+      "add_neighboor_request": {
+        "not_your_room": "Вы изменили комнату, но не сохранили изменения. Пожалуйста, сохраните заявку, прежде чем приглашать кого бы то ни было к совместному проживанию.",
+        "not_enough_places": "К сожалению, в Вашей комнате не осталось свободных мест.",
+        "cannot_be_invited_to_room_type": "К сожалению, приглашенный пользователь выбрал тип взноса, который не позволит поселиться в данной комнате.",
+        "not_enough_places_on_accept": "К сожалению, в данной комнате не осталось свободных мест.",
+        "cannot_be_invited_to_room_type_on_accept": "К сожалению, у Вас выбран тип взноса, который не позволяет поселиться в данной комнате."
+      }
+    }
+  },
+  "fraym_model": {
+    "object_name": "заявку",
+    "object_messages": [
+      "Заявка успешно подана.",
+      "Заявка изменена.",
+      "Заявка удалена."
+    ],
+    "elements": {
+      "project_id": {
+        "shownName": "Проект"
+      },
+      "project_id_myapplication": {
+        "shownName": "Проект"
+      },
+      "team_application_myapplication": {
+        "shownName": "Тип",
+        "values": [
+          [
+            "0",
+            "индивидуальная"
+          ],
+          [
+            "1",
+            "командная"
+          ]
+        ]
+      },
+      "money_provided": {
+        "helpText": null
+      },
+      "rooms_selector": {
+        "helpText": null
+      },
+      "sorter": {
+        "shownName": "Название"
+      },
+      "project_character_id": {
+        "helpText": null
+      },
+      "user_requested_project_group_ids": {
+        "shownName": "Запрошенные группы"
+      },
+      "qrpg_key": {
+        "helpText": null
+      },
+      "players_bank_values": {
+        "helpText": null
+      }
+    }
+  }
+}

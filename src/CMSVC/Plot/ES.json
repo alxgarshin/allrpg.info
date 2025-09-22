@@ -1,0 +1,90 @@
+{
+  "global": {
+    "plot": "Trama",
+    "for": "Para",
+    "too_many": "demasiados",
+    "visible_to": "visto por%s: ",
+    "global_story": "historia global",
+    "global_story_2": "historia global",
+    "deleted_character": "personaje eliminado",
+    "deleted_character_2": "personaje eliminado",
+    "deleted_application": "aplicación eliminada",
+    "deleted_application_2": "aplicación eliminada",
+    "deleted_group": "grupo eliminado",
+    "deleted_group_2": "grupo eliminado",
+    "hidden_plot_participant": "el jugador no sabe con quién está conectado por la trama",
+    "will_see_when_accepted": "el jugador lo verá cuando se acepte la solicitud",
+    "plot_not_ready": "Hay tareas pendientes, no visibles para jugadores",
+    "about": "sobre",
+    "hidden_about": "Objetivo de la trama desconocido",
+    "character": "Personaje",
+    "player": "Jugador",
+    "character_name": "Nombre del personaje",
+    "story": "historia",
+    "not_ready": "trama no lista",
+    "story_not_ready": "historia no lista",
+    "global_story_5fieldtree": "Historia global",
+    "title_character": "personaje",
+    "title_group": "grupo",
+    "title_application": "aplicación",
+    "nothing_found": "No se encontró nada. Por favor, introduce 3 o más símbolos o un ID.",
+    "about_character_not_see": "Tramas sobre el personaje (no visibles para el jugador): <b>%s<\/b>",
+    "details": "más detalles",
+    "counter_personal": "trama personal",
+    "counter_group": "trama de grupo",
+    "counter_not_ready": "no está listo, no es visible",
+    "counter_about": "sobre el personaje"
+  },
+  "fraym_model": {
+    "object_name": "historia",
+    "object_messages": [
+      "Historia creada correctamente.",
+      "Historia modificada correctamente.",
+      "Historia eliminada correctamente.",
+      "Historia y todas sus tramas se eliminaron correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título",
+        "helpText": "solo para gamemasters."
+      },
+      "responsible_gamemaster_id": {
+        "shownName": "Maestro de juego responsable"
+      },
+      "search_groups_by_name": {
+        "shownName": "Buscar grupos por usuario \/ aplicación \/ personaje"
+      },
+      "search_groups_by_name_default_application": {
+        "shownName": ""
+      },
+      "search_groups_by_name_default_character": {
+        "shownName": ""
+      },
+      "project_character_ids": {
+        "shownName": "Grupos de historia",
+        "helpText": "Puedes configurar la lista de grupos de personajes en la sección «<a href=\"\/group\/\">Lista de grupos<\/a>»."
+      },
+      "description": {
+        "shownName": "Descripción",
+        "helpText": "Solo para maestros de juego."
+      },
+      "code": {
+        "shownName": "Mostrar orden",
+        "helpText": "Cuanto mayor sea el número, más temprano se mostrará la información en la lista de historias."
+      },
+      "todo": {
+        "shownName": "Tareas pendientes en la historia",
+        "helpText": "Si hay texto, la historia se oculta a los jugadores."
+      },
+      "plots": {
+        "shownName": "Tramas"
+      },
+      "plots_data": {
+        "shownName": "Lista completa de tramas"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

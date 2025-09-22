@@ -1,0 +1,60 @@
+{
+  "global": {
+    "title": "Бюджет",
+    "total": "Итого план затрат",
+    "total10": "+10%",
+    "player_count": "Количество игроков",
+    "recommended": "Рекоменд. взнос (+20%)",
+    "set": "Установлен минимум",
+    "overdraft": "На перерасход",
+    "paid": "Сдано взносов",
+    "paid_application": "по полю «Оплачено» в заявках",
+    "comission": "Комиссия и налоги",
+    "not_paid": "Еще должны взносов",
+    "needed": "Не хватает со взносов",
+    "spent": "Потрачено",
+    "remaining": "Осталось",
+    "from_fee": "Из взносов",
+    "options": "Управление",
+    "nullify_fees": "сбросить все взносы"
+  },
+  "fraym_model": {
+    "object_name": "позицию",
+    "object_messages": [
+      "Позиция успешно добавлена.",
+      "Позиции успешно изменены",
+      "Позиция успешно удалена."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Название"
+      },
+      "price": {
+        "shownName": "Цена"
+      },
+      "quantity_needed": {
+        "shownName": "Надо"
+      },
+      "quantity": {
+        "shownName": "Оплачено"
+      },
+      "description": {
+        "shownName": "Комментарий"
+      },
+      "responsible_id": {
+        "shownName": "Ответственный"
+      },
+      "bought_by": {
+        "shownName": "За свой счет"
+      },
+      "distributed_item": {
+        "shownName": "<span class=\"sbi sbi-hand-stop\"><\/span>",
+        "helpText": "раздаточный материал."
+      },
+      "is_category": {
+        "shownName": "<span class=\"sbi sbi-folder\"><\/span>",
+        "helpText": "это категория."
+      }
+    }
+  }
+}

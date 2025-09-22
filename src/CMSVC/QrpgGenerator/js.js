@@ -1,0 +1,5 @@
+/** QPRG-генератор */
+
+if (withDocumentEvents) {
+
+}

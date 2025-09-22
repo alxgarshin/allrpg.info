@@ -1,0 +1,6 @@
+div.maincontent_data.autocreated form#form_ruling_question_edit div[id^="field_code"],
+div.maincontent_data.autocreated form#form_ruling_question_edit div[id^="field_obj_helper_1"] {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}

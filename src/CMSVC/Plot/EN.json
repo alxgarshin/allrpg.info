@@ -1,0 +1,90 @@
+{
+  "global": {
+    "plot": "Plot",
+    "for": "For",
+    "too_many": "too many",
+    "visible_to": "seen by%s: ",
+    "global_story": "global story",
+    "global_story_2": "global story",
+    "deleted_character": "deleted character",
+    "deleted_character_2": "deleted character",
+    "deleted_application": "deleted application",
+    "deleted_application_2": "deleted application",
+    "deleted_group": "deleted group",
+    "deleted_group_2": "deleted group",
+    "hidden_plot_participant": "player doesn't know whom to he or she is connected by plot",
+    "will_see_when_accepted": "player will see it when application is accepted",
+    "plot_not_ready": "todos present, not visible to players",
+    "about": "about",
+    "hidden_about": "Plot target unknown",
+    "character": "Character",
+    "player": "Player",
+    "character_name": "Character name",
+    "story": "story",
+    "not_ready": "plot not ready",
+    "story_not_ready": "story not ready",
+    "global_story_5fieldtree": "Global story",
+    "title_character": "character",
+    "title_group": "group",
+    "title_application": "application",
+    "nothing_found": "Nothing was found. Please, enter 3+ symbols or an id.",
+    "about_character_not_see": "Plots <b>about<\/b> the character (not visible to player): <b>%s<\/b>",
+    "details": "more details",
+    "counter_personal": "personal plot",
+    "counter_group": "group plot",
+    "counter_not_ready": "not ready, not visible",
+    "counter_about": "about the character"
+  },
+  "fraym_model": {
+    "object_name": "story",
+    "object_messages": [
+      "Story created successfully.",
+      "Story changed successfully.",
+      "Story deleted successfully.",
+      "Story and all of its' plots were deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title",
+        "helpText": "for gamemasters only."
+      },
+      "responsible_gamemaster_id": {
+        "shownName": "Responsible gamemaster"
+      },
+      "search_groups_by_name": {
+        "shownName": "Search groups by user \/ application \/ character"
+      },
+      "search_groups_by_name_default_application": {
+        "shownName": ""
+      },
+      "search_groups_by_name_default_character": {
+        "shownName": ""
+      },
+      "project_character_ids": {
+        "shownName": "Story groups",
+        "helpText": "you can set up characters groups list in «<a href=\"\/group\/\">Groups list<\/a>» section."
+      },
+      "description": {
+        "shownName": "Description",
+        "helpText": "for gamemasters only."
+      },
+      "code": {
+        "shownName": "Show order",
+        "helpText": "the more the number the earlier information is shown in stories list."
+      },
+      "todo": {
+        "shownName": "ToDo in story",
+        "helpText": "if any text is present, story is hidden from players."
+      },
+      "plots": {
+        "shownName": "Plots"
+      },
+      "plots_data": {
+        "shownName": "Full plots list"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

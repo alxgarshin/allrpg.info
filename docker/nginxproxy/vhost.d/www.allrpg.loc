@@ -1,0 +1,70 @@
+fastcgi_buffers 16 32k;
+fastcgi_buffer_size 64k;
+fastcgi_busy_buffers_size 64k;
+
+# Security headers
+add_header X-Permitted-Cross-Domain-Policies "none";
+add_header X-XSS-Protection "1; mode=block";
+add_header X-Frame-Options "DENY";
+
+# Hide PHP headers
+fastcgi_hide_header X-Powered-By;
+fastcgi_hide_header X-CF-Powered-By;
+
+# UTF-8
+#charset UTF-8;
+
+# PHP settings
+fastcgi_param PHP_VALUE "default_charset=utf-8;\n request_order=GP;\n max_input_vars=10000;";
+
+# Supress errors on screen
+#fastcgi_param PHP_FLAG "display_startup_errors=off;\n display_errors=off;\n html_errors=off;";
+#fastcgi_param PHP_VALUE "docref_root=0;\n docref_ext=0;";
+
+location ~ \.php$ {
+    root /var/www/public;
+
+    include fastcgi_params;
+    fastcgi_pass allrpg.loc;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+}
+
+location ~ ^/thumbnails/uploads/ {
+    rewrite ^/thumbnails/uploads/(.*)/(.*)$ /uploads/download.php?path=$1&name=$2&thumbnail=true last;
+}
+
+location ~ ^/uploads/ {
+    rewrite ^/uploads/(.*)/(.*)$ /uploads/download.php?path=$1&name=$2 last;
+    rewrite ^/uploads/$ /uploads/index.php?$args last;
+}
+
+location ~ ^/scripts/ {
+    rewrite ^/scripts/(.*?)/(.*)$ /scripts/index.php?path=$1&$2&$args last;
+}
+
+location = / {
+    try_files $uri $uri/ @rules;
+}
+
+location ~ ^/ {
+    alias /var/html/allrpg;
+    #add_header X-uri "document_root: $document_root, request_uri: $request_uri" always;
+    try_files $uri $uri/ @rules;
+}
+
+location @rules {
+    rewrite ^/vendor/fraym/cmsvc/(.*).js$ /vendor/fraym/cmsvc/js.php?kind=$1&$args last;
+    rewrite ^/vendor/fraym/cmsvc/(.*).css$ /vendor/fraym/cmsvc/css.php?kind=$1&$args last;
+    rewrite ^/roles/(.*)/(.*)/(.*)/$ /index.php?kind=roles&id=$1&obj_type=$2&obj_id=$3&$args last;
+    rewrite ^/roles/(.*)/(.*)/(.*)$ /index.php?kind=roles&id=$1&obj_type=$2&obj_id=$3&$args last;
+    rewrite ^/roles/([0-9]+)$ /index.php?kind=roles&id=$1 last;
+    rewrite ^/oauth2callback/$ /index.php?kind=oauth2callback&$args last;
+    rewrite ^/(.*)/(.*)/(.*)/(.*)/(.*)$ /index.php?kind=$1&bid=$2&cmsvc=$3&id=$4&$5&$args last;
+    rewrite ^/(.*)/(.*)/(.*)/(.*)$ /index.php?kind=$1&cmsvc=$2&id=$3&$4&$args last;
+    rewrite ^/(.*)/(.*)/(.*)/$ /index.php?kind=$1&cmsvc=$2&id=$3&$args last;
+    rewrite ^/(.*)/(.*)/act=add(.*)$ /index.php?kind=$1&cmsvc=$2&act=add&$3&$args last;
+    rewrite ^/(.*)/(.*)/(.*)$ /index.php?kind=$1&id=$2&$3&$args last;
+    rewrite ^/(.*)/(.*)/$ /index.php?kind=$1&cmsvc=$1&id=$2 last;
+    rewrite ^/(.*)/(.*)$ /index.php?kind=$1&$2&$args last;
+    rewrite ^/(.*)$ /index.php?$1 last;
+}

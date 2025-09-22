@@ -1,0 +1,90 @@
+{
+  "global": {
+    "plot": "Завязка",
+    "for": "Для",
+    "too_many": "слишком многих",
+    "visible_to": "ее видят%s: ",
+    "global_story": "глобального сюжета",
+    "global_story_2": "глобальный сюжет",
+    "deleted_character": "удаленного персонажа",
+    "deleted_character_2": "удаленного персонажа",
+    "deleted_application": "удаленной заявки",
+    "deleted_application_2": "удаленную заявку",
+    "deleted_group": "удаленной группы",
+    "deleted_group_2": "удаленную группу",
+    "hidden_plot_participant": "игрок не знает, на кого конкретно у него данная завязка",
+    "will_see_when_accepted": "увидит, как только заявка будет принята",
+    "plot_not_ready": "не доделан, не виден игрокам",
+    "about": "про",
+    "hidden_about": "кого-то скрытого",
+    "character": "Персонаж",
+    "player": "Игрок",
+    "character_name": "Имя",
+    "story": "сюжет",
+    "not_ready": "завязка не готова",
+    "story_not_ready": "сюжет не готов",
+    "global_story_5fieldtree": "Глобальный сюжет",
+    "title_character": "персонаж",
+    "title_group": "группа",
+    "title_application": "заявка",
+    "nothing_found": "Ничего не найдено. Введите 3+ символа или id.",
+    "about_character_not_see": "Завязки <b>про<\/b> персонажа (не видны игроку): <b>%s<\/b>",
+    "details": "подробнее",
+    "counter_personal": "персональные завязки",
+    "counter_group": "групповые завязки",
+    "counter_not_ready": "не доделано, не видно",
+    "counter_about": "про персонажа"
+  },
+  "fraym_model": {
+    "object_name": "сюжет",
+    "object_messages": [
+      "Сюжет добавлен.",
+      "Сюжет изменен.",
+      "Сюжет удален.",
+      "Сюжет и все завязки в нем удалены."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Название сюжета",
+        "helpText": "только для мастеров"
+      },
+      "responsible_gamemaster_id": {
+        "shownName": "Ответственный мастер"
+      },
+      "search_groups_by_name": {
+        "shownName": "Поиск групп по игроку \/ заявке \/ персонажу"
+      },
+      "search_groups_by_name_default_application": {
+        "shownName": ""
+      },
+      "search_groups_by_name_default_character": {
+        "shownName": ""
+      },
+      "project_character_ids": {
+        "shownName": "Группы сюжета",
+        "helpText": "группы персонажей можно настроить в разделе «<a href=\"\/group\/\">Группы персонажей<\/a>»."
+      },
+      "description": {
+        "shownName": "Описание сюжета",
+        "helpText": "только для мастеров."
+      },
+      "code": {
+        "shownName": "Очередность вывода",
+        "helpText": "чем выше цифра, тем раньше будет информация в списке загрузов."
+      },
+      "todo": {
+        "shownName": "Что необходимо доделать в сюжете?",
+        "helpText": "если здесь есть хоть какой-то текст, сюжет и все его завязки выводиться не будут."
+      },
+      "plots": {
+        "shownName": "Завязки"
+      },
+      "plots_data": {
+        "shownName": "Полный список завязок"
+      },
+      "updated_at": {
+        "shownName": "Последнее изменение"
+      }
+    }
+  }
+}

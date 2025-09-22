@@ -1,0 +1,123 @@
+{
+  "global": {
+    "add_application": "Nueva solicitud",
+    "provide_payment": "Reportar pago",
+    "provide_payment2": "Pagar \/ Reportar pago",
+    "yk_description": "Pago de la solicitud n.° %s",
+    "paw_description": "Pago de la solicitud n.° %s",
+    "pm_description": "Pago de la solicitud n.° %s",
+    "pk_description": "Pago de la solicitud n.° %s",
+    "payment": "Pago",
+    "fee_payment": "Pago de la tarifa",
+    "group_request": "Por favor, agrégueme al grupo: %s",
+    "comments": "Comentarios",
+    "change_comments_order": "En orden de calendario",
+    "title": "Mis solicitudes",
+    "conversation_text": "Comentario",
+    "conversation_sub_obj_types": [
+      [
+        "{from_player}",
+        "to Gamemasters"
+      ]
+    ],
+    "titles_conversation_sub_obj_types": {
+      "to_player": "para ti",
+      "from_player": "para Gamemasters"
+    },
+    "show_all_conversations": "mostrar más comentarios",
+    "switch_to_deleted": "aplicaciones eliminadas",
+    "switch_to_all": "todas las aplicaciones",
+    "changes_history": "historial de cambios",
+    "back_to_application": "volver a la aplicación",
+    "prev_change": "anterior",
+    "next_change": "posterior",
+    "send_individual_application": "Solicitud personal",
+    "send_team_application": "Solicitud de equipo",
+    "sent_applications": "Lista de aplicaciones",
+    "roles_list": "Lista de roles",
+    "website": "Sitio web",
+    "project": "Proyecto",
+    "ingame": "módulo del jugador",
+    "accept_application": "Aceptar solicitud",
+    "decline_application": "Rechazar solicitud",
+    "to_comments": "A comentarios",
+    "check_contacts": "Por favor, revise sus contactos",
+    "messages": {
+      "payment_provided_successfully": "Gracias por su informe de pago",
+      "paykeeper": {
+        "token_error": "Error de token",
+        "invoice_id_error": "Error de ID de factura."
+      },
+      "application_deleted_by_gamemaster": "La solicitud fue eliminada por gamemasters.",
+      "application_create_to_gamemasters_subject": "El usuario «%s» solicitó «%s» al proyecto «%s»",
+      "application_create_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> fue proporcionada por el usuario <a href=\"%speople\/%s\/\">«%s»<\/a>.",
+      "application_change_to_gamemasters_subject": "El participante cambió la solicitud «%s» en el proyecto «%s»",
+      "application_change_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%speople\/%s\/\">«%s»<\/a> ha sido modificada por el participante.",
+      "field_changed": " (modificado)",
+      "application_deleted_success": "La solicitud se eliminó correctamente de la lista de solicitudes y se notificó a los gamemasters por correo electrónico.",
+      "application_delete_to_gamemasters_subject": "El participante eliminó la solicitud «%s» del proyecto «%s»",
+      "application_delete_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%speople\/%s\/\">«%s»<\/a> ha sido eliminado por un participante.",
+      "oneorderfromplayer": "Los Gamemasters no permiten solicitar más de una vez a este proyecto.",
+      "gamemasters_offer_application": "Los Gamemasters te ofrecen esta solicitud.",
+      "application_accepted": "Has aceptado la solicitud.",
+      "application_declined": "Has rechazado la solicitud.",
+      "add_neighboor_request": {
+        "not_your_room": "Has cambiado de sala, pero no has guardado los cambios. Guarda la solicitud antes de invitar a alguien a compartir la sala.",
+        "not_enough_places": "Lamentablemente, no quedan plazas libres en tu sala.",
+        "cannot_be_invited_to_room_type": "Lamentablemente, este usuario ha seleccionado un tipo de tarifa incompatible con el tipo de acuerdo actual.",
+        "not_enough_places_on_accept": "Lamentablemente, no quedan plazas libres en esta sala.",
+        "cannot_be_invited_to_room_type_on_accept": "Lamentablemente, ha seleccionado un tipo de tarifa incompatible con este tipo de liquidación."
+      }
+    }
+  },
+  "fraym_model": {
+    "object_name": "application",
+    "object_messages": [
+      "Solicitud creada correctamente.",
+      "Solicitud modificada correctamente.",
+      "Solicitud eliminada correctamente."
+    ],
+    "elementos": {
+      "project_id": {
+        "shownName": "Proyecto"
+      },
+      "project_id_myapplication": {
+        "shownName": "Proyecto"
+      },
+      "team_application_myapplication": {
+        "shownName": "Tipo",
+        "values": [
+          [
+            "0",
+            "personal"
+          ],
+          [
+            "1",
+            "equipo"
+          ]
+        ]
+      },
+      "money_provided": {
+        "helpText": null
+      },
+      "rooms_selector": {
+        "helpText": null
+      },
+      "sorter": {
+        "shownName": "Título"
+      },
+      "project_character_id": {
+        "helpText": null
+      },
+      "user_requested_project_group_ids": {
+        "shownName": "Grupos solicitados"
+      },
+      "qrpg_key": {
+        "helpText": null
+      },
+      "players_bank_values": {
+        "Texto_de_ayuda": null
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+div.csvimport h2 {
+    padding: .5em 0;
+}
+
+div.csvimport ul {
+    margin-left: 1.5em;
+    padding: .5em 0;
+}
+
+div.csvimport input[type="file"] {
+    font-size: 1em;
+}
+
+div.csvimport form {
+    padding: .5em 0;
+}
+
+div.csvimport div.csv_data div.csv_data_error,
+div.csvimport div.csv_data div.csv_data_error a {
+    color: red;
+}
+
+div.csvimport div.csv_data div.csv_data_success,
+div.csvimport div.csv_data div.csv_data_success a {
+    color: green;
+}
+
+div.csvimport div.fieldvalue {
+    padding-left: 0;
+}
+
+div.csvimport div.uploaded_file {
+    display: none;
+}
+
+@media only screen and (max-device-width: 767px) {
+    div.csvimport {
+        font-size: 1.2em;
+    }
+
+    form#form_import_characters div.field,
+    form#form_import_characters div.fieldvalue,
+    form#form_import_applications div.field,
+    form#form_import_applications div.fieldvalue {
+        font-size: 1em;
+    }
+}

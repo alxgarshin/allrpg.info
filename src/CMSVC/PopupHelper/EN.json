@@ -1,0 +1,18 @@
+{
+  "global": {
+    "title": ""
+  },
+  "fraym_model": {
+    "object_name": "",
+    "object_messages": [
+      "",
+      "",
+      ""
+    ],
+    "elements": {
+      "name": {
+        "shownName": ""
+      }
+    }
+  }
+}

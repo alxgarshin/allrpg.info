@@ -1,0 +1,367 @@
+{
+  "global": {
+    "title": "Proyectos",
+    "search": "Buscar por nombre de proyecto o anotación",
+    "author": "Autor",
+    "was_registered": "Creado",
+    "my_projects": "Mis proyectos",
+    "past_projects": "Proyectos completados",
+    "all_projects": "Todos los proyectos",
+    "found_projects": "Resultados de la búsqueda de proyectos",
+    "search_by_name_or_annotation": "Buscar por nombre de proyecto o anotación",
+    "management_of_template_based_on_project": "Administración de plantillas basadas en proyectos",
+    "remove_template": "Eliminar plantilla",
+    "make_a_template": "Crear una plantilla",
+    "available_to_all_portal_users": "Disponible para otros usuarios",
+    "available_to_me_only": "Disponible solo para mí",
+    "additional_template_text": "A partir de ahora al crear un nuevo proyecto, usted o cualquier otro usuario (según su elección previa) podrán usar la estructura de tareas de este proyecto como base para uno nuevo.",
+    "modal_header_project_resources": "Recursos del proyecto",
+    "modal_header_project_members": "Participantes del proyecto",
+    "modal_group_admin": "Autor",
+    "modal_group_admin_first_letter": "Autor",
+    "modal_group_member": "Miembros",
+    "modal_group_member_first_letter": "M",
+    "modal_group_management": "Maestro de juego",
+    "modal_group_management_first_letter": "Maestro de juego",
+    "modal_group_technology": "Noticias",
+    "modal_group_technology_first_letter": "Noticias",
+    "modal_group_business": "Presupuesto",
+    "modal_group_business_first_letter": "Presupuesto",
+    "modal_group_fee": "Cuota",
+    "modal_group_fee_first_letter": "Tarifa",
+    "edit_project": "Editar proyecto",
+    "invite_to_project": "Invitar a un amigo",
+    "switch_status_to_off": "Cerrar aplicación",
+    "switch_status_to_on": "Abrir aplicación",
+    "add_task": "Añadir una tarea",
+    "add_event": "Añadir un evento",
+    "add_project": "Añadir un proyecto",
+    "open_template": "Abrir plantilla",
+    "closed_template": "Plantilla cerrada",
+    "make_template": "Crear una plantilla",
+    "create_project_chat": "Crear una conversación de proyecto",
+    "open_project_chat": "Abrir conversación de proyecto",
+    "create_foresight_map": "Crear un mapa de previsión",
+    "edit_foresight_map": "Editar mapa de previsión",
+    "show_qr_code": "Mostrar código QR",
+    "calendar_event": "Evento en el calendario",
+    "leave_project": "Abandonar el proyecto",
+    "access_request_sent": "Solicitud enviada",
+    "request_access": "Solicitar participación",
+    "get_access": "Unirse al proyecto",
+    "view_application": "Mi solicitud",
+    "send_application": "Solicitud personal",
+    "send_team_application": "Solicitud de equipo",
+    "roles_list": "Lista de roles",
+    "edit_project_capitalized": "Editar proyecto",
+    "members_management_capitalized": "Administrar derechos",
+    "today": "Hoy",
+    "past_events": "Eventos pasados",
+    "future_events": "Próximos eventos",
+    "tasks": "Tareas",
+    "tasks_mine": "Responsable",
+    "tasks_membered": "Miembro",
+    "tasks_notmembered": "Otros",
+    "tasks_delayed": "Suspendido",
+    "tasks_all": "Todo",
+    "tasks_closed": "Cerrado",
+    "task_priority": "Prioridad",
+    "task_dates": "Fecha de vencimiento",
+    "task_name": "Nombre",
+    "task_responsible": "Responsable",
+    "task_members": "Participantes",
+    "task_status": "Estado",
+    "task_closed": "Cerrado",
+    "task_result": "Resultado",
+    "task_status_hot": "urgente",
+    "task_status_current": "actual",
+    "task_status_future": "futuro",
+    "task_new_status_overdue": "Vencido",
+    "task_new_status_today": "Hoy",
+    "task_new_status_tomorrow": "Mañana",
+    "task_new_status_later": "Más tarde",
+    "task_new_status_no_date": "Fecha no establecida",
+    "foresight_map": "Mapa de previsión",
+    "calendar": "Calendario",
+    "calendar_today": "hoy",
+    "calendar_hours": "horas",
+    "calendar_days": "días",
+    "calendar_months": "meses",
+    "calendar_import": "importar",
+    "calendar_google_authorize_for_import": "Autorizar a Google a transferir eventos desde Google Calendar",
+    "tasks_google_authorize_for_import": "Autorizar a Google a transferir eventos desde Google Tasks",
+    "ical_link": "Enlazar a tu calendario en formato iCal",
+    "create_project_while_updating_google_tasks": "Crear un proyecto con el mismo nombre e importar tareas allí",
+    "budget_info": "Cuotas pagadas",
+    "budget_info_no_info": "Para mostrar información aquí, Por favor, complete las <a href=\"\/fee\/\">cuotas<\/a> y proporcione un recuento de jugadores planificado en la <a href=\"act=edit\">configuración del proyecto<\/a>.",
+    "conversations": "Conversaciones",
+    "group_authors": "Autores",
+    "group_management": "Gamemasters",
+    "group_technology": "Noticias",
+    "group_business": "Emprendimiento",
+    "group_members": "Miembros",
+    "create_conversation": "Crear un tema",
+    "conversation_text": "Texto de la conversación",
+    "members": "Miembros del proyecto",
+    "members_alt": "Derechos de los miembros",
+    "documents": "Documentos",
+    "documents_project": "Proyecto",
+    "documents_tasks": "Tarea",
+    "documents_events": "Eventos",
+    "documents_upload": "Subir",
+    "documents_add_link": "Añadir un enlace",
+    "help": "Ayuda al proyecto",
+    "help_requests": "Solicitudes",
+    "help_offers": "Ofertas",
+    "help_resources": "Recursos",
+    "help_request_new": "Nuevo",
+    "help_request_enter_text": "Escribe un texto",
+    "contact_author": "Escribe al autor",
+    "help_offer_new": "Nuevo",
+    "help_offer_enter_text": "Introduce texto",
+    "resources_edit": "Editar",
+    "wall": "El muro",
+    "wall_input_text": "Introduce texto",
+    "show_previous": "Mostrar anterior",
+    "goto": "Abrir en una nueva ventana",
+    "messages": {
+      "character": "Personaje",
+      "character_name": "Nombre del personaje",
+      "successfully_joined": "Te has unido al proyecto correctamente.",
+      "closed_project_join_only_by_invitation": "Para unirte a un proyecto cerrado necesitas una invitación.",
+      "closed_templates_label_capitalized": "CERRADO",
+      "open_templates_label_capitalized": "ABIERTO",
+      "none_available_template": "No hay ninguna plantilla abierta o cerrada disponible.",
+      "no_template_specified": "No se ha especificado ninguna plantilla.",
+      "new_project_name_not_specified": "No se ha especificado el nombre del proyecto.",
+      "new_project_date_not_specified": "No se ha especificado la fecha de inicio del proyecto.",
+      "project_successfully_duplicated": "Proyecto duplicado correctamente.",
+      "bad_input_data": "Datos de entrada incorrectos.",
+      "get_access_word": "Proyecto",
+      "successfully_left_project": "Has abandonado el proyecto correctamente.",
+      "error_deleting_rights": "Error al eliminar los derechos de acceso al proyecto.",
+      "calendar_successfully_imported": "El calendario se importó correctamente.",
+      "no_connection_to_google": "No se puede conectar a los servidores de Google. Por favor, verifique la conexión y vuelva a intentarlo.",
+      "open_template_created_successfully": "Plantilla abierta creada correctamente.",
+      "personal_template_created_successfully": "Plantilla personal creada correctamente.",
+      "template_deleted_successfully": "Plantilla eliminada correctamente.",
+      "personal_project": "Proyecto personal.",
+      "no_matching_calendar_event_found": "No se encontró un evento con el mismo nombre y fechas en el calendario <a href=\"\/calendar_event\/act=add&project_id=%s\">Por favor, añádalo aquí<\/a>.",
+      "project_status_on": "La solicitud está abierta.",
+      "project_status_off": "La solicitud está cerrada."
+    }
+  },
+  "fraym_model": {
+    "object_name": "proyecto",
+    "object_messages": [
+      "Proyecto creado correctamente.",
+      "Proyecto modificado correctamente.",
+      "Proyecto eliminado correctamente."
+    ],
+    "elements": {
+      "h1_2": {
+        "shownName": "General"
+      },
+      "type": {
+        "shownName": "Tipo",
+        "values": [
+          [
+            "{open}",
+            "open"
+          ],
+          [
+            "{close}",
+            "closed"
+          ],
+          [
+            "{request}",
+            "at request"
+          ]
+        ],
+        "helpText": "Abierto: los usuarios pueden unirse sin necesidad de solicitar nada. Cerrado: los usuarios solo pueden unirse aceptando la invitación de un miembro. A petición: los usuarios solo pueden unirse si su solicitud es aceptada."
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "communities": {
+        "shownName": "Conectado a grupos"
+      },
+      "user_id": {
+        "shownName": "Miembros"
+      },
+      "annotation": {
+        "shownName": "Descripción breve (visible para quienes aún no están en el proyecto)"
+      },
+      "description": {
+        "shownName": "Descripción completa (visible para los miembros del proyecto)"
+      },
+      "external_link": {
+        "shownName": "Sitio web"
+      },
+      "attachments": {
+        "shownName": "Logotipo del proyecto",
+        "helpText": "160 píxeles de ancho, 160 píxeles de alto."
+      },
+      "date_from": {
+        "shownName": "Fecha de inicio"
+      },
+      "date_to": {
+        "shownName": "Fecha de finalización"
+      },
+      "h1_1": {
+        "shownName": "Lista de solicitudes y roles"
+      },
+      "sorter": {
+        "shownName": "Campo de ordenación de solicitudes personales",
+        "helpText": "Todas las solicitudes personales (solo formato «Entrada de texto») se ordenarán por este campo."
+      },
+      "sorter2": {
+        "shownName": "Campo de ordenación de solicitudes de equipo",
+        "helpText": "Todas las solicitudes de equipo (solo formato «Entrada de texto») se ordenarán por este campo."
+      },
+      "show_roleslist": {
+        "shownName": "Mostrar lista de roles",
+        "values": [
+          [
+            "0",
+            "para todos"
+          ],
+          [
+            "1",
+            "solo para gamemasters"
+          ]
+        ]
+      },
+      "status": {
+        "shownName": "Sistema de solicitudes",
+        "values": [
+          [
+            "0",
+            "está cerrado"
+          ],
+          [
+            "1",
+            "está abierto"
+          ]
+        ]
+      },
+      "goto_link": {
+        "shownName": "Enlace para solicitar/verificar la solicitud actual"
+      },
+      "oneorderfromplayer": {
+        "shownName": "El usuario no puede crear más de una solicitud"
+      },
+      "showonlyacceptedroles": {
+        "shownName": "Mostrar solo las solicitudes aceptadas en la lista de solicitudes/roles"
+      },
+      "h1_3": {
+        "shownName": "Configuración financiera"
+      },
+      "money_link": {
+        "shownName": "Configuración de la comisión de participación",
+        "defaultValue": "<a href=\"\/fee\/\" target=\"_blank\">abrir en una nueva ventana<\/a>"
+      },
+      "currency": {
+        "shownName": "Moneda",
+        "values": [
+          [
+            "USD",
+            "USD"
+          ],
+          [
+            "EUR",
+            "EUR"
+          ],
+          [
+            "RUR",
+            "RUR"
+          ],
+          [
+            "UAH",
+            "UAH"
+          ]
+        ]
+      },
+      "player_count": {
+        "shownName": "Conteo de jugadores planificado"
+      },
+      "helper_before_transaction_add": {
+        "shownName": "Instrucción sobre el pago del informe del jugador Formulario"
+      },
+      "show_datetime_in_transaction": {
+        "shownName": "Mostrar el campo obligatorio «Fecha y hora de pago» en el formulario de informe de pagos"
+      },
+      "show_budget_info": {
+        "shownName": "Mostrar el contador de «Cuotas pagadas» en la página del proyecto a los miembros"
+      },
+      "h1_5": {
+        "shownName": "Configuración para el pago de cuotas con tarjeta de crédito"
+      },
+      "helper_1_pk": {
+        "defaultValue": "Por ahora, debe estar registrado como contribuyente en la Federación Rusa para recibir pagos en línea."
+      },
+      "paykeeper_login": {
+        "shownName": "Inicio de sesión de PayKeeper"
+      },
+      "paykeeper_pass": {
+        "shownName": "Contraseña de PayKeeper"
+      },
+      "paykeeper_server": {
+        "shownName": "Servidor de PayKeeper"
+      },
+      "paykeeper_seсret": {
+        "shownName": "Contraseña de PayKeeper"
+      },
+      "helper_1_pm": {
+        "defaultValue": "Por ahora, debe estar registrado como contribuyente en la Federación Rusa para recibir pagos en línea."
+      },
+      "paymaster_merchant_id": {
+        "shownName": "ID del sitio de PayMaster"
+      },
+      "paymaster_code": {
+        "shownName": "Código secreto de PayMaster"
+      },
+      "helper_1_yk": {
+        "defaultValue": "Por ahora, debe estar registrado como contribuyente en la Federación Rusa para recibir pagos en línea."
+      },
+      "yk_acc_id": {
+        "shownName": "ID de la cuenta de YooKassa"
+      },
+      "yk_code": {
+        "shownName": "Código secreto de YooKassa"
+      },
+      "helper_1_paw": {
+        "defaultValue": "Puede habilitar y configurar el pago de comisiones con tarjeta de crédito mediante PayAnyWay. Para ello, consulte la sección «<a href=\"\/payment_type\/\" target=\"_blank\">Tipos de pago<\/a>», pulse el botón «Añadir tipo de pago con tarjeta de crédito» y siga las instrucciones. Comisión de PayAnyWay por transferencias: 2,7 %. Sin otras comisiones ni suscripciones. Puede retirar su dinero en cualquier momento."
+      },
+      "paw_mnt_id": {
+        "shownName": "Número de cuenta extendido del proyecto en PayAnyWay"
+      },
+      "paw_code": {
+        "shownName": "Código de verificación de integridad de datos"
+      },
+      "h1_4": {
+        "shownName": "Adicional"
+      },
+      "access_to_childs": {
+        "shownName": "Acceso a eventos",
+        "helpText": "Si se establece el acceso gratuito, los usuarios podrán unirse a eventos sin necesidad de solicitarlo a sus autores.",
+        "values": [
+          [
+            "",
+            "solo por solicitud"
+          ],
+          [
+            "1",
+            "gratis"
+          ]
+        ]
+      },
+      "ingame_css": {
+        "shownName": "Ruta a un archivo CSS externo para el rediseño del módulo del juego"
+      },
+      "disable_taken_field": {
+        "shownName": "Ocultar el campo «Tomado» en el carácter configuración"
+      }
+    }
+  }
+}

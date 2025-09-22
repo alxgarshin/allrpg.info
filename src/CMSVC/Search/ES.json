@@ -1,0 +1,39 @@
+{
+  "global": {
+    "title": "Buscar",
+    "find": "Buscar",
+    "no_matches": "No se encontraron coincidencias",
+    "tag": "Etiqueta: ",
+    "messages": {
+      "need_more_symbols": "Se requieren más de 3 símbolos",
+      "publication_co_author": "Coautor del artículo",
+      "publication_author": "Autor del artículo",
+      "tags": "Etiquetas",
+      "publication_text": "Texto del artículo",
+      "publication": "Artículo",
+      "user": "Usuario",
+      "project": "Proyecto",
+      "project_text": "Resumen del proyecto",
+      "community": "Grupo",
+      "community_text": "Resumen del grupo",
+      "task": "Tarea",
+      "task_text": "Resumen de la tarea",
+      "event": "Evento",
+      "event_text": "Resumen del evento",
+      "calendar_event": "Evento del calendario",
+      "calendar_event_text": "Resumen del evento del calendario",
+      "area": "Área",
+      "gamemaster": "Grupo de gamemasters"
+    }
+  },
+  "fraym_model": {
+    "elements": {
+      "qwerty": {
+        "shownName": "Texto de búsqueda"
+      },
+      "region": {
+        "shownName": "Región"
+      }
+    }
+  }
+}

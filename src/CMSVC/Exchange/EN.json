@@ -1,0 +1,17 @@
+{
+  "global": {
+    "title": "Warehouse",
+    "exchange_categorys": "Categories",
+    "add_item": "Add an item",
+    "my_items": "My items",
+    "search": "Search by name or description",
+    "edit": "Edit",
+    "city": "City",
+    "publish_date": "Publish date",
+    "price_lease": "Rent price",
+    "price_buy": "Buy-off price",
+    "additional": "Important nuances",
+    "about": "What's «Warehouse»?",
+    "about_text": "«Warehouse» – LARP stuff search for gamemasters and dungeons teams. You can post offers of any kind, from selling to «will give away for kisses». You will find a category, region, name and description search below. And you can contact the «seller» immediately through the allrpg.info."
+  }
+}

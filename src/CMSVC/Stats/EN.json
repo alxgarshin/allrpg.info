@@ -1,0 +1,48 @@
+{
+  "global": {
+    "title": "Reports",
+    "stats": "Reports",
+    "filters_not_set": "Filters are not set!",
+    "types": [
+      [
+        "User",
+        "user"
+      ],
+      [
+        "Project",
+        "project"
+      ],
+      [
+        "Community",
+        "group"
+      ],
+      [
+        "Task",
+        "task"
+      ],
+      [
+        "Event",
+        "event"
+      ],
+      [
+        "PublicationsEdit",
+        "article"
+      ]
+    ],
+    "select_the_object_needed": "Select the object needed:",
+    "go_back_to_object_choice": "Select another report",
+    "nothing_found": "nothing found.",
+    "filter": "Find",
+    "reset_filter": "Reset",
+    "name": "Name",
+    "author": "Author",
+    "created_at": "Created at",
+    "total": "Total: ",
+    "show_all_on_one_page": "Show all objects on one page",
+    "export_to_excel": "Export all objects to Excel",
+    "messages": {
+      "communities_and_projects_not_filled": "Please, select at least one project or group.",
+      "competences_not_filled": "Please, select at least one competence."
+    }
+  }
+}

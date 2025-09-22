@@ -1,0 +1,63 @@
+a.geoposition_map_center {
+    font-size: .9em;
+    margin-top: 1em;
+    text-align: right;
+    display: none;
+}
+
+a.geoposition_map_center.shown {
+    display: block;
+}
+
+div.geoposition_map {
+    width: 100%;
+    height: 40em;
+    margin-top: 2em;
+    border-radius: .7em;
+}
+
+div.geoposition_map_overlay {
+    background-color: var(--color-background-main);
+    padding: 2em;
+    border-radius: .7em;
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: 25em;
+    min-height: 5em;
+    right: 0;
+    top: 0;
+}
+
+div.geoposition_map_overlay.shown {
+    display: block;
+}
+
+div.geoposition_map_overlay div.geoposition_map_overlay_name {
+    font-weight: bold;
+}
+
+div.geoposition_map_overlay div.photoName {
+    width: 3em;
+    float: right;
+    margin-left: .5em;
+}
+
+div.geoposition_map_overlay div.geoposition_map_overlay_content {
+    padding-top: .7em;
+}
+
+div.geoposition_map_overlay div.geoposition_map_overlay_content div {
+    font-size: .9em;
+    line-height: 1.2em;
+    margin-bottom: .5em;
+}
+
+div.geoposition_map_overlay div.geoposition_map_overlay_content div:last-of-type {
+    margin-bottom: 0;
+}
+
+div.geoposition_map_overlay div.geoposition_map_overlay_content div span {
+    font-weight: bold;
+    margin-right: .5em;
+}

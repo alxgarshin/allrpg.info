@@ -1,0 +1,22 @@
+{
+  "global": {
+    "title": "Ruling",
+    "management": "Gestión",
+    "generate_rules": "Generar reglas",
+    "discuss_items": "Leer y debatir fragmentos de reglas",
+    "view_all": "Ver todo",
+    "view_10": "Ver la vista normal",
+    "search": "Buscar por título y contenido",
+    "generate": "Generar",
+    "about": "¿Qué es «Ruling»?",
+    "about_text": "«Ruling» permite a los grupos de gamemasters encontrar y compilar una plantilla para las reglas de su proyecto. ¿Cómo funciona? Por favor, completa la encuesta a continuación y haz clic en el botón «Generar». Recibirás el resultado inmediatamente.<br><br>\r\nEstamos intentando incluir tantos modelos de reglas en «Ruling» como sea posible y, si quieres ayudar, puedes: 1) <a href=\"\/community\/1\/#conversation_200612\" target=\"_blank\">Envíanos<\/a> un modelo faltante; 2) <a href=\"\/ruling\/view_all=1\">Lee y comenta los modelos presentados<\/a>; 3) Propón tu propia pregunta o respuesta en uno existente para el generador.",
+    "injection": "El modelo «<a href=\"\/ruling\/%s\/\">%s<\/a>» se mostrará aquí si %s.",
+    "answer_to_question": "Se da la respuesta «%s» a la pregunta «%s»",
+    "will_be_shown": "El modelo se mostrará en el generador si:",
+    "will_be_shown_in": "El modelo se mostrará dentro de:",
+    "in_item": "El modelo «<a href=\"\/ruling\/%s\/\">%s<\/a>» si ",
+    "generation_link": "Enlace a este conjunto de reglas",
+    "conversation": "La discusión del modelo"
+  },
+  "fraym_model": {}
+}

@@ -1,0 +1,45 @@
+.*/
+!/.gitignore
+/.gitconfig
+/.bash_history
+/.rnd
+
+/.env.dev
+/.env.prod
+/.env.stage
+/public/apple_certs/
+/public/.well-known/
+/var
+/vendor
+
+Thumbs.db
+**/.DS_Store
+Исходники/
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+public/uploads/*
+!public/uploads/*/.gitkeep
+!public/uploads/*/thumbnail/.gitkeep
+!public/uploads/users/none_female.png
+!public/uploads/users/none_male.png
+!public/uploads/download.php
+!public/uploads/index.php
+!public/uploads/special/social_network_logo.png
+!public/uploads/special/id1.webp
+
+###> docker ###
+/docker/db/data/
+/docker/db/dump/**
+!/docker/db/dump/.gitkeep
+/docker/nginxproxy/vhost.d/allrpg.info
+/docker/nginxproxy/vhost.d/www.allrpg.info
+###< docker ###

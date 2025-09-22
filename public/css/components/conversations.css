@@ -1,0 +1,394 @@
+/** Обсуждения */
+div[id$="_conversation"] div.conversation_form {
+    padding: 0 0 3em 0;
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"] {
+    padding: 1em;
+    border-radius: .7em;
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"].string2 {
+    background-color: var(--underlay-gray);
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"]~div[class*="_conversation_message"] {
+    padding-top: 1em;
+}
+
+div[id$="_conversation"] div>div[class*="_conversation_message"]:first-child {
+    padding-top: 1em;
+}
+
+div[id$="_conversation"] div[class$="_conversation_count"] {
+    color: var(--placeholder);
+    float: right;
+    font-size: 1.4em;
+    vertical-align: middle;
+    height: 140%;
+}
+
+div[id$="_conversation"] div[class$="_conversation_count"] span.sbi {
+    width: 1.2em;
+    height: 1em;
+    display: inline-block;
+    margin-left: .5em;
+    background-size: contain;
+    background-image: url(/design/icon-discuss-number.svg);
+    margin-top: -.4em;
+}
+
+div[id$="_conversation"] div[class$="_conversation_count"] span.sbi svg {
+    width: 1.2em;
+    height: auto;
+    vertical-align: middle;
+}
+
+div[id$="_conversation"] div[class$="_conversation_count"] span.sbi svg .cls-1 {
+    fill: var(--gray-light);
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"] div[class*="_conversation_name"] {
+    margin-bottom: 0.5%;
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"] div[class*="_conversation_name"] a {
+    font-size: 1.2em;
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"] div[class*="_conversation_additional"] {
+    font-size: 80%;
+    color: var(--gray-soft);
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"] div[class*="_conversation_additional"] span {
+    margin-right: .5em;
+}
+
+div[id$="_conversation"] div[class*="_conversation_message"] div[class*="_conversation_additional"] span.red {
+    border-radius: .7em;
+    background-color: var(--main-red);
+    color: var(--color-background-main);
+    padding: .1em 1em;
+    vertical-align: text-top;
+}
+
+div.conversation_message_container {
+    padding: 0;
+}
+
+div.conversation_message_container hr {
+    margin-top: 0;
+}
+
+div.conversation_message {
+    padding: 3em 0;
+    display: flex;
+}
+
+div.conversation_message.bottom_border {
+    border-bottom: 1px solid var(--inputs-borders);
+}
+
+div.conversation_message.need_response div.conversation_message_content_text {
+    background: url(../../vendor/fraym/design/input-error.svg) right center no-repeat;
+    background-size: 1em;
+    padding-right: 1.5em;
+}
+
+div.conversation_message_container>div:first-of-type {
+    padding-top: 2em;
+}
+
+div.conversation_message_children_container>div.conversation_message,
+div.conversation_message_children_container>div.conversation_message_children_container {
+    padding-left: 4em;
+    margin-left: 2.5em;
+    border-left: 1px solid var(--inputs-borders);
+}
+
+div.conversation_message div.conversation_message_photo {
+    flex: 1;
+    width: 5em;
+    max-width: 5em;
+    min-width: 5em;
+}
+
+div.conversation_message div.photoName {
+    width: 100%;
+    margin: 0;
+}
+
+div.conversation_message div.photoName div.photoName_photo_wrapper {
+    width: 100%;
+    margin: 0;
+}
+
+div.conversation_message div.conversation_message_data {
+    flex: 1;
+    vertical-align: top;
+    padding-left: 1.5em;
+}
+
+div.conversation_message.child div.conversation_message_data {
+    flex: 1;
+    vertical-align: top;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.5em;
+    padding-left: 0;
+    margin-top: -3em;
+    padding-top: 3em;
+    border-top: 1px solid var(--inputs-borders);
+}
+
+div.conversation_message_children_container+div.conversation_message.child div.conversation_message_data {
+    border-top: 0;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_id {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 1.2em;
+    display: none;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_more.shown~div.conversation_message_id {
+    right: 2em;
+    display: block;
+}
+
+div.conversation_message div.conversation_message_data div.important_button {
+    margin-right: 1em;
+}
+
+div.conversation_message div.conversation_message_data div.important_button span.important_button_icon {
+    width: 1.3em;
+    height: 1.3em;
+    background-size: cover;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_more {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    width: 1.2em;
+    height: 1.2em;
+    background: url(/design/vertical_dots.svg) center center no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    display: none;
+}
+
+div.conversation_message:hover div.conversation_message_data div.conversation_message_more,
+div.conversation_message div.conversation_message_data div.conversation_message_more.shown {
+    display: block;
+}
+
+div.conversation_message.child div.conversation_message_data div.conversation_message_more {
+    top: 3.1em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_more_list {
+    display: none;
+    background: var(--underlay-gray);
+    opacity: 1;
+    padding: 1.2em 1.3em;
+    position: absolute;
+    z-index: 2;
+    box-shadow: 0 0.2em 0.8em var(--shadow-black-1);
+    border-radius: 1.3em;
+    top: 1em;
+    right: 1em;
+    min-width: 18em;
+}
+
+div.conversation_message.child div.conversation_message_data div.conversation_message_more_list {
+    top: 4em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_more_list.shown {
+    display: block;
+
+    animation: fadeIn .15s;
+    -o-animation: fadeIn .15s;
+    -ms-animation: fadeIn .15s;
+    -webkit-animation: fadeIn .15s;
+    -moz-animation: fadeIn .15s;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_more_list a {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid var(--special-gray);
+    font-size: 1em;
+    display: block;
+    line-height: 1em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_more_list a:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border: 0 !important;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_creator {
+    font-weight: bold;
+    margin-bottom: 1em;
+    order: 1;
+    font-size: 1.2em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content {
+    margin-bottom: 1em;
+    overflow-wrap: break-word;
+    text-align: justify;
+    order: 5;
+    font-size: 1.2em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content.unread {
+    background-color: rgba(241, 241, 241, 1);
+    animation: unread_fade 5s forwards;
+}
+
+@keyframes unread_fade {
+    from {
+        background-color: rgba(241, 241, 241, 1);
+    }
+
+    to {
+        background-color: rgba(241, 241, 241, 0);
+    }
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote {
+    margin-top: 1%;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice {
+    font-size: 90%;
+    margin-top: .3em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice_made {
+    font-size: 90%;
+    margin-top: .5em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice_made div.conversation_message_vote_choice_made_bar {
+    padding: 0 0;
+    background-color: var(--inputs-borders);
+    height: 1.5em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice_made div.conversation_message_vote_choice_made_bar_count {
+    width: 94%;
+    text-align: center;
+    border-left: 1px solid var(--inputs-borders);
+    border-right: 1px solid var(--inputs-borders);
+    margin-top: -1.45em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice_made div.conversation_message_vote_choice_made_percent {
+    font-weight: bold;
+    float: right;
+    width: 5%;
+    text-align: left;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice .inputradio+label {
+    padding-left: 1.5em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice .inputradio+label:before {
+    width: 1em;
+    height: 1em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_content div.conversation_message_vote_choice .inputradio+label:after {
+    top: 0.3em;
+    left: 0.3em;
+    width: 0.5em;
+    height: 0.5em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_time {
+    display: flex;
+    align-items: center;
+    order: 10;
+    flex-wrap: wrap;
+    vertical-align: middle;
+    min-width: max-content;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_time>span {
+    color: var(--gray-soft);
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_time a {
+    color: var(--main-blue);
+    margin-left: 1em;
+}
+
+div.conversation_message div.conversation_message_data div.conversation_message_time a.use_group_name {
+    color: inherit;
+    margin-left: 0;
+    margin-right: 1em;
+}
+
+div.conversation_message_container div.conversation_form {
+    margin-left: 6em;
+}
+
+div.conversation_message+div.conversation_form,
+div.conversation_message_children_container+div.conversation_form {
+    padding-top: 3em;
+}
+
+@media only screen and (max-device-width: 767px) {
+
+    div.conversation_message_children_container>div.conversation_message,
+    div.conversation_message_children_container>div.conversation_message_children_container {
+        padding-left: 1em;
+    }
+
+    div.conversation_message div.conversation_message_data div.conversation_message_creator {
+        margin-right: 2.5em;
+    }
+
+    div.conversation_message div.conversation_message_data div.conversation_message_more {
+        display: block !important;
+    }
+
+    div.conversation_message div.conversation_message_data div.conversation_message_more_list {
+        right: 0;
+        top: 2em;
+    }
+
+    div.conversation_message div.conversation_message_data div.conversation_message_more~div.conversation_message_id,
+    div.conversation_message div.conversation_message_data div.conversation_message_more.shown~div.conversation_message_id {
+        right: 1.8em;
+        display: block;
+    }
+
+    div.conversation_message_container div.conversation_form {
+        margin-left: 2.5em;
+    }
+
+    div.conversation_form div.conversation_form_controls .inputradio+label {
+        margin: .5em 0;
+    }
+
+    div.conversation_form div.conversation_form_controls label:last-of-type {
+        margin-bottom: 1em !important;
+    }
+
+    div[id$="_conversation"] div[class*="_conversation_message"] div[class*="_conversation_additional"] {
+        font-size: 1em;
+    }
+}

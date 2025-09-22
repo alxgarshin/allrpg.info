@@ -1,0 +1,70 @@
+{
+  "global": {
+    "title": "Gamemasters \/ organizers",
+    "messages": {
+      "invitation_sent": "An invitation was sent. Rights will be set automatically after the user confirms his \/ her participation in the project.",
+      "cannot_remove_admin": "Only another gamemaster can remove an author right from you."
+    }
+  },
+  "fraym_model": {
+    "object_name": "organizer",
+    "object_messages": [
+      "Organizer invited successfully.",
+      "Organizers rights changed successfully",
+      "Organizer removed successfully."
+    ],
+    "elements": {
+      "obj_id_from": {
+        "shownName": "User",
+        "helpText": "to invite an user as an organizer to the project, please, invite him \/ her to your friends first. It protects users from spam."
+      },
+      "type": {
+        "shownName": "Project right",
+        "values": [
+          [
+            "{admin}",
+            "author"
+          ],
+          [
+            "{gamemaster}",
+            "gamemaster"
+          ],
+          [
+            "{newsmaker}",
+            "news"
+          ],
+          [
+            "{budget}",
+            "budget"
+          ],
+          [
+            "{fee}",
+            "fee"
+          ]
+        ]
+      },
+      "comment": {
+        "shownName": "Settings",
+        "help_1": "If a \"gamemaster\" right is set, the user will be able to edit only applications within selected filtersets still being able to comment any application",
+        "help_2": "If a \"gamemaster\" right is set, only selected sections will be accessable"
+      },
+      "obj_type_from": {
+        "shownName": "<span class=\"sbi sbi-check\"><\/span>",
+        "helpText": "accepted invitation to the project?",
+        "values": [
+          [
+            "{user}",
+            "<span class=\"sbi sbi-check\"></span>"
+          ],
+          [
+            "{user_invited}",
+            "<span class=\"sbi sbi-times\"></span>"
+          ]
+        ]
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

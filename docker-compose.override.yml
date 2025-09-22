@@ -1,0 +1,33 @@
+services:
+
+  app:
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    hostname: database
+    container_name: allrpg-db
+    image: mysql:5.7.42
+    restart: always
+    environment:
+      MYSQL_DATABASE: "allrpginfo"
+      MYSQL_USER: "allrpginfo"
+      MYSQL_PASSWORD: "secret"
+      MYSQL_ROOT_PASSWORD: "secret"
+    ports:
+      - "3306:3306"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./docker/db/init:/docker-entrypoint-initdb.d
+      - ./docker/db/data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s

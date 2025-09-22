@@ -1,0 +1,16 @@
+{
+  "global": {
+    "title": "Регистрация на месте",
+    "type_data_to_search": "Поиск: введите id, Ф.И.О., никнейм участника или же текст из заглавного поля заявок",
+    "th_header_application": "Заявка",
+    "th_header_user": "Участник",
+    "th_header_money": "Взнос",
+    "th_header_eco_money": "Эковзнос",
+    "th_header_comments": "Примечание",
+    "th_header_distributed_ids": "Раздатка",
+    "th_header_rooms_data": "Поселение",
+    "th_header_register": "Зарегистрировать",
+    "payment_type_name": "Регистрация: ",
+    "eco_money_name": "Эковзнос"
+  }
+}

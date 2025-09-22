@@ -1,0 +1,724 @@
+@import url('/css/components/myapplication_project_selection.min.css');
+@import url('/css/components/conversation_form.min.css');
+@import url('/css/components/application_conversations.min.css');
+@import url('/css/components/plot.min.css');
+@import url('/css/components/conversations.min.css');
+
+div.kind_ingame div.plot div.plot_name_and_participants {
+    font-size: 115%;
+}
+
+div.kind_ingame div.plot a.show_hidden {
+    font-size: 70%;
+    display: inline-block;
+    padding: 0;
+    text-align: left;
+    border: 0;
+    margin: 0;
+    line-height: normal;
+}
+
+div.kind_ingame div.publication_content div.plot ul li div {
+    display: inline-block;
+}
+
+div.geoposition_info {
+    position: absolute;
+    right: 0;
+    border-radius: .5em;
+    background-color: var(--main-blue);
+    padding: .3em .7em;
+    color: var(--color-background-main);
+    line-height: 2.3em;
+    display: none;
+}
+
+div.geoposition_info.shown {
+    display: block;
+}
+
+div.geoposition_info.error {
+    background-color: var(--main-red);
+}
+
+div#qrcode_clicker_container {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 10em;
+    height: 10em;
+    background: url(/design/qr_icon.svg) center center no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+
+div#qrcode_clicker_sign {
+    display: inline-block;
+    font-weight: bold;
+    color: var(--color-background-main);
+    background-color: var(--main-blue);
+    padding: .3em;
+    width: 100%;
+}
+
+input[name="qrcode"] {
+    display: none;
+}
+
+div.qrcode_result {
+    display: none;
+    margin-top: 3em;
+    width: 60em;
+}
+
+div.qrcode_result.shown {
+    display: block;
+}
+
+div.qrcode_result #circleG {
+    position: relative;
+    top: auto;
+    padding: 1em 0 0 0;
+    font-size: 1.5em;
+}
+
+div.qrcode_result h1 {
+    margin: 1em 0;
+}
+
+div.qrcode_result h1:first-of-type {
+    margin-top: 0;
+}
+
+div.qrcode_result div.qrpg_description {
+    font-size: 1.3em;
+    margin-top: 2em;
+    text-align: justify;
+}
+
+div.qrcode_result div.qrpg_description img.qrpg_code_data,
+div.qrpg_property_description img.qrpg_code_data {
+    display: block;
+    margin: 0 auto;
+    max-height: 15em;
+    cursor: pointer;
+    background-color: white;
+}
+
+div.qrcode_result div.qrpg_description div.message_conversation_form {
+    margin: 1em 0 -1em 0;
+}
+
+div.qrcode_result div.qrpg_description div.message_conversation_form div.conversation_form {
+    padding: 0;
+}
+
+div.qrcode_result div.qrpg_description div.conversation_form.opened div.conversation_form_data,
+div.conversation_form.do_not_hide div.conversation_form_data {
+    padding-left: 0;
+}
+
+div.qrcode_result div.qrpg_description a.attach {
+    display: none;
+}
+
+a#retry_qrcode_scanner {
+    margin-top: 1em;
+    font-size: 1.3em;
+    font-weight: bold;
+    display: none;
+}
+
+a#retry_qrcode_scanner.shown {
+    display: inline-block;
+}
+
+canvas#qr-canvas {
+    display: none;
+}
+
+div.qr-video-container {
+    margin-top: 1em;
+    max-width: 20em;
+    max-height: 30em;
+    display: none;
+}
+
+div.qr-video-container.shown {
+    display: block;
+}
+
+video#qr-video {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: .5em;
+}
+
+div.flashlight {
+    display: block;
+    width: 3em;
+    height: 3em;
+    background: url(/design/lightbulb-o.svg) center center no-repeat var(--main-blue);
+    background-size: 1.5em;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: 0 .5em 0 .5em;
+}
+
+div.flashlight.turnoff {
+    background: url(/design/lightbulb.svg) center center no-repeat var(--main-blue);
+    background-size: 1.5em;
+}
+
+div.qrcode_result div.qrpg_description img {
+    max-width: 100%;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking {
+    display: flex;
+    width: 100%;
+    background-color: var(--underlay-gray);
+    border-radius: .7em;
+    padding: 1.5em;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking.qrpg_hacking_active {
+    justify-content: space-between;
+    flex-direction: column;
+    height: 32em;
+    background: none;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_description {
+    margin-bottom: 2em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking.qrpg_hacking_text_input {
+    justify-content: space-between;
+    flex-direction: column;
+    background: none;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_text {
+    margin-bottom: 2em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_start {
+    padding: 1em 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: var(--main-blue);
+    color: var(--color-background-main);
+    cursor: pointer;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 7em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_timer {
+    width: 11em;
+    min-width: 11em;
+    max-width: 11em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--underlay-gray);
+    border-top-left-radius: .7em;
+    padding: 1em;
+    margin-right: 2em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_timer div.name {
+    font-weight: bold;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_timer span {
+    background-color: var(--main-red);
+    color: var(--color-background-main);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3em;
+    height: 3em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_input_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--underlay-gray);
+    border-top-left-radius: .7em;
+    padding: 1em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_input_container div.name {
+    font-weight: bold;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_input {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_input div.qrpg_hacking_input_elem {
+    width: 2em;
+    height: 2em;
+    background-color: var(--main-blue);
+    color: var(--color-background-main);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_sequences {
+    width: 13em;
+    min-width: 13em;
+    max-width: 13em;
+    border: 1px solid var(--main-blue);
+    background-color: var(--main-blue);
+    border-top-left-radius: .7em;
+    overflow: hidden;
+    padding: 1em;
+    max-height: 10em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 2em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_sequences div.name {
+    font-weight: bold;
+    color: var(--color-background-main);
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_sequences img {
+    width: 100%;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix_container {
+    width: 100%;
+    display: flex;
+    background-color: var(--underlay-gray);
+    border-top-left-radius: .7em;
+    padding: 1em;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix_container div.finish {
+    cursor: pointer;
+    position: absolute;
+    right: .5em;
+    top: 1.2em;
+    background-color: var(--special-gray);
+    padding: .3em .5em;
+    font-size: .8em;
+    display: none;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix_container div.finish.shown {
+    display: block;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix_container div.name {
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix {
+    width: 15em;
+    height: 15em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix div.qrpg_hacking_matrix_row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix div.qrpg_hacking_matrix_row div.qrpg_hacking_matrix_col {
+    width: 2em;
+    height: 2em;
+    color: var(--color-background-main);
+    background-color: var(--main-blue);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: .5;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix div.qrpg_hacking_matrix_row div.qrpg_hacking_matrix_col.selected {
+    opacity: 1;
+}
+
+div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix div.qrpg_hacking_matrix_row div.qrpg_hacking_matrix_col.chosen {
+    cursor: initial;
+    color: var(--color-font-main);
+    background-color: var(--special-gray);
+    font-weight: bold;
+}
+
+div.qrpg_properties_list {
+    margin-top: 2em;
+    width: 60em;
+}
+
+div.qrpg_properties_list div.qrpg_property_name {
+    background-color: var(--main-blue);
+    border-radius: 1.3rem;
+    color: var(--color-background-main);
+    font-size: 1.6em;
+    padding: .7em 1em;
+    cursor: pointer;
+    margin-bottom: 1em;
+}
+
+div.qrpg_properties_list div.qrpg_property_name div.timer {
+    color: var(--color-background-main);
+    font-size: .6em;
+}
+
+div.qrpg_properties_list div.qrpg_property_name.hidden {
+    display: none;
+}
+
+div.qrpg_properties_list div.qrpg_property_description {
+    display: none;
+    background-color: var(--color-background-main);
+    font-size: 1.2em;
+    border-radius: 1.3rem;
+    border: 1px solid var(--main-blue);
+    padding: 2em;
+    text-align: justify;
+}
+
+div.qrpg_properties_list div.qrpg_property_description.shown {
+    display: block;
+    cursor: pointer;
+}
+
+div.qrpg_keys_list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60em;
+    justify-content: space-between;
+}
+
+div.qrpg_keys_list div.qrpg_key {
+    background-color: var(--main-blue);
+    border-radius: 1.3rem;
+    color: var(--color-background-main);
+    font-size: 1.6em;
+    padding: .7em 1em;
+    margin-bottom: 1em;
+    width: 48%;
+    min-width: 48%;
+    max-width: 48%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+div.qrpg_keys_list div.qrpg_key div.timer {
+    color: var(--color-background-main);
+    font-size: .6em;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+div.qrpg_keys_list div.qrpg_key div.qrpg_key_icon {
+    display: inline-block;
+    width: 2.5em;
+    height: 2.5em;
+    background: center center no-repeat var(--color-background-main);
+    background-size: 1.5em;
+    border-radius: 50%;
+    margin-right: .5em;
+}
+
+div.qrpg_keys_list div.qrpg_key div.qrpg_key_name {
+    display: inline-block;
+}
+
+div.kind_ingame div#fraymtabs-doc2 h2 {
+    margin-top: 1.5em;
+}
+
+div.kind_ingame div.conversation_message div.conversation_message_id {
+    display: none;
+}
+
+div.bank_header {
+    display: flex;
+    justify-content: space-between;
+    margin: 2.5em 0;
+}
+
+div.bank_balance {
+    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    flex-wrap: wrap;
+    border-radius: .7em;
+    background-color: var(--main-blue);
+    color: var(--color-background-main);
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div.qrcode_result div.bank_balance {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    font-size: 1em;
+    padding: 1em;
+}
+
+div.qrcode_result button#approve_payment {
+    margin-top: 2em;
+    cursor: pointer;
+}
+
+div.bank_balance div {
+    width: 100%;
+    text-align: center;
+    margin: .5em 0;
+}
+
+div.bank_balance div.small {
+    font-size: .8em;
+}
+
+div.bank_balance span {
+    margin-left: .2em;
+    font-weight: bold;
+}
+
+div.bank_generate_qrpg {
+    width: 68%;
+    min-width: 68%;
+    max-width: 68%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.bank_generate_qrpg div.amount {
+    flex: 1;
+    padding-right: 2em;
+}
+
+div.bank_generate_qrpg div.amount span {
+    margin-bottom: .5em;
+    display: block;
+}
+
+div.bank_generate_qrpg div.amount select,
+div.bank_generate_qrpg div.amount input {
+    margin-bottom: 1em;
+}
+
+div.bank_generate_qrpg div.amount select option[disabled],
+div.kind_ingame form#form_bank_transaction_add select[name="from_bank_currency_id[0]"] option[disabled],
+div.kind_ingame form#form_bank_transaction_add select[name="bank_currency_id[0]"] option[disabled] {
+    display: none;
+}
+
+div.bank_generate_qrpg div.result {
+    flex: 1;
+    border-radius: .7em;
+    border: 1px solid var(--special-gray);
+    width: 15em;
+    min-width: 15em;
+    max-width: 15em;
+    height: 15em;
+    padding: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.bank_generate_qrpg div.result button.main {
+    font-size: 1rem !important;
+}
+
+/*noinspection CssInvalidPropertyValue*/
+div.bank_generate_qrpg div.result img {
+    width: 14em;
+    height: 14em;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    background-color: white;
+}
+
+div.bank_generate_qrpg div.result img {
+    image-rendering: pixelated;
+}
+
+div.mp3_player {
+    text-align: center;
+    padding: 2em 0 1em 0;
+}
+
+@media only screen and (max-device-width: 767px) {
+    div.qrcode_result div.qrpg_description.qrpg_hacking.qrpg_hacking_active {
+        height: auto !important;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    div.qrpg_hacking_header,
+    div.qrpg_hacking_body {
+        flex-wrap: wrap !important;
+        height: auto !important;
+    }
+
+    div.qrpg_hacking_header>div,
+    div.qrpg_hacking_body>div {
+        width: 100% !important;
+        margin-bottom: 1em !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_timer span,
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_input,
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_sequences img {
+        margin-top: 1em;
+    }
+
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_timer {
+        margin: 0;
+    }
+
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_header div.qrpg_hacking_input {
+        padding: 0;
+    }
+
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_sequences {
+        max-height: unset;
+        margin: 0;
+        align-items: center;
+    }
+
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_sequences img {
+        width: 50%;
+    }
+
+    div.qrcode_result div.qrpg_description.qrpg_hacking div.qrpg_hacking_body div.qrpg_hacking_matrix_container div.finish {
+        top: 1em;
+    }
+
+    div.qrcode_result,
+    div.qrpg_properties_list,
+    div.qrpg_keys_list,
+    div.bank_header {
+        width: 100%;
+    }
+
+    div.geoposition_info {
+        line-height: 1.5em;
+        top: 2.6em;
+    }
+
+    div.bank_header {
+        flex-wrap: wrap;
+    }
+
+    div.bank_generate_qrpg {
+        margin-bottom: 2em;
+        flex-wrap: nowrap;
+    }
+
+    div.bank_generate_qrpg div.amount {
+        padding-right: 1em;
+    }
+
+    div.bank_generate_qrpg div.amount span {
+        font-size: 1.2em;
+    }
+
+    div.bank_generate_qrpg div.result button.main {
+        font-size: 1.6rem !important;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    div.bank_balance {
+        padding: 1em;
+        justify-content: center;
+    }
+
+    div#fraymtabs-bank div.multi_objects_table.excel input,
+    div#fraymtabs-bank div.multi_objects_table.excel select {
+        min-width: 6em;
+    }
+
+    div.qrpg_keys_list div.qrpg_key,
+    div.bank_balance,
+    div.bank_generate_qrpg {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    div.qrpg_properties_list div.qrpg_property_name div.timer,
+    div.qrpg_keys_list div.qrpg_key div.timer {
+        font-size: .8em;
+    }
+
+    div.myapplication_project_selection {
+        grid-template-columns: 1fr;
+    }
+
+    div.myapplication_project_selection_project_links a {
+        margin-right: 40%;
+    }
+
+    div.myapplication_project_selection_project_links div.project_links_avatar {
+        width: 8em;
+        max-width: 8em;
+        min-width: 8em;
+        height: 8em;
+        min-height: 8em;
+        max-height: 8em;
+    }
+}

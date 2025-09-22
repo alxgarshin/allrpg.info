@@ -1,0 +1,370 @@
+{
+  "global": {
+    "title": "Проекты",
+    "search": "Поиск по названию или аннотации",
+    "my_projects": "Мои проекты",
+    "past_projects": "Прошедшие проекты",
+    "all_projects": "Все проекты",
+    "found_projects": "Результаты поиска среди проектов",
+    "search_by_name_or_annotation": "Поиск по названию или аннотации проекта",
+    "author": "Автор",
+    "was_registered": "Создан",
+    "management_of_template_based_on_project": "Управление шаблоном на основе проекта",
+    "remove_template": "Удалить шаблон?",
+    "make_a_template": "Сделать шаблон",
+    "available_to_all_portal_users": "доступным для всех пользователей портала",
+    "available_to_me_only": "доступным только мне",
+    "additional_template_text": "В дальнейшем при создании нового проекта Вы или все пользователи портала (в зависимости от выбора выше) смогут использовать структуру задач данного проекта в качестве основы.",
+    "modal_header_project_resources": "Ресурсы проекта",
+    "modal_header_project_members": "Участники проекта",
+    "modal_group_admin": "автор",
+    "modal_group_admin_first_letter": "Автор",
+    "modal_group_member": "участник",
+    "modal_group_member_first_letter": "У",
+    "modal_group_management": "мастер",
+    "modal_group_management_first_letter": "Мастер",
+    "modal_group_technology": "новости",
+    "modal_group_technology_first_letter": "Новости",
+    "modal_group_business": "бюджет",
+    "modal_group_business_first_letter": "Бюджет",
+    "modal_group_fee": "взносы",
+    "modal_group_fee_first_letter": "Взносы",
+    "edit_project": "Редактировать проект",
+    "switch_status_to_off": "Закрыть подачу заявок",
+    "switch_status_to_on": "Открыть подачу заявок",
+    "invite_to_project": "Пригласить друга",
+    "add_task": "Добавить задачу",
+    "add_event": "Добавить событие",
+    "add_project": "Добавить проект",
+    "professiogram_control": "Управление профессиограммами",
+    "open_template": "Открытый шаблон",
+    "closed_template": "Закрытый шаблон",
+    "make_template": "Сделать шаблоном",
+    "create_project_chat": "Создать проектный диалог",
+    "open_project_chat": "Открыть проектный диалог",
+    "show_qr_code": "Показать QR-код",
+    "calendar_event": "Событие в календаре",
+    "leave_project": "Покинуть проект",
+    "access_request_sent": "Запрос отправлен",
+    "request_access": "Запросить подключение",
+    "get_access": "Вступить в проект",
+    "view_application": "Моя заявка",
+    "send_application": "Подать заявку",
+    "send_team_application": "Подать командную заявку",
+    "roles_list": "Сетка ролей",
+    "edit_project_capitalized": "Редактирование проекта",
+    "members_management_capitalized": "Управление правами",
+    "today": "Сегодня",
+    "past_events": "Прошедшие события",
+    "future_events": "Ближайшие события",
+    "tasks": "Задачи (видно только МГ)",
+    "tasks_mine": "Ответственный",
+    "tasks_membered": "Участник",
+    "tasks_notmembered": "Чужие",
+    "tasks_delayed": "Отложенные",
+    "tasks_all": "Все",
+    "tasks_closed": "Закрытые",
+    "task_priority": "Приоритет",
+    "task_dates": "Сделать до",
+    "task_name": "Название",
+    "task_responsible": "Ответственный",
+    "task_members": "Участники",
+    "task_status": "Статус",
+    "task_closed": "Закрыта",
+    "task_result": "Результат",
+    "task_status_hot": "горящая",
+    "task_status_current": "текущая",
+    "task_status_future": "будущая",
+    "task_new_status_overdue": "Просроченные",
+    "task_new_status_today": "Сегодня",
+    "task_new_status_tomorrow": "Завтра",
+    "task_new_status_later": "Позже",
+    "task_new_status_no_date": "Без даты",
+    "foresight_map": "Форсайт-карта",
+    "calendar": "Календарь",
+    "calendar_today": "сегодня",
+    "calendar_hours": "часы",
+    "calendar_days": "дни",
+    "calendar_months": "месяцы",
+    "calendar_import": "импортировать",
+    "calendar_google_authorize_for_import": "Авторизоваться в Google для переноса задач из Google Calendar",
+    "tasks_google_authorize_for_import": "Авторизоваться в Google для переноса задач из Google Tasks",
+    "ical_link": "Ссылка на Ваш календарь в формате iCal",
+    "create_project_while_updating_google_tasks": "создать одноименный проект и разместить задачи в нем",
+    "budget_info": "Сдано взносов",
+    "budget_info_no_info": "Пожалуйста, для отображения информации в блоке настройте <a href=\"\/fee\/\">взносы<\/a> и планируемое количество игроков в <a href=\"act=edit\">свойствах проекта<\/a>.",
+    "conversations": "Обсуждения",
+    "group_authors": "Авторы",
+    "group_management": "Мастера",
+    "group_technology": "Новости",
+    "group_business": "Предпринимательство",
+    "group_members": "Участники",
+    "create_conversation": "Создать тему",
+    "conversation_text": "Текст обсуждения",
+    "members": "Участники проекта",
+    "members_alt": "Права участников",
+    "documents": "Документы (видно только МГ)",
+    "documents_project": "Проекта",
+    "documents_tasks": "Задач",
+    "documents_events": "Событий",
+    "documents_upload": "Загрузить",
+    "documents_add_link": "Добавить ссылку",
+    "help": "Помощь проекту",
+    "help_requests": "Запросы",
+    "help_offers": "Предложения",
+    "help_resources": "Ресурсы",
+    "help_request_new": "Новый",
+    "help_request_enter_text": "Написать сообщение",
+    "contact_author": "Написать автору",
+    "help_offer_new": "Новое",
+    "help_offer_enter_text": "Написать сообщение",
+    "resources_edit": "Изменить",
+    "wall": "Стена",
+    "wall_input_text": "Написать сообщение",
+    "show_previous": "Показать предыдущие записи",
+    "goto": "открыть в новом окне",
+    "messages": {
+      "character": "Персонаж",
+      "character_name": "Имя персонажа",
+      "successfully_joined": "Вы успешно вступили в проект.",
+      "closed_project_join_only_by_invitation": "Вступление в закрытый проект осуществляется только по приглашению.",
+      "closed_templates_label_capitalized": "ЗАКРЫТЫЕ",
+      "open_templates_label_capitalized": "ОТКРЫТЫЕ",
+      "none_available_template": "Нет ни одного доступного Вам открытого или закрытого шаблона.",
+      "no_template_specified": "Не заполнено поле шаблона.",
+      "new_project_name_not_specified": "Не заполнено название нового проекта.",
+      "new_project_date_not_specified": "Не заполнена дата начала нового проекта.",
+      "project_successfully_duplicated": "Проект успешно скопирован.",
+      "bad_input_data": "Неверные входящие данные.",
+      "get_access_word": "проекту",
+      "successfully_left_project": "Вы успешно покинули проект.",
+      "error_deleting_rights": "Не удалось удалить права доступа к проекту.",
+      "calendar_successfully_imported": "Календарь успешно импортирован.",
+      "no_connection_to_google": "Не удалось подключиться к сервису Google. Попробуйте еще раз.",
+      "open_template_created_successfully": "Открытый для всех шаблон успешно создан.",
+      "personal_template_created_successfully": "Доступный исключительно Вам шаблон успешно создан.",
+      "template_deleted_successfully": "Шаблон успешно удален.",
+      "personal_project": "Личный проект.",
+      "no_matching_calendar_event_found": "Не удалось найти событие с таким же названием и датами в календаре. <a href=\"\/calendar_event\/act=add&project_id=%s\">Пожалуйста, добавьте его здесь<\/a>.",
+      "project_status_on": "Подача заявок открыта.",
+      "project_status_off": "Подача заявок закрыта."
+    }
+  },
+  "fraym_model": {
+    "object_name": "проект",
+    "object_messages": [
+      "Проект успешно создан.",
+      "Проект успешно изменен.",
+      "Проект успешно удален."
+    ],
+    "elements": {
+      "h1_2": {
+        "shownName": "Общие сведения"
+      },
+      "type": {
+        "shownName": "Тип",
+        "helpText": "Открытый – пользователь может присоединиться самостоятельно. Закрытый – пользователь может присоединиться только по приглашению от участников. По запросу – пользователь может запросить доступ и присоединиться по подтверждению.",
+        "values": [
+          [
+            "{open}",
+            "открытый"
+          ],
+          [
+            "{close}",
+            "закрытый"
+          ],
+          [
+            "{request}",
+            "по запросу"
+          ]
+        ]
+      },
+      "name": {
+        "shownName": "Название"
+      },
+      "communities": {
+        "shownName": "Связан с группами"
+      },
+      "user_id": {
+        "shownName": "Участники"
+      },
+      "annotation": {
+        "shownName": "Краткое описание (видно тем, кто еще не вступил в проект)"
+      },
+      "description": {
+        "shownName": "Полное описание (видно действующим участникам проекта)"
+      },
+      "external_link": {
+        "shownName": "Ссылка на сайт"
+      },
+      "attachments": {
+        "shownName": "Аватар проекта",
+        "helpText": "160 пикселей в ширину, 160 пикселей в высоту."
+      },
+      "date_from": {
+        "shownName": "Дата начала"
+      },
+      "date_to": {
+        "shownName": "Дата окончания"
+      },
+      "h1_1": {
+        "shownName": "Заявки и сетка ролей"
+      },
+      "sorter": {
+        "shownName": "Сортировка индивидуальных заявок",
+        "helpText": "по данному полю (<u>только формата «Строка для текста»<\/u>) будут сортироваться все индивидуальные заявки."
+      },
+      "sorter2": {
+        "shownName": "Сортировка командных заявок",
+        "helpText": "по данному полю (<u>только формата «Строка для текста»<\/u>) будут сортироваться все командные заявки."
+      },
+      "show_roleslist": {
+        "shownName": "Показывать сетку ролей",
+        "values": [
+          [
+            "0",
+            "всем"
+          ],
+          [
+            "1",
+            "только мастерам"
+          ]
+        ]
+      },
+      "status": {
+        "shownName": "Подача заявок",
+        "values": [
+          [
+            "0",
+            "закрыта"
+          ],
+          [
+            "1",
+            "открыта"
+          ]
+        ]
+      },
+      "goto_link": {
+        "shownName": "Ссылка на подачу заявки \/ свою поданную заявку"
+      },
+      "oneorderfromplayer": {
+        "shownName": "Пользователь не может подать более одной заявки на проект"
+      },
+      "showonlyacceptedroles": {
+        "shownName": "Показывать в списке заявок \/ сетке ролей только принятые заявки"
+      },
+      "h1_3": {
+        "shownName": "Финансовые настройки"
+      },
+      "money_link": {
+        "shownName": "Настройка взносов",
+        "defaultValue": "<a href=\"\/fee\/\" target=\"_blank\">открыть в новом окне<\/a>"
+      },
+      "currency": {
+        "shownName": "Валюта",
+        "values": [
+          [
+            "USD",
+            "USD"
+          ],
+          [
+            "EUR",
+            "EUR"
+          ],
+          [
+            "RUR",
+            "RUR"
+          ],
+          [
+            "UAH",
+            "UAH"
+          ]
+        ]
+      },
+      "player_count": {
+        "shownName": "Планируемое количество игроков"
+      },
+      "helper_before_transaction_add": {
+        "shownName": "Текст инструкции перед формой оплаты у игроков"
+      },
+      "show_datetime_in_transaction": {
+        "shownName": "Показать обязательное поле «Дата и время платежа» при отметке оплаты игроком"
+      },
+      "show_budget_info": {
+        "shownName": "Показать счетчик «Сдано взносов» участникам на странице проекта"
+      },
+      "h1_5": {
+        "shownName": "Настройки оплаты взносов онлайн"
+      },
+      "helper_1_pk": {
+        "shownName": " ",
+        "defaultValue": "Вы можете подключить и настроить прием как полной, так и частичной оплаты взносов банковскими картами через сервис PayKeeper. Для этого перейдите в раздел «<a href=\"/payment_type/\" target=\"_blank\">Методы оплаты</a>», нажмите кнопку «Как подключить оплату взносов через PayKeeper?» и следуйте инструкции. Комиссия PayKeeper за перевод - всего 0,7%. Никаких других комиссий или абонентских плат. Вывод средств - раз в день."
+      },
+      "paykeeper_login": {
+        "shownName": "Логин в PayKeeper"
+      },
+      "paykeeper_pass": {
+        "shownName": "Пароль в PayKeeper"
+      },
+      "paykeeper_server": {
+        "shownName": "Сервер в PayKeeper"
+      },
+      "paykeeper_seсret": {
+        "shownName": "Секретное слово в PayKeeper"
+      },
+      "helper_1_pm": {
+        "shownName": " ",
+        "defaultValue": "Вы можете подключить и настроить прием как полной, так и частичной оплаты взносов банковскими картами через сервис PayMaster. Для этого перейдите в раздел «<a href=\"/payment_type/\" target=\"_blank\">Методы оплаты</a>», нажмите кнопку «Как подключить оплату взносов через PayMaster?» и следуйте инструкции. Комиссия PayMaster за перевод - всего 1%. Никаких других комиссий или абонентских плат. Вывод средств - раз в день."
+      },
+      "paymaster_merchant_id": {
+        "shownName": "Идентификатор сайта в PayMaster"
+      },
+      "paymaster_code": {
+        "shownName": "Секретный ключ сайта в PayMaster"
+      },
+      "helper_1_yk": {
+        "shownName": " ",
+        "defaultValue": "Вы можете подключить и настроить прием как полной, так и частичной оплаты взносов банковскими картами через сервис Юkassа (ранее – Яндекс.касса). Для этого перейдите в раздел «<a href=\"/payment_type/\" target=\"_blank\">Методы оплаты</a>», нажмите кнопку «Как подключить оплату взносов через Юkassу?» и следуйте инструкции. Комиссия Юkassы за перевод - всего 3,5%. Никаких других комиссий или абонентских плат. Вывод средств в любой момент."
+      },
+      "yk_acc_id": {
+        "shownName": "Идентификатор магазина в Юkassе (Яндекс.кассе) (shopId)"
+      },
+      "yk_code": {
+        "shownName": "Секретный ключ магазина в Юkassе (Яндекс.кассе)"
+      },
+      "helper_1_paw": {
+        "shownName": " ",
+        "defaultValue": "Вы можете подключить и настроить прием как полной, так и частичной оплаты взносов банковскими картами через сервис PayAnyWay. Для этого перейдите в раздел «<a href=\"/payment_type/\" target=\"_blank\">Методы оплаты</a>», нажмите кнопку «Как подключить оплату взносов через PayAnyWay?» и следуйте инструкции. Комиссия PayAnyWay за перевод - всего 2,7%. Никаких других комиссий или абонентских плат. Вывод средств в любой момент."
+      },
+      "paw_mnt_id": {
+        "shownName": "Расширенный счет проекта в PayAnyWay"
+      },
+      "paw_code": {
+        "shownName": "Код проверки целостности данных"
+      },
+      "h1_4": {
+        "shownName": "Прочее"
+      },
+      "access_to_childs": {
+        "shownName": "Доступ к событиям",
+        "helpText": "при предоставлении свободного доступа к событиям пользователи смогут вступать в них без запроса к их авторам.",
+        "values": [
+          [
+            "",
+            "по запросу"
+          ],
+          [
+            "1",
+            "свободный"
+          ]
+        ]
+      },
+      "ingame_css": {
+        "shownName": "Путь до внешнего css-файла для смены визуализации модуля игрока проекта"
+      },
+      "disable_taken_field": {
+        "shownName": "Скрыть поле «Занят» в карточке персонажа"
+      }
+    }
+  }
+}

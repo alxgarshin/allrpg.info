@@ -1,0 +1,31 @@
+{
+  "global": {
+    "title": "Reports"
+  },
+  "fraym_model": {
+    "object_name": "report",
+    "object_messages": [
+      "Report added successfully.",
+      "Report changed successfully.",
+      "Report deleted successfully."
+    ],
+    "elements": {
+      "calendar_event_id": {
+        "shownName": "Calendar event",
+        "helpText": "you will find only events from the <a href=\"\/calendar_event\/\">calendar<\/a> in this list. You can add an event to the list <a href=\"\/calendar_event\/act=add\">here<\/a>."
+      },
+      "creator_id": {
+        "shownName": "Author"
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "content": {
+        "shownName": "Content"
+      },
+      "updated_at": {
+        "shownName": "Date"
+      }
+    }
+  }
+}

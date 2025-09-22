@@ -1,0 +1,71 @@
+{
+  "global": {
+    "title": "Player's module",
+    "qrpg": "QRpg",
+    "scan": "Scanner and character properties",
+    "keys": "Character's keys and objects",
+    "scan_btn": "Scan",
+    "timer": "Seconds left",
+    "inputed_sequence": "Inputed sequence",
+    "sequences": "Sequences",
+    "matrix": "Data matrix",
+    "finish": "завершить",
+    "documents": "About character",
+    "doc1": "Ingame passport",
+    "doc2": "Character information",
+    "plots": "Plots",
+    "chat": "Contact gamemasters",
+    "chat_btn": "Chat",
+    "conversation_text": "Comment",
+    "conversation_sub_obj_types": [
+      [
+        "{from_player}",
+        "to gamemasters"
+      ]
+    ],
+    "titles_conversation_sub_obj_types": {
+      "to_player": "to you",
+      "from_player": "to gamemasters"
+    },
+    "show_all_conversations": "show more comments",
+    "bank": "Bank",
+    "balance": "Your balance: ",
+    "account_num": "Your account number: ",
+    "account_num_to": "Recipient account number: ",
+    "generate_qrpg_pay": "Generate QRpg-code for a payment to you",
+    "pay_manually": "Pay manually",
+    "amount": "Amount",
+    "name": "Subject",
+    "generate": "Generate",
+    "payment": "Transfer",
+    "payment_success": "Transfer success",
+    "payment_success_details": "Transfered <b>%s<\/b>%s from the account <b>%s<\/b> to the account <b>%s<\/b>.<br>Comment: %s",
+    "approve": "Approve",
+    "retry_qrcode_scanner": "Retry",
+    "admin": "producer",
+    "exit": "To the projects list",
+    "to_application": "To the application",
+    "messages": {
+      "no_access_header": "No access",
+      "no_access": "You don't have access to this information.",
+      "errouneous_data_header": "Scan error",
+      "errouneous_data": "It looks like there was an error on a code scan. Please, try it one more time.",
+      "no_applications_header": "No active projects",
+      "no_applications": "You will find info here when you will have applications for any future projects.",
+      "wrong_project_header": "Wrong project",
+      "wrong_project": "It seems like you are trying to read a QRpg-code from another project. Please, try to scan the code once more and (if unsuccessful) to switch to an application of a correct project.",
+      "not_enough_balance": "Not enough funds for the transaction.",
+      "rules_prohibit": "Rules disallow the transfer. If you think it's a mistake, please, consult gamemasters.",
+      "value_should_be_multiple": "How much should be a multiple of %s.",
+      "bad_recipient": "Wrong recipient account number.",
+      "need_to_reload_page": "Could not define what application you are using. Please, reload the page or reenter the <a href=\"\/ingame\/\">player's module<\/a>.",
+      "received_resource": "<b>Gathered<\/b>: %s%s.",
+      "lost_resource": "<b>Lost<\/b>: %s%s.",
+      "not_received_resource_due_to_timeout": "<b>Not enough time has passed since the last code scan to gather \/ lost resources.<\/b>",
+      "not_received_resource_due_to_once": "<b>Resources were gathered \/ lost earlier by someone.<\/b>",
+      "not_enough_copies": "Not enough copies of QRpg-codes needed to open left. If you think it's a mistake, please, contact gamemasters.",
+      "please_destroy": "Destroy codes",
+      "destroy_following_codes": "Please, destroy certificates of following codes since it's prohibited to use them more than once: %s."
+    }
+  }
+}

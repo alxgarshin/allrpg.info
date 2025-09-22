@@ -1,0 +1,17 @@
+form#form_bank_transaction_add div.multi_objects_table.excel div.tr.menu div.td#td_name {
+    width: 15em;
+}
+
+form#form_bank_transaction_add div.multi_objects_table.excel div.tr.menu div.td#td_amount {
+    width: 9em;
+}
+
+form#form_bank_transaction_add div.multi_objects_table.excel div.td,
+form#form_bank_transaction_add div.multi_objects_table.excel div.tr div.td:nth-of-type(3) {
+    min-width: 5.5em !important;
+}
+
+form#form_bank_transaction_add input[type=text].obligatory {
+    padding: 1em .2em;
+    background: none;
+}

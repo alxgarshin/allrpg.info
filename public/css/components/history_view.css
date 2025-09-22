@@ -1,0 +1,72 @@
+div.maincontent_data.autocreated.table_cell.history_view_old,
+div.maincontent_data.autocreated.table_cell.history_view {
+    width: 49%;
+    min-width: 49%;
+    max-width: 49%;
+}
+
+div.maincontent_data.autocreated.table_cell.history_view_old {
+    margin-left: 2%;
+}
+
+div.maincontent_data.autocreated.table_cell.history_view_old form div.field,
+div.maincontent_data.autocreated.table_cell.history_view form div.field {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+}
+
+div.maincontent_data.autocreated.table_cell.history_view_old div.filter a.fixed_select.right,
+div.maincontent_data.autocreated.table_cell.history_view div.filter a.fixed_select.right {
+    position: relative;
+    top: 0;
+}
+
+div.maincontent_data.autocreated.table_cell.history_view div.filter,
+div.maincontent_data.autocreated.table_cell.history_view_old div.filter {
+    align-items: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2.5em 0 0;
+}
+
+div.maincontent_data.autocreated.table_cell.history_view div.filter a.fixed_select,
+div.maincontent_data.autocreated.table_cell.history_view_old div.filter a.fixed_select {
+    margin-bottom: 0;
+}
+
+div.maincontent_data.autocreated.table_cell.history_view div.filter div.clear,
+div.maincontent_data.autocreated.table_cell.history_view_old div.filter div.clear {
+    display: none;
+}
+
+div.history_view_old div.fieldname {
+    opacity: 0;
+}
+
+span.diff_inserted {
+    background-color: green;
+    color: var(--color-background-main);
+}
+
+span.diff_deleted {
+    background-color: var(--main-red);
+    text-decoration: line-through;
+    color: var(--color-background-main);
+    opacity: .7;
+}
+
+@media only screen and (max-device-width: 767px) {
+
+    div.maincontent_data.autocreated.table_cell.history_view div.filter,
+    div.maincontent_data.autocreated.table_cell.history_view_old div.filter {
+        height: 11em;
+        min-height: 11em;
+        max-height: 11em;
+    }
+
+    div.maincontent_data.autocreated.table_cell.history_view_old div.filter a.fixed_select.right,
+    div.maincontent_data.autocreated.table_cell.history_view div.filter a.fixed_select.right {
+        margin-bottom: 0;
+    }
+}

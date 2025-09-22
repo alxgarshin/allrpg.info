@@ -1,0 +1,14 @@
+@import url('/css/components/plot.min.css');
+
+div.maincontent_data.autocreated form#form_document div[id^="field_name"],
+div.maincontent_data.autocreated form#form_generate_documents div[id^="field_application_id"] {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+div.maincontent_data.autocreated div.fieldvalue.read[id^="div_plots_data"] {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}

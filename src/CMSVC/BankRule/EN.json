@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Game bank: transfers rules"
+  },
+  "fraym_model": {
+    "object_name": "rule",
+    "object_messages": [
+      "A rule added successfully.",
+      "Rules changed successfully",
+      "A rule deleted successfully."
+    ],
+    "elements": {
+      "qrpg_keys_from_ids": {
+        "shownName": "From",
+        "helpText": "to transfer this resource a player needs any of those keys. If you remove everything in this field, any player will be able to transfer it.",
+        "default_values": [
+          [
+            "none",
+            "block all players"
+          ]
+        ]
+      },
+      "currency_from_id": {
+        "shownName": "What"
+      },
+      "amount_from": {
+        "shownName": "How much"
+      },
+      "qrpg_keys_to_ids": {
+        "shownName": "To",
+        "helpText": "to receive this resource a player needs any of those keys. If you remove everything in this field, any player will be able to receive it."
+      },
+      "currency_to_id": {
+        "shownName": "To what"
+      },
+      "amount_to": {
+        "shownName": "To how much"
+      }
+    }
+  }
+}

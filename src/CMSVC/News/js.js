@@ -1,0 +1,5 @@
+/** Новости */
+
+if (withDocumentEvents) {
+
+}

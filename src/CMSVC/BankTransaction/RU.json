@@ -1,0 +1,42 @@
+{
+  "global": {
+    "title": "Игровой банк: транзакции",
+    "messages": {
+      "too_small_amount": "Во сколько должно быть более 0."
+    }
+  },
+  "fraym_model": {
+    "object_name": "транзакцию",
+    "object_messages": [
+      "Транзакция успешно добавлена.",
+      "Транзакции успешно изменены",
+      "Транзакция успешно удалена."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Назначение"
+      },
+      "from_project_application_id": {
+        "shownName": "С заявки"
+      },
+      "from_bank_currency_id": {
+        "shownName": "Что"
+      },
+      "amount_from": {
+        "shownName": "Cколько"
+      },
+      "to_project_application_id": {
+        "shownName": "На заявку"
+      },
+      "bank_currency_id": {
+        "shownName": "Во что"
+      },
+      "amount": {
+        "shownName": "Во сколько"
+      },
+      "created_at": {
+        "shownName": "Дата"
+      }
+    }
+  }
+}

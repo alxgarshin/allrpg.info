@@ -1,0 +1,742 @@
+@import url('/css/components/conversation_form.min.css');
+@import url('/css/components/message.min.css');
+@import url('/css/components/achievement.min.css');
+
+div.maincontent_data.autocreated form#form_conversation div[id^="field_group"],
+div.maincontent_data.autocreated form#form_conversation div[id^="field_name"] {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+div.maincontent_data.autocreated form#form_conversation div.dropfield2 img {
+    max-height: 3em;
+}
+
+div.kind_conversation {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+div.kind_conversation h1.page_header {
+    width: 100%;
+}
+
+div.conversation_message_switcher {
+    flex: 1;
+    height: calc(100vh - 20em);
+    min-height: calc(100vh - 20em);
+    max-height: calc(100vh - 20em);
+    width: 25%;
+    min-width: 25%;
+    max-width: 25%;
+    border: 1px solid var(--inputs-borders);
+    border-radius: .9em 0 0 .9em;
+    margin-top: 2.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+div.conversation_message_switcher div.conversation_message_switcher_search_container {
+    padding: 1.5rem;
+    border-bottom: 1px var(--inputs-borders) solid;
+}
+
+div.conversation_message_switcher div.conversation_message_switcher_scroller {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    max-height: 100%;
+}
+
+div.conversation_message_switcher div.conversation_message_switcher_scroller div.conversation_block h3 {
+    font-size: 1rem;
+    padding: 1rem 2rem;
+}
+
+div.conversation_message_switcher div.conversation_message_switcher_scroller div.message {
+    font-size: 1em;
+}
+
+div.conversation_message_switcher div.conversation_message_switcher_scroller div.message:hover {
+    cursor: pointer;
+}
+
+div.conversation_message_switcher h2 {
+    font-size: 165%;
+    border-bottom: 1px #e7e7e7 solid;
+    padding: .6em;
+    height: 2.4em;
+}
+
+div.conversation_message_switcher div.conversation_message_switcher_scroller div.message div.message_photos div.photoName {
+    z-index: auto;
+}
+
+div.conversation_message_maincontent {
+    flex: 1;
+    height: calc(100vh - 20em);
+    min-height: calc(100vh - 20em);
+    max-height: calc(100vh - 20em);
+    width: 75%;
+    display: flex;
+    border-radius: 0 .9em .9em 0;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: 1px solid var(--inputs-borders);
+    border-left: 0;
+    margin-top: 2.5em;
+}
+
+div.conversation_message_maincontent div.conversation_message_maincontent_header {
+    height: 6rem;
+    max-height: 6rem;
+    min-height: 6rem;
+    display: flex;
+    align-items: center;
+}
+
+div.kind_conversation div.actions_list_switcher {
+    flex: 1;
+    width: 40%;
+    min-width: 40%;
+    max-width: 40%;
+    background-color: transparent;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 2em;
+}
+
+div.kind_conversation div.actions_list_items {
+    top: 3.2em;
+    right: 2rem;
+    margin-top: 0;
+}
+
+div.kind_conversation div.actions_list_text {
+    bottom: auto;
+    right: auto;
+    position: relative;
+    float: right;
+    order: 2;
+}
+
+div.conversation_message_maincontent div.conversation_message_maincontent_scroller {
+    flex: 1 0 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    height: 10em;
+}
+
+div.conversation_message_maincontent div.conversation_message_maincontent_scroller div.conversation_message_maincontent_scroller_wrap {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    overflow-y: auto;
+    position: unset;
+    /* иначе будет обрезаться всплывающий helper */
+}
+
+div.conversation_message_maincontent div.conversation_message_maincontent_scroller div.conversation_message_maincontent_scroller_wrap div.message.inner:last-of-type {
+    border-bottom: 0;
+}
+
+div.conversation_message_maincontent h2 {
+    font-size: 1.2em;
+    padding: 1rem 2rem;
+    flex: 1;
+    width: 60%;
+    max-width: 60%;
+    min-width: 60%;
+    align-self: center;
+}
+
+div.conversation_message_maincontent div.message_conversation_form {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    height: 8rem;
+    min-height: 8rem;
+    max-height: 8rem;
+}
+
+div.conversation_message_maincontent div.message_conversation_form div.conversation_form {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    height: 100%;
+    border-top: 1px var(--inputs-borders) solid;
+}
+
+div.conversation_message_maincontent div.conversation_form div.conversation_form_photo {
+    display: none;
+}
+
+div.conversation_message_maincontent div.conversation_form div.conversation_form_data {
+    padding-left: 0;
+    display: flex;
+}
+
+div.conversation_message_maincontent div.conversation_form div.conversation_form_data div#help_conversation_form_data {
+    display: none !important;
+}
+
+div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data textarea {
+    flex: 1;
+    height: 3em;
+    max-height: 100%;
+    margin-bottom: 0;
+    border: 0 !important;
+    padding-left: 0 !important;
+    -ms-overflow-style: none;
+    resize: none;
+    overflow: hidden;
+    border-radius: 0 !important;
+}
+
+div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data div.conversation_form_controls {
+    flex: 1;
+    min-width: max-content;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin-left: .5em;
+}
+
+div.kind_conversation div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data div.conversation_form_controls {
+    margin-left: 0;
+    padding-left: .5em;
+}
+
+div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data button.main {
+    border-radius: 50% !important;
+    color: var(--main-blue) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: url(/design/plane.svg) left center no-repeat !important;
+    background-size: 2.5em !important;
+    width: 7.5em;
+    font-size: 1.2em !important;
+    text-align: right;
+    height: 100%;
+}
+
+div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data button.main:disabled {
+    color: transparent !important;
+}
+
+div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data button.main:disabled #circleG {
+    position: absolute;
+    top: auto;
+    bottom: auto;
+    width: 4em;
+    margin-left: 3em;
+}
+
+div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data button.main:disabled .circleG {
+    width: 1em;
+    height: 1em;
+}
+
+div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data div.conversation_form_controls {
+    flex-direction: row;
+}
+
+div.conversation_message_maincontent a.attach {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    background: url(/design/paperclip.svg) center center no-repeat;
+    background-size: contain;
+    width: 2em;
+    height: 1.5em;
+}
+
+div.conversation_message_maincontent div.inputfile {
+    display: none;
+}
+
+div.conversation_message_maincontent div.uploaded_file:hover a.edit_file {
+    display: none;
+}
+
+div.conversation_message_maincontent div.uploaded_file a.trash {
+    position: relative;
+    right: auto;
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+div.conversation_message_maincontent div.uploaded_file {
+    padding-left: 0;
+    background: none;
+}
+
+div.conversation_message_maincontent div.message_content div.files_list {
+    margin-left: 0;
+    margin-top: 1em;
+}
+
+div.conversations_widget_message div.files_list img,
+div.conversation_message_maincontent div.message_content div.files_list img {
+    max-width: 100%;
+}
+
+div.message {
+    padding: 1rem;
+    border-bottom: 1px solid var(--inputs-borders);
+    color: var(--color-font-main);
+    display: flex;
+}
+
+div.message.inner {
+    padding: 1rem 2rem;
+    font-size: 1em;
+}
+
+div.message.inner:first-of-type {
+    border-top: 1px solid transparent;
+}
+
+div.message.inner.unread {
+    background-color: var(--unread);
+    transition: background-color 1s ease-in-out;
+}
+
+div.message.inner.unread.viewed {
+    background-color: transparent;
+}
+
+div.message.selected {
+    background-color: var(--main-blue);
+    color: var(--color-background-main);
+}
+
+div.message.inner:hover {
+    cursor: auto;
+}
+
+div.message.inner div.helper {
+    left: 5em;
+}
+
+div.message div.message_info {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.message.inner div.message_info {
+    font-size: 1em;
+    justify-content: unset;
+}
+
+div.message div.message_photos {
+    width: 3.4em;
+    max-width: 3.4em;
+    min-width: 3.4em;
+    margin-right: .8em;
+    flex: 1;
+    height: 3.4em;
+}
+
+div.message.inner div.message_photos {
+    margin-right: 1em;
+}
+
+div.message div.message_photos div.photoName {
+    margin: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+div.maincontent_data>div.message div.message_photos div.photoName {
+    margin-top: 3%;
+}
+
+div.message_info div.names {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bold;
+    max-width: calc(100% - 4em);
+}
+
+div.message.inner div.names {
+    display: inline-block;
+    max-width: unset;
+}
+
+div.message.inner div.counter {
+    font-size: .9em;
+    color: var(--gray-medium);
+}
+
+div.message_info div.time {
+    max-width: 6em;
+    min-width: 4em;
+    text-align: right;
+    color: var(--gray-soft);
+}
+
+div.conversation_message_switcher_scroller div.message_info div.time {
+    font-size: .9em;
+}
+
+div.conversation_message_switcher_scroller div.message.selected div.message_info div.time {
+    color: var(--color-background-main);
+}
+
+div.message.inner div.time {
+    display: inline-block;
+    margin-left: .3em;
+    width: auto;
+    max-width: unset;
+    min-width: unset;
+    text-align: left;
+}
+
+div.message_info div.content_preview {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    flex: 1;
+}
+
+div.message_info div.content_preview.unread {
+    padding-right: 1em;
+}
+
+div.message_info div.content_preview.unread:after {
+    content: '';
+    position: absolute;
+    background-color: var(--special-red);
+    border-radius: 50%;
+    bottom: .3em;
+    right: 0;
+    width: .7em;
+    height: .7em;
+    max-width: 6px;
+    max-height: 6px;
+}
+
+div.message.selected div.message_info div.content_preview.unread:after {
+    background-color: var(--color-background-main);
+}
+
+div.message_info div.content_preview.unread.counter {
+    padding-right: 1.5em;
+}
+
+div.message div.message_info div.content_preview.unread.counter:after {
+    background-color: var(--main-blue);
+}
+
+div.message_info div.content_preview.unread.counter {
+    padding-right: 2em;
+}
+
+div.message_info div.content_preview.unread.counter:after {
+    bottom: 0;
+    width: auto;
+    height: 1.1em;
+    max-width: unset;
+    max-height: unset;
+    color: var(--color-background-main);
+    text-align: center;
+    content: attr(data-content);
+    padding: 0 .5em;
+    border-radius: .5em;
+}
+
+div.message_info div.content_preview div.commands,
+div.message_info div.content_preview div.additional {
+    display: none;
+}
+
+div.message.inner div.message_content {
+    margin-top: .5em;
+    width: 100%;
+}
+
+div.message_content div.photoName {
+    width: 100%;
+}
+
+div.message_content div.message_content_data {
+    overflow-wrap: break-word;
+    text-align: justify;
+}
+
+div.message.inner div.message_content div.message_content_data {
+    margin: 0;
+}
+
+div.maincontent_data>div.message div.message_content div.message_content_data {
+    margin-left: 3.5em;
+    text-align: justify;
+    margin-bottom: 0;
+    max-height: 4.3em;
+    overflow: hidden;
+}
+
+div.maincontent_data>div.message.inner div.message_content div.message_content_data {
+    max-height: none;
+}
+
+div.message_content div.files_list {
+    margin-left: 4em;
+}
+
+div.maincontent_data>div.message div.message_content div.files_list {
+    margin-left: 4em;
+}
+
+div.message_content div.commands,
+div.conversation_message_content_text div.commands {
+    float: right;
+    z-index: 1;
+    margin-left: .5em;
+}
+
+div.message_content div.commands a[action_request],
+div.conversation_message_content_text div.commands a[action_request] {
+    color: var(--color-font-main);
+    display: inline-block;
+    background-color: var(--underlay-gray);
+    padding: .5em 1em;
+    margin-left: .5em;
+    border-radius: 3.5em;
+    font-size: .9em;
+    margin-top: -.5em;
+}
+
+div.message_content div.commands a.bold[action_request],
+div.conversation_message_content_text div.commands a.bold[action_request] {
+    font-weight: normal;
+    background-color: var(--main-blue);
+    color: var(--color-background-main) !important;
+}
+
+div.message_content div.commands div.done,
+div.conversation_message_content_text div.commands div.done {
+    display: inline-block;
+    margin-left: .5em;
+    color: var(--gray-soft);
+}
+
+div.message_content div.commands a[action_request]:hover,
+div.message_content div.commands div:hover,
+div.conversation_message_content_text div.commands div:hover {
+    text-decoration: none;
+}
+
+div.message_content a.bold {
+    font-weight: bold;
+}
+
+div.message.inner div.message_delete {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    right: 2rem;
+}
+
+div.message.inner:hover div.message_delete {
+    display: block;
+}
+
+div.message.inner div.message_delete a {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: url(/design/close_blue.svg) center center no-repeat;
+    background-size: 1em;
+    opacity: 0.8;
+}
+
+div.message.inner div.message_delete a:hover {
+    opacity: 1;
+    border-bottom: 0;
+}
+
+div.message.inner div.names {
+    display: inline-block;
+    max-width: unset;
+}
+
+div.message.inner div.counter {
+    font-size: .9em;
+    color: var(--gray-medium);
+}
+
+div.conversation_message_switcher_scroller div.message_info div.time {
+    font-size: .9em;
+}
+
+div.conversation_message_switcher_scroller div.message.selected div.message_info div.time {
+    color: var(--color-background-main);
+}
+
+div.message.inner div.time {
+    display: inline-block;
+    margin-left: .3em;
+    width: auto;
+    max-width: unset;
+    min-width: unset;
+    text-align: left;
+}
+
+div.message.inner div.message_content {
+    margin-top: .5em;
+    width: 100%;
+}
+
+div.message.inner div.message_content div.message_content_data {
+    margin: 0;
+}
+
+div.maincontent_data>div.message.inner div.message_content div.message_content_data {
+    max-height: none;
+}
+
+div.message.inner div.message_delete {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    right: 2rem;
+}
+
+div.message.inner div.message_delete a {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: url(/design/close_blue.svg) center center no-repeat;
+    background-size: 1em;
+    opacity: 0.8;
+}
+
+div.message.inner span.achievement {
+    margin: 0;
+    font-size: 1em;
+}
+
+@media only screen and (max-device-width: 767px) {
+    div.conversation_message_switcher {
+        width: 100%;
+        border: 0;
+        border-radius: .5em;
+        order: 2;
+        min-width: 100%;
+        max-width: 100%;
+        margin-top: 0;
+        height: calc(100vh - 10em);
+        min-height: calc(100vh - 10em);
+        max-height: calc(100vh - 10em);
+    }
+
+    div.conversation_message_switcher.inside_conversation {
+        display: none;
+    }
+
+    div.conversation_message_switcher div.conversation_message_switcher_scroller {
+        height: auto;
+        font-size: 1.3em;
+    }
+
+    div.conversation_message_switcher+div.conversation_message_maincontent {
+        display: none;
+    }
+
+    div.conversation_message_switcher.inside_conversation+div.conversation_message_maincontent {
+        width: 100%;
+        border: 0;
+        display: flex;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-size: 1.3em;
+        margin-top: 0;
+        height: calc(100vh - 10em);
+        min-height: calc(100vh - 10em);
+        max-height: calc(100vh - 10em);
+        flex-wrap: nowrap;
+    }
+
+    div.conversation_message_maincontent div.conversation_message_maincontent_header {
+        height: 8rem;
+        max-height: 8rem;
+        min-height: 8rem;
+    }
+
+    div.conversation_message_maincontent h2 {
+        padding-left: 0;
+        width: auto;
+        max-width: unset;
+        min-width: unset;
+    }
+
+    div.kind_conversation div.actions_list_switcher {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        padding-right: 0;
+        width: max-content;
+        max-width: max-content;
+        min-width: max-content;
+    }
+
+    div.kind_conversation div.actions_list_switcher div.user_was_online {
+        width: 100%;
+        text-align: right;
+        margin-bottom: .5em;
+        display: none;
+    }
+
+    div.kind_conversation div.actions_list_text {
+        margin-top: 0;
+    }
+
+    div.new_message {
+        margin: 2.5rem 1rem;
+    }
+
+    div.message.inner {
+        padding: 1rem 0;
+    }
+
+    div.kind_conversation div.conversation_message_maincontent div.conversation_form div.conversation_form_data {
+        flex-wrap: nowrap;
+    }
+
+    div.conversation_message_maincontent div.message_conversation_form div.conversation_form {
+        padding: 0;
+    }
+
+    div.kind_conversation div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data div.conversation_form_controls {
+        padding: 0;
+    }
+
+    div.conversation_message_maincontent div.conversation_form.do_not_hide div.conversation_form_data button.main {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 3em;
+        background-position: center center !important;
+    }
+
+    div.conversation_message_switcher div.conversation_message_switcher_search_container {
+        padding: 1.5rem 0;
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "global": {
+    "title": "Geoposición de jugadores",
+    "type_data_to_search": "Buscar: introducir el ID, nombre o apodo de un participante, o el texto del campo principal de la aplicación",
+    "center": "centrar mapa"
+  }
+}

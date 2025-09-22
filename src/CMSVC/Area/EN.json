@@ -1,0 +1,70 @@
+{
+  "global": {
+    "title": "Areas",
+    "no_name": "Without title",
+    "publish_date": "Last update"
+  },
+  "fraym_model": {
+    "object_name": "area",
+    "object_messages": [
+      "Area added successfully.",
+      "Area changed successfully.",
+      "Area deleted successfully."
+    ],
+    "elements": {
+      "toarea": {
+        "shownName": "Area in the knowledge base"
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "tipe": {
+        "shownName": "Type",
+        "values": [
+          [
+            "1",
+            "city"
+          ],
+          [
+            "2",
+            "forest"
+          ],
+          [
+            "3",
+            "camping"
+          ],
+          [
+            "4",
+            "on water"
+          ]
+        ]
+      },
+      "city": {
+        "shownName": "City"
+      },
+      "content": {
+        "shownName": "Description"
+      },
+      "havegood": {
+        "shownName": "Pros"
+      },
+      "havebad": {
+        "shownName": "Cons"
+      },
+      "external_map_link": {
+        "shownName": "Link to an external map (google, yandex)",
+        "helpText": "to provide a working link, you have to find a «Share» function in the map and paste a link from there. Direct links from browser will not work."
+      },
+      "map": {
+        "shownName": "Road map"
+      },
+      "way": {
+        "shownName": "Road map (description)"
+      },
+      "coordinates": {
+        "shownName": "Official contacts",
+        "helpText": "hidden from everyone except you."
+      }
+    }
+  }
+}

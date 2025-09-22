@@ -1,0 +1,49 @@
+{
+  "global": {
+    "title": "Portfolio",
+    "messages": {
+      "no_data": "An event was deleted."
+    }
+  },
+  "fraym_model": {
+    "object_name": "event",
+    "object_messages": [
+      "An event added successfully to your portfolio.",
+      "An event changed successfully.",
+      "An event deleted successfully."
+    ],
+    "elements": {
+      "togame": {
+        "shownName": "Event card in the knowledge base"
+      },
+      "calendar_event_id": {
+        "shownName": "Event",
+        "helpText": "in this list you will find only events from <a href=\"\/calendar_event\/\">the knowledge base<\/a>. You can add events into this list <a href=\"\/calendar_event\/act=add\">here<\/a>."
+      },
+      "role": {
+        "shownName": "Role"
+      },
+      "locat": {
+        "shownName": "Location"
+      },
+      "specializ": {
+        "shownName": "Participant"
+      },
+      "specializ2": {
+        "shownName": "Gamemaster"
+      },
+      "specializ3": {
+        "shownName": "Support"
+      },
+      "photo": {
+        "shownName": "Photo link"
+      },
+      "active": {
+        "shownName": "Visible to everyone"
+      },
+      "id": {
+        "shownName": "Dates"
+      }
+    }
+  }
+}

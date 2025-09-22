@@ -1,0 +1,58 @@
+{
+  "global": {
+    "title": "QRpg: keys and properties",
+    "switch_to_cards": "switch to cards view",
+    "switch_to_table": "switch to table view",
+    "usedInCodes": {
+      "qrpg_keys": "opens",
+      "not_qrpg_keys": "blocks",
+      "removes_qrpg_keys": "is removed",
+      "gives_qrpg_keys": "is added",
+      "transferred": "is transferred",
+      "gives_bad_qrpg_keys": "on unsuccessful scan"
+    },
+    "messages": {
+      "error_in_keydata": "The key must consist of latin letters and numbers.",
+      "error_in_img": "Please, select an icon from the list."
+    }
+  },
+  "fraym_model": {
+    "object_name": "QRpg-key",
+    "object_messages": [
+      "QRpg-key created successfully.",
+      "QRpg-keys changed successfully",
+      "QRpg-key deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Key title"
+      },
+      "keydata": {
+        "shownName": "Key",
+        "helpText": "latin and numbers only. We recommend to create a master key to include it in all further QRpg-codes."
+      },
+      "consists_of": {
+        "shownName": "Consists of",
+        "helpText": "players with all keys listed in here will gain this key automatically."
+      },
+      "property_name": {
+        "shownName": "Property name",
+        "helpText": "if a name is set, the key in a player's application will give a property to the character. This property label will be shown in player's module."
+      },
+      "property_description": {
+        "shownName": "Property description",
+        "helpText": "if a description is set, a click on a label in the player's module will toggle current text. You can format text with: <b>**for bold**<\/b>, <i>__for italic__<\/i>, [for image http-address], > for quote. Use a format: [#code_id] - to automatically insert another QRpg-code into the text. A click on this code will transfer user to it's description immediately. If you're adding links to mp3-files they will be replaced by a mp3-player automatically. If you add: [loop] - right after a link to a mp3-file, the file will be looped. Use a format: [conversation|user id] - to insert a form for sending a message to the user specified."
+      },
+      "img": {
+        "shownName": "Icon",
+        "helpText": "keys icons are automatically placed on <a href=\"\/qrpg_code\/\" target=\"_blank\">QRpg-codes<\/a> when generated and help players to understand whenever they are able to open the code or not."
+      },
+      "used_in_codes": {
+        "shownName": "Used in codes"
+      },
+      "used_in_applications": {
+        "shownName": "In applications"
+      }
+    }
+  }
+}

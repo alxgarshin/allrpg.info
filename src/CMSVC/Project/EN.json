@@ -1,0 +1,367 @@
+{
+  "global": {
+    "title": "Projects",
+    "search": "Search by project name or annotation",
+    "author": "Author",
+    "was_registered": "Created",
+    "my_projects": "My projects",
+    "past_projects": "Completed projects ",
+    "all_projects": "All projects",
+    "found_projects": "Project search results",
+    "search_by_name_or_annotation": "Search by project name or annotation",
+    "management_of_template_based_on_project": "Managing project-based templates",
+    "remove_template": "Delete template",
+    "make_a_template": "Create a template",
+    "available_to_all_portal_users": "available to other users",
+    "available_to_me_only": "Available to me only",
+    "additional_template_text": "From now on, when a new project is being created you or any other users (depending on the choice you have made before) can use a task structure of this project as a basis for a new one.",
+    "modal_header_project_resources": "Project resources",
+    "modal_header_project_members": "Project participants",
+    "modal_group_admin": "author",
+    "modal_group_admin_first_letter": "Author",
+    "modal_group_member": "members",
+    "modal_group_member_first_letter": "M",
+    "modal_group_management": "gamemaster",
+    "modal_group_management_first_letter": "Gamemaster",
+    "modal_group_technology": "news",
+    "modal_group_technology_first_letter": "News",
+    "modal_group_business": "budget",
+    "modal_group_business_first_letter": "Budget",
+    "modal_group_fee": "fee",
+    "modal_group_fee_first_letter": "Fee",
+    "edit_project": "edit project",
+    "invite_to_project": "Invite a friend",
+    "switch_status_to_off": "Close application",
+    "switch_status_to_on": "Open application",
+    "add_task": "Add a task",
+    "add_event": "Add an event",
+    "add_project": "Add a project",
+    "open_template": "Open template",
+    "closed_template": "Closed template",
+    "make_template": "Make a template",
+    "create_project_chat": "Create a project conversation",
+    "open_project_chat": "Open project conversation",
+    "create_foresight_map": "Create a foresight map",
+    "edit_foresight_map": "Edit foresight map",
+    "show_qr_code": "Show QR-code",
+    "calendar_event": "Event in calendar",
+    "leave_project": "Leave project",
+    "access_request_sent": "Request sent",
+    "request_access": "Ask for participation",
+    "get_access": "Join the project",
+    "view_application": "My application",
+    "send_application": "Personal application",
+    "send_team_application": "Team application",
+    "roles_list": "Roles list",
+    "edit_project_capitalized": "Edit project",
+    "members_management_capitalized": "Manage rights",
+    "today": "Today",
+    "past_events": "Past events",
+    "future_events": "Upcoming events",
+    "tasks": "Tasks",
+    "tasks_mine": "Responsible",
+    "tasks_membered": "Member",
+    "tasks_notmembered": "Others",
+    "tasks_delayed": "Suspended",
+    "tasks_all": "All",
+    "tasks_closed": "Closed",
+    "task_priority": "Priority",
+    "task_dates": "Due date",
+    "task_name": "Name",
+    "task_responsible": "Responsible",
+    "task_members": "Participants",
+    "task_status": "Status",
+    "task_closed": "Closed",
+    "task_result": "Result",
+    "task_status_hot": "urgent",
+    "task_status_current": "current",
+    "task_status_future": "future",
+    "task_new_status_overdue": "Overdue",
+    "task_new_status_today": "Today",
+    "task_new_status_tomorrow": "Tomorrow",
+    "task_new_status_later": "Later",
+    "task_new_status_no_date": "Date not set",
+    "foresight_map": "Foresight map",
+    "calendar": "Calendar",
+    "calendar_today": "today",
+    "calendar_hours": "hours",
+    "calendar_days": "days",
+    "calendar_months": "months",
+    "calendar_import": "import",
+    "calendar_google_authorize_for_import": "Authorize Google to transfer events from Google Calendar",
+    "tasks_google_authorize_for_import": "Authorize Google to transfer events from Google Tasks",
+    "ical_link": "Link to your calendar in iCal format",
+    "create_project_while_updating_google_tasks": "Create a project with the same name and import tasks there",
+    "budget_info": "Fees paid",
+    "budget_info_no_info": "To display information here, please, fill in <a href=\"\/fee\/\">fees<\/a> and provide a planned players count in <a href=\"act=edit\">project settings<\/a>.",
+    "conversations": "Conversations",
+    "group_authors": "Authors",
+    "group_management": "Gamemasters",
+    "group_technology": "News",
+    "group_business": "Entrepreneurship",
+    "group_members": "Members",
+    "create_conversation": "Create a topic",
+    "conversation_text": "Conversation text",
+    "members": "Project members",
+    "members_alt": "Members rights",
+    "documents": "Documents",
+    "documents_project": "Project",
+    "documents_tasks": "Task",
+    "documents_events": "Events",
+    "documents_upload": "Upload",
+    "documents_add_link": "Add a link",
+    "help": "Help the project",
+    "help_requests": "Requests",
+    "help_offers": "Offers",
+    "help_resources": "Resources",
+    "help_request_new": "New",
+    "help_request_enter_text": "Write a text",
+    "contact_author": "Write to the author",
+    "help_offer_new": "New",
+    "help_offer_enter_text": "Enter text",
+    "resources_edit": "Edit",
+    "wall": "The wall",
+    "wall_input_text": "Enter text",
+    "show_previous": "Show previous",
+    "goto": "open in a new window",
+    "messages": {
+      "character": "Character",
+      "character_name": "Character name",
+      "successfully_joined": "You have successfully joined the project.",
+      "closed_project_join_only_by_invitation": "To join a closed project you need an invitation.",
+      "closed_templates_label_capitalized": "CLOSED",
+      "open_templates_label_capitalized": "OPEN",
+      "none_available_template": "There is no open or closed template available for you.",
+      "no_template_specified": "No template specified.",
+      "new_project_name_not_specified": "Project name is not specified.",
+      "new_project_date_not_specified": "Date of project start in not specified.",
+      "project_successfully_duplicated": "Project duplicated successfully.",
+      "bad_input_data": "bad input data.",
+      "get_access_word": "Project",
+      "successfully_left_project": "You’ve successfully left the project.",
+      "error_deleting_rights": "Error when deleting access rights to the project.",
+      "calendar_successfully_imported": "Calendar is successfully imported.",
+      "no_connection_to_google": "Not being able to connect to Google servers. Please, check connection and try again.",
+      "open_template_created_successfully": "Open template created successfully.",
+      "personal_template_created_successfully": "Personal template created successfully.",
+      "template_deleted_successfully": "Template deleted successfully.",
+      "personal_project": "Personal project.",
+      "no_matching_calendar_event_found": "An event with the same name and dates was not found in calendar. <a href=\"\/calendar_event\/act=add&project_id=%s\">Please, add it here<\/a>.",
+      "project_status_on": "Application is open.",
+      "project_status_off": "Application is closed."
+    }
+  },
+  "fraym_model": {
+    "object_name": "project",
+    "object_messages": [
+      "Project created successfully.",
+      "Project changed successfully.",
+      "Project deleted successfully."
+    ],
+    "elements": {
+      "h1_2": {
+        "shownName": "General"
+      },
+      "type": {
+        "shownName": "Type",
+        "values": [
+          [
+            "{open}",
+            "open"
+          ],
+          [
+            "{close}",
+            "closed"
+          ],
+          [
+            "{request}",
+            "at request"
+          ]
+        ],
+        "helpText": "Open – users can join without any requests. Closed – users can join by accepting an invitation from a member only. At request – users can join only if their request to join is accepted."
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "communities": {
+        "shownName": "Connected to groups"
+      },
+      "user_id": {
+        "shownName": "Members"
+      },
+      "annotation": {
+        "shownName": "Short description (visible to those not yet in project)"
+      },
+      "description": {
+        "shownName": "Full description (visible to the project members)"
+      },
+      "external_link": {
+        "shownName": "Website"
+      },
+      "attachments": {
+        "shownName": "Project logo",
+        "helpText": "160 pixels wide, 160 pixels high."
+      },
+      "date_from": {
+        "shownName": "Beginning date"
+      },
+      "date_to": {
+        "shownName": "Ending date"
+      },
+      "h1_1": {
+        "shownName": "Applications and roles list"
+      },
+      "sorter": {
+        "shownName": "Personal applications sort field",
+        "helpText": "all personal applications (<u>«Text input» format only<\/u>) will be sorted by this field."
+      },
+      "sorter2": {
+        "shownName": "Team applications sort field",
+        "helpText": "all team applications (<u>«Text input» format only<\/u>) will be sorted by this field."
+      },
+      "show_roleslist": {
+        "shownName": "Show roles list",
+        "values": [
+          [
+            "0",
+            "to everyone"
+          ],
+          [
+            "1",
+            "to gamemasters only"
+          ]
+        ]
+      },
+      "status": {
+        "shownName": "Application system",
+        "values": [
+          [
+            "0",
+            "is closed"
+          ],
+          [
+            "1",
+            "is open"
+          ]
+        ]
+      },
+      "goto_link": {
+        "shownName": "Link to apply \/ check present application"
+      },
+      "oneorderfromplayer": {
+        "shownName": "User can not make more than one application"
+      },
+      "showonlyacceptedroles": {
+        "shownName": "Show only accepted applications in applications \/ roles list"
+      },
+      "h1_3": {
+        "shownName": "Finance settings"
+      },
+      "money_link": {
+        "shownName": "Participation fee setup",
+        "defaultValue": "<a href=\"\/fee\/\" target=\"_blank\">open in a new window<\/a>"
+      },
+      "currency": {
+        "shownName": "Сurrency",
+        "values": [
+          [
+            "USD",
+            "USD"
+          ],
+          [
+            "EUR",
+            "EUR"
+          ],
+          [
+            "RUR",
+            "RUR"
+          ],
+          [
+            "UAH",
+            "UAH"
+          ]
+        ]
+      },
+      "player_count": {
+        "shownName": "Planned player count"
+      },
+      "helper_before_transaction_add": {
+        "shownName": "Instruction above player's report payment form"
+      },
+      "show_datetime_in_transaction": {
+        "shownName": "Show an obligatory «Payment datetime» field in the payment report form"
+      },
+      "show_budget_info": {
+        "shownName": "Show «Fees paid» counter on the project page to members"
+      },
+      "h1_5": {
+        "shownName": "Settings for fee payments through credit cards"
+      },
+      "helper_1_pk": {
+        "defaultValue": "As for now you have to be a registered tax payer in Russian Federation to get online payments."
+      },
+      "paykeeper_login": {
+        "shownName": "PayKeeper login"
+      },
+      "paykeeper_pass": {
+        "shownName": "PayKeeper password"
+      },
+      "paykeeper_server": {
+        "shownName": "PayKeeper server"
+      },
+      "paykeeper_seсret": {
+        "shownName": "PayKeeper secret word"
+      },
+      "helper_1_pm": {
+        "defaultValue": "As for now you have to be a registered tax payer in Russian Federation to get online payments."
+      },
+      "paymaster_merchant_id": {
+        "shownName": "Site id from PayMaster"
+      },
+      "paymaster_code": {
+        "shownName": "Secret code from PayMaster"
+      },
+      "helper_1_yk": {
+        "defaultValue": "As for now you have to be a registered tax payer in Russian Federation to get online payments."
+      },
+      "yk_acc_id": {
+        "shownName": "Account id from YooKassa"
+      },
+      "yk_code": {
+        "shownName": "Secret code from YooKassa"
+      },
+      "helper_1_paw": {
+        "defaultValue": "You can enable and setup fee payments through credit cards by PayAnyWay service. To do so, please, check section «<a href=\"\/payment_type\/\" target=\"_blank\">Payment types<\/a>», press the button «Add payment type of credit cards» and follow instructions. PayAnyWay fee for money transfer: 2,7%. No other comissions and subscriptions. Money withdraw at any moment."
+      },
+      "paw_mnt_id": {
+        "shownName": "Project extended account number in PayAnyWay"
+      },
+      "paw_code": {
+        "shownName": "Data integrity verify code"
+      },
+      "h1_4": {
+        "shownName": "Additional"
+      },
+      "access_to_childs": {
+        "shownName": "Access to events",
+        "helpText": "if free access is set, users will be able to join events withouth any request to its authors.",
+        "values": [
+          [
+            "",
+            "by request only"
+          ],
+          [
+            "1",
+            "free"
+          ]
+        ]
+      },
+      "ingame_css": {
+        "shownName": "Path to an external css-file for the ingame module redesign"
+      },
+      "disable_taken_field": {
+        "shownName": "Hide «Taken» field in character setup"
+      }
+    }
+  }
+}

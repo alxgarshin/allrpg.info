@@ -1,0 +1,170 @@
+form#form_budget_add div.multi_objects_table.excel {
+    grid-template-columns: 4em 4em 15% 10% 6% 6% 1fr 15% 14% 5% auto;
+}
+
+form#form_budget_add div.tr.bought div.td,
+form#form_budget_add div.tr.not_bought div.td {
+    background: none;
+}
+
+form#form_budget_add div.multi_objects_table.excel div.td.multi_objects_num {
+    position: relative;
+}
+
+form#form_budget_add div.tr.bought:focus-within div.td {
+    opacity: 1;
+}
+
+form#form_budget_add div.tr.bought div.td {
+    opacity: .3;
+}
+
+form#form_budget_add input.inputnum {
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+form#form_budget_add div.tr.readonly div.td:nth-of-type(3),
+form#form_budget_add div.tr.readonly div.td:nth-of-type(4) {
+    font-weight: bold;
+    font-size: 1.2em;
+    align-items: start;
+}
+
+form#form_budget_add div.tr.readonly div.td:nth-of-type(5),
+form#form_budget_add div.tr.readonly div.td:nth-of-type(6),
+form#form_budget_add div.tr.readonly div.td:nth-of-type(8),
+form#form_budget_add div.tr.readonly div.td:nth-of-type(9) {
+    color: transparent;
+}
+
+form#form_budget_add div.tr.readonly div.td:nth-of-type(10) .sbi,
+form#form_budget_add div.tr.readonly div.td:nth-of-type(11) .sbi {
+    opacity: 0;
+}
+
+form#form_budget_add div.tr.readonly div.td {
+    background-color: var(--underlay-gray);
+}
+
+form#form_budget_add textarea.inputtextarea {
+    vertical-align: middle;
+}
+
+form#form_budget_add div.tr[id^="line"] div.td.expanded {
+    vertical-align: top;
+    text-align: left;
+}
+
+form#form_budget_add textarea[name^="description"][class*="expanded"] {
+    position: absolute;
+    width: calc(100% - 1.5em);
+    height: 6em;
+    z-index: 1;
+    border: 1px var(--main-blue) solid;
+    overflow-y: auto;
+}
+
+form#form_budget_add textarea {
+    resize: none;
+}
+
+div.budget_info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-bottom: 2.5em;
+}
+
+div.budget_info_left_part,
+div.budget_info_right_part {
+    width: 49%;
+    min-width: 49%;
+    max-width: 49%;
+    display: flex;
+    flex-direction: column;
+    row-gap: .5em;
+}
+
+div.budget_field {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: var(--underlay-gray);
+    color: var(--main-blue);
+    border-radius: .6em;
+    padding: 1em;
+}
+
+span.budget_field_title {
+    font-weight: bold;
+}
+
+div.bought_by_data {
+    width: 100%;
+}
+
+div.bought_by_data h2 {
+    margin-bottom: 2em;
+}
+
+form#form_budget_add h2 {
+    width: 100%;
+    margin-top: 2em;
+}
+
+div.bought_by_gamemaster {
+    display: inline-block;
+    margin-bottom: .5em;
+    background-color: var(--underlay-gray);
+    color: var(--main-blue);
+    border-radius: .6em;
+    padding: 1em;
+    margin-right: 1em;
+}
+
+span.bought_by_gamemaster_name {
+    margin-right: .5em;
+    float: left;
+    z-index: 1;
+    max-width: 18em;
+}
+
+span.bought_by_gamemaster_amount {
+    float: right;
+    z-index: 1;
+}
+
+@media only screen and (max-device-width: 767px) {
+    form#form_budget_add td {
+        padding: 1em 0.5em !important;
+    }
+
+    form#form_budget_add input:not([type="checkbox"]),
+    form#form_budget_add select,
+    form#form_budget_add textarea {
+        min-width: 10em;
+        padding-left: 0.5em;
+    }
+
+    form#form_budget_add input.inputnum {
+        min-width: 5em;
+    }
+
+    form#form_budget_add input.inputcheckbox {
+        margin: 0;
+    }
+
+    form#form_budget_add textarea {
+        min-height: 1em;
+    }
+
+    form#form_budget_add td#td_responsible_id {
+        -ms-word-break: break-all;
+        word-break: break-all;
+    }
+}

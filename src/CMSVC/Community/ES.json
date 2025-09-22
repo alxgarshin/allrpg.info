@@ -1,0 +1,170 @@
+{
+  "global": {
+    "title": "Grupos",
+    "search": "Buscar por nombre o descripción del grupo",
+    "my_communities": "Mis grupos",
+    "all_communities": "Todos los grupos",
+    "found_communities": "Resultados de la búsqueda de grupos",
+    "search_by_name_or_annotation": "Buscar por nombre o descripción del grupo",
+    "author": "Autor",
+    "was_registered": "Creado",
+    "modal_header_community_members": "Miembros del grupo",
+    "modal_header_community_projects": "Proyectos del grupo",
+    "modal_group_admin": "Autor",
+    "modal_group_admin_first_letter": "Autor",
+    "modal_group_moderator": "Moderador",
+    "modal_group_moderator_first_letter": "Moderador",
+    "modal_group_member": "Miembro",
+    "modal_group_member_first_letter": "M",
+    "edit_community": "Editar grupo",
+    "invite_to_community": "Invitar a un amigo",
+    "show_qr_code": "Mostrar código QR",
+    "add_task": "Añadir una tarea",
+    "add_event": "Añadir un evento",
+    "add_project": "Añadir un proyecto",
+    "add_community": "Añadir un grupo",
+    "create_community_chat": "Crear conversación de grupo",
+    "open_community_chat": "Abrir conversación de grupo",
+    "create_foresight_map": "Crear un mapa de Foresight",
+    "edit_foresight_map": "Editar mapa de Foresight",
+    "leave_community": "Abandonar el grupo",
+    "access_request_sent": "Solicitud enviada",
+    "request_access": "Solicitar acceso",
+    "get_access": "Unirse al grupo",
+    "edit_community_capitalized": "Editar grupo",
+    "members_management_capitalized": "Administrar derechos",
+    "today": "hoy",
+    "past_events": "Eventos pasados",
+    "future_events": "Próximos eventos",
+    "tasks": "Tareas",
+    "tasks_mine": "Responsable",
+    "tasks_membered": "Miembro",
+    "tasks_notmembered": "Otros",
+    "tasks_delayed": "Suspendido",
+    "tasks_all": "Todos",
+    "tasks_closed": "Cerrado",
+    "task_priority": "Prioridad",
+    "task_dates": "Fecha de vencimiento",
+    "task_name": "Nombre",
+    "task_responsible": "Responsable",
+    "task_members": "Participantes",
+    "task_status": "Estado",
+    "task_closed": "Cerrado",
+    "task_result": "Resultado",
+    "task_status_hot": "urgente",
+    "task_status_current": "actual",
+    "task_status_future": "futuro",
+    "task_new_status_overdue": "Vencido",
+    "task_new_status_today": "Hoy",
+    "task_new_status_tomorrow": "Mañana",
+    "task_new_status_later": "Más tarde",
+    "task_new_status_no_date": "Fecha no establecida",
+    "foresight_map": "Mapa de previsión",
+    "calendar": "Calendario",
+    "calendar_today": "hoy",
+    "calendar_hours": "horas",
+    "calendar_days": "días",
+    "calendar_months": "meses",
+    "calendar_import": "importar",
+    "calendar_google_authorize_for_import": "Autorizar a Google a Transferir eventos desde Google Calendar",
+    "conversations": "Conversaciones",
+    "create_conversation": "Crear un tema",
+    "conversation_text": "Texto de la conversación",
+    "members": "Miembros del grupo",
+    "members_alt": "Derechos de los miembros",
+    "communities": "Grupos conectados",
+    "projects": "Proyectos de grupo",
+    "group_authors": "Autores",
+    "group_moderators": "Moderadores",
+    "group_members": "Miembros",
+    "documents": "Documentos",
+    "documents_community": "Grupos",
+    "documents_tasks": "Tareas",
+    "documents_events": "Eventos",
+    "documents_projects": "Proyectos",
+    "documents_upload": "Subir",
+    "documents_add_link": "Añadir un enlace",
+    "wall": "El muro",
+    "wall_input_text": "Añadir texto",
+    "show_previous": "Mostrar anterior",
+    "mensajes": {
+      "successfully_joined": "Te has unido al grupo correctamente.",
+      "closed_community_join_only_by_invitation": "Para unirte a un grupo cerrado necesitas una invitación.",
+      "get_access_to_obj": "grupo",
+      "successfully_quitted_community": "Has abandonado el grupo correctamente.",
+      "couldnt_delete_rights": "La eliminación del derecho de acceso al grupo no se realizó correctamente."
+    }
+  },
+  "fraym_model": {
+    "object_name": "Grupo",
+    "object_messages": [
+      "Grupo creado correctamente.",
+      "Configuración del grupo modificada correctamente.",
+      "Grupo eliminado correctamente."
+    ],
+    "elements": {
+      "type": {
+        "shownName": "Tipo",
+        "values": [
+          [
+            "{open}",
+            "open"
+          ],
+          [
+            "{close}",
+            "closed"
+          ],
+          [
+            "{request}",
+            "at request"
+          ]
+        ],
+        "helpText": "Abierto: los usuarios pueden unirse sin ninguna solicitud. Cerrado: los usuarios solo pueden unirse aceptando la invitación de un miembro. A petición: los usuarios solo pueden unirse si se acepta su solicitud."
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "communities": {
+        "shownName": "Conectado a grupos"
+      },
+      "description": {
+        "shownName": "Descripción completa"
+      },
+      "attachments": {
+        "shownName": "Logotipo del grupo",
+        "helpText": "160 píxeles de ancho, 160 píxeles de alto."
+      },
+      "access_to_childs": {
+        "shownName": "Acceso a eventos",
+        "helpText": "Si se establece el acceso libre, los usuarios podrán unirse a los eventos sin necesidad de solicitarlo a sus autores.",
+        "values": [
+          [
+            "",
+            "solo bajo solicitud"
+          ],
+          [
+            "1",
+            "gratis"
+          ]
+        ]
+      },
+      "competences": {
+        "shownName": "Certifica competencias"
+      },
+      "tags": {
+        "shownName": "Etiquetas",
+        "values": null
+      },
+      "foresight_map_id": {
+        "shownName": "IDs de mapas de prospectiva",
+        "helpText": "Puede obtener los IDs de mapas de prospectiva aquí: <a href='%s' target='_blank'>http:\/\/www.foresightmaps.ru\/<\/a>. Puede proporcionar más de un ID separándolos con el símbolo «;»."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      },
+      "back_to_community": {
+        "shownName": "Volver al grupo después de guardar"
+      }
+    }
+  }
+}

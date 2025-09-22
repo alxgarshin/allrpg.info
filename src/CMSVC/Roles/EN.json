@@ -1,0 +1,29 @@
+{
+  "global": {
+    "title": "Roles list",
+    "noname": "Untitled",
+    "description_above": "Go to description above",
+    "all": "Roles list",
+    "apply": "Apply",
+    "up_to": "(up to %s)",
+    "question": "?",
+    "team_up_to": "(team up to %s participants)",
+    "error_on_quantity": "(%s of %s applications)",
+    "taken": "Applied: %s",
+    "maybetaken": "Possible applies: %s",
+    "show_roleslist_helper": "Include roles list to your website: <a id=\"switch_show_roleslist_helper\">code<\/a>.",
+    "helper": "To include roles list to your website, please, insert the following HTML-code:",
+    "show_roleslist": "Roles list is visible %s: <a id=\"switch_show_roleslist\">switch<\/a>.",
+    "view_roleslist_mode": "Viewing roles list in %s mode: <a id=\"switch_view_roleslist_mode\">switch<\/a>.",
+    "view_roleslist_modes": {
+      "gamemaster": "gamemaster",
+      "player": "player"
+    },
+    "edit": "edit",
+    "first_group": "create a group of characters",
+    "add_group": "create a subgroup",
+    "add_character": "create a character",
+    "change_order": "move",
+    "filter": "enter a text here to find a location \/ group \/ character"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "global": {
+    "title": "Tareas",
+    "author": "Autor",
+    "was_registered": "Creado",
+    "modal_header_task_members": "Participantes de la tarea",
+    "modal_group_admin": "autor",
+    "modal_group_admin_first_letter": "Autor",
+    "modal_group_responsible": "responsable",
+    "modal_group_responsible_first_letter": "Responsable",
+    "modal_group_member": "participante",
+    "modal_group_member_first_letter": "P",
+    "percentage": "estado",
+    "state_name_closed": "cerrado",
+    "state_name_hot": "urgente",
+    "state_name_current": "actual",
+    "state_name_future": "futuro",
+    "no_due_date": "sin fecha de vencimiento",
+    "no_start_date": "sin fecha de inicio",
+    "priority": "Prioridad",
+    "status": "Estado",
+    "state_name_lowercase": "Estado",
+    "edit_task_capitalized": "Editar tarea",
+    "members_management_capitalized": "Administrar derechos",
+    "leave_task_capitalized": "Abandonar tarea",
+    "access_request_sent": "Solicitud enviada",
+    "request_access": "Solicitar participación",
+    "get_access": "Unirse a la tarea",
+    "place": "Lugar",
+    "task_members": "Participantes de la tarea",
+    "members": "Miembros de la tarea",
+    "members_alt": "Derechos de los miembros",
+    "group_authors": "Autores",
+    "group_responsibles": "Responsable",
+    "group_members": "Miembros",
+    "edit_task": "Editar tarea",
+    "invite_into_task": "Invitar a la tarea",
+    "create_task_chat": "Crear una conversación de tarea",
+    "open_task_chat": "Abrir conversación de tarea",
+    "copy_task": "Copiar tarea",
+    "show_qr_code": "Mostrar código QR",
+    "materials": "Materiales",
+    "documents": "Documentos",
+    "starting_dcouments": "Documentos entrantes",
+    "resources": "Recursos",
+    "upload": "Subir",
+    "add_a_link": "Añadir un enlace",
+    "change_resources": "Editar",
+    "result": "Resultado requerido",
+    "stories": "Casos de prueba",
+    "story_add": "Añadir un caso de prueba",
+    "history": "Historial",
+    "input_message": "Escribir un mensaje, editar responsable, estado y prioridad",
+    "request_access_capitalized": "Solicitar acceso",
+    "rerequest_access_capitalized": "Solicitar acceso de nuevo",
+    "project": "Proyecto",
+    "community": "Grupo",
+    "parent_task": "Parte de",
+    "child_task": "Consiste en",
+    "following_task": "Siguiente",
+    "preceding_task": "Anterior",
+    "messages": {
+      "successfully_joined": "Te has unido correctamente a la tarea.",
+      "community": "Grupo",
+      "task_change_message_1": "Hola.<br><br>%s han cambiado%s una tarea <a href=\"%stask\/%s\/\">%s<\/a>.<br><br><b>Estado:<\/b>",
+      "task_change_message_2": "Prioridad",
+      "task_change_message_3": "Fecha y hora de inicio",
+      "task_change_message_4": "Fecha y hora de finalización",
+      "task_change_message_5": "Descripción",
+      "task_change_message_10": "Resultado objetivo",
+      "task_change_message_6": "La tarea ha cambiado",
+      "task_change_message_7": "Hola.<br><br>%s te ha asignado a %s como responsable de la tarea <a href=\"%stask\/%s\/\">%s<\/a>.",
+      "task_change_message_8": "Se te asignó la responsabilidad de esta tarea",
+      "task_change_message_9": "Tarea creada.",
+      "have_no_rights": "No tienes permisos para la tarea especificada",
+      "have_no_rights_project": "Proyecto",
+      "have_no_rights_community": "Grupo",
+      "remove_access_success": "Has abandonado la tarea correctamente.",
+      "remove_access_fail": "No se pueden eliminar los permisos de la tarea.",
+      "get_access_word": "tarea",
+      "cant_follow_parent": "Una tarea no puede seguir y ser hija de la misma tarea simultáneamente.",
+      "have_no_rights_in_this_task": "No tiene permisos para gestionar esta tarea.",
+      "dates_changed_successfully": "Fechas modificadas correctamente.",
+      "dates_change_message": "Fechas en proceso de cambio. Fecha y hora de inicio: %s. Fecha y hora de finalización: %s.",
+      "task_created_successfully": "Tarea creada correctamente.",
+      "tasks_have_different_parents": "Es imposible vincular tareas de diferentes proyectos.",
+      "tasks_cant_loop": "La tarea no puede formar parte de otra tarea y estar compuesta simultáneamente por ella."
+    }
+  },
+  "fraym_model": {
+    "object_name": "task",
+    "object_messages": [
+      "Tarea creada correctamente.",
+      "Tarea modificada correctamente.",
+      "Tarea eliminada correctamente."
+    ],
+    "elementos": {
+      "estado": {
+        "valores": [
+          [
+            "{nuevo}",
+            "nuevo"
+          ],
+          [
+            "{listo}",
+            "listo para trabajar"
+          ],
+          [
+            "{datos_necesarios}",
+            "se necesitan más detalles"
+          ],
+          [
+            "{trabajando}",
+            "en proceso"
+          ],
+          [
+            "{comprobando}",
+            "debe revisarse"
+          ],
+          [
+            "{retrasado}",
+            "pospuesto"
+          ],
+          [
+            "{cerrado}",
+            "cerrado"
+          ],
+          [
+            "{rechazado}",
+            "rechazado"
+          ]
+        ],
+        "nombremostrado": "Estado"
+      },
+      "prioridad": {
+        "valores": [
+          [
+            "1",
+            "inmediato"
+          ],
+          [
+            "2",
+            "urgente"
+          ],
+          [
+            "3",
+            "alta"
+          ],
+          [
+            "4",
+            "normal"
+          ],
+          [
+            "5",
+            "baja"
+          ]
+        ],
+        "shownName": "Prioridad"
+      },
+      "obj_id": {
+        "shownName": "Grupo"
+      },
+      "user_id": {
+        "shownName": "Participantes"
+      },
+      "responsible": {
+        "shownName": "Responsable"
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "place": {
+        "shownName": "Ubicación"
+      },
+      "result": {
+        "shownName": "Resultado deseado"
+      },
+      "description": {
+        "shownName": "Descripción"
+      },
+      "date_from": {
+        "shownName": "Fecha y hora de inicio"
+      },
+      "date_to": {
+        "shownName": "Fecha y hora de finalización"
+      },
+      "do_not_count_as_busy": {
+        "shownName": "No contar como ocupado al determinar la disponibilidad"
+      },
+      "repeat_mode": {
+        "shownName": "Repetir tarea",
+        "values": [
+          [
+            "single",
+            "no repetir"
+          ],
+          [
+            "everyday",
+            "todos los días"
+          ],
+          [
+            "every_workday",
+            "todos los días laborables"
+          ],
+          [
+            "once_per_week",
+            "todas las semanas"
+          ],
+          [
+            "every_month",
+            "todos los meses"
+          ],
+          [
+            "every_year",
+            "todos los años"
+          ]
+        ]
+      },
+      "repeat_until": {
+        "shownName": "Repetir hasta"
+      },
+      "attachments": {
+        "shownName": "Documentos entrantes"
+      },
+      "percentage": {
+        "shownName": "% de disponibilidad"
+      },
+      "parent_task": {
+        "shownName": "Forma parte de",
+        "values": [
+          [
+            "nothing_found",
+            "no se encontraron tareas"
+          ]
+        ]
+      },
+      "following_task": {
+        "shownName": "Sigue",
+        "values": [
+          [
+            "nothing_found",
+            "no se encontraron tareas"
+          ]
+        ]
+      },
+      "competences": {
+        "shownName": "Certifica competencias"
+      },
+      "tags": {
+        "shownName": "Etiquetas"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      },
+      "back_to_project": {
+        "shownName": "Volver al proyecto después de guardar"
+      }
+    }
+  }
+}

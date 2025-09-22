@@ -1,0 +1,70 @@
+{
+  "global": {
+    "title": "Gamemasters/organizadores",
+    "messages": {
+      "invitation_sent": "Se envió una invitación. Los derechos se establecerán automáticamente después de que el usuario confirme su participación en el proyecto.",
+      "cannot_remove_admin": "Solo otro gamemaster puede eliminarte un derecho de autor."
+    }
+  },
+  "fraym_model": {
+    "object_name": "organizador",
+    "object_messages": [
+      "Organizador invitado correctamente.",
+      "Permisos de organizadores cambiados correctamente",
+      "Organizador eliminado correctamente."
+    ],
+    "elements": {
+      "obj_id_from": {
+        "shownName": "Usuario",
+        "helpText": "Para invitar a un usuario como organizador al proyecto, invítalo primero a tu lista de amigos. Esto protege a los usuarios del spam."
+      },
+      "type": {
+        "shownName": "Derecho de proyecto",
+        "values": [
+          [
+            "{admin}",
+            "author"
+          ],
+          [
+            "{gamemaster}",
+            "gamemaster"
+          ],
+          [
+            "{newsmaker}",
+            "news"
+          ],
+          [
+            "{budget}",
+            "budget"
+          ],
+          [
+            "{fee}",
+            "fee"
+          ]
+        ]
+      },
+      "comment": {
+        "shownName": "Configuración",
+        "help_1": "Si se establece un derecho de \"gamemaster\", el usuario solo podrá editar las aplicaciones dentro de los conjuntos de filtros seleccionados, pero podrá comentar cualquier aplicación",
+        "help_2": "Si se establece un derecho de \"gamemaster\", solo se podrá acceder a las secciones seleccionadas"
+      },
+      "obj_type_from": {
+        "shownName": "<span class=\"sbi sbi-check\">",
+        "helpText": "¿Aceptaste la invitación al proyecto?",
+        "values": [
+          [
+            "{user}",
+            "<span class=\"sbi sbi-check\"></span>"
+          ],
+          [
+            "{user_invited}",
+            "<span class=\"sbi sbi-times\"></span>"
+          ]
+        ]
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

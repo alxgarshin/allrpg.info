@@ -1,0 +1,195 @@
+{
+  "global": {
+    "title": "Пользователи",
+    "show_contacts": "показать контактную информацию",
+    "edit_profile": "Редактировать",
+    "edit_portfolio": "Редактировать портфолио",
+    "add_as_colleague": "Добавить в друзья",
+    "re_add_as_colleague": "Добавить в друзья<br><span class=\"small\">(повторный запрос)<\/span>",
+    "send_a_message": "Написать сообщение",
+    "click_to_change_status": "щелкните для изменения статуса",
+    "birth_date": "Дата рождения",
+    "city": "Город",
+    "achievements": "Достижения на allrpg.info",
+    "contact_user": "Связаться и добавить в друзья",
+    "contact_user_only": "Связаться",
+    "find_a_friend": "Найти пользователя",
+    "colleagues": "Друзья",
+    "projects": "Проекты",
+    "project_add": "Добавить проект",
+    "communities": "Группы",
+    "community_add": "Добавить группу",
+    "publications": "Статьи",
+    "publication_add": "Добавить статью",
+    "portfolio": "Портфолио",
+    "notion": "Отзывы",
+    "wall_input_text": "Написать отзыв",
+    "rating": "Рейтинг",
+    "report": "Отчеты",
+    "report_add": "Добавить отчет",
+    "name": "Название",
+    "author": "Автор",
+    "date": "Дата",
+    "add_portfolio": "Добавить событие в портфолио",
+    "master": "Мастер",
+    "support": "Полигонщик",
+    "participant": "Участник",
+    "portfolio_fields": {
+      "event": "Событие",
+      "dates": "Даты",
+      "role": "Роль",
+      "location": "Локация",
+      "role_and_location": "Роль и локация",
+      "speciality": "Специализация",
+      "report": "Отчет",
+      "photo": "Фото"
+    },
+    "messages": {
+      "filters_not_set": "Фильтры не определены!",
+      "made_expert": "Пользователь успешно назначен экспертом."
+    }
+  },
+  "fraym_model": {
+    "object_name": "Account information",
+    "object_messages": [
+      "",
+      "Account information changed successfully.",
+      "Account information deleted successfully."
+    ],
+    "elements": {
+      "h1_0": {
+        "shownName": "Basic information"
+      },
+      "h1_4": {
+        "shownName": "Personal data"
+      },
+      "fio": {
+        "shownName": "Full name"
+      },
+      "birth": {
+        "shownName": "Birthdate"
+      },
+      "city": {
+        "shownName": "City"
+      },
+      "gender": {
+        "shownName": "Sex",
+        "values": [
+          [
+            "1",
+            "Male"
+          ],
+          [
+            "2",
+            "Female"
+          ]
+        ]
+      },
+      "photo": {
+        "shownName": "Photo",
+        "helpText": "Format: gif, jpeg, png. Size: no more than 400 pixels."
+      },
+      "h1_10": {
+        "shownName": "Contact information"
+      },
+      "phone": {
+        "shownName": "Telephone"
+      },
+      "icq": {
+        "shownName": "ICQ"
+      },
+      "skype": {
+        "shownName": "Skype"
+      },
+      "jabber": {
+        "shownName": "Jabber"
+      },
+      "vkontakte": {
+        "shownName": "ВКонтакте"
+      },
+      "facebook": {
+        "shownName": "Facebook"
+      },
+      "googleplus": {
+        "shownName": "Google+"
+      },
+      "twitter": {
+        "shownName": "Twitter"
+      },
+      "livejournal": {
+        "shownName": "Живой Журнал"
+      },
+      "linkedin": {
+        "shownName": "LinkedIn"
+      },
+      "professional_data": {
+        "shownName": "Professional information"
+      },
+      "place_of_work": {
+        "shownName": "Current workplace"
+      },
+      "place_of_study": {
+        "shownName": "Main educational institution"
+      },
+      "study_grade": {
+        "shownName": "Education",
+        "values": [
+          [
+            "8",
+            "Higher"
+          ],
+          [
+            "1",
+            "Bachelor",
+            "1"
+          ],
+          [
+            "2",
+            "Master",
+            "1"
+          ],
+          [
+            "3",
+            "PhD",
+            "1"
+          ],
+          [
+            "4",
+            "Doctor of Science",
+            "1"
+          ],
+          [
+            "5",
+            "Uncompleted higher education\/Non-official higher education"
+          ],
+          [
+            "6",
+            "Vocational secondary education"
+          ],
+          [
+            "7",
+            "Secondary education"
+          ]
+        ]
+      },
+      "specialities": {
+        "shownName": "Sphere of activity",
+        "values": []
+      },
+      "interests": {
+        "shownName": "Field of interest",
+        "values": null
+      },
+      "additional": {
+        "shownName": "Additional information"
+      },
+      "settings": {
+        "shownName": "Settings"
+      },
+      "subs_objects": {
+        "shownName": "Send notifications about",
+        "values": []
+      }
+    }
+  }
+}

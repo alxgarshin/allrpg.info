@@ -1,0 +1,195 @@
+{
+  "global": {
+    "title": "Usuarios",
+    "show_contacts": "Mostrar información de contacto",
+    "edit_profile": "Editar",
+    "edit_portfolio": "Editar portafolio",
+    "add_as_colleague": "Añadir a amigos",
+    "re_add_as_colleague": "Añadir a amigos<br><span class=\"small\">(segunda solicitud)<\/span>",
+    "send_a_message": "Introduce un mensaje",
+    "click_to_change_status": "Haz clic aquí para cambiar el estado",
+    "birth_date": "Fecha de nacimiento",
+    "city": "Ciudad",
+    "achievements": "Logros de allrpg.info",
+    "contact_user": "Contactar con el usuario y añadirlo a amigos",
+    "contact_user_only": "Contactar con el usuario",
+    "find_a_friend": "Buscar un usuario",
+    "colleagues": "Amigos",
+    "projects": "Proyectos",
+    "project_add": "Crear un proyecto",
+    "communities": "Grupos",
+    "community_add": "Crear un grupo",
+    "publications": "Artículos",
+    "publication_add": "Añadir un artículo",
+    "portfolio": "Portafolio",
+    "notion": "Nociones",
+    "wall_input_text": "Introducir noción",
+    "rating": "Calificación",
+    "report": "Informes",
+    "report_add": "Añadir un informe",
+    "name": "Título",
+    "author": "Autor",
+    "date": "Fecha",
+    "add_portfolio": "Añadir un evento al portafolio",
+    "master": "Gamemaster",
+    "support": "Soporte",
+    "participant": "Participante",
+    "portfolio_fields": {
+      "event": "Evento",
+      "dates": "Fechas",
+      "role": "Rol",
+      "location": "Ubicación",
+      "role_and_location": "Rol y ubicación",
+      "speciality": "Especialidad",
+      "report": "Informe",
+      "photo": "Foto"
+    },
+    "messages": {
+      "filters_not_set": "¡Filtros no seleccionados!",
+      "made_expert": "El usuario fue asignado correctamente como experto."
+    }
+  },
+  "fraym_model": {
+    "object_name": "Información de la cuenta",
+    "object_messages": [
+      "",
+      "Información de la cuenta modificada correctamente.",
+      "Información de la cuenta eliminada correctamente."
+    ],
+    "elements": {
+      "h1_0": {
+        "shownName": "Información básica"
+      },
+      "h1_4": {
+        "shownName": "Datos personales"
+      },
+      "fio": {
+        "shownName": "Nombre completo"
+      },
+      "birth": {
+        "shownName": "Fecha de nacimiento"
+      },
+      "city": {
+        "shownName": "Ciudad"
+      },
+      "gender": {
+        "shownName": "Sexo",
+        "values": [
+          [
+            "1",
+            "Masculino"
+          ],
+          [
+            "2",
+            "Femenino"
+          ]
+        ]
+      },
+      "photo": {
+        "shownName": "Foto",
+        "helpText": "Formato: gif, jpeg, png. Tamaño: máximo 400 píxeles."
+      },
+      "h1_10": {
+        "shownName": "Información de contacto"
+      },
+      "phone": {
+        "shownName": "Teléfono"
+      },
+      "icq": {
+        "shownName": "ICQ"
+      },
+      "skype": {
+        "shownName": "Skype"
+      },
+      "jabber": {
+        "shownName": "Jabber"
+      },
+      "vkontakte": {
+        "shownName": "Vkontakte"
+      },
+      "facebook": {
+        "shownName": "Facebook"
+      },
+      "googleplus": {
+        "shownName": "Google+"
+      },
+      "twitter": {
+        "shownName": "Twitter"
+      },
+      "livejournal": {
+        "shownName": "LiveJournal"
+      },
+      "linkedin": {
+        "shownName": "LinkedIn"
+      },
+      "professional_data": {
+        "shownName": "Información profesional"
+      },
+      "place_of_work": {
+        "shownName": "Lugar de trabajo actual"
+      },
+      "place_of_study": {
+        "shownName": "Institución educativa principal"
+      },
+      "study_grade": {
+        "shownName": "Educación",
+        "values": [
+          [
+            "8",
+            "Superior"
+          ],
+          [
+            "1",
+            "Licenciatura",
+            "1"
+          ],
+          [
+            "2",
+            "Máster",
+            "1"
+          ],
+          [
+            "3",
+            "Doctorado",
+            "1"
+          ],
+          [
+            "4",
+            "Doctor en Ciencias",
+            "1"
+          ],
+          [
+            "5",
+            "Educación superior no completada/Educación superior no reglada"
+          ],
+          [
+            "6",
+            "Educación secundaria profesional"
+          ],
+          [
+            "7",
+            "Educación secundaria"
+          ]
+        ]
+      },
+      "specialities": {
+        "shownName": "Área de actividad",
+        "values": []
+      },
+      "interests": {
+        "shownName": "Campo de interés",
+        "values": null
+      },
+      "additional": {
+        "shownName": "Información adicional"
+      },
+      "settings": {
+        "shownName": "Configuración"
+      },
+      "subs_objects": {
+        "shownName": "Enviar notificaciones sobre",
+        "values": []
+      }
+    }
+  }
+}

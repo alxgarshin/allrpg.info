@@ -1,0 +1,16 @@
+{
+  "global": {
+    "title": "Задачи",
+    "filter_tasks_and_events": "Отфильтровать задачи и события: ",
+    "obj_filters": {
+      "all": "все",
+      "personal": "личные",
+      "global": "глобальные"
+    },
+    "obj_filters_additional": {
+      "project": "Проекты",
+      "community": "Группы",
+      "responsible": "Ответственный"
+    }
+  }
+}

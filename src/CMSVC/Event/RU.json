@@ -1,0 +1,99 @@
+{
+  "global": {
+    "title": "События",
+    "author": "Автор",
+    "was_registered": "Создано",
+    "modal_header_event_members": "Участники события",
+    "modal_group_admin": "автор",
+    "modal_group_admin_first_letter": "Автор",
+    "modal_group_member": "участник",
+    "modal_group_member_first_letter": "У",
+    "edit_event_capitalized": "Редактирование события",
+    "members_management_capitalized": "Управление правами",
+    "leave_event_capitalized": "Покинуть событие",
+    "place": "Место",
+    "foresight_map": "Форсайт-карта",
+    "event_members": "Участники события",
+    "members": "Участники события",
+    "members_alt": "Права участников",
+    "group_authors": "Авторы",
+    "group_members": "Участники",
+    "edit_event": "Редактировать событие",
+    "invite_into_event": "Пригласить в событие",
+    "create_event_chat": "Создать диалог события",
+    "open_event_chat": "Открыть диалог события",
+    "create_foresight_map": "Создать форсайт-карту",
+    "edit_foresight_map": "Редактировать форсайт карту",
+    "show_qr_code": "Показать QR-код",
+    "materials": "Материалы",
+    "documents": "Документы",
+    "starting_dcouments": "Входящие документы",
+    "upload": "Загрузить",
+    "add_a_link": "Добавить ссылку",
+    "stories": "Прецеденты",
+    "story_add": "Добавить прецедент",
+    "history": "История",
+    "input_message": "Написать сообщение",
+    "access_request_sent": "Запрос отправлен",
+    "request_access": "Запросить подключение",
+    "get_access": "Вступить в событие",
+    "request_access_capitalized": "Запросить доступ",
+    "rerequest_access_capitalized": "Запросить доступ повторно",
+    "project": "Проект",
+    "community": "Группа",
+    "messages": {
+      "successfully_joined": "Вы успешно вступили в событие.",
+      "project": "Проект",
+      "event_change_message_1": "Добрый день.<br><br>%s изменил%s событие <a href=\"%sevent\/%s\/\">%s<\/a>.<br><br><b>Дата и время начала:<\/b> %s<br><b>Дата и время окончания:<\/b> %s<br><b>Описание:<\/b><br>",
+      "event_change_message_2": "Событие изменено",
+      "event_change_message_3": "Добрый день.<br><br>%s назначил%s Вас ответственным в событии <a href=\"%sevent\/%s\/\">%s<\/a>.",
+      "event_change_message_4": "Вы назначены ответственным в событии",
+      "have_no_rights": "У Вас нет прав на управление событиями указанного",
+      "have_no_rights_project": "проекта",
+      "have_no_rights_community": "группы",
+      "remove_access_success": "Вы успешно покинули событие.",
+      "remove_access_fail": "Не удалось удалить права доступа к событию.",
+      "get_access_word": "событию",
+      "have_no_rights_in_this_event": "У Вас нет прав на управление данным событием.",
+      "dates_changed_successfully": "Даты успешно изменены.",
+      "dates_change_message": "Изменение дат. Дата и время начала: %s. Дата и время окончания: %s."
+    }
+  },
+  "fraym_model": {
+    "object_name": "событие",
+    "object_messages": [
+      "Событие успешно создано.",
+      "Событие успешно изменено.",
+      "Событие успешно удалено."
+    ],
+    "elements": {
+      "obj_id": {
+        "shownName": "Группа"
+      },
+      "name": {
+        "shownName": "Название"
+      },
+      "user_id": {
+        "shownName": "Участники"
+      },
+      "place": {
+        "shownName": "Местоположение"
+      },
+      "description": {
+        "shownName": "Описание"
+      },
+      "date_from": {
+        "shownName": "Дата и время начала"
+      },
+      "date_to": {
+        "shownName": "Дата и время окончания"
+      },
+      "attachments": {
+        "shownName": "Вложения"
+      },
+      "tags": {
+        "shownName": "Теги"
+      }
+    }
+  }
+}

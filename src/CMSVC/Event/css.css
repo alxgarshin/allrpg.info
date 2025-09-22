@@ -1,0 +1,30 @@
+@import url('/css/components/conversation_form.min.css');
+@import url('/css/components/task_event_message.min.css');
+
+div.maincontent_data.autocreated form#form_event div[id^="field_place"] {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+div.event_dates {
+    text-align: right;
+    float: right;
+    background-color: var(--underlay-gray);
+    color: var(--main-blue);
+    border-radius: .3em;
+}
+
+div.event_dates div {
+    padding: .5em 1em;
+}
+
+div.event_dates div:last-child {
+    border-top: 1px solid var(--some-borders);
+}
+
+@media only screen and (max-device-width: 767px) {
+    div.kind_event div.object_info_1 {
+        display: none;
+    }
+}

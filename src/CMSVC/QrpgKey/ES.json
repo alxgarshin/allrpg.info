@@ -1,0 +1,58 @@
+{
+  "global": {
+    "title": "QRpg: claves y propiedades",
+    "switch_to_cards": "cambiar a la vista de cartas",
+    "switch_to_table": "cambiar a la vista de tabla",
+    "usedInCodes": {
+      "qrpg_keys": "abre",
+      "not_qrpg_keys": "bloquea",
+      "removes_qrpg_keys": "se elimina",
+      "gives_qrpg_keys": "se añade",
+      "transferred": "se transfiere",
+      "gives_bad_qrpg_keys": "en caso de escaneo fallido"
+    },
+    "messages": {
+      "error_in_keydata": "La clave debe constar de letras latinas y números.",
+      "error_in_img": "Por favor, seleccione un icono de la lista."
+    }
+  },
+  "fraym_model": {
+    "object_name": "Clave QRpg",
+    "object_messages": [
+      "Clave QRpg creada correctamente.",
+      "Claves QRpg modificadas correctamente",
+      "Clave QRpg eliminada correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título de la clave"
+      },
+      "keydata": {
+        "shownName": "Clave",
+        "helpText": "Solo latín y números. Recomendamos crear una clave maestra para incluirla en todos los códigos QRpg posteriores."
+      },
+      "consists_of": {
+        "shownName": "Consiste en",
+        "helpText": "Los jugadores con todas las claves listadas aquí obtendrán esta clave automáticamente."
+      },
+      "property_name": {
+        "shownName": "Nombre de la propiedad",
+        "helpText": "Si se establece un nombre, la clave en la aplicación del jugador asignará una propiedad al personaje. Esta etiqueta de propiedad se mostrará en el módulo del jugador."
+      },
+      "property_description": {
+        "shownName": "Descripción de la propiedad",
+        "helpText": "Si se establece una descripción, al hacer clic en una etiqueta del módulo del reproductor se alternará el texto actual. Puede formatear el texto con: <b>**para negrita**<\/b>, <i>__para cursiva__<\/i>, [para la dirección http de la imagen], > para citar. Use el formato [#code_id] para insertar automáticamente otro código QRpg en el texto. Al hacer clic en este código, el usuario accederá inmediatamente a su descripción. Si agrega enlaces a archivos MP3, estos se reemplazarán automáticamente por un reproductor MP3. Si agrega [loop] justo después de un enlace a un archivo MP3, el archivo se reproducirá en bucle. Use el formato [conversation|user id] para insertar un formulario para enviar un mensaje al usuario especificado."
+      },
+      "img": {
+        "shownName": "Icono",
+        "helpText": "Los iconos de las teclas se colocan automáticamente en los <a href=\"\/qrpg_code\/\" target=\"_blank\">códigos QRpg<\/a> al generarse y ayudan a los jugadores a saber cuándo pueden abrir el código o no."
+      },
+      "used_in_codes": {
+        "shownName": "Usado en códigos"
+      },
+      "used_in_applications": {
+        "shownName": "En aplicaciones"
+      }
+    }
+  }
+}

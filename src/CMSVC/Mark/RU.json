@@ -1,0 +1,17 @@
+{
+  "global": {
+    "important_button": {
+      "marked_message": "интересно",
+      "unmarked_message": "интересно",
+      "marking_error": "Ошибка пометки."
+    },
+    "messages": {
+      "message_marked_need_response_success": "Сообщение успешно отмечено требующим решения.",
+      "message_marked_need_response_fail": "Сообщение не отмечено требующим решения.",
+      "message_marked_has_response_success": "Сообщение успешно отмечено получившим решение.",
+      "message_marked_has_response_fail": "Сообщение не отмечено получившим решение.",
+      "message_marked_read_success": "Сообщение успешно отмечено прочитанным.",
+      "message_marked_read_fail": "Сообщение не отмечено прочитанным."
+    }
+  }
+}

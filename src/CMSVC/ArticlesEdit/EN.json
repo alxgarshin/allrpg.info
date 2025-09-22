@@ -1,0 +1,38 @@
+{
+  "global": {
+    "title": "Page editing",
+    "messages": {
+      "alias_for_section_not_filled": "High level devisions should have completed alias.",
+      "alias_latin_only": "Alias should be stated in low case letters, for example: news"
+    }
+  },
+  "fraym_model": {
+    "object_name": "section",
+    "object_messages": [
+      "Section created successfully.",
+      "Section changed successfully.",
+      "Section deleted successfully.",
+      "Section and all of its pages deleted successfully."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Parent section"
+      },
+      "code": {
+        "shownName": "Order",
+        "helpText": "sections with lower order value appear earlier."
+      },
+      "name": {
+        "shownName": "Name",
+        "helpText": "no more than 255 symbols."
+      },
+      "attachments": {
+        "shownName": "Alias",
+        "helpText": "not needed in subsections. Short alias leading to this section in browser."
+      },
+      "active": {
+        "shownName": "Active"
+      }
+    }
+  }
+}

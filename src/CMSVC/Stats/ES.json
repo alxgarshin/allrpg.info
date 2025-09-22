@@ -1,0 +1,48 @@
+{
+  "global": {
+    "title": "Informes",
+    "stats": "Informes",
+    "filters_not_set": "¡Los filtros no están configurados!",
+    "types": [
+      [
+        "Usuario",
+        "usuario"
+      ],
+      [
+        "Proyecto",
+        "proyecto"
+      ],
+      [
+        "Comunidad",
+        "grupo"
+      ],
+      [
+        "Tarea",
+        "tarea"
+      ],
+      [
+        "Evento",
+        "evento"
+      ],
+      [
+        "EditarPublicaciones",
+        "artículo"
+      ]
+    ],
+    "select_the_object_needed": "Seleccione el objeto necesario:",
+    "go_back_to_object_choice": "Seleccione otro informe",
+    "nothing_found": "No se encontró nada.",
+    "filter": "Buscar",
+    "reset_filter": "Restablecer",
+    "name": "Nombre",
+    "author": "Autor",
+    "created_at": "Creado en",
+    "total": "Total: ",
+    "show_all_on_one_page": "Mostrar todos los objetos en una página",
+    "export_to_excel": "Exportar todos los objetos a Excel",
+    "messages": {
+      "communities_and_projects_not_filled": "Seleccione al menos un proyecto o grupo.",
+      "competences_not_filled": "Seleccione al menos una competencia."
+    }
+  }
+}

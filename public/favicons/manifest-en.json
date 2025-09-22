@@ -1,0 +1,89 @@
+{
+  "short_name": "allrpg.info",
+  "name": "allrpg.info",
+  "id": "allrpginfo",
+  "description": "Everything you need for LARP games",
+  "icons": [
+    {
+      "src": "/favicons/google-splash-icon-384x384.png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "/favicons/google-touch-icon-512x512.png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicons/google-touch-icon-512x512.png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://www.allrpg.info/favicons/manifest-en.json"
+    },
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=allrpginfo.twa",
+      "id": "allrpginfo.twa"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/favicons/screenshots/1.jpg",
+      "sizes": "422x937",
+      "type": "image/jpg"
+    },
+    {
+      "src": "/favicons/screenshots/2.jpg",
+      "sizes": "422x937",
+      "type": "image/jpg"
+    },
+    {
+      "src": "/favicons/screenshots/3.jpg",
+      "sizes": "422x937",
+      "type": "image/jpg"
+    },
+    {
+      "src": "/favicons/screenshots/4.jpg",
+      "sizes": "422x937",
+      "type": "image/jpg"
+    }
+  ],
+  "categories": [
+    "entertainment",
+    "lifestyle",
+    "games",
+    "rpg",
+    "larpg",
+    "productivity",
+    "project management",
+    "social"
+  ],
+  "shortcuts": [
+    {
+      "name": "My applications",
+      "short_name": "My applications",
+      "url": "/myapplication/"
+    },
+    {
+      "name": "Calendar",
+      "short_name": "Calendar",
+      "url": "/calendar/"
+    },
+    {
+      "name": "Conversations",
+      "short_name": "Conversations",
+      "url": "/conversation/"
+    }
+  ]
+}

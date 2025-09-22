@@ -1,0 +1,70 @@
+{
+  "global": {
+    "title": "Áreas",
+    "no_name": "Sin título",
+    "publish_date": "Última actualización"
+  },
+  "fraym_model": {
+    "object_name": "área",
+    "object_messages": [
+      "Área añadida correctamente.",
+      "Área modificada correctamente.",
+      "Área eliminada correctamente."
+    ],
+    "elements": {
+      "toarea": {
+        "shownName": "Área en la base de conocimientos"
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "tipe": {
+        "shownName": "Tipo",
+        "values": [
+          [
+            "1",
+            "ciudad"
+          ],
+          [
+            "2",
+            "bosque"
+          ],
+          [
+            "3",
+            "camping"
+          ],
+          [
+            "4",
+            "sobre el agua"
+          ]
+        ]
+      },
+      "city": {
+        "shownName": "Ciudad"
+      },
+      "content": {
+        "shownName": "Descripción"
+      },
+      "havegood": {
+        "shownName": "Ventajas"
+      },
+      "havebad": {
+        "shownName": "Desventajas"
+      },
+      "external_map_link": {
+        "shownName": "Enlace a un mapa externo (Google, yandex)",
+        "helpText": "Para proporcionar un enlace que funcione, debe buscar la función \"Compartir\" en el mapa y pegar el enlace desde allí. Los enlaces directos desde el navegador no funcionarán."
+      },
+      "map": {
+        "shownName": "Mapa de carreteras"
+      },
+      "way": {
+        "shownName": "Mapa de carreteras (descripción)"
+      },
+      "coordinates": {
+        "shownName": "Contactos oficiales",
+        "helpText": "Oculto para todos excepto para usted."
+      }
+    }
+  }
+}

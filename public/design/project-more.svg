@@ -1,0 +1,18 @@
+<svg id="btn_more" data-name="btn more" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+    <defs>
+        <style>
+            .pm-cls-1 {
+            fill: #6a6f74;
+            }
+
+            .pm-cls-2 {
+            fill: #fff;
+            }
+        </style>
+    </defs>
+    <rect id="Rounded_Rectangle_1389" data-name="Rounded Rectangle 1389" class="pm-cls-1" width="21" height="21" rx="10.5"
+          ry="10.5"/>
+    <circle class="pm-cls-2" cx="5.5" cy="10.5" r="1.5"/>
+    <circle class="pm-cls-2" cx="10.5" cy="10.5" r="1.5"/>
+    <circle class="pm-cls-2" cx="15.5" cy="10.5" r="1.5"/>
+</svg>

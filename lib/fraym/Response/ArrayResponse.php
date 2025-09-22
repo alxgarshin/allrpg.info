@@ -1,0 +1,29 @@
+<?php
+
+/*
+ * This file is part of the Fraym package.
+ *
+ * (c) Alex Garshin <alxgarshin@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Fraym\Response;
+
+use Fraym\Interface\Response;
+
+class ArrayResponse implements Response
+{
+    public function __construct(
+        private readonly array $data,
+    ) {
+    }
+
+    public function getData(): array
+    {
+        return $this->data;
+    }
+}

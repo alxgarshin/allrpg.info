@@ -1,0 +1,29 @@
+{
+  "global": {
+    "title": "Сетка ролей",
+    "noname": "Без названия",
+    "description_above": "Перейти к описанию выше",
+    "all": "Сетка ролей",
+    "apply": "Заявиться",
+    "up_to": "(до %s)",
+    "question": "?",
+    "team_up_to": "(команда до %s человек)",
+    "error_on_quantity": "(%s из %s заявок)",
+    "taken": "Набрано: %s",
+    "maybetaken": "Возможно набрано: %s",
+    "show_roleslist_helper": "Разместить сетку ролей у себя на сайте: <a id=\"switch_show_roleslist_helper\">код<\/a>.",
+    "helper": "Для размещения сетки ролей на Вашем сайте вставьте следующий код в HTML-код соответствующей страницы:",
+    "show_roleslist": "Сетка ролей видна %s: <a id=\"switch_show_roleslist\">переключить<\/a>.",
+    "view_roleslist_mode": "Сетка ролей видна в режиме %s: <a id=\"switch_view_roleslist_mode\">переключить<\/a>.",
+    "view_roleslist_modes": {
+      "gamemaster": "мастера",
+      "player": "игрока"
+    },
+    "edit": "редактировать",
+    "first_group": "создать группу персонажей",
+    "add_group": "добавить подгруппу",
+    "add_character": "добавить персонажа",
+    "change_order": "переместить",
+    "filter": "введите текст для поиска локации \/ группы \/ персонажа"
+  }
+}

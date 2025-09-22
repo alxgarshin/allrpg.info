@@ -1,0 +1,47 @@
+{
+  "fraym_model": {
+    "object_name": "page",
+    "object_messages": [
+      "Page created successfully.",
+      "Page changed successfully.",
+      "Page deleted successfully."
+    ],
+    "elements": {
+      "lin": {
+        "shownName": "Link to the page on the website"
+      },
+      "parent": {
+        "shownName": "Parent section"
+      },
+      "code": {
+        "shownName": "Order",
+        "helpText": "pages with lower order value appear earlier."
+      },
+      "name": {
+        "shownName": "Name",
+        "helpText": "no more than 255 symbols."
+      },
+      "author": {
+        "shownName": "Author(s)"
+      },
+      "active": {
+        "shownName": "Active"
+      },
+      "attachments": {
+        "shownName": "Attachments"
+      },
+      "content": {
+        "shownName": "Content"
+      },
+      "nocomments": {
+        "shownName": "Disable comments"
+      },
+      "tags": {
+        "shownName": "Tags"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

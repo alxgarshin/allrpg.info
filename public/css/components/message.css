@@ -1,0 +1,123 @@
+/** Сообщения */
+div.maincontent_data>div.message div.message_photos div.photoName {
+    margin-top: 3%;
+}
+
+div.message_info div.names {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bold;
+    max-width: calc(100% - 4em);
+}
+
+div.message_info div.time {
+    max-width: 6em;
+    min-width: 4em;
+    text-align: right;
+    color: var(--gray-soft);
+}
+
+div.message_info div.content_preview {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    flex: 1;
+}
+
+div.message.selected div.message_info div.content_preview,
+div.message.selected div.message_info div.content_preview span.gray {
+    color: var(--color-background-main);
+}
+
+div.message_info div.content_preview div.commands,
+div.message_info div.content_preview div.additional {
+    display: none;
+}
+
+div.message_content div.photoName {
+    width: 100%;
+}
+
+div.message_content div.message_content_data {
+    overflow-wrap: break-word;
+    text-align: justify;
+}
+
+div.maincontent_data>div.message div.message_content div.message_content_data {
+    margin-left: 3.5em;
+    text-align: justify;
+    margin-bottom: 0;
+    max-height: 4.3em;
+    overflow: hidden;
+}
+
+div.message_content div.files_list {
+    margin-left: 4em;
+}
+
+div.maincontent_data>div.message div.message_content div.files_list {
+    margin-left: 4em;
+}
+
+div.message_content div.commands,
+div.conversation_message_content_text div.commands {
+    float: right;
+    z-index: 1;
+    margin-left: .5em;
+}
+
+div.message_content div.commands a[action_request],
+div.conversation_message_content_text div.commands a[action_request] {
+    color: var(--color-font-main);
+    display: inline-block;
+    background-color: var(--underlay-gray);
+    padding: .5em 1em;
+    margin-left: .5em;
+    border-radius: 3.5em;
+    font-size: .9em;
+    margin-top: -.5em;
+}
+
+div.message_content div.commands a.bold[action_request],
+div.conversation_message_content_text div.commands a.bold[action_request] {
+    font-weight: normal;
+    background-color: var(--main-blue);
+    color: var(--color-background-main) !important;
+}
+
+div.message_content div.commands div.done,
+div.conversation_message_content_text div.commands div.done {
+    display: inline-block;
+    margin-left: .5em;
+    color: var(--gray-soft);
+}
+
+div.message_content div.commands a[action_request]:hover,
+div.message_content div.commands div:hover,
+div.conversation_message_content_text div.commands div:hover {
+    text-decoration: none;
+}
+
+div.message_content a.bold {
+    font-weight: bold;
+}
+
+@media only screen and (max-device-width: 767px) {
+    div.message {
+        font-size: small;
+    }
+
+    div.message_content div.commands {
+        float: none;
+        margin: .5em 0;
+    }
+
+    div.message_content div.commands div.done {
+        margin-left: 0;
+        display: block;
+    }
+}

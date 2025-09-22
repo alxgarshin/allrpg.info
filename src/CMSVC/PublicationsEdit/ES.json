@@ -1,0 +1,49 @@
+{
+  "global": {
+    "title": "Edición de artículos"
+  },
+  "fraym_model": {
+    "object_name": "article",
+    "object_messages": [
+      "Publicación añadida correctamente.",
+      "Publicación modificada correctamente.",
+      "Publicación eliminada correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título",
+        "helpText": "No más de 255 símbolos."
+      },
+      "author": {
+        "shownName": "Autor(es)",
+        "helpText": "Solo puedes configurar a tus amigos como autores."
+      },
+      "annotation": {
+        "shownName": "Resumen"
+      },
+      "content": {
+        "shownName": "Contenido"
+      },
+      "attachments": {
+        "shownName": "Adjuntos"
+      },
+      "agree": {
+        "shownName": "Acepto las normas de publicación",
+        "helpText": "Entiendo que la información se publicará en internet y estará disponible para los participantes de las redes sociales. Confirmo que los materiales proporcionados y publicados por mí conservan los derechos de autor; de lo contrario, tengo permiso para usar y publicar estos materiales."
+      },
+      "active": {
+        "shownName": "Publicación disponible"
+      },
+      "nocomments": {
+        "shownName": "Desactivar los comentarios para esta publicación"
+      },
+      "tags": {
+        "shownName": "Etiquetas",
+        "values": null
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

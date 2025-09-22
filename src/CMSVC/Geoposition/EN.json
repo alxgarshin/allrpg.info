@@ -1,0 +1,7 @@
+{
+  "global": {
+    "title": "Players geoposition",
+    "type_data_to_search": "Search: type in a participant id, name or nickname or a main application field text",
+    "center": "center map"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "global": {
+    "title": "Warehouse: my items",
+    "messages": {
+      "wrong_image_path": "Wrong path to an image: perhaps the photo is under a restricted access or you're providing a link to the webpage instead of a link to the image itself."
+    }
+  },
+  "fraym_model": {
+    "object_name": "item",
+    "object_messages": [
+      "Item added successfully.",
+      "Item changed successfully.",
+      "Item deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Name",
+        "helpText": "no more than 255 symbols."
+      },
+      "region": {
+        "shownName": "Region"
+      },
+      "currency": {
+        "shownName": "Currency",
+        "values": [
+          [
+            "RUR",
+            "RUB"
+          ],
+          [
+            "USD",
+            "USD"
+          ],
+          [
+            "EUR",
+            "EUR"
+          ]
+        ]
+      },
+      "exchange_category_ids": {
+        "shownName": "Warehouse categories",
+        "values": [
+          [
+            "3",
+            "Accessory"
+          ],
+          [
+            "4",
+            "Armor"
+          ],
+          [
+            "7",
+            "Historical"
+          ],
+          [
+            "2",
+            "Costume"
+          ],
+          [
+            "1",
+            "Weapon"
+          ],
+          [
+            "8",
+            "Contemporary"
+          ],
+          [
+            "9",
+            "Buildings"
+          ],
+          [
+            "10",
+            "Tourism stuff"
+          ],
+          [
+            "6",
+            "Science fiction"
+          ],
+          [
+            "5",
+            "Fantasy"
+          ]
+        ],
+        "helpText": "if you miss a category, please, contact the <a href=\"\/help\/\" target=\"_blank\">support service<\/a> on the matter."
+      },
+      "description": {
+        "shownName": "Description",
+        "helpText": "if you provide this item for free or in exchange for something, write about it here."
+      },
+      "price_lease": {
+        "shownName": "Rent price"
+      },
+      "price_buy": {
+        "shownName": "Buy-off price"
+      },
+      "additional": {
+        "shownName": "Important nuances",
+        "values": [
+          [
+            "1",
+            "buy it if break it"
+          ],
+          [
+            "2",
+            "self pick-up and self return"
+          ],
+          [
+            "3",
+            "can bring it to you"
+          ],
+          [
+            "4",
+            "will send by mail"
+          ]
+        ]
+      },
+      "active": {
+        "shownName": "Visibile to other users"
+      },
+      "h1_1": {
+        "shownName": "Links to images"
+      },
+      "images": {
+        "shownName": "Image link",
+        "helpText": "if you\\'re adding links to images from a social network, please, make sure that the image is accessible from the Internet and is not in a closed photo album. To add a link for sure, please, click right mouse button on an image and select «Open image in new tab», afterwards copy the image address from the browser address bar."
+      }
+    }
+  }
+}

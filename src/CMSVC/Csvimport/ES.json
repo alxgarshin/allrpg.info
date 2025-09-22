@@ -1,0 +1,18 @@
+{
+  "global": {
+    "title": "Importación CSV",
+    "import_characters_btn": "Importar caracteres y grupos",
+    "import_applications_btn": "Importar aplicaciones",
+    "import_characters_text": "Para importar caracteres y grupos, necesita un archivo CSV con las siguientes columnas:<ul>\r\n<li><b>Carácter<\/b>: contiene el nombre del carácter.<\/li>\r\n<li>Grupos: campo opcional con grupos de caracteres divididos por una línea vertical: Ubicación 1 | Ubicación 2 | Grupo 3<\/li>\r\n<li>Descripción: campo opcional con una descripción textual del carácter.<\/li>\r\n<\/ul>\r\nPara importar el archivo, utilice el siguiente formulario.",
+    "import_applications_text": "Para importar aplicaciones, necesita un archivo CSV con las siguientes columnas:<ul>\r\n<li>Nombre: campo opcional con el nombre del carácter a buscar en la lista de roles.<\/li>\r\n<li>Estado: campo opcional con el estado de la solicitud; los valores posibles son: «Aceptado», «Procesado», «Enviado», «Rechazado».<\/li>\r\n<li>Actualizado: campo opcional con la fecha de la última actualización.<\/li>\r\n<li>Creado: campo opcional con la fecha de creación.<\/li>\r\n<li>Izquierdo: campo opcional con la cantidad pendiente de pago.<\/li>\r\n<li>Pagado: campo opcional con la cantidad ya pagada.<\/li>\r\n<li>Correo electrónico: campo opcional con el correo electrónico del jugador, mediante el cual allrpg.info intentará encontrarlo y proponer la solicitud inmediatamente.<\/li>\r\n<li><b>Nombre del personaje: nombre de la aplicación.<\/li>\r\n<\/ul>\r\nAdemás, el archivo csv puede contener cualquier Columnas cuyos nombres coinciden exactamente con los configurados en la sección «<a href=\"\/setup\/\" target=\"_blank\">Configuración de la aplicación<\/a>». En este caso, allrpg.info completará todos estos campos automáticamente. Por ejemplo: «Trasfondo».<br>\r\nPara importar el archivo, utilice el siguiente formulario.",
+    "messages": {
+      "no_file_selected": "No se ha seleccionado ningún archivo para importar.",
+      "import_success": "Importación exitosa.",
+      "upload_error": "Error al subir el archivo.",
+      "character_no_name": "El campo obligatorio «Personaje» no está configurado en la cadena %s.",
+      "character_already_present": "Ya existe un personaje con el nombre de la cadena %s en el proyecto: <a href=\"\/character\/%s\/\" target=\"_blank\">%s<\/a>.",
+      "application_no_name": "El campo obligatorio «Nombre del personaje» no está definido en la cadena %s.",
+      "application_already_present": "Ya existe una aplicación con el nombre de la cadena %s en el proyecto: <a href=\"\/application\/%s\/\" target=\"_blank\">%s<\/a>."
+    }
+  }
+}

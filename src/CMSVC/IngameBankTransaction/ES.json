@@ -1,0 +1,45 @@
+{
+  "global": {
+    "title": "Pagar manualmente",
+    "messages": {
+      "too_small_amount": "¿Cuánto debe ser mayor que 0?"
+    }
+  },
+  "fraym_model": {
+    "object_name": "transaction",
+    "object_messages": [
+      "Transacción creada correctamente.",
+      "Transacciones modificadas correctamente",
+      "Transacción eliminada correctamente."
+    ],
+    "elementos": {
+      "name": {
+        "shownName": "Asunto"
+      },
+      "from_project_application_id": {
+        "shownName": "De la cuenta n.°"
+      },
+      "to_project_application_id": {
+        "shownName": "A la cuenta n.°"
+      },
+      "amount_from": {
+        "shownName": "Cuánto"
+      },
+      "currency_from_id": {
+        "shownName": "Qué"
+      },
+      "amount": {
+        "shownName": "A cuánto"
+      },
+      "bank_currency_id": {
+        "shownName": "A qué"
+      },
+      "created_at": {
+        "shownName": "Fecha"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "global": {
+    "location": "Grupo",
+    "switch_to_group": "Campos de solicitud de equipo",
+    "switch_to_individual": "Campos de solicitud personales",
+    "messages": {
+      "do_not_add_player_fields": "¡Por favor, no agregue ningún campo que solicite información personal del jugador! El perfil del jugador se incluye automáticamente en cada solicitud."
+    }
+  },
+  "fraym_model": {
+    "object_name": "Campo de solicitud",
+    "object_messages": [
+      "Campo de solicitud creado correctamente.",
+      "Campo de solicitud modificado correctamente.",
+      "Campo de solicitud eliminado correctamente."
+    ],
+    "elements": {
+      "field_name": {
+        "shownName": "Título",
+        "helpText": "No más de 255 símbolos."
+      },
+      "field_type": {
+        "shownName": "Tipo",
+        "values": [
+          [
+            "texto",
+            "Cadena de texto"
+          ],
+          [
+            "select",
+            "Cuadro de selección"
+          ],
+          [
+            "textarea",
+            "Área de texto"
+          ],
+          [
+            "checkbox",
+            "Casilla de verificación"
+          ],
+          [
+            "multiselect",
+            "Cuadro de selección múltiple"
+          ],
+          [
+            "h1",
+            "Encabezado"
+          ],
+          [
+            "wysiwyg",
+            "WYSIWYG"
+          ],
+          [
+            "number",
+            "Campo numérico"
+          ],
+          [
+            "calendar",
+            "Calendario"
+          ]
+        ]
+      },
+      "field_mustbe": {
+        "shownName": "Campo obligatorio",
+        "helpText": "¿Es obligatorio el campo?"
+      },
+      "field_values": {
+        "shownName": "Valores",
+        "helpText": "Introduzca solo si ha configurado el tipo <b>«casilla de selección»» o «casilla de selección múltiple»<\/b>.<br><br>\r\nFormato:<br>\r\n<u>[id][valor]<\/u><br>\r\n<u>[id][valor]<\/u><br><br>\r\nPor ejemplo:<br>\r\n[1][de amigos]<br>\r\n[2][de un sitio web amigable]"
+      },
+      "field_default": {
+        "shownName": "Valor predeterminado",
+        "helpText": "¿Qué se debe mostrar en el campo por defecto?<br><br>\r\nEn caso de «casilla de verificación»»: si desea que la casilla de verificación esté marcada, introduzca «1».<br><br>\r\nEn caso de «selección múltiple» Tipo de cuadro: si desea que se marquen algunas casillas de selección múltiple, introduzca los identificadores de dichas casillas con un signo menos a los lados, p. ej., «-1-2-5-».<br><br>\r\nEn el caso de un cuadro de selección, introduzca el identificador de la selección predeterminada, p. ej., «2»."
+      },
+      "show_if": {
+        "shownName": "Mostrar solo si",
+        "helpText": "El campo aparecerá en la aplicación solo si ya se ha definido un valor específico para otro cuadro de selección o cuadro de selección múltiple."
+      },
+      "field_rights": {
+        "shownName": "Permisos de acceso",
+        "values": [
+          [
+            "1",
+            "Solo para gamemasters"
+          ],
+          [
+            "2",
+            "El jugador puede ver, pero no editar"
+          ],
+          [
+            "3",
+            "El jugador puede ver y editar"
+          ],
+          [
+            "4",
+            "El jugador puede ver y editar + el campo se puede ver en una aplicación en la lista de roles"
+          ]
+        ]
+      },
+      "field_help": {
+        "shownName": "Texto de ayuda",
+        "Texto de ayuda": "Un texto útil que describe el campo para los jugadores."
+      },
+      "field_code": {
+        "shownName": "Prioridad",
+        "Texto de ayuda": "Orden de los campos en la aplicación. El campo con prioridad 0 se mostrará en la parte superior del formulario de solicitud."
+      },
+      "field_height": {
+        "shownName": "Altura",
+        "Texto de ayuda": "En píxeles."
+      },
+      "ingame_settings": {
+        "shownName": "Mostrar en el módulo del jugador",
+        "values": [
+          [
+            "game",
+            "en la pestaña de pasaporte del juego"
+          ],
+          [
+            "out_of_game",
+            "en la pestaña de información del personaje"
+          ]
+        ]
+      },
+      "show_in_filters": {
+        "shownName": "Usar como filtro",
+        "helpText": "Si la casilla está marcada, los gamemasters pueden buscar aplicaciones por este campo en la «<a href=\"\/application\/\">Lista de aplicaciones<\/a>»."
+      },
+      "show_in_table": {
+        "shownName": "Mostrar en la tabla de aplicaciones"
+      },
+      "hide_field_on_application_create": {
+        "shownName": "Ocultar campo durante la creación de la aplicación",
+        "helpText": "Si la casilla está marcada, el jugador no verá este campo durante la creación de la aplicación. Este campo no puede ser obligatorio."
+      }
+    }
+  }
+}

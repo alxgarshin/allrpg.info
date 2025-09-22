@@ -1,0 +1,9 @@
+{
+  "global": {
+    "publish_date": "Publicado",
+    "publish_time_separator": "a",
+    "authors": "Autor(es)",
+    "tags": "Etiquetas",
+    "edit_pages": "Editar páginas"
+  }
+}

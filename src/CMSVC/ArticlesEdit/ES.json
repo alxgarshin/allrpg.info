@@ -1,0 +1,38 @@
+{
+  "global": {
+    "title": "Edición de página",
+    "messages": {
+      "alias_for_section_not_filled": "Las divisiones de alto nivel deben tener un alias completo.",
+      "alias_latin_only": "El alias debe indicarse en minúsculas, por ejemplo: noticias."
+    }
+  },
+  "fraym_model": {
+    "object_name": "section",
+    "object_messages": [
+      "Sección creada correctamente.",
+      "Sección modificada correctamente.",
+      "Sección eliminada correctamente.",
+      "Sección y todas sus páginas eliminadas correctamente."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Sección principal"
+      },
+      "code": {
+        "shownName": "Orden",
+        "helpText": "Las secciones con un valor de orden inferior aparecen primero."
+      },
+      "name": {
+        "shownName": "Nombre",
+        "helpText": "No más de 255 símbolos."
+      },
+      "attachments": {
+        "shownName": "Alias",
+        "helpText": "No es necesario en subsecciones. Alias ​​corto que lleva a esta sección en el navegador."
+      },
+      "active": {
+        "shownName": "Activo"
+      }
+    }
+  }
+}

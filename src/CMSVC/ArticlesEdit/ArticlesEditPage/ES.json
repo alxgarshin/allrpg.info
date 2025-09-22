@@ -1,0 +1,47 @@
+{
+  "fraym_model": {
+    "object_name": "página",
+    "object_messages": [
+      "Página creada correctamente.",
+      "Página modificada correctamente.",
+      "Página eliminada correctamente."
+    ],
+    "elements": {
+      "lin": {
+        "shownName": "Enlace a la página en el sitio web"
+      },
+      "parent": {
+        "shownName": "Sección principal"
+      },
+      "code": {
+        "shownName": "Orden",
+        "helpText": "Las páginas con un valor de orden inferior aparecen primero."
+      },
+      "name": {
+        "shownName": "Nombre",
+        "helpText": "No más de 255 símbolos."
+      },
+      "author": {
+        "shownName": "Autor(es)"
+      },
+      "active": {
+        "shownName": "Activo"
+      },
+      "attachments": {
+        "shownName": "Adjuntos"
+      },
+      "content": {
+        "shownName": "Contenido"
+      },
+      "nocomments": {
+        "shownName": "Desactivar comentarios"
+      },
+      "tags": {
+        "shownName": "Etiquetas"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

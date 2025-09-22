@@ -1,0 +1,80 @@
+/** Управление поселением */
+
+if (el('form#form_rooms')) {
+    /** Добавление игрока в комнату */
+    _('a#add_neighboor').on('click', function () {
+        const btn = _(this);
+
+        createPseudoPrompt(
+            `<div><input type="text" name="application_name" placehold="${LOCALE.enterName}" obj_id="${btn.attr('obj_id')}" project_id="${btn.attr('project_id')}"><input type="hidden" name="application_id"></div>`,
+            LOCALE.searchCapitalizedApplications,
+            [
+                {
+                    text: LOCALE.inviteCapitalized,
+                    class: 'main',
+                    click: function () {
+                        const self = getNotyDialogDOM();
+                        const input = self.find('input[type=text]');
+                        const input2 = self.find('input[type=hidden]');
+
+                        if (input2.val() > 0) {
+                            actionRequest({
+                                action: 'rooms/add_neighboor',
+                                application_id: input2.val(),
+                                obj_id: input.attr('obj_id')
+                            });
+                        } else {
+                            showMessage({
+                                text: LOCALE.wrongUser,
+                                type: 'error',
+                                timeout: 5000
+                            });
+                        }
+                    }
+                }
+            ],
+            null,
+            function () {
+                const self = getNotyDialogDOM();
+                const input = self.find('input[type=text]');
+                const input2 = self.find('input[type=hidden]');
+
+                fraymPlaceholder(input);
+
+                fraymAutocompleteApply(
+                    input,
+                    {
+                        source: '/helper_application/?nochar=1',
+                        makeEmptySearches: true,
+                        select: function () {
+                            const self = getNotyDialogDOM();
+
+                            input2.val(this.obj_id);
+
+                            self.find('button.main').click();
+                        },
+                        change: function (value) {
+                            this.options.minLength = isInt(value) ? 1 : 3;
+
+                            if (!value) {
+                                input2.val(null);
+                            }
+                        }
+                    }
+                );
+
+                input.trigger('activate');
+            });
+    });
+}
+
+if (withDocumentEvents) {
+    _arSuccess('add_neighboor', function (jsonData, params, target) {
+        notyDialog?.close();
+
+        actionRequest({
+            action: 'application/get_list_of_room_neighboors',
+            obj_id: params['obj_id']
+        });
+    })
+}

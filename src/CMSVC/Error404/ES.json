@@ -1,0 +1,7 @@
+{
+  "global": {
+    "title": "404 - no encontrado",
+    "text": "¡No se encontró la página que busca!<br>Es posible que no tenga autorización para verla.",
+    "to_main_page": "Ir a la página principal"
+  }
+}

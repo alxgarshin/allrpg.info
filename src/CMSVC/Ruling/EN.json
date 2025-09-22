@@ -1,0 +1,22 @@
+{
+  "global": {
+    "title": "Ruling",
+    "management": "Management",
+    "generate_rules": "Generate rules",
+    "discuss_items": "Read and discuss rules pieces",
+    "view_all": "view all",
+    "view_10": "to the regular view mode",
+    "search": "Search by title and content",
+    "generate": "Generate",
+    "about": "What is «Ruling»?",
+    "about_text": "«Ruling» allows gamemaster groups to find and compile a template for their project rules. How does it work? Please, fill the survey below and click on the «Generate» button. You will get the result immediately.<br><br>\r\nWe're trying to include as many rule models to «Ruling» as possible and if you're willing to help, you can: : 1) <a href=\"\/community\/1\/#conversation_200612\" target=\"_blank\">send us<\/a> a missing model; 2) <a href=\"\/ruling\/view_all=1\">read through and comment models presented<\/a>; 3) propose your own question or answer in a present one for the generator.",
+    "injection": "The model «<a href=\"\/ruling\/%s\/\">%s<\/a>» will be shown here if %s.",
+    "answer_to_question": "the answer «%s» is given to the question «%s»",
+    "will_be_shown": "The model will be shown in generator if:",
+    "will_be_shown_in": "The model will be shown inside:",
+    "in_item": "the model «<a href=\"\/ruling\/%s\/\">%s<\/a>» if ",
+    "generation_link": "link to this rules set",
+    "conversation": "The model discussion"
+  },
+  "fraym_model": {}
+}

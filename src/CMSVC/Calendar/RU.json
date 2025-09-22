@@ -1,0 +1,40 @@
+{
+  "global": {
+    "title": "Календарь ролевых игр %s",
+    "more": "еще",
+    "add_event": "Добавить событие",
+    "calendarstyle_0": "в виде таблицы",
+    "calendarstyle_1": "в виде календаря",
+    "filter_year": "Год",
+    "filter_month": "Месяц",
+    "filter_region": "Регион",
+    "filter_setting": "Мир",
+    "filter_gametype2": "Тип",
+    "filter_cancelled_moved": "Отменено \/ перенесено",
+    "name": "Название",
+    "dates": "Даты",
+    "gametype2": "Тип",
+    "small_cancelled": "отменено",
+    "small_moved": "перенесено",
+    "gamemasters_group": "Мастерская группа",
+    "gamemasters_group_short": "МГ",
+    "players": "Игроки",
+    "other": "Прочее",
+    "count_notion": "Отзывы: %s",
+    "count_report": "Отчеты: %s",
+    "count_gallery": "Фото: %s",
+    "legend": "<span class=\"player\"><b>Таким фоном<\/b><\/span> отмечены события, в которых вы <u>играете<\/u>.<br>\r\n<span class=\"master\"><b>Таким фоном<\/b><\/span> отмечены события, которые вы <u>мастерите<\/u>.<br>\r\n<span class=\"tech\"><b>Таким фоном<\/b><\/span> отмечены события, в которых вы являетесь <u>полигонщиком<\/u>.",
+    "all": "Все",
+    "filter_region_fixed_selects": {
+      "2,13": "Москва",
+      "89,119": "Санкт-Петербург"
+    },
+    "filter_gametype2_fixed_selects": {
+      "14": "павильонная",
+      "15": "полигонная"
+    },
+    "filter_month_fixed_selects": {
+      "closest": "Ближайшие"
+    }
+  }
+}

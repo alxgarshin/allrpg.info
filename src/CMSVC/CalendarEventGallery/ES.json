@@ -1,0 +1,9 @@
+{
+  "global": {
+    "messages": {
+      "photo_video_added": "Datos añadidos correctamente.",
+      "photo_video_changed": "Datos modificados correctamente.",
+      "photo_video_deleted": "Datos eliminados correctamente."
+    }
+  }
+}

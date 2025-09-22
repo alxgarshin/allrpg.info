@@ -1,0 +1,170 @@
+{
+  "global": {
+    "title": "Groups",
+    "search": "Search by community name or description",
+    "my_communities": "My groups",
+    "all_communities": "All groups",
+    "found_communities": "Groups search results",
+    "search_by_name_or_annotation": "Search by community name or description",
+    "author": "Author",
+    "was_registered": "Created",
+    "modal_header_community_members": "Group members",
+    "modal_header_community_projects": "Group projects",
+    "modal_group_admin": "author",
+    "modal_group_admin_first_letter": "Author",
+    "modal_group_moderator": "moderator",
+    "modal_group_moderator_first_letter": "Мoderator",
+    "modal_group_member": "member",
+    "modal_group_member_first_letter": "M",
+    "edit_community": "Edit group",
+    "invite_to_community": "Invite a friend",
+    "show_qr_code": "Show QR-code",
+    "add_task": "Add a task",
+    "add_event": "Add an event",
+    "add_project": "Add a project",
+    "add_community": "Add a group",
+    "create_community_chat": "Create group conversation",
+    "open_community_chat": "Open group conversation",
+    "create_foresight_map": "Create a foresight map",
+    "edit_foresight_map": "Edit foresight map",
+    "leave_community": "Leave group",
+    "access_request_sent": "Request sent",
+    "request_access": "Request access",
+    "get_access": "Join the community",
+    "edit_community_capitalized": "Edit group",
+    "members_management_capitalized": "Manage rights",
+    "today": "today",
+    "past_events": "Past events",
+    "future_events": "Upcoming events",
+    "tasks": "Tasks",
+    "tasks_mine": "Responsible",
+    "tasks_membered": "Member",
+    "tasks_notmembered": "Others",
+    "tasks_delayed": "Suspended",
+    "tasks_all": "All",
+    "tasks_closed": "Closed",
+    "task_priority": "Priority",
+    "task_dates": "Due date",
+    "task_name": "Name",
+    "task_responsible": "Responsible",
+    "task_members": "Participants",
+    "task_status": "Status",
+    "task_closed": "Closed",
+    "task_result": "Result",
+    "task_status_hot": "urgent",
+    "task_status_current": "current",
+    "task_status_future": "future",
+    "task_new_status_overdue": "Overdue",
+    "task_new_status_today": "Today",
+    "task_new_status_tomorrow": "Tomorrow",
+    "task_new_status_later": "Later",
+    "task_new_status_no_date": "Date not set",
+    "foresight_map": "Foresight map",
+    "calendar": "Calendar",
+    "calendar_today": "today",
+    "calendar_hours": "hours",
+    "calendar_days": "days",
+    "calendar_months": "months",
+    "calendar_import": "import",
+    "calendar_google_authorize_for_import": "Authorize Google to transfer events from Google Calendar",
+    "conversations": "Conversations",
+    "create_conversation": "Create a topic",
+    "conversation_text": "Conversation text",
+    "members": "Group members",
+    "members_alt": "Members rights",
+    "communities": "Connected groups",
+    "projects": "Group projects",
+    "group_authors": "Authors",
+    "group_moderators": "Moderators",
+    "group_members": "Members",
+    "documents": "Documents",
+    "documents_community": "Groups",
+    "documents_tasks": "Tasks",
+    "documents_events": "Events",
+    "documents_projects": "Projects",
+    "documents_upload": "Upload",
+    "documents_add_link": "Add a link",
+    "wall": "The wall",
+    "wall_input_text": "Add text",
+    "show_previous": "Show previous",
+    "messages": {
+      "successfully_joined": "You have successfully joined the group.",
+      "closed_community_join_only_by_invitation": "To join a closed group you need an invitation.",
+      "get_access_to_obj": "group",
+      "successfully_quitted_community": "You have successfully left the group.",
+      "couldnt_delete_rights": "Deleting access right to group was unsuccessful."
+    }
+  },
+  "fraym_model": {
+    "object_name": "Group",
+    "object_messages": [
+      "Group created successfully.",
+      "Group settings changed successfully.",
+      "Group deleted successfully."
+    ],
+    "elements": {
+      "type": {
+        "shownName": "Type",
+        "values": [
+          [
+            "{open}",
+            "open"
+          ],
+          [
+            "{close}",
+            "closed"
+          ],
+          [
+            "{request}",
+            "at request"
+          ]
+        ],
+        "helpText": "Open – users can join without any requests. Closed – users can join by accepting an invitation from a member only. At request – users can join only if their request to join is accepted."
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "communities": {
+        "shownName": "Connected to groups"
+      },
+      "description": {
+        "shownName": "Full description"
+      },
+      "attachments": {
+        "shownName": "Group logo",
+        "helpText": "160 pixels wide, 160 pixels high."
+      },
+      "access_to_childs": {
+        "shownName": "Access to events",
+        "helpText": "if free access is set, users will be able to join events withouth any request to its authors.",
+        "values": [
+          [
+            "",
+            "by request only"
+          ],
+          [
+            "1",
+            "free"
+          ]
+        ]
+      },
+      "competences": {
+        "shownName": "Certifies competences"
+      },
+      "tags": {
+        "shownName": "Tags",
+        "values": null
+      },
+      "foresight_map_id": {
+        "shownName": "Foresight maps IDs",
+        "helpText": "You can get foresight maps IDs here: <a href='%s' target='_blank'>http:\/\/www.foresightmaps.ru\/<\/a>. You can provide more than one ID by dividing them with a «;» symbol."
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      },
+      "back_to_community": {
+        "shownName": "Return to group after saving"
+      }
+    }
+  }
+}

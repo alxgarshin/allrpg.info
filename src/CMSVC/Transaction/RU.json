@@ -1,0 +1,59 @@
+{
+  "global": {
+    "title": "История взносов"
+  },
+  "fraym_model": {
+    "object_name": "транзакцию",
+    "object_messages": [
+      "Транзакция успешно добавлена.",
+      "Транзакции успешно изменены",
+      "Транзакция успешно удалена."
+    ],
+    "elements": {
+      "project_application_id": {
+        "shownName": "Заявка"
+      },
+      "helper_before_transaction_add": {
+        "shownName": "Инструкция"
+      },
+      "pay_by_card": {
+        "shownName": "Никак не получается оплатить онлайн, хочу попробовать другим способом"
+      },
+      "test_payment": {
+        "shownName": "Тестовый платеж (только для авторов проекта)"
+      },
+      "amount": {
+        "shownName": "Сумма"
+      },
+      "verified": {
+        "shownName": "<span class=\"sbi sbi-check hiddenInFilters\"><\/span><span class=\"hidden shownInFilters\">Проверено<\/span>",
+        "helpText": "проверено."
+      },
+      "hasCheck": {
+        "shownName": "Чек",
+        "helpText": "есть ли ссылка на чек с nalog.ru в ответном сообщении?"
+      },
+      "project_payment_type_id": {
+        "shownName": "Счет"
+      },
+      "name": {
+        "shownName": "Название"
+      },
+      "payment_datetime": {
+        "shownName": "Дата и время платежа"
+      },
+      "content": {
+        "shownName": "Комментарий"
+      },
+      "comission_percent": {
+        "shownName": "Комиссия и налоги (%)"
+      },
+      "comission_value": {
+        "shownName": "Комиссия и налоги (&#8381;)"
+      },
+      "updated_at": {
+        "shownName": "Последнее изменение"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "global": {
+    "folders": {
+      "messages": {
+        "add_folder_success": "Папка успешно добавлена.",
+        "add_folder_fail": "Ошибка добавления папки.",
+        "edit_folder_success": "Папка успешно изменена.",
+        "edit_folder_fail": "Ошибка изменения папки.",
+        "remove_folder_success": "Папка успешно удалена.",
+        "remove_folder_fail": "Ошибка удаления папки."
+      }
+    },
+    "links": {
+      "messages": {
+        "add_link_success": "Ссылка успешно добавлена.",
+        "add_link_fail": "Ошибка добавления ссылки.",
+        "edit_link_success": "Ссылка успешно изменена.",
+        "edit_link_fail": "Ошибка изменения ссылки.",
+        "remove_link_success": "Ссылка успешно удалена.",
+        "remove_link_fail": "Ошибка удаления ссылки."
+      }
+    }
+  }
+}

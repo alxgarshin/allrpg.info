@@ -1,0 +1,38 @@
+{
+  "global": {
+    "title": "Fee setup",
+    "base_name": "Main fee option",
+    "nullify_fee": "All fees nullify",
+    "messages": {
+      "money_change": "Participation fee was changed in all applications without «Fee paid» set.",
+      "nullify_fees": "All fees were nullified. Budgets of payment types were also nullified."
+    }
+  },
+  "fraym_model": {
+    "object_name": "fee option",
+    "object_messages": [
+      "Fee option created successfully.",
+      "Fee option changed successfully.",
+      "Fee option deleted successfully.",
+      "Fee option and all starting dates deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "add_to_unpaid_applications": {
+        "shownName": "Add to unpaid applications"
+      },
+      "do_not_use_in_budget": {
+        "shownName": "Do not add to \"Set\" field in budget"
+      },
+      "project_room_ids": {
+        "shownName": "Connect fee option to specific settlement types \/ rooms",
+        "helpText": "<a href=\"/rooms/\" target=\"_blank\">setup settlement</a>"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

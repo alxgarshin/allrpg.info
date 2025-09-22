@@ -1,0 +1,9 @@
+/** Список задач */
+
+ready(() => {
+    actionRequest({
+        action: "user/get_new_events",
+        obj_type: newTasksCounterObjType,
+        obj_id: newTasksCounterObjId
+    });
+});

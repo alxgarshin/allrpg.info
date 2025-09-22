@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Payment types",
+    "base_name": "To gamemaster personally",
+    "pk_type": "Through PayKeeper",
+    "pk_add_btn": "Setup online payments system",
+    "pm_type": "Through PayMaster",
+    "pm_add_btn": "Setup online payments system",
+    "yk_type": "Through YooKassa",
+    "yk_add_btn": "Setup online payments system",
+    "paw_type": "By credit card through PayAnyWay",
+    "paw_add_btn": "Setup credit card payments system",
+    "add_card_type": "Add payment type of credit cards",
+    "add_card_type_text_pk": "As for now you have to be a registered tax payer in Russian Federation to get online payments.",
+    "add_card_type_text_paw": "If you have a legal entity of LLC, you can setup <a href=\"https:\/\/www.payanyway.ru\" target=\"_blank\">PayAnyWay<\/a> credit card payments system  to your project. It's simple.\r\n<ul>\r\n<li>PAW fee is 2,7% from each payment, an absolute minumim on the market.<\/li>\r\n<li>No more fees of any kind.<\/li>\r\n<li>Free setup.<\/li>\r\n<li>You can withdraw funds as often as you need it.<\/li>\r\n<li>allrpg.info is not <b>in any way<\/b> involved in the process, this fact radically speeds up your communication with PAW.<\/li>\r\n<\/ul><br>\r\nTo setup the credit cards payments function, you have to do the following:\r\n<ul>\r\n<li>read our <a href=\"\/publication\/186\/\" target=\"_blank\">offer for Events Managers on Tickets services<\/a>;<\/li>\r\n<li>fully accept it by pressing «Setup credit card payments system» button below;<\/li>\r\n<li>provide all the data needed for the non-residents and register on PayAnyWay (you will be automatically transferred to it);<\/li>\r\n<li>if you'll encounter any difficulties, contact our <a href=\"\/help\/\" target=\"_blank\">support service<\/a>;<\/li>\r\n<li>login into a personal area, change the password and provide a security question;<\/li>\r\n<li>fill out all the forms necessary defined in the personal area in the «Forms not yet provided» balloon;<\/li>\r\n<li>wait for the PayAnyWay check and your transfer to a correct status;<\/li>\r\n<li>after a message of status change create an extended account in PayAnyWay: in personal area you will see a button «Create an extended account»;<\/li>\r\n<li>set during creation of extended account:<ul>\r\n<li>in the field «Alias» – your project's name;<\/li>\r\n<li>press the button «Show additional fields»;<\/li>\r\n<li>in the field «Pay URL» – \/\/includes\/payanyway.php;<\/li>\r\n<li>in the field «Data integrity verification code» – any latin numbers and digits (save the code, you will need it later);<\/li>\r\n<li>in the field «Payment form signature required» – yes;<\/li>\r\n<li>in the field «Reassignment of settings in url is allowed» – yes;<\/li>\r\n <\/ul><\/li>\r\n<li>provide extended account number and data integrity verification code in <a href=\"\/project\/\/act=edit\" target=\"_blank\">your project settings<\/a>;<\/li>\r\n<li>you have to send all the documents needed (found in the personal area, section «Documents») to PayAnyWay within a month by mail or by email (if signed by digital signature);<\/li>\r\n<li>and announce the new feature to all of your players.<\/li>\r\n<\/ul>",
+    "add_card_type_text_yk": "As for now you have to be a registered tax payer in Russian Federation to get online payments.",
+    "add_card_type_text_pm": "As for now you have to be a registered tax payer in Russian Federation to get online payments."
+  },
+  "fraym_model": {
+    "object_name": "payment type",
+    "object_messages": [
+      "Payment type created successfully.",
+      "Payment types changed successfully",
+      "Payment type deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "user_id": {
+        "shownName": "Responsible"
+      },
+      "amount": {
+        "shownName": "Income"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

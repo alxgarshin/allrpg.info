@@ -1,0 +1,9 @@
+{
+  "global": {
+    "publish_date": "Опубликовано",
+    "publish_time_separator": "в",
+    "authors": "Автор(-ы)",
+    "tags": "Теги",
+    "edit_pages": "Редактировать страницы"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "global": {
+    "title": "Mi cuenta",
+    "header": "Tu cuenta",
+    "messages": {
+      "already_registered_email": "El usuario con este correo electrónico ya está registrado. Por favor, utiliza la función de recordatorio de contraseña o contacta con el soporte técnico para obtener ayuda. Si hay algún error, contacta con el soporte técnico. Gracias.",
+      "email_cannot_be_empty": "Estás usando un correo electrónico y una contraseña para acceder al sitio web. El correo electrónico no puede estar vacío.",
+      "verification_link_sent": "Se ha enviado correctamente un enlace para verificar el correo electrónico a %s.",
+      "verification_link_not_sent": "Se ha producido un error al intentar enviar un enlace de verificación a %s.",
+      "verification_link_good": "Correo electrónico verificado correctamente.",
+      "verification_link_bad": "Datos incorrectos para verificar un correo electrónico."
+    },
+    "verify_em": {
+      "name": "Verificación de correo electrónico en un sitio web «%s»",
+      "base_text": "¡Buen día!<br><br>Hemos recibido una solicitud para registrar un usuario con su correo electrónico en un sitio web «%s».<br><br>Para verificar el correo electrónico actual, siga el enlace: <a href=\"%s\">%s</a>.<br><br>Si no se ha registrado en el sitio web, ignore este mensaje.<br><br>Que tenga un buen día."
+    }
+  },
+  "fraym_model": {
+    "object_name": "información de la cuenta",
+    "object_messages": [
+      "",
+      "Información de la cuenta modificada correctamente.",
+      "Información de la cuenta eliminada correctamente."
+    ]
+  }
+}

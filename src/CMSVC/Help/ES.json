@@ -1,0 +1,48 @@
+{
+  "global": {
+    "title": "Ayuda \/ informar sobre el error",
+    "button_text": "Enviar una pregunta a los desarrolladores",
+    "auto_button_text_to_replace": "Añadir pregunta",
+    "captcha": "Código de verificación",
+    "captcha_help": "Introduzca el código de verificación que se ve en la imagen. No importa si se trata de mayúsculas o minúsculas.",
+    "messages": {
+      "support": "Soporte",
+      "link_to_page": "Enlace a una página",
+      "technical_info": "Información técnica",
+      "request_send_success": "Su solicitud se ha enviado correctamente.",
+      "please_fill_all_fields": "Por favor, rellene todos los campos necesarios.",
+      "wrong_captcha": "¡Código de verificación incorrecto! Inténtelo de nuevo.",
+      "look_like_bot": "Haga clic <a id=\"approvement_link\">aquí<\/a> para confirmar que está No es un bot."
+    }
+  },
+  "fraym_model": {
+    "object_name": "pregunta",
+    "object_messages": [],
+    "elements": {
+      "beforeask": {
+        "shownName": "Antes de hacer una pregunta, reporta un error",
+        "defaultValue": "<ol><li>Por favor, asegúrate de que tu pregunta no esté disponible en <a href=\"/faq/\">Preguntas frecuentes<\/a>.<\/li>\r\n<li>Por favor, asegúrate de usar la última versión del navegador (Chrome, Mozilla Firefox, Opera, Internet Explorer).<\/li>\r\n<li>Por favor, completa todos los datos en el formulario a continuación.<\/li>\r\n<\/ol>"
+      },
+      "name": {
+        "shownName": "¿Cuál es tu nombre?"
+      },
+      "em": {
+        "shownName": "Correo electrónico"
+      },
+      "maintext": {
+        "shownName": "¿Cuál es la pregunta/error?"
+      },
+      "details": {
+        "shownName": "Descripción detallada de la pregunta/error"
+      },
+      "link": {
+        "shownName": "Enlace a una página",
+        "helpText": "Si se produce un error en una página, por favor, infórmelo aquí."
+      },
+      "technical": {
+        "shownName": "Información técnica",
+        "helpText": "¿Qué navegador utiliza (Internet Explorer, Mozilla Firefox, Opera)? Si es posible, por favor, especifique la versión de su navegador."
+      }
+    }
+  }
+}

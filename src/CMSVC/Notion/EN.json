@@ -1,0 +1,14 @@
+{
+  "global": {
+    "placeholders": {
+      "edit": "Edit",
+      "hide": "Hide",
+      "show": "Show"
+    },
+    "messages": {
+      "notion_add_success": "Notion added successfully.",
+      "notion_save_success": "Notion changed successfully.",
+      "notion_delete_success": "Notion deleted successfully."
+    }
+  }
+}

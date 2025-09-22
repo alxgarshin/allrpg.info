@@ -1,0 +1,31 @@
+{
+  "global": {
+    "title": "Informes"
+  },
+  "fraym_model": {
+    "object_name": "informe",
+    "object_messages": [
+      "Informe añadido correctamente.",
+      "Informe modificado correctamente.",
+      "Informe eliminado correctamente."
+    ],
+    "elements": {
+      "calendar_event_id": {
+        "shownName": "Evento del calendario",
+        "helpText": "En esta lista solo encontrarás eventos del <a href=\"\/calendar_event\/\">calendario<\/a>. Puedes añadir un evento a la lista <a href=\"\/calendar_event\/act=add\">aquí<\/a>."
+      },
+      "creator_id": {
+        "shownName": "Autor"
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "content": {
+        "shownName": "Contenido"
+      },
+      "updated_at": {
+        "shownName": "Fecha"
+      }
+    }
+  }
+}

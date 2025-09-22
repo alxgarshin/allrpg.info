@@ -1,0 +1,5 @@
+/** Мастерские группы */
+
+if (withDocumentEvents) {
+
+}

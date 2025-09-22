@@ -1,0 +1,25 @@
+{
+  "fraym_model": {
+    "object_name": "fecha de inicio",
+    "object_messages": [
+      "Fecha de inicio creada correctamente.",
+      "Fecha de inicio modificada correctamente.",
+      "Fecha de inicio eliminada correctamente."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Opción de tarifa"
+      },
+      "cost": {
+        "shownName": "Precio",
+        "helpText": "Si lo cambia, se reemplazará automáticamente en todas las aplicaciones que lo tenían y que no tengan configurada la opción «Tarifa pagada»."
+      },
+      "date_from": {
+        "shownName": "Fecha de inicio"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

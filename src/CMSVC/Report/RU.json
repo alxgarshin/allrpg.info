@@ -1,0 +1,31 @@
+{
+  "global": {
+    "title": "Отчеты"
+  },
+  "fraym_model": {
+    "object_name": "отчет",
+    "object_messages": [
+      "Отчет успешно добавлен.",
+      "Отчет успешно изменен.",
+      "Отчет успешно удален."
+    ],
+    "elements": {
+      "calendar_event_id": {
+        "shownName": "Событие",
+        "helpText": "в данном списке представлены только те события, которые есть в <a href=\"/calendar_event/\">календаре</a>. Добавить событие в этот список Вы можете <a href=\"/calendar_event/act=add\">здесь</a>."
+      },
+      "creator_id": {
+        "shownName": "Автор"
+      },
+      "name": {
+        "shownName": "Заголовок отчета"
+      },
+      "content": {
+        "shownName": "Текст отчета"
+      },
+      "updated_at": {
+        "shownName": "Дата"
+      }
+    }
+  }
+}

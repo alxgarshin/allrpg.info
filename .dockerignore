@@ -1,0 +1,15 @@
+.git
+/bin/d
+/bin/recreateDb
+/public/uploads
+/tests/
+/var/
+*.test
+.gitattributes
+.gitignore
+.gitlab-ci.yml
+*.cache
+Dockerfile
+docker-*
+README.md
+/docker/db

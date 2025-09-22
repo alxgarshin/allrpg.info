@@ -1,0 +1,18 @@
+{
+  "global": {
+    "title": "Wall",
+    "conversations": "Conversations",
+    "create_conversation": "Create a topic",
+    "conversation_text": "Conversation text",
+    "group_authors": "Authors",
+    "group_management": "Management",
+    "group_technology": "Technology",
+    "group_business": "Entrepreneurship",
+    "wall": "Wall",
+    "new_messages": "Show new",
+    "all_messages": "Show all",
+    "show_previous": "Show previous",
+    "no_projects_or_communities": "You are not a part of any group or project yet.",
+    "no_new_threads": "No new threads found."
+  }
+}

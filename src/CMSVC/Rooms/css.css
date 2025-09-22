@@ -1,0 +1,21 @@
+div.kind_rooms div.publication_content {
+    padding: 0;
+}
+
+div.kind_rooms div.publication_content ul {
+    margin: .3em 0;
+}
+
+form#form_rooms div[id="div_room_neighboors[0]"] {
+    background-color: transparent;
+}
+
+form#form_rooms div[id="div_room_neighboors[0]"] a {
+    display: inline-block;
+    padding: .5em;
+    width: 50%;
+}
+
+form#form_rooms div[id="div_room_neighboors[0]"] a.string2 {
+    background-color: var(--underlay-gray);
+}

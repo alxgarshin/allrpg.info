@@ -1,0 +1,18 @@
+{
+  "global": {
+    "title": "Grupos de eventos"
+  },
+  "fraym_model": {
+    "object_name": "grupo de eventos",
+    "object_messages": [
+      "Grupo de eventos añadido correctamente.",
+      "Grupos de eventos modificados correctamente",
+      "Grupo de eventos eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      }
+    }
+  }
+}

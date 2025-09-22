@@ -1,0 +1,123 @@
+{
+  "global": {
+    "add_application": "new application",
+    "provide_payment": "report payment",
+    "provide_payment2": "pay \/ report payment",
+    "yk_description": "Payment for application №%s",
+    "paw_description": "Payment for application №%s",
+    "pm_description": "Payment for application №%s",
+    "pk_description": "Payment for application №%s",
+    "payment": "payment",
+    "fee_payment": "Fee payment",
+    "group_request": "Please, add me into group: %s",
+    "comments": "Comments",
+    "change_comments_order": "in calendar order",
+    "title": "My applications",
+    "conversation_text": "Comment",
+    "conversation_sub_obj_types": [
+      [
+        "{from_player}",
+        "to gamemasters"
+      ]
+    ],
+    "titles_conversation_sub_obj_types": {
+      "to_player": "to you",
+      "from_player": "to gamemasters"
+    },
+    "show_all_conversations": "show more comments",
+    "switch_to_deleted": "deleted applications",
+    "switch_to_all": "all applications",
+    "changes_history": "changes history",
+    "back_to_application": "back to application",
+    "prev_change": "earlier",
+    "next_change": "later",
+    "send_individual_application": "Personal application",
+    "send_team_application": "Team application",
+    "sent_applications": "Applications list",
+    "roles_list": "Roles list",
+    "website": "Website",
+    "project": "Project",
+    "ingame": "player's module",
+    "accept_application": "Accept application",
+    "decline_application": "Decline application",
+    "to_comments": "To comments",
+    "check_contacts": "Please, check your contacts",
+    "messages": {
+      "payment_provided_successfully": "Thank you for your payment report.",
+      "paykeeper": {
+        "token_error": "Token error.",
+        "invoice_id_error": "Invoice id error."
+      },
+      "application_deleted_by_gamemaster": "Application was deleted by gamemasters.",
+      "application_create_to_gamemasters_subject": "User «%s» applied «%s» to project «%s»",
+      "application_create_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> was provided by user <a href=\"%speople\/%s\/\">«%s»<\/a>.",
+      "application_change_to_gamemasters_subject": "Participant changed application «%s» in project «%s»",
+      "application_change_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%speople\/%s\/\">«%s»<\/a> has been changed by participant.",
+      "field_changed": " (changed)",
+      "application_deleted_success": "Application was successfully removed from applications list, gamemasters were notified by e-mail.",
+      "application_delete_to_gamemasters_subject": "Participant deleted application «%s» in project «%s»",
+      "application_delete_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%speople\/%s\/\">«%s»<\/a> has been deleted by participant.",
+      "oneorderfromplayer": "Gamemasters do not allow to apply more than once to this project.",
+      "gamemasters_offer_application": "Gamemasters offer you this application.",
+      "application_accepted": "You have accepted the application.",
+      "application_declined": "You have declined the application.",
+      "add_neighboor_request": {
+        "not_your_room": "You've changed the room, yet haven't saved changes. Please, save the application before inviting anyone to share the room.",
+        "not_enough_places": "Unfortunately there're no free spaces left in your room.",
+        "cannot_be_invited_to_room_type": "Unfortunately this user has selected a fee type that is incompatible with current settlement type.",
+        "not_enough_places_on_accept": "Unfortunately there're no free spaces left in this room.",
+        "cannot_be_invited_to_room_type_on_accept": "Unfortunately you have selected a fee type that is incompatible with this settlement type."
+      }
+    }
+  },
+  "fraym_model": {
+    "object_name": "application",
+    "object_messages": [
+      "Application created successfully.",
+      "Application changed successfully.",
+      "Application deleted successfully."
+    ],
+    "elements": {
+      "project_id": {
+        "shownName": "Project"
+      },
+      "project_id_myapplication": {
+        "shownName": "Project"
+      },
+      "team_application_myapplication": {
+        "shownName": "Type",
+        "values": [
+          [
+            "0",
+            "personal"
+          ],
+          [
+            "1",
+            "team"
+          ]
+        ]
+      },
+      "money_provided": {
+        "helpText": null
+      },
+      "rooms_selector": {
+        "helpText": null
+      },
+      "sorter": {
+        "shownName": "Title"
+      },
+      "project_character_id": {
+        "helpText": null
+      },
+      "user_requested_project_group_ids": {
+        "shownName": "Requested groups"
+      },
+      "qrpg_key": {
+        "helpText": null
+      },
+      "players_bank_values": {
+        "helpText": null
+      }
+    }
+  }
+}

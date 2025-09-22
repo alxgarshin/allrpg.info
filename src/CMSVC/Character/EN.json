@@ -1,0 +1,102 @@
+{
+  "global": {
+    "switch_to_mine": "my characters",
+    "switch_to_free": "free characters",
+    "switch_to_all": "all characters",
+    "switch_to_different_groups_in_applications": "different groups in applications",
+    "link_to_roles_default": "open"
+  },
+  "fraym_model": {
+    "object_name": "character",
+    "object_messages": [
+      "Character created successfully.",
+      "Character changed successfully.",
+      "Character deleted successfully."
+    ],
+    "elements": {
+      "link_to_roles": {
+        "shownName": "View in roles list"
+      },
+      "project_group_ids": {
+        "shownName": "Groups",
+        "helpText": "if field is not set, application for this character won't get main group automatically. You can set groups in «<a href=\"\/group\/\">Character groups<\/a>» section."
+      },
+      "setparentgroups": {
+        "shownName": "Auto add parent groups"
+      },
+      "disallow_applications": {
+        "shownName": "Do not accept applications"
+      },
+      "team_character": {
+        "shownName": "Type",
+        "helpText": "if you haven't <a href=\"\/setup\/\">set application field<\/a> of concurrent type, users won't be able to apply for this character.",
+        "values": [
+          [
+            "0",
+            "personal"
+          ],
+          [
+            "1",
+            "team"
+          ]
+        ]
+      },
+      "name": {
+        "shownName": "Name"
+      },
+      "applications_needed_count": {
+        "shownName": "Needed applications quantity",
+        "helpText": "how many applications would you like to have for this character."
+      },
+      "auto_new_character_creation": {
+        "shownName": "Automatic new character creation",
+        "helpText": "if «Needed applications quantity» is more than 1, application for this character will be moved to a newly created character in same groups when it receives «processed» or «accepted» status."
+      },
+      "team_applications_needed_count": {
+        "shownName": "People in team needed quantity",
+        "helpText": "to count people quantity in team application, please, provide quantity in this field while creating a group character. This number will be shown automatically next to character name in roles list."
+      },
+      "maybetaken": {
+        "shownName": "Preliminarily accepted",
+        "helpText": "you can provide here names of people (separated by commas), who preliminarily accepted this character but <b>have not yet applied through allrpg.info<\/b>."
+      },
+      "taken": {
+        "shownName": "Accepted",
+        "helpText": "you can provide here names of people (separated by commas), who accepted this character but <b>have not yet applied through allrpg.info<\/b>."
+      },
+      "id": {
+        "shownName": "Needed \/ accepted applications quantities"
+      },
+      "taken_details": {
+        "shownName": "Needed \/ accepted applications quantities"
+      },
+      "hide_applications": {
+        "shownName": "Show applications quantity instead of applications in roles list"
+      },
+      "content": {
+        "shownName": "Description",
+        "helpText": "for roles list. You can format text with: <b>**for bold**<\/b>, <i>__for italic__<\/i>, [for image http-address]."
+      },
+      "comments": {
+        "shownName": "Gamemaster comments",
+        "helpText": "hidden from players."
+      },
+      "code": {
+        "shownName": "Priority",
+        "helpText": "optional. Field with priority 0 will be shown on top of the roles list."
+      },
+      "plots": {
+        "shownName": "Plots"
+      },
+      "plots_data": {
+        "shownName": "Full plots list"
+      },
+      "link_to_applications": {
+        "shownName": "Character applications"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

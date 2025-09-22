@@ -1,0 +1,40 @@
+{
+  "global": {
+    "title": "Calendar of roleplaying games in %s",
+    "more": "more",
+    "add_event": "Add an event",
+    "calendarstyle_0": "view as table",
+    "calendarstyle_1": "view as calendar",
+    "filter_year": "Year",
+    "filter_month": "Month",
+    "filter_region": "Region",
+    "filter_setting": "Setting",
+    "filter_gametype2": "Type",
+    "filter_cancelled_moved": "Cancelled \/ moved",
+    "name": "Name",
+    "dates": "Dates",
+    "gametype2": "Type",
+    "small_cancelled": "cancelled",
+    "small_moved": "moved",
+    "gamemasters_group": "Gamemasters",
+    "gamemasters_group_short": "GMs",
+    "players": "Players",
+    "other": "Additional",
+    "count_notion": "Notions: %s",
+    "count_report": "Reports: %s",
+    "count_gallery": "Photos: %s",
+    "legend": "You <u>participate<\/u> in events marked with <span class=\"player\"><b>this background<\/b><\/span>.<br>\r\nYou <u>gamemaster<\/u> events marked with <span class=\"master\"><b>this background<\/b><\/span>.<br>\r\nYou <u>provide help on place<\/u> in events marked with <span class=\"tech\"><b>this background<\/b><\/span>.",
+    "all": "All",
+    "filter_region_fixed_selects": {
+      "2,13": "Moscow",
+      "89,119": "Saint-Petersburg"
+    },
+    "filter_gametype2_fixed_selects": {
+      "14": "on a pavilion",
+      "15": "on a polygon"
+    },
+    "filter_month_fixed_selects": {
+      "closest": "Closest"
+    }
+  }
+}

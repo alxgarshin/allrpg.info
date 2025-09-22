@@ -1,0 +1,30 @@
+div.payment_type_online_add {
+    margin-top: 2.5em;
+}
+
+div.payment_type_online_add div.publication_content {
+    padding: 0;
+}
+
+div.add_card_type_text {
+    font-size: 1.2em;
+}
+
+div.add_card_type_text ul {
+    margin-left: 1.5em;
+}
+
+div.add_card_type_text li.checked::before {
+    content: "";
+    margin-left: -1.05em;
+    background-image: url(/vendor/fraym/design/sbi/check.svg);
+    width: 1rem;
+    height: 1rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: .2em;
+}
+
+div.add_card_type_text form button.main {
+    margin-top: 1em;
+}

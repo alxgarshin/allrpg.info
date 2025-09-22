@@ -1,0 +1,24 @@
+{
+  "global": {
+    "title": "Eventos",
+    "events_calendar": "Calendario de eventos",
+    "mo": "Lun",
+    "tu": "Mar",
+    "we": "Mié",
+    "th": "Jue",
+    "fr": "Vie",
+    "su": "Sáb",
+    "sa": "Dom",
+    "during_day": "durante",
+    "filter_tasks_and_events": "Filtrar tareas y eventos:",
+    "obj_filters": {
+      "all": "todos",
+      "personal": "personal",
+      "global": "global"
+    },
+    "obj_filters_additional": {
+      "project": "Proyectos",
+      "community": "Grupos"
+    }
+  }
+}

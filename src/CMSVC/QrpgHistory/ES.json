@@ -1,0 +1,33 @@
+{
+  "global": {
+    "title": "QRpg: historial de escaneos"
+  },
+  "fraym_model": {
+    "object_name": "Transacción QRpg",
+    "object_messages": [
+      "",
+      "",
+      ""
+    ],
+    "elements": {
+      "creator_id": {
+        "shownName": "Escaneado por"
+      },
+      "qrpg_code_id": {
+        "shownName": "Código QRpg"
+      },
+      "codes_successes": {
+        "shownName": "Éxitos"
+      },
+      "remove_copies_successes": {
+        "shownName": "Eliminar copias de códigos"
+      },
+      "currencies_successes": {
+        "shownName": "Recopilación de recursos"
+      },
+      "created_at": {
+        "shownName": "Fecha"
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "fraym_model": {
+    "object_name": "plot",
+    "object_messages": [
+      "Trama creada correctamente.",
+      "Trama modificada correctamente.",
+      "Trama eliminada correctamente."
+    ],
+    "elements": {
+      "parent": {
+        "shownName": "Forma parte de la historia",
+        "helpText": "<a id=\"go_to_plot\" href=\"\">a la historia<\/a>"
+      },
+      "name": {
+        "shownName": "Título",
+        "helpText": "Solo para gamemasters."
+      },
+      "applications_1_side_ids": {
+        "shownName": "Para"
+      },
+      "applications_2_side_ids": {
+        "shownName": "Acerca de"
+      },
+      "hideother": {
+        "shownName": "Ocultar la información de «Acerca de»",
+        "helpText": "Ocultar a los jugadores que ven esta trama de qué personajes y jugadores se trata."
+      },
+      "content": {
+        "shownName": "Trama",
+        "helpText": "Enlace a un grupo específico \/ personaje \/ perfil de jugador de la aplicación: introduce @ y empieza a escribir un nombre de las selecciones del campo «Acerca de», luego introduce un espacio. El texto antes de los corchetes será visible como un enlace al objeto en la descripción de la historia."
+      },
+      "code": {
+        "shownName": "Mostrar orden",
+        "helpText": "Cuanto mayor sea el número, más temprano se mostrará la información en la lista de tramas."
+      },
+      "todo": {
+        "shownName": "Tarea en la trama",
+        "helpText": "Si hay texto, la trama y todas sus historias se ocultan a los jugadores."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

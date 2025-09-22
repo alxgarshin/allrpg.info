@@ -1,0 +1,42 @@
+{
+  "global": {
+    "title": "Оплатить вручную",
+    "messages": {
+      "too_small_amount": "Сколько должно быть более 0."
+    }
+  },
+  "fraym_model": {
+    "object_name": "транзакцию",
+    "object_messages": [
+      "Транзакция успешно добавлена.",
+      "Транзакции успешно изменены",
+      "Транзакция успешно удалена."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Назначение"
+      },
+      "from_project_application_id": {
+        "shownName": "С № счета"
+      },
+      "from_bank_currency_id": {
+        "shownName": "Что"
+      },
+      "amount_from": {
+        "shownName": "Cколько"
+      },
+      "to_project_application_id": {
+        "shownName": "На № счета"
+      },
+      "bank_currency_id": {
+        "shownName": "Во что"
+      },
+      "amount": {
+        "shownName": "Во сколько"
+      },
+      "created_at": {
+        "shownName": "Дата"
+      }
+    }
+  }
+}

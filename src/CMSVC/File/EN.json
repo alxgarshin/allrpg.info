@@ -1,0 +1,24 @@
+{
+  "global": {
+    "folders": {
+      "messages": {
+        "add_folder_success": "Folder added successfully.",
+        "add_folder_fail": "Failed to add a folder.",
+        "edit_folder_success": "Folder changed successfully.",
+        "edit_folder_fail": "Failed to change a folder.",
+        "remove_folder_success": "Folder deleted successfully.",
+        "remove_folder_fail": "Failed to delete a folder."
+      },
+      "links": {
+        "messages": {
+          "add_link_success": "Link added successfully.",
+          "add_link_fail": "Failed to add a link.",
+          "edit_link_success": "Link successfully changed.",
+          "edit_link_fail": "Failed to change a link.",
+          "remove_link_success": "Link successfully deleted.",
+          "remove_link_fail": "Failed to delete a link."
+        }
+      }
+    }
+  }
+}

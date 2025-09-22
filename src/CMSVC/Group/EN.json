@@ -1,0 +1,90 @@
+{
+  "global": {
+    "switch_to_mine": "my groups",
+    "switch_to_all": "all groups",
+    "characters": "characters",
+    "applications": "applications",
+    "roleslist": "view in roles list",
+    "unwrap": "expand",
+    "wrap": "collapse",
+    "link_to_roles_default": "open",
+    "before": "before ",
+    "at_the_end": "at the end",
+    "messages": {
+      "disable_changes_active": "Group change disabled. Please, remove corresponding checkbox first."
+    }
+  },
+  "fraym_model": {
+    "object_name": "group",
+    "object_messages": [
+      "Group created successfully.",
+      "Group changed successfully.",
+      "Group deleted successfully.",
+      "Group deleted successfully."
+    ],
+    "elements": {
+      "link_to_roles": {
+        "shownName": "View in roles list"
+      },
+      "parent": {
+        "shownName": "Is a part of"
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "rights": {
+        "shownName": "Visibility in roles list",
+        "values": [
+          [
+            "0",
+            "show all applications"
+          ],
+          [
+            "1",
+            "show only applications count"
+          ],
+          [
+            "2",
+            "for plots only: do not show at all"
+          ],
+          [
+            "3",
+            "for gamemasters only: do not show even to player"
+          ]
+        ]
+      },
+      "responsible_gamemaster_id": {
+        "shownName": "Responsible gamemaster"
+      },
+      "description": {
+        "shownName": "Description",
+        "helpText": "for roles list. You can format text with: <b>**for bold**<\/b>, <i>__for italic__<\/i>, [for image http-address]."
+      },
+      "image": {
+        "shownName": "HTTP-path to an image"
+      },
+      "code": {
+        "shownName": "Place"
+      },
+      "distributed_item_autoset": {
+        "shownName": "Add distributed items to application on the group set"
+      },
+      "disallow_applications": {
+        "shownName": "Block application on group"
+      },
+      "user_can_request_access": {
+        "shownName": "User can request access to the group",
+        "helpText": "User can request access to the group in his \/ her application. Responsible master will have to approve or decline access. Group can not be for gamemasters only."
+      },
+      "disable_changes": {
+        "shownName": "Disable group change"
+      },
+      "link_to_characters": {
+        "shownName": "Group characters"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

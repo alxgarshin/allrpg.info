@@ -1,0 +1,10 @@
+{
+  "global": {
+    "messages": {
+      "redirect_to_auth": "Redireccionando a autorización.",
+      "already_logged": "Ya has iniciado sesión.<br>\r\nPuedes conectar tu cuenta de red social añadiéndola a la <a href=\"%s\/\">información de cuenta<\/a> del usuario.",
+      "email_already_registered": "El usuario con este correo electrónico ya está registrado. Por favor, utiliza la función de recordatorio de contraseña o contacta con el soporte técnico para obtener ayuda.",
+      "couldnt_auth": "Autorización fallida. Intenta cerrar sesión en la red social, volver a iniciar sesión y volver a autorizarte en allrpg.info."
+    }
+  }
+}

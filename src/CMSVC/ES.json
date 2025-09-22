@@ -1,0 +1,598 @@
+{
+  "meta_author": "net",
+  "sitename": "allrpg.info",
+  "bottom_sitename": "allrpg.info",
+  "admin_mail": "notify@allrpg.info",
+  "meta_description": "Un portal para y sobre juegos de rol en vivo",
+  "meta_keywords": "Juegos de rol, sistema de aplicaciones, calendario de juegos",
+  "header_social_network": "allrpg.info",
+  "about": "Acerca de allrpg.info",
+  "language": "Idioma",
+  "server": "Servidor",
+  "your_questions_and_issues": "Ayuda",
+  "contacts": "Información de contacto",
+  "offlineMessage": "Parece que se ha perdido la conexión a Internet. Este mensaje desaparecerá cuando se restablezca la conexión.",
+  "in_development": "En construcción",
+  "exit": "Cerrar sesión",
+  "back": "Volver",
+  "login_word": "Ingresar",
+  "fb_init": "Iniciar sesión con Facebook",
+  "vk_init": "Iniciar sesión con Vkontakte",
+  "nothing_found": "No se encontró nada. Por favor, introduzca 3 o más símbolos",
+  "show_hidden": "Mostrar todo",
+  "show_next": "Mostrar más",
+  "show_item": "Mostrar",
+  "save_item": "Descargar",
+  "loading": "Cargando",
+  "deleted_user": "Usuario eliminado",
+  "user_id": "id",
+  "no_file_app_on_device": "Lamentamos informarle que no hay aplicaciones en su dispositivo para seleccionar el archivo.",
+  "input_fio_id_for_search": "Introduzca un texto para buscar por nombre o ID",
+  "em_or_social_needed": "Debe verificar su correo electrónico o proporcionar una cuenta activa en redes sociales en su <a href=\"\/profile\/\">perfil<\/a>.",
+  "actions_list_text": "Acciones",
+  "published_by": "Publicado por",
+  "mobile": "Aplicación móvil",
+  "search": "Buscar",
+  "subscription": {
+    "author_name": "allrpg.info",
+    "author_email": "notify@allrpg.info",
+    "subscription_new_message_text": "Hola<br><br>Tienes un correo.<br><br>%s<br><br>Atentamente,<br>allrpg.info.",
+    "subscribe": "suscribirse",
+    "unsubscribe": "darse de baja",
+    "messages": {
+      "subscribe_success": "Te has suscrito correctamente para recibir actualizaciones.",
+      "unsubscribe_success": "Has cancelado tu suscripción correctamente."
+    },
+    "name": "Notificaciones",
+    "conversation": "Conversación",
+    "subscription_new_message_name": "Tienes nuevos mensajes personales",
+    "obj_types": {
+      "project": "proyecto",
+      "community": "grupo",
+      "task": "tarea",
+      "event": "evento",
+      "project_application": "aplicación"
+    },
+    "send_invitation": "te invita a",
+    "send_invitation_room": "te invita a compartir la sala «%s» en «<a href=\"\/project\/%s\/\">%s<\/a>».",
+    "get_access": "solicita acceso a",
+    "become_friends": "pide confirmar que son amigos"
+  },
+  "achievement": {
+    "names": {
+      "1": "desarrollador de allrpg.info",
+      "2": "colaborador de allrpg.info",
+      "3": "probador beta de allrpg.info",
+      "4": "Superó la prueba beta de allrpg.info",
+      "5": "Más de 50 proyectos visitados",
+      "6": "Más de 25 proyectos visitados",
+      "7": "Más de 10 proyectos visitados",
+      "8": "Gamemaster en más de 25 proyectos",
+      "9": "Gamemaster en más de 15 proyectos",
+      "10": "Gamemaster en más de 5 proyectos",
+      "11": "Redactó más de 25 informes",
+      "12": "Redactó más de 15 informes",
+      "13": "Redactó más de 5 informes",
+      "14": "Perfil completo"
+    }
+  },
+  "apps": {
+    "download": "descarga de la aplicación",
+    "google": "Descargar desde Google Play",
+    "apple": "Descargar desde Apple iTunes",
+    "windows": "Descargar desde la Tienda Windows"
+  },
+  "banners": {
+    "know_more": "¿QUIERES SABER MÁS?"
+  },
+  "conversation": {
+    "invitation_email": {
+      "name": "Invitación a allrpg.info"
+    }
+  },
+  "disk": {
+    "title": "Archivos"
+  },
+  "pwa": {
+    "already_installed": "¿Ya está instalado? <a class=\"PWAsuccess\">Cambiar<\/a>.",
+    "success_btn": "Cambiar a la aplicación",
+    "description": "Recomendamos instalar la aplicación. Aún más rápido, aún más cómodo.",
+    "android": {
+      "install": "Instalar"
+    },
+    "ios": {
+      "install": "Pulsa <span><\/span> y luego «Añadir a la pantalla de inicio» para instalar"
+    },
+    "undefined": {
+      "help": "<ul><li>iOS: por favor, cambia a un navegador Safari actualizado.<\/li><li>De lo contrario: por favor, usa un navegador Chrome o Firefox actualizado.<\/li><\/ul>"
+    }
+  },
+  "global_links": {
+    "FAQ": "faq/",
+    "about": "publication/4/",
+    "contacts": "",
+    "your_questions_and_issues": "faq/"
+  },
+  "main_menu": [
+    {
+      "class": "item1",
+      "kind": [
+        "login"
+      ],
+      "name": "Iniciar sesión",
+      "visibility": "not_logged"
+    },
+    {
+      "class": "item2",
+      "kind": [
+        "register"
+      ],
+      "name": "Registrarse",
+      "visibility": "not_logged"
+    },
+    {
+      "class": "item3",
+      "kind": [
+        "start"
+      ],
+      "name": "Página principal"
+    },
+    {
+      "class": "item4",
+      "kind": [
+        "myapplication"
+      ],
+      "name": "Aplicaciones",
+      "subitems": [
+        {
+          "kind": [
+            "myapplication"
+          ],
+          "params": [
+            "act=add"
+          ],
+          "name": "Nueva aplicación"
+        },
+        {
+          "kind": [
+            "myapplication"
+          ],
+          "name": "Lista completa de aplicaciones",
+          "not_params": [
+            "act=add"
+          ],
+          "add": "myapplication/act=add"
+        },
+        {
+          "kind": [
+            "ingame"
+          ],
+          "name": "Módulo del jugador"
+        },
+        {
+          "list": "project_application",
+          "people": "roles/{project_id}/"
+        }
+      ]
+    },
+    {
+      "class": "item5",
+      "kind": [
+        "conversation"
+      ],
+      "name": "Conversaciones",
+      "counter": "new_messages_counter"
+    },
+    {
+      "class": "item6",
+      "kind": [
+        "project"
+      ],
+      "name": "Proyectos",
+      "counter": "new_applications_counter",
+      "subitems": [
+        {
+          "kind": [
+            "project"
+          ],
+          "name": "Lista completa de proyectos",
+          "not_id": [
+            "any"
+          ],
+          "add": "project/act=add"
+        },
+        {
+          "list": "project",
+          "edit": "project/{id}/act=edit"
+        }
+      ]
+    },
+    {
+      "class": "item7",
+      "kind": [
+        "calendar"
+      ],
+      "name": "Calendario",
+      "subitems": [
+        {
+          "kind": [
+            "calendar"
+          ],
+          "name": "Año más cercano"
+        },
+        {
+          "kind": [
+            "calendar_event"
+          ],
+          "name": "Mis eventos",
+          "add": "calendar_event/act=add"
+        },
+        {
+          "kind": [
+            "area"
+          ],
+          "name": "Mis áreas de juego",
+          "add": "area/act=add"
+        },
+        {
+          "kind": [
+            "portfolio"
+          ],
+          "name": "Mi portafolio",
+          "add": "portfolio/act=add"
+        }
+      ]
+    },
+    {
+      "class": "item8",
+      "kind": [
+        "community"
+      ],
+      "name": "Grupos",
+      "subitems": [
+        {
+          "kind": [
+            "community"
+          ],
+          "name": "Lista completa de grupos",
+          "add": "community/act=add"
+        },
+        {
+          "list": "community",
+          "edit": "community/{id}/act=edit"
+        }
+      ]
+    },
+    {
+      "class": "item9",
+      "kind": [
+        "exchange"
+      ],
+      "name": "Almacén",
+      "subitems": [
+        {
+          "kind": [
+            "exchange"
+          ],
+          "name": "Arrendamiento / venta"
+        },
+        {
+          "kind": [
+            "exchange_item_edit"
+          ],
+          "name": "Mis artículos",
+          "add": "exchange_item_edit/act=add"
+        }
+      ]
+    },
+    {
+      "class": "item10",
+      "kind": [
+        "ruling"
+      ],
+      "name": "Ruling",
+      "subitems": [
+        {
+          "kind": [
+            "ruling"
+          ],
+          "not_params": [
+            "view_all=1"
+          ],
+          "name": "Generar conjunto de reglas"
+        },
+        {
+          "kind": [
+            "ruling"
+          ],
+          "params": [
+            "view_all=1"
+          ],
+          "name": "Explorar y discutir modelos"
+        },
+        {
+          "kind": [
+            "ruling_tag_edit"
+          ],
+          "name": "Ruling: etiquetas",
+          "visibility": "ruling_admin"
+        },
+        {
+          "kind": [
+            "ruling_edit"
+          ],
+          "name": "Ruling: preguntas y modelos",
+          "visibility": "ruling_admin"
+        },
+        {
+          "kind": [
+            "ruling_question_edit"
+          ],
+          "name": "Ruling: preguntas y constructor",
+          "visibility": "ruling_admin",
+          "add": "ruling_question_edit/act=add"
+        },
+        {
+          "kind": [
+            "ruling_item_edit"
+          ],
+          "name": "Ruling: modelos de reglas",
+          "visibility": "ruling_admin",
+          "add": "ruling_item_edit/act=add"
+        }
+      ]
+    },
+    {
+      "class": "item11",
+      "kind": [
+        "publication"
+      ],
+      "name": "Base de conocimientos",
+      "subitems": [
+        {
+          "kind": [
+            "publication"
+          ],
+          "name": "Artículos",
+          "edit": "publications_edit/"
+        },
+        {
+          "kind": [
+            "report"
+          ],
+          "name": "Informes",
+          "edit": "report/action=setFilters&search_creator_id[{user_id}]=on"
+        },
+        {
+          "kind": [
+            "gamemaster"
+          ],
+          "name": "Grupos de gamemasters"
+        }
+      ]
+    },
+    {
+      "class": "item13",
+      "link": "https://rolladie.allrpg.info",
+      "name": "Roll-a-die"
+    },
+    {
+      "class": "item12",
+      "kind": [
+        "publication"
+      ],
+      "id": [
+        155
+      ],
+      "name": "Ayuda"
+    }
+  ],
+  "project_control_items": {
+    "tab1": [
+      "Datos principales",
+      "{admin} {gamemaster} {budget} {fee} {newsmaker}"
+    ],
+    "roles/{id}": [
+      "Lista de roles",
+      "{admin} {gamemaster} {budget} {fee} {newsmaker}"
+    ],
+    "application": [
+      "Lista de aplicaciones",
+      "{admin} {application}"
+    ],
+    "plot": [
+      "Historias y tramas",
+      "{admin} {plot}"
+    ],
+    "org": [
+      "Gamemasters / organizadores",
+      "{admin}"
+    ],
+    "setup": [
+      "Configuración de la aplicación",
+      "{admin} {setup}"
+    ],
+    "filterset": [
+      "Conjuntos de filtros",
+      "{admin} {filterset}"
+    ],
+    "tab2": [
+      "Finanzas",
+      "{admin} {budget} {fee}"
+    ],
+    "budget": [
+      "Presupuesto",
+      "{admin} {budget}"
+    ],
+    "fee": [
+      "Configuración de comisiones",
+      "{admin} {fee}"
+    ],
+    "payment_type": [
+      "Tipos de pago",
+      "{admin} {fee}"
+    ],
+    "transaction": [
+      "Historial de comisiones",
+      "{admin} {budget} {fee}"
+    ],
+    "tab3": [
+      "Módulos",
+      "{admin} {tab3}"
+    ],
+    "rooms": [
+      "Liquidación",
+      "{admin} {rooms}"
+    ],
+    "document": [
+      "Generador de documentos",
+      "{admin} {document}"
+    ],
+    "registration": [
+      "Registro en el sitio",
+      "{admin} {registration}"
+    ],
+    "tab4": [
+      "Módulo del jugador",
+      "{admin} {tab4}"
+    ],
+    "qrpg_key": [
+      "QRpg: claves, objetos y propiedades",
+      "{admin} {qrpg_key}"
+    ],
+    "qrpg_code": [
+      "QRpg: códigos",
+      "{admin} {qrpg_code}"
+    ],
+    "qrpg_history": [
+      "QRpg: historial de escaneos",
+      "{admin} {qrpg_history}"
+    ],
+    "geoposition": [
+      "Geoposición de jugadores",
+      "{admin} {geoposition}"
+    ],
+    "bank_transaction": [
+      "Banco de juego: transacciones",
+      "{admin} {bank_transaction}"
+    ],
+    "bank_currency": [
+      "Banco de juego: recursos",
+      "{admin} {bank_currency}"
+    ],
+    "bank_rule": [
+      "Banco de juego: reglas de transferencia",
+      "{admin} {bank_rule}"
+    ],
+    "tab5": [
+      "Listas e importación",
+      "{admin} {tab5}"
+    ],
+    "character": [
+      "Lista de personajes",
+      "{admin} {character}"
+    ],
+    "group": [
+      "Grupos de personajes",
+      "{admin} {group}"
+    ],
+    "csvimport": [
+      "Importación de CSV",
+      "{admin}"
+    ]
+  },
+  "user_logged_menu": [
+    {
+      "class": "menu_item1",
+      "kind": [
+        "people"
+      ],
+      "id": [
+        "{user_sid}"
+      ],
+      "name": "Tu perfil"
+    },
+    {
+      "class": "menu_item2",
+      "kind": [
+        "portfolio"
+      ],
+      "name": "Portafolio",
+      "add": "portfolio/act=añadir"
+    },
+    {
+      "class": "menu_item3",
+      "kind": [
+        "people"
+      ],
+      "id": [
+        "{user_sid}"
+      ],
+      "params": [
+        "#reportes"
+      ],
+      "name": "Informes",
+      "add": "report/act=añadir"
+    },
+    {
+      "class": "menu_item4",
+      "kind": [
+        "people"
+      ],
+      "id": [
+        "{user_sid}"
+      ],
+      "params": [
+        "#friends"
+      ],
+      "name": "Amigos"
+    },
+    {
+      "class": "menu_item5",
+      "kind": [
+        "tasklist"
+      ],
+      "name": "Lista de tareas",
+      "add": "task/task/act=añadir&obj_type=project&obj_id=todos",
+      "counter": "new_tasks_counter"
+    },
+    {
+      "class": "menu_item6",
+      "kind": [
+        "muro"
+      ],
+      "name": "Muro",
+      "counter": "new_muro_counter"
+    },
+    {
+      "class": "menu_item7",
+      "kind": [
+        "muro2"
+      ],
+      "name": "Discusiones",
+      "counter": "new_conversations_counter"
+    },
+    {
+      "class": "menu_item8",
+      "kind": [
+        "faq"
+      ],
+      "name": "Ayuda"
+    },
+    {
+      "class": "menu_item9",
+      "kind": [
+        "stats"
+      ],
+      "name": "Estadísticas",
+      "visibility": "admin"
+    },
+    {
+      "class": "menu_item10 no_dynamic_contenido",
+      "kind": [
+        "cerrar sesión"
+      ],
+      "name": "Cerrar sesión"
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "global": {
+    "to_filterset": "Save as a filters set",
+    "type_data_to_search": "Search: type in a participant contact data or a main application field text",
+    "type_data_to_search_comments": "Search: in comments",
+    "comments": "Comments",
+    "change_comments_order": "in calendar order",
+    "man": "man",
+    "woman": "woman",
+    "birth": "",
+    "telegram": "Telegram",
+    "skype": "Skype",
+    "facebook_visible": "Facebook",
+    "vkontakte": "VK",
+    "twitter": "Twitter",
+    "livejournal": "LiveJournal",
+    "googleplus": "Google+",
+    "linkedin": "LinkedIn",
+    "jabber": "Jabber",
+    "icq": "ICQ",
+    "sickness": "Medical contraindications",
+    "too_many_applications_for_comments": "Comments are not included due to an export of %s+ applications.",
+    "too_many_applications_for_plots": "Plots are not included due to an export of %s+ applications.",
+    "conversation_text_global": "Comment + mail to all filtered applications",
+    "conversation_text": "Comment",
+    "conversation_sub_obj_types": [
+      [
+        "{gamemaster}",
+        "to gamemasters"
+      ],
+      [
+        "{to_player}",
+        "to player"
+      ]
+    ],
+    "titles_conversation_sub_obj_types": {
+      "gamemaster": "to gamemasters",
+      "to_player": "to player",
+      "from_player": "from player"
+    },
+    "conversation_sub_obj_type_filter": [
+      [
+        "{filter}",
+        "to all filtered applications"
+      ]
+    ],
+    "show_all_conversations": "show more comments",
+    "switch_to_mine": "my applications",
+    "switch_to_deleted": "deleted by player",
+    "switch_to_non_replied_comments": "comments with no reply",
+    "switch_to_need_response": "needs solution",
+    "switch_to_non_filled_mustbes": "not filled obligatory fields",
+    "switch_to_non_settled": "non settled players",
+    "switch_to_payment_approve": "nonconfirmed payments",
+    "switch_to_all": "all applications",
+    "switch_to_plots_count_on": "show plots count",
+    "switch_to_plots_count_off": "hide plots count",
+    "export_to_excel": "export to Excel",
+    "export_to_excel_2": "export to Excel (team)",
+    "set_special_group": "set special group",
+    "set_special_group_title": "set a plot or a gamemaster group to all filtered applications",
+    "generate_documents": "generate documents",
+    "total": "active: ",
+    "room_description": "%s (%s). %s of %s taken.",
+    "transfer_application": "offer application to an another player",
+    "transfer_application_cancel": "cancel application offer",
+    "changes_history": "history",
+    "back_to_application": "back to application",
+    "prev_change": "earlier",
+    "next_change": "later",
+    "to_comments": "To comments",
+    "messages": {
+      "set_special_group": "Group is set.",
+      "conversation_sub_obj_type_filter_success": "Comment was added successfully to selected applications.",
+      "payment_provided_accepted": "Payment confirmed.",
+      "payment_provided_accepted_need_check": "Organizers have to provide a e-check.",
+      "payment_provided_declined": "Payment not confirmed.",
+      "group_request_accepted": "Group request accepted.",
+      "group_request_declined": "Group request declined.",
+      "application_deleted_by_player": "Application was deleted by player.",
+      "transfer_application_success": "Application was offered to «%s».",
+      "transfer_application_cancel_success": "Application offer was canceled.",
+      "application_autonewrole_success": "Application was successfully separated into a new character in same groups.",
+      "application_change_to_gamemasters_subject": "Gamemaster changed application «%s» in project «%s»",
+      "application_change_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%speople\/%s\/\">«%s»<\/a> has been changed by <a href=\"%speople\/%s\/\">gamemaster «%s»<\/a>.",
+      "application_change_to_player_subject": "Your application «%s» in project «%s» has been changed",
+      "application_change_to_player_message": "Good day!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Your application «%s»<\/a> has been changed <a href=\"%speople\/%s\/\">by gamemaster «%s»<\/a>.",
+      "application_deleted_success": "Application was successfully removed from applications list, player was notified by e-mail.",
+      "application_delete_to_gamemasters_subject": "Gamemaster deleted application «%s» in project «%s»",
+      "application_delete_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%speople\/%s\/\">«%s»<\/a> has been deleted by <a href=\"%speople\/%s\/\">gamemaster «%s»<\/a>.",
+      "application_delete_to_player_subject": "Your application «%s» in project «%s» has been deleted",
+      "application_delete_to_player_message": "Good day!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Your application «%s»<\/a> has been deleted <a href=\"%speople\/%s\/\">by gamemaster «%s»<\/a>.",
+      "application_declined": "Application offer was declined by user."
+    }
+  },
+  "fraym_model": {
+    "object_name": "application",
+    "object_messages": [
+      "Application created successfully.",
+      "Application changed successfully.",
+      "Application deleted successfully."
+    ],
+    "elements": {
+      "h1_1": {
+        "shownName": "Player"
+      },
+      "creator_id": {
+        "shownName": "Player"
+      },
+      "h1_2": {
+        "shownName": "Application"
+      },
+      "status": {
+        "shownName": "Status",
+        "values": [
+          [
+            "1",
+            "sent"
+          ],
+          [
+            "2",
+            "processed"
+          ],
+          [
+            "3",
+            "accepted"
+          ],
+          [
+            "4",
+            "declined"
+          ]
+        ]
+      },
+      "responsible_gamemaster_id": {
+        "shownName": "Responsible gamemaster"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      },
+      "player_registered": {
+        "shownName": "Player has been registered on the game area"
+      },
+      "team_application": {
+        "shownName": "Type",
+        "values": [
+          [
+            "0",
+            "personal"
+          ],
+          [
+            "1",
+            "team"
+          ]
+        ]
+      },
+      "h1_3": {
+        "with_rooms": "Fee & settlement",
+        "no_rooms": "Fee"
+      },
+      "project_fee_ids": {
+        "shownName": "Participation fee options"
+      },
+      "money": {
+        "shownName": "Participation fee"
+      },
+      "money_provided": {
+        "shownName": "Paid",
+        "helpText": "if you're using <a href=\"/budget/\">budget section</a>, you should make changes into fees through players requests or by adding them manually into \"<a href=\"/transaction/\">Fees history</a>\"."
+      },
+      "money_paid": {
+        "shownName": "Fee fully paid"
+      },
+      "h1_5": {
+        "shownName": "Settlement"
+      },
+      "rooms_selector": {
+        "shownName": "Settlement",
+        "helpText": "<a href=\"/rooms/\" target=\"_blank\">setup settlement</a>"
+      },
+      "room_neighboors": {
+        "shownName": "Settlement residents"
+      },
+      "eco_money_paid": {
+        "shownName": "Eco fee paid"
+      },
+      "h1_4": {
+        "shownName": "Roles list"
+      },
+      "project_character_id": {
+        "shownName": "Character",
+        "helpText": "<a href=\"/character/\" target=\"_blank\">switch to character</a>"
+      },
+      "project_group_ids": {
+        "shownName": "Groups"
+      },
+      "user_requested_project_group_ids": {
+        "shownName": "Groups requested by user"
+      },
+      "application_team_count": {
+        "shownName": "People in team quantity"
+      },
+      "applications_needed_count": {
+        "shownName": "People in team needed quantity"
+      },
+      "registration_comments": {
+        "shownName": "Comments from registration team"
+      },
+      "sorter": {
+        "shownName": "",
+        "fix_character_name_by_sorter": "<a id=\"fix_character_name_by_sorter\" obj_id=\"%s\">fix character name in roles list<\/a>"
+      },
+      "distributed_item_ids": {
+        "shownName": "Distributed items"
+      },
+      "qrpg_key": {
+        "shownName": "QRpg: keys \/ properties",
+        "helpText": "setup: <a href=\"/qrpgkey/\" target=\"_blank\">keys \/ properties<\/a> and <a href=\"/qrpgcode/\" target=\"_blank\">codes \/ objects<\/a>."
+      },
+      "players_bank_values": {
+        "shownName": "Game bank: balance",
+        "helpText": "setup: <a href=\"/bank_transaction/\" target=\"_blank\">transactions<\/a> and <a href=\"/bank_currency/\" target=\"_blank\">resources<\/a>."
+      },
+      "player_got_info": {
+        "shownName": "Player got all information"
+      },
+      "user_sickness": {
+        "shownName": "Medical contraindications"
+      },
+      "plots": {
+        "shownName": "Plots"
+      },
+      "plots_data": {
+        "shownName": "Full plots list"
+      },
+      "last_update_user_id": {
+        "shownName": "<span class=\"sbi sbi-user\"><\/span><div class=\"hidden\">Last updated by<\/div>"
+      },
+      "id": {
+        "shownName": "<span class=\"sbi sbi-link\"><\/span><div class=\"hidden\">Stories<\/div>"
+      },
+      "deleted_by_player": {
+        "shownName": "Deleted by player"
+      },
+      "created_at": {
+        "shownName": "Application submission date"
+      }
+    }
+  }
+}

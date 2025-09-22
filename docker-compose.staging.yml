@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      target: staging
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      VIRTUAL_HOST: dev.allrpg.info
+      LETSENCRYPT_HOST: dev.allrpg.info

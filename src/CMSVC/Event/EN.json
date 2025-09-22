@@ -1,0 +1,108 @@
+{
+  "global": {
+    "title": "Events",
+    "author": "Author",
+    "was_registered": "Created",
+    "modal_header_event_members": "Event members",
+    "modal_group_admin": "author",
+    "modal_group_admin_first_letter": "Author",
+    "modal_group_member": "participant",
+    "modal_group_member_first_letter": "p",
+    "edit_event_capitalized": "Edit event",
+    "members_management_capitalized": "Manage rights",
+    "leave_event_capitalized": "Leave event",
+    "place": "Place",
+    "foresight_map": "Foresight map",
+    "event_members": "Members",
+    "members": "Event members",
+    "members_alt": "Members rights",
+    "group_authors": "Authors",
+    "group_members": "Members",
+    "edit_event": "Edit event",
+    "invite_into_event": "Invite to event",
+    "create_event_chat": "Create an event conversation",
+    "open_event_chat": "Open an event conversation",
+    "create_foresight_map": "Create a foresight map",
+    "edit_foresight_map": "Edit foresight map",
+    "show_qr_code": "Show QR-code",
+    "materials": "Materials",
+    "documents": "Documents",
+    "starting_dcouments": "Incoming Documents",
+    "upload": "Upload",
+    "add_a_link": "Add a link",
+    "stories": "Proofcases",
+    "story_add": "Add a proofcase",
+    "history": "History",
+    "input_message": "Enter a message",
+    "get_access": "Join the event",
+    "request_access_capitalized": "Request access",
+    "rerequest_access_capitalized": "Request access again",
+    "project": "Project",
+    "community": "Group",
+    "messages": {
+      "successfully_joined": "You have successfully joined the event.",
+      "project": "Project",
+      "event_change_message_1": "Hello.<br><br>%s changed%s the event<a href=\"%sevent\/%s\/\">%s<\/a>.<br><br><b>Date and Time of beginning:<\/b> %s<br><b>Date and Time of the end:<\/b> %s<br><b>Description:<\/b><br>",
+      "event_change_message_2": "Event changed",
+      "event_change_message_3": "Hello.<br><br>%s assigned%s you responsible for the event <a href=\"%sevent\/%s\/\">%s<\/a>.",
+      "event_change_message_4": "You are assigned responsible for the event",
+      "have_no_rights": "You have no rights to manage the events of the specified",
+      "have_no_rights_project": "Project",
+      "have_no_rights_community": "Group",
+      "remove_access_success": "You have successfully left the event.",
+      "remove_access_fail": "Rights to access this event could not be deleted.",
+      "get_access_word": "Еvent",
+      "have_no_rights_in_this_event": "You have no rights to manage this event.",
+      "dates_changed_successfully": "Dates changed successfully",
+      "dates_change_message": "Dates being changed. Beginning Date and Time: %s. Ending Date and Time: %s."
+    }
+  },
+  "fraym_model": {
+    "object_name": "event",
+    "object_messages": [
+      "Event created successfully.",
+      "Event changed successfully.",
+      "Event deleted successfully."
+    ],
+    "elements": {
+      "user_id": {
+        "shownName": "participants"
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "place": {
+        "shownName": "Location"
+      },
+      "description": {
+        "shownName": "Description"
+      },
+      "date_from": {
+        "shownName": "Beginning Date and Time"
+      },
+      "date_to": {
+        "shownName": "Ending Date and Time"
+      },
+      "attachments": {
+        "shownName": "Attachments"
+      },
+      "competences": {
+        "shownName": "Certifies competences"
+      },
+      "tags": {
+        "shownName": "Tags",
+        "values": null
+      },
+      "foresight_map_id": {
+        "shownName": "Foresight maps IDs",
+        "helpText": "You can get foresight maps IDs here: <a href='%s' target='_blank'>http:\/\/www.foresightmaps.ru\/<\/a>. You can provide more than one ID by dividing them with a «;» symbol."
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      },
+      "back_to_project": {
+        "shownName": "Return to project \/ group after saving"
+      }
+    }
+  }
+}

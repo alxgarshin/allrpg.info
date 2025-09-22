@@ -1,0 +1,25 @@
+{
+  "global": {
+    "title": "Filters sets"
+  },
+  "fraym_model": {
+    "object_name": "filters set",
+    "object_messages": [
+      "Filter set created successfully.",
+      "Filter sets changed successfully",
+      "Filter set deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "link": {
+        "shownName": "Link",
+        "helpText": "you can get a link to a filters sets in the applications list. Filter your applications and at the bottom of the list you will see a link «A link to the current filters set». Click on it with the right mouse button, copy it and paste into this field."
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

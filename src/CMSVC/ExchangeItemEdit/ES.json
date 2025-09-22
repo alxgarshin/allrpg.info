@@ -1,0 +1,129 @@
+{
+  "global": {
+    "title": "Almacén: mis artículos",
+    "messages": {
+      "wrong_image_path": "Ruta incorrecta a una imagen: quizás la foto tenga acceso restringido o estés proporcionando un enlace a la página web en lugar de un enlace a la imagen."
+    }
+  },
+  "fraym_model": {
+    "object_name": "ítem",
+    "object_messages": [
+      "Ítem añadido correctamente.",
+      "Ítem modificado correctamente.",
+      "Ítem eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Nombre",
+        "helpText": "máximo de 255 símbolos."
+      },
+      "region": {
+        "shownName": "Región"
+      },
+      "currency": {
+        "shownName": "Moneda",
+        "values": [
+          [
+            "RUR",
+            "RUB"
+          ],
+          [
+            "USD",
+            "USD"
+          ],
+          [
+            "EUR",
+            "EUR"
+          ]
+        ]
+      },
+      "exchange_category_ids": {
+        "shownName": "Categorías de almacén",
+        "values": [
+          [
+            "3",
+            "Accesorio"
+          ],
+          [
+            "4",
+            "Armadura"
+          ],
+          [
+            "7",
+            "Histórico"
+          ],
+          [
+            "2",
+            "Traje"
+          ],
+          [
+            "1",
+            "Arma"
+          ],
+          [
+            "8",
+            "Contemporáneo"
+          ],
+          [
+            "9",
+            "Edificios"
+          ],
+          [
+            "10",
+            "Turismo"
+          ],
+          [
+            "6",
+            "Ciencia ficción"
+          ],
+          [
+            "5",
+            "Fantasía"
+          ]
+        ],
+        "helpText": "Si no encuentras una categoría, por favor, contacta con el <a href=\"\/help\/\" target=\"_blank\">servicio de soporte<\/a>."
+      },
+      "description": {
+        "shownName": "Descripción",
+        "helpText": "Si proporcionas este artículo gratis o a cambio de algo, escríbelo aquí."
+      },
+      "price_lease": {
+        "shownName": "Precio de alquiler"
+      },
+      "price_buy": {
+        "shownName": "Precio de compra"
+      },
+      "additional": {
+        "shownName": "Aclaraciones importantes",
+        "values": [
+          [
+            "1",
+            "Cómpralo si se rompe"
+          ],
+          [
+            "2",
+            "Recogida y devolución en persona"
+          ],
+          [
+            "3",
+            "Te lo traemos"
+          ],
+          [
+            "4",
+            "Se envía por correo"
+          ]
+        ]
+      },
+      "active": {
+        "shownName": "Visible para otros usuarios"
+      },
+      "h1_1": {
+        "shownName": "Enlaces a imágenes"
+      },
+      "images": {
+        "shownName": "Enlace de imagen",
+        "helpText": "Si añades enlaces a imágenes de una red social, Por favor, asegúrese de que la imagen sea accesible desde internet y no esté en un álbum de fotos cerrado. Para añadir un enlace con seguridad, haga clic derecho sobre una imagen y seleccione «Abrir imagen en una nueva pestaña». Después, copie la dirección de la imagen desde la barra de direcciones del navegador."
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "global": {
+    "folders": {
+      "messages": {
+        "add_folder_success": "Carpeta añadida correctamente.",
+        "add_folder_fail": "Error al añadir una carpeta.",
+        "edit_folder_success": "Carpeta modificada correctamente.",
+        "edit_folder_fail": "Error al cambiar una carpeta.",
+        "remove_folder_success": "Carpeta eliminada correctamente.",
+        "remove_folder_fail": "Error al eliminar una carpeta."
+      },
+      "links": {
+        "messages": {
+          "add_link_success": "Enlace añadido correctamente.",
+          "add_link_fail": "Error al añadir un enlace.",
+          "edit_link_success": "Enlace modificado correctamente.",
+          "edit_link_fail": "Error al cambiar un enlace.",
+          "remove_link_success": "Enlace eliminado correctamente.",
+          "remove_link_fail": "Error al eliminar un enlace."
+        }
+      }
+    }
+  }
+}

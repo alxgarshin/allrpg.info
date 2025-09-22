@@ -1,0 +1,11 @@
+{
+  "global": {
+    "title": "Wall",
+    "wall": "Wall",
+    "new_messages": "Show new",
+    "all_messages": "Show all",
+    "show_previous": "Show previous",
+    "no_projects_or_communities": "You are not a part of any group or project yet.",
+    "no_new_threads": "No new threads found."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "global": {
+    "messages": {
+      "redirect_to_auth": "Redirecting to authorization.",
+      "already_logged": "You are already logged in.<br>\r\nYou can connect your social network account by adding it in user’s <a href=“%s\">account information <\/a>.",
+      "email_already_registered": " User with this email is already registered. Please, use password remind function or contact support for help.",
+      "couldnt_auth": " Authorization unsuccessful. Please, try to <a href=\"https:\/\/www.vk.ru\/\">log out<\/a> from social network, re-login into it and then try to re-authorize in allrpg.info."
+    }
+  }
+}

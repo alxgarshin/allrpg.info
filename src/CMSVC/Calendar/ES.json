@@ -1,0 +1,40 @@
+{
+  "global": {
+    "title": "Calendario de partidas de rol en %s",
+    "more": "más",
+    "add_event": "Añadir un evento",
+    "calendarstyle_0": "ver como tabla",
+    "calendarstyle_1": "ver como calendario",
+    "filter_year": "Año",
+    "filter_month": "Mes",
+    "filter_region": "Región",
+    "filter_setting": "Ajuste",
+    "filter_gametype2": "Tipo",
+    "filter_cancelled_moved": "Cancelado/movido",
+    "name": "Nombre",
+    "dates": "Fechas",
+    "gametype2": "Tipo",
+    "small_cancelled": "cancelado",
+    "small_moved": "movido",
+    "gamemasters_group": "Maestros de juego",
+    "gamemasters_group_short": "GMs",
+    "players": "Jugadores",
+    "other": "Adicional",
+    "count_notion": "Nociones: %s",
+    "count_report": "Informes: %s",
+    "count_gallery": "Fotos: %s",
+    "legend": "Participas en eventos marcados con <span class=\"player\"><b>este fondo<\/b><\/span>.<br>\r\nEres el <u>maestro de juego<\/u> en eventos marcados con <span class=\"master\"><b>este fondo<\/b><\/span>.<br>\r\nProporcionas ayuda en el lugar<\/u> en eventos marcados con <span class=\"tech\"><b>este fondo<\/b><\/span>.",
+    "all": "Todos",
+    "filter_region_fixed_selects": {
+      "2,13": "Moscú",
+      "89,119": "San Petersburgo"
+    },
+    "filter_gametype2_fixed_selects": {
+      "14": "en un pabellón",
+      "15": "en un polígono"
+    },
+    "filter_month_fixed_selects": {
+      "closest": "Más cercano"
+    }
+  }
+}

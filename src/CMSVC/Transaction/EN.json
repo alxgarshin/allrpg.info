@@ -1,0 +1,59 @@
+{
+  "global": {
+    "title": "Fees history"
+  },
+  "fraym_model": {
+    "object_name": "transaction",
+    "object_messages": [
+      "Transaction created successfully.",
+      "Transactions changed successfully",
+      "Transaction deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "project_application_id": {
+        "shownName": "Application"
+      },
+      "pay_by_card": {
+        "shownName": "Unable to pay online, would like to try different way of payment"
+      },
+      "test_payment": {
+        "shownName": "Test payment (for project authors only)"
+      },
+      "payment_datetime": {
+        "shownName": "Date & time of payment"
+      },
+      "content": {
+        "shownName": "Comment"
+      },
+      "project_payment_type_id": {
+        "shownName": "Account"
+      },
+      "helper_before_transaction_add": {
+        "shownName": "Instruction"
+      },
+      "amount": {
+        "shownName": "Amount"
+      },
+      "comission_percent": {
+        "shownName": "Comissions and taxes (%)"
+      },
+      "comission_value": {
+        "shownName": "Comissions and taxes (&#8381;)"
+      },
+      "hasCheck": {
+        "shownName": "Check",
+        "helpText": "has a check from nalog.ru."
+      },
+      "verified": {
+        "shownName": "<span class=\"sbi sbi-check hiddenInFilters\"><\/span><span class=\"hidden shownInFilters\">Verified<\/span>",
+        "helpText": "verified."
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "global": {
+    "title": "Задачи",
+    "author": "Автор",
+    "was_registered": "Создана",
+    "modal_header_task_members": "Участники задачи",
+    "modal_group_admin": "автор",
+    "modal_group_admin_first_letter": "Автор",
+    "modal_group_responsible": "ответственный",
+    "modal_group_responsible_first_letter": "Ответственный",
+    "modal_group_member": "участник",
+    "modal_group_member_first_letter": "У",
+    "percentage": "готовность",
+    "state_name_closed": "закрыта",
+    "state_name_hot": "горящая",
+    "state_name_current": "текущая",
+    "state_name_future": "будущая",
+    "no_due_date": "без даты конца",
+    "no_start_date": "без даты начала",
+    "priority": "Приоритет",
+    "status": "Статус",
+    "state_name_lowercase": "состояние",
+    "edit_task_capitalized": "Редактирование задачи",
+    "members_management_capitalized": "Управление правами",
+    "leave_task_capitalized": "Покинуть задачу",
+    "access_request_sent": "Запрос отправлен",
+    "request_access": "Запросить подключение",
+    "get_access": "Вступить в задачу",
+    "place": "Место",
+    "task_members": "Участники задачи",
+    "members": "Участники задачи",
+    "members_alt": "Права участников",
+    "group_authors": "Авторы",
+    "group_responsibles": "Ответственный",
+    "group_members": "Участники",
+    "edit_task": "Редактировать задачу",
+    "invite_into_task": "Пригласить в задачу",
+    "create_task_chat": "Создать диалог задачи",
+    "open_task_chat": "Открыть диалог задачи",
+    "copy_task": "Скопировать задачу",
+    "show_qr_code": "Показать QR-код",
+    "materials": "Материалы",
+    "documents": "Документы",
+    "starting_dcouments": "Входящие документы",
+    "resources": "Ресурсы",
+    "upload": "Загрузить",
+    "add_a_link": "Добавить ссылку",
+    "change_resources": "Изменить",
+    "result": "Желаемый результат",
+    "stories": "Прецеденты",
+    "story_add": "Добавить прецедент",
+    "history": "История",
+    "input_message": "Написать сообщение, изменить ответственного, статус и приоритет",
+    "request_access_capitalized": "Запросить доступ",
+    "rerequest_access_capitalized": "Запросить доступ повторно",
+    "project": "Проект",
+    "community": "Группа",
+    "parent_task": "Является частью",
+    "child_task": "Состоит из",
+    "following_task": "Следует за",
+    "preceding_task": "Идет перед",
+    "messages": {
+      "successfully_joined": "Вы успешно вступили в задачу.",
+      "community": "Группа",
+      "task_change_message_1": "Добрый день.<br><br>%s изменил%s задачу <a href=\"%stask\/%s\/\">%s<\/a>.<br><br><b>Статус:<\/b> ",
+      "task_change_message_2": "Приоритет",
+      "task_change_message_3": "Дата и время начала",
+      "task_change_message_4": "Дата и время окончания",
+      "task_change_message_5": "Описание",
+      "task_change_message_10": "Желаемый результат",
+      "task_change_message_6": "Задача изменена",
+      "task_change_message_7": "Добрый день.<br><br>%s назначил%s Вас ответственным в задаче <a href=\"%stask\/%s\/\">%s<\/a>.",
+      "task_change_message_8": "Вы назначены ответственным в задаче",
+      "task_change_message_9": "Задача создана.",
+      "have_no_rights": "У Вас нет прав на управление задачами указанного",
+      "have_no_rights_project": "проекта",
+      "have_no_rights_community": "группы",
+      "remove_access_success": "Вы успешно покинули задачу.",
+      "remove_access_fail": "Не удалось удалить права доступа к задаче.",
+      "get_access_word": "задаче",
+      "cant_follow_parent": "Задача не может одновременно являться частью и следовать за другой задачей.",
+      "have_no_rights_in_this_task": "У Вас нет прав на управление данной задачей.",
+      "dates_changed_successfully": "Даты успешно изменены.",
+      "dates_change_message": "Изменение дат. Дата и время начала: %s. Дата и время окончания: %s.",
+      "task_created_successfully": "Задача успешно создана.",
+      "tasks_have_different_parents": "Нельзя привязывать задачи разных проектов друг к другу.",
+      "tasks_cant_loop": "Задача не может одновременно являться частью и состоять из другой задачи."
+    }
+  },
+  "fraym_model": {
+    "object_name": "задачу",
+    "object_messages": [
+      "Задача успешно создана.",
+      "Задача успешно изменена.",
+      "Задача успешно удалена."
+    ],
+    "elements": {
+      "obj_id": {
+        "shownName": "Группа"
+      },
+      "name": {
+        "shownName": "Название"
+      },
+      "user_id": {
+        "shownName": "Участники"
+      },
+      "responsible": {
+        "shownName": "Ответственный"
+      },
+      "place": {
+        "shownName": "Местоположение"
+      },
+      "result": {
+        "shownName": "Желаемый результат"
+      },
+      "description": {
+        "shownName": "Описание"
+      },
+      "date_from": {
+        "shownName": "Дата и время начала"
+      },
+      "date_to": {
+        "shownName": "Дата и время окончания"
+      },
+      "do_not_count_as_busy": {
+        "shownName": "Не учитывать в дальнейшем при определении занятости"
+      },
+      "repeat_mode": {
+        "shownName": "Повторять",
+        "values": [
+          [
+            "single",
+            "однократная задача"
+          ],
+          [
+            "everyday",
+            "ежедневно"
+          ],
+          [
+            "every_workday",
+            "каждый рабочий день"
+          ],
+          [
+            "once_per_week",
+            "еженедельно"
+          ],
+          [
+            "every_month",
+            "ежемесячно"
+          ],
+          [
+            "every_year",
+            "ежегодно"
+          ]
+        ]
+      },
+      "repeat_until": {
+        "shownName": "Повторять вплоть до"
+      },
+      "repeated_tasks_change": {
+        "shownName": "Изменить повторяющиеся задачи",
+        "values": [
+          [
+            "all",
+            "все"
+          ],
+          [
+            "only_this_one",
+            "только эту"
+          ]
+        ]
+      },
+      "attachments": {
+        "shownName": "Входящие документы"
+      },
+      "status": {
+        "shownName": "Статус",
+        "values": [
+          [
+            "{new}",
+            "новая"
+          ],
+          [
+            "{ready}",
+            "готова к исполнению"
+          ],
+          [
+            "{data_needed}",
+            "требуется обсуждение"
+          ],
+          [
+            "{working}",
+            "в работе"
+          ],
+          [
+            "{checking}",
+            "проверяется"
+          ],
+          [
+            "{delayed}",
+            "отложена"
+          ],
+          [
+            "{closed}",
+            "закрыта"
+          ],
+          [
+            "{rejected}",
+            "отклонена"
+          ]
+        ]
+      },
+      "priority": {
+        "shownName": "Приоритет",
+        "values": [
+          [
+            "1",
+            "немедленный"
+          ],
+          [
+            "2",
+            "срочный"
+          ],
+          [
+            "3",
+            "высокий"
+          ],
+          [
+            "4",
+            "нормальный"
+          ],
+          [
+            "5",
+            "низкий"
+          ]
+        ]
+      },
+      "percentage": {
+        "shownName": "% готовности"
+      },
+      "parent_task": {
+        "shownName": "Является частью",
+        "values": [
+          [
+            "nothing_found",
+            "задач не найдено"
+          ]
+        ]
+      },
+      "following_task": {
+        "shownName": "Следует за",
+        "values": [
+          [
+            "nothing_found",
+            "задач не найдено"
+          ]
+        ]
+      },
+      "tags": {
+        "shownName": "Теги"
+      }
+    }
+  }
+}

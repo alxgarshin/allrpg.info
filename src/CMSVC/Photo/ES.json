@@ -1,0 +1,37 @@
+{
+  "global": {
+    "title": "Proponer una foto",
+    "button_text": "Enviar una propuesta a los desarrolladores",
+    "auto_button_text_to_replace": "Añadir propuesta",
+    "messages": {
+      "photo": "Nueva solicitud de foto",
+      "request_send_success": "Su solicitud se ha enviado correctamente. Gracias.",
+      "please_fill_all_fields": "Por favor, rellene todos los campos necesarios.",
+      "wrong_captcha": "¡Código de verificación incorrecto! Inténtelo de nuevo.",
+      "look_like_bot": "Por favor, haga clic <a id=\"approvement_link\">aquí<\/a> para confirmar que no es un bot."
+    }
+  },
+  "fraym_model": {
+    "object_name": "propuesta",
+    "object_messages": [],
+    "elements": {
+      "name": {
+        "shownName": "¿Cuál es tu nombre?"
+      },
+      "em": {
+        "shownName": "Correo electrónico"
+      },
+      "details": {
+        "shownName": "Información sobre la foto",
+        "helpText": "autor; un enlace al sitio web del proyecto."
+      },
+      "link": {
+        "shownName": "Enlace a una foto"
+      },
+      "agreed": {
+        "shownName": "Todos los participantes dieron su permiso",
+        "helpText": "Para evitar malentendidos, al marcar este campo, confirmas que has recibido el permiso de todos los participantes para publicar esta foto."
+      }
+    }
+  }
+}

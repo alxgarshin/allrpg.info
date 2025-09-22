@@ -1,0 +1,5 @@
+/** Фото */
+
+if (withDocumentEvents) {
+
+}

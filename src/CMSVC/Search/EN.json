@@ -1,0 +1,39 @@
+{
+  "global": {
+    "title": "Search",
+    "find": "Find",
+    "no_matches": "No matches found",
+    "tag": "Tag: ",
+    "messages": {
+      "need_more_symbols": "More than 3 symbols required.",
+      "publication_co_author": "Article coauthor",
+      "publication_author": "Article author",
+      "tags": "Tags",
+      "publication_text": "Article text",
+      "publication": "Article",
+      "user": "User",
+      "project": "Project",
+      "project_text": "Project Summary",
+      "community": "Group",
+      "community_text": "Group summary",
+      "task": "Task",
+      "task_text": "Task summary",
+      "event": "Event",
+      "event_text": "Event summary",
+      "calendar_event": "Calendar event",
+      "calendar_event_text": "Calendar event summary",
+      "area": "Area",
+      "gamemaster": "Gamemasters group"
+    }
+  },
+  "fraym_model": {
+    "elements": {
+      "qwerty": {
+        "shownName": "Search text"
+      },
+      "region": {
+        "shownName": "Region"
+      }
+    }
+  }
+}

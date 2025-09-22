@@ -1,0 +1,9 @@
+{
+  "global": {
+    "messages": {
+      "photo_video_added": "Материал успешно добавлен.",
+      "photo_video_changed": "Материал успешно изменен.",
+      "photo_video_deleted": "Материал успешно удален."
+    }
+  }
+}

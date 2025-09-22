@@ -1,0 +1,19 @@
+/** Капча */
+form div[id="div_regstamp[0]"] {
+    margin-right: 17em;
+}
+
+form div[id="div_regstamp[0]"] a[action_request] {
+    position: absolute;
+    z-index: 1;
+    right: 2.2em;
+    top: 1.4em;
+    color: var(--main-blue);
+}
+
+form div[id="div_regstamp[0]"] a[action_request]:hover,
+body.night_mode form div[id="div_regstamp[0]"] a[action_request]:hover {
+    color: var(--forms-background);
+}
+
+@media only screen and (max-device-width: 767px) {}

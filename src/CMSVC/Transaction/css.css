@@ -1,0 +1,95 @@
+form#form_transaction_add div.multi_objects_table.excel {
+    grid-template-columns: 4em 4em 1fr 16em 7em 5em 5em 1fr 1fr 11em 1fr 10em auto;
+}
+
+form#form_transaction_add div.multi_objects_table.excel.without_payment_datetime {
+    grid-template-columns: 4em 4em 1fr 16em 7em 5em 5em 1fr 1fr 1fr 10em auto;
+}
+
+form#form_transaction_add div.tr#line0 input[name^="amount"] {
+    padding: 1em .25em;
+    background: var(--color-background-main);
+}
+
+form#form_transaction_add div.tr#line0 td:nth-of-type(6) {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#form_transaction_add .without_payment_datetime div.tr:not([id="line0"]):not(.menu) div.td:nth-of-type(11),
+#form_transaction_add .without_payment_datetime div.tr:not([id="line0"]):not(.menu) div.td:nth-of-type(12),
+#form_transaction_add .with_payment_datetime div.tr:not([id="line0"]):not(.menu) div.td:nth-of-type(12),
+#form_transaction_add .with_payment_datetime div.tr:not([id="line0"]):not(.menu) div.td:nth-of-type(13) {
+    cursor: pointer;
+}
+
+#form_transaction_add .without_payment_datetime div.tr:not([id="line0"]):not(.menu) div.td:nth-of-type(10),
+#form_transaction_add .with_payment_datetime div.tr:not([id="line0"]):not(.menu) div.td:nth-of-type(11) {
+    -ms-word-break: break-all;
+    word-break: break-all;
+}
+
+form#form_transaction_add span.separator {
+    opacity: 0;
+    display: block;
+    height: 0;
+}
+
+form#form_transaction_add label[for^="project_application_id"] span.separator {
+    opacity: 1;
+    display: inline;
+    height: auto;
+}
+
+form#form_transaction_add .sbi-info {
+    padding-left: .5em;
+    cursor: pointer;
+}
+
+form#form_transaction_add div.helper {
+    min-width: max-content;
+    top: -1em;
+    left: -2em;
+}
+
+form#form_transaction_add div.helper div.social {
+    margin-left: 1em;
+    float: right;
+    height: 3em;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+}
+
+form#form_transaction_add div.helper div.social span {
+    padding-left: 1.5em;
+}
+
+form#form_transaction_add div.helper div.social span {
+    background: left center no-repeat;
+    background-size: contain;
+    margin-top: .3em;
+}
+
+form#form_transaction_add div.helper div.social span:first-of-type {
+    margin-top: 0;
+}
+
+form#form_transaction_add div.helper div.social span a {
+    color: var(--color-background-main);
+}
+
+form#form_transaction_add div.helper div.social span.c1 {
+    background-image: url(/design/networks/vk_icon.svg);
+}
+
+form#form_transaction_add div.helper div.social span.c2 {
+    background-image: url(/design/networks/tg_icon.svg);
+}
+
+@media only screen and (max-device-width: 767px) {
+    form#form_transaction_add td:nth-of-type(2) {
+        display: none;
+    }
+}

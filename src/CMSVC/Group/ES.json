@@ -1,0 +1,90 @@
+{
+  "global": {
+    "switch_to_mine": "mis grupos",
+    "switch_to_all": "todos los grupos",
+    "characters": "personajes",
+    "applications": "aplicaciones",
+    "roleslist": "ver en la lista de roles",
+    "unwrap": "expandir",
+    "wrap": "contraer",
+    "link_to_roles_default": "abrir",
+    "before": "antes",
+    "at_the_end": "al final",
+    "messages": {
+      "disable_changes_active": "Cambio de grupo deshabilitado. Por favor, desmarque primero la casilla correspondiente."
+    }
+  },
+  "fraym_model": {
+    "object_name": "grupo",
+    "object_messages": [
+      "Grupo creado correctamente.",
+      "Grupo modificado correctamente.",
+      "Grupo eliminado correctamente.",
+      "Grupo eliminado correctamente."
+    ],
+    "elements": {
+      "link_to_roles": {
+        "shownName": "Ver en la lista de roles"
+      },
+      "parent": {
+        "shownName": "Forma parte de"
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "rights": {
+        "shownName": "Visibilidad en la lista de roles",
+        "values": [
+          [
+            "0",
+            "mostrar todas las aplicaciones"
+          ],
+          [
+            "1",
+            "mostrar solo el recuento de aplicaciones"
+          ],
+          [
+            "2",
+            "solo para parcelas: no mostrar"
+          ],
+          [
+            "3",
+            "solo para gamemasters: no mostrar ni siquiera al jugador"
+          ]
+        ]
+      },
+      "responsible_gamemaster_id": {
+        "shownName": "Gamemaster responsable"
+      },
+      "description": {
+        "shownName": "Descripción",
+        "helpText": "Para la lista de roles. Puedes formatear el texto con: <b>**para negrita**<\/b>, <i>__para cursiva__<\/i>, [para la dirección http de la imagen ]."
+      },
+      "image": {
+        "shownName": "Ruta HTTP de una imagen"
+      },
+      "code": {
+        "shownName": "Lugar"
+      },
+      "distributed_item_autoset": {
+        "shownName": "Añadir elementos distribuidos a la aplicación en el conjunto de grupos"
+      },
+      "disallow_applications": {
+        "shownName": "Bloquear la aplicación en el grupo"
+      },
+      "user_can_request_access": {
+        "shownName": "El usuario puede solicitar acceso al grupo",
+        "helpText": "El usuario puede solicitar acceso al grupo en su aplicación. El maestro responsable deberá aprobar o rechazar el acceso. El grupo no puede ser exclusivo para maestros de juego."
+      },
+      "disable_changes": {
+        "shownName": "Desactivar cambio de grupo"
+      },
+      "link_to_characters": {
+        "shownName": "Agrupar personajes"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

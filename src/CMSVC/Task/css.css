@@ -1,0 +1,146 @@
+@import url('/css/components/tasks_table.min.css');
+@import url('/css/components/files_library.min.css');
+@import url('/css/components/conversation_form.min.css');
+@import url('/css/components/task_event_message.min.css');
+
+/** Даты задачи */
+div.task_dates {
+    text-align: right;
+    float: right;
+    background-color: var(--underlay-gray);
+    color: var(--main-blue);
+    border-radius: .3em;
+}
+
+div.task_dates div {
+    padding: .5em 1em;
+}
+
+div.task_dates div:last-child {
+    border-top: 1px solid var(--some-borders);
+}
+
+div.task_status,
+div.task_priority {
+    cursor: pointer;
+}
+
+div.task_percentage,
+div.task_state {
+    background-color: var(--inputs-borders);
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: left;
+    padding: .3em;
+    float: right;
+    clear: right;
+    margin: 1em 0 0 0;
+    z-index: 1;
+}
+
+div.task_percentage {
+    border-left: 1px solid var(--inputs-borders);
+    border-right: 1px solid var(--inputs-borders);
+    width: 8%;
+    text-align: center;
+}
+
+div.task_state.red {
+    background-color: var(--main-red);
+    color: var(--color-background-main);
+}
+
+div.task_state.yellow {
+    background-color: var(--yellow);
+    color: var(--color-background-main);
+}
+
+div.task_state.green {
+    background-color: var(--main-blue);
+    color: var(--color-background-main);
+}
+
+div.task_description {
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
+div.task_description a.child_task {
+    display: block;
+}
+
+div.task_description a.closed_child_task {
+    opacity: .3;
+}
+
+div.task_description a.closed_child_task:hover {
+    opacity: 1;
+}
+
+div.task_place,
+div.task_attachments,
+div.task_result,
+div.task_comments,
+div.event_description,
+div.event_attachments,
+div.event_comments {
+    margin-right: 1%;
+}
+
+div.task_description div.block_data,
+div.task_place div.block_data,
+div.task_attachments div.block_data,
+div.task_result div.block_data,
+div.event_description div.block_data,
+div.event_attachments div.block_data {
+    padding: 1%;
+}
+
+div#unavailable_users div.photoName {
+    width: 4em;
+    margin: 0 1em 0 0;
+}
+
+div#unavailable_users div.photoName div.photoName_photo_wrapper {
+    margin: 0;
+    width: 100%;
+}
+
+div#closest_acceptable_time {
+    float: right;
+    text-align: right;
+    font-weight: bold;
+}
+
+div#closest_acceptable_time a {
+    font-weight: normal;
+    cursor: pointer;
+}
+
+@media only screen and (max-device-width: 767px) {
+    div.kind_task div.object_info_1 {
+        display: none;
+    }
+
+    div.kind_task div.task_message div.task_message_data {
+        padding-bottom: 5em;
+    }
+
+    div.task_comment_form div.conversation_form div.conversation_form_data textarea {
+        height: 4.5em;
+    }
+
+    div.task_message div.task_message_data div.task_changes {
+        margin: 0;
+        text-align: left;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: .5em 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        max-width: unset;
+        top: auto;
+    }
+}

@@ -1,0 +1,15 @@
+div.maincontent_data.autocreated.kind_qrpg_history .td:nth-of-type(2) span {
+    display: none;
+}
+
+div.maincontent_data.autocreated.kind_qrpg_history .td:nth-of-type(5) a {
+    padding-right: .5em;
+    margin-right: .5em;
+    border-right: 1px dotted var(--main-blue);
+}
+
+div.maincontent_data.autocreated.kind_qrpg_history .td:nth-of-type(5) a:first-of-type {
+    padding-left: .5em;
+    margin-left: .5em;
+    border-left: 1px dotted var(--main-blue);
+}

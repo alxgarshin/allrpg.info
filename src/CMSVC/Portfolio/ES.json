@@ -1,0 +1,49 @@
+{
+  "global": {
+    "title": "Portafolio",
+    "messages": {
+      "no_data": "Se eliminó un evento."
+    }
+  },
+  "fraym_model": {
+    "object_name": "evento",
+    "object_messages": [
+      "Se agregó un evento correctamente a tu portafolio.",
+      "Se modificó un evento correctamente.",
+      "Se eliminó un evento correctamente."
+    ],
+    "elements": {
+      "togame": {
+        "shownName": "Tarjeta de evento en la base de conocimientos"
+      },
+      "calendar_event_id": {
+        "shownName": "Evento",
+        "helpText": "En esta lista solo encontrarás eventos de <a href=\"\/calendar_event\/\">la base de conocimientos<\/a>. Puedes añadir eventos a esta lista <a href=\"\/calendar_event\/act=add\">aquí<\/a>."
+      },
+      "role": {
+        "shownName": "Rol"
+      },
+      "locat": {
+        "shownName": "Ubicación"
+      },
+      "specializ": {
+        "shownName": "Participante"
+      },
+      "specializ2": {
+        "shownName": "Gamemaster"
+      },
+      "specializ3": {
+        "shownName": "Soporte"
+      },
+      "photo": {
+        "shownName": "Enlace de la foto"
+      },
+      "active": {
+        "shownName": "Visible para todos"
+      },
+      "id": {
+        "shownName": "Fechas"
+      }
+    }
+  }
+}

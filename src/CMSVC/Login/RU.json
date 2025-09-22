@@ -1,0 +1,25 @@
+{
+  "global": {
+    "title": "Войти",
+    "enter": "Вход",
+    "email": "E-mail",
+    "password": "Пароль",
+    "login_button": "Войти",
+    "remind_button": "Забыли пароль?",
+    "register_button": "Регистрация",
+    "enter_using": "Или авторизуйтесь через социальную сеть:",
+    "enter_using_vkontakte": "войти через вКонтакте",
+    "enter_using_facebook": "войти через Facebook",
+    "remind": "Восстановить",
+    "input_your_email": "Введите Ваш е-mail",
+    "do_remind": "Восстановить",
+    "messages": {
+      "remind_message": ",\r\nВы запросили восстановление пароля на сайте %s.\r\nВаш логин: равен Вашему e-mail'у.\r\nВаш новый пароль: %s",
+      "remind_subject": "Восстановление пароля на сайте",
+      "new_pass_sent": "На ваш e-mail отправлено письмо с новым паролем.",
+      "error_while_sending": "При отправке письма на сервере возникли проблемы.",
+      "no_email_found_in_db": "Указанного e-mail'а в базе не обнаружено.",
+      "need_to_login_or_register_for_that": "Необходимо войти или зарегистрироваться, после чего Вы будете перенаправлены в нужный раздел."
+    }
+  }
+}

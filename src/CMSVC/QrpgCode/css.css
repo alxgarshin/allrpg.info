@@ -1,0 +1,63 @@
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_generate"] a.qrpg_code_generate_link {
+    margin-right: 1em;
+}
+
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_qrpg_keys"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_not_qrpg_keys"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_hacking_settings"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_text_to_access"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_gives_bad_qrpg_keys"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_gives_bad_qrpg_keys_for_minutes"] {
+    width: 48%;
+    max-width: 48%;
+    min-width: 48%;
+}
+
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_on_success"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_conditions"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_on_fail"],
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_give_currency"] {
+    margin-top: 1.5rem;
+}
+
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_on_success"] div.fieldvalue,
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_conditions"] div.fieldvalue,
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_on_fail"] div.fieldvalue,
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_give_currency"] div.fieldvalue {
+    display: none;
+}
+
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_on_success"] div.fieldname,
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_conditions"] div.fieldname,
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_on_fail"] div.fieldname,
+div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_give_currency"] div.fieldname {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 0;
+}
+
+div.fieldvalue[id^="div_qrpg_key"] label img,
+div.fieldvalue[id^="div_not_qrpg_keys"] label img,
+div.fieldvalue[id^="div_gives_bad_qrpg_keys"] label img,
+div.fieldvalue[id^="div_removes_qrpg_keys_user"] label img,
+div.fieldvalue[id^="div_removes_qrpg_keys"] label img,
+div.fieldvalue[id^="div_removes_copies_of_qrpg_codes"] label img,
+div.fieldvalue[id^="div_gives_qrpg_keys"] label img {
+    max-width: 1.5em;
+}
+
+@media only screen and (max-device-width: 767px) {
+
+    div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_qrpg_keys"],
+    div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_not_qrpg_keys"],
+    div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_hacking_settings"],
+    div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_text_to_access"],
+    div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_gives_bad_qrpg_keys"],
+    div.maincontent_data.autocreated form#form_qrpg_code div[id^="field_gives_bad_qrpg_keys_for_minutes"] {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+}

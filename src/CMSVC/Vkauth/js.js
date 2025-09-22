@@ -1,0 +1,5 @@
+/** Vkontakte auth */
+
+if (withDocumentEvents) {
+
+}

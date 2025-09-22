@@ -1,0 +1,15 @@
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <style>
+            .pc-cls-1 {
+            fill: #55739C !important;
+            }
+            .pc-cls-2 {
+            fill: #fff !important;
+            fill-rule: evenodd;
+            }
+        </style>
+    </defs>
+    <circle class="pc-cls-1" cx="13" cy="13" r="13"/>
+    <path class="pc-cls-2" d="M1606,149h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2Z" transform="translate(-1587 -135)"/>
+</svg>

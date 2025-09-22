@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -eq 0 -o "$1" != "--force" ]; then
+    echo -e "\033[41m\n\n [ ПРЕДУПРЕЖДЕНИЕ ] Эта операция УДАЛИТ базы данных для dev и test окружения.\n\033[0m\n"
+    echo -e "Ее можно запускать исключительно на персональном dev-сервере.\n\n"
+    echo -e "Она не должна запускаться на stage или prod серверах.\n\n"
+    echo -e "Для запуска команды используйте опцию --force.\n\n"
+    exit 1;
+fi
+
+php lib/fraym/Tools/migrate.php database:drop --env=test
+php lib/fraym/Tools/migrate.php database:migrate --env=test
+
+php lib/fraym/Tools/migrate.php database:drop
+php lib/fraym/Tools/migrate.php database:migrate

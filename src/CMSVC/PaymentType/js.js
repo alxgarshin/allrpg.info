@@ -1,0 +1,5 @@
+/** Методы оплаты */
+
+if (withDocumentEvents) {
+
+}

@@ -1,0 +1,47 @@
+{
+  "global": {
+    "title": "Отчеты",
+    "stats": "Отчеты",
+    "filters_not_set": "Фильтры не определены!",
+    "types": [
+      [
+        "User",
+        "пользователь"
+      ],
+      [
+        "Project",
+        "проект"
+      ],
+      [
+        "Community",
+        "группа"
+      ],
+      [
+        "Task",
+        "задача"
+      ],
+      [
+        "Event",
+        "событие"
+      ],
+      [
+        "PublicationsEdit",
+        "статья"
+      ]
+    ],
+    "select_the_object_needed": "Выберите необходимый отчет:",
+    "go_back_to_object_choice": "Выбрать другой отчет",
+    "nothing_found": "Подходящие объекты не обнаружены.",
+    "filter": "Найти",
+    "reset_filter": "Сбросить",
+    "name": "Название",
+    "author": "Автор",
+    "created_at": "Создано",
+    "total": "Всего: ",
+    "show_all_on_one_page": "Показать все объекты на одной странице",
+    "export_to_excel": "Выгрузить все объекты в Excel",
+    "messages": {
+      "communities_and_projects_not_filled": "Необходимо выбрать хотя бы один проект или группу."
+    }
+  }
+}

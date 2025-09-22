@@ -1,0 +1,46 @@
+<html>
+<title>оффлайн / offline</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" href="/css/current.css" type="text/css">
+<style>
+    div.fullpage_cover.offline_shown {
+        opacity: 1;
+    }
+
+    hr {
+        margin: 1.5em 0;
+    }
+</style>
+<body>
+<div class="fullpage_cover offline_shown" style="display: table !important;">
+    <div id="offlineMessage">
+        Похоже, Ваше соединение с Интернет разорвано. Данное сообщение пропадёт, как только
+        соединение будет восстановлено.
+        <hr>
+        It looks like your Internet-connection is lost. This message will disappear when your connection is
+        reestablished.
+    </div>
+</div>
+
+<script>
+    window.addEventListener('online', () => {
+        window.location.reload();
+    });
+
+    async function checkNetworkAndReload() {
+        try {
+            const response = await fetch('.');
+            if (response.status >= 200 && response.status < 500) {
+                window.location.reload();
+                return;
+            }
+        } catch {
+        }
+        window.setTimeout(checkNetworkAndReload, 2500);
+    }
+
+    checkNetworkAndReload();
+</script>
+</body>
+</html>

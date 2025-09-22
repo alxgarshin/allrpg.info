@@ -1,0 +1,138 @@
+{
+  "global": {
+    "location": "Group",
+    "switch_to_group": "team application fields",
+    "switch_to_individual": "personal application fields",
+    "messages": {
+      "do_not_add_player_fields": "Please, do not add any fields requesting player personal info! Player profile is included automatically in every application."
+    }
+  },
+  "fraym_model": {
+    "object_name": "application field",
+    "object_messages": [
+      "Application field created successfully.",
+      "Application field changed successfully.",
+      "Application field deleted successfully."
+    ],
+    "elements": {
+      "field_name": {
+        "shownName": "Title",
+        "helpText": "no more than 255 symbols."
+      },
+      "field_type": {
+        "shownName": "Type",
+        "values": [
+          [
+            "text",
+            "Text string"
+          ],
+          [
+            "select",
+            "Select box"
+          ],
+          [
+            "textarea",
+            "Text area"
+          ],
+          [
+            "checkbox",
+            "Checkbox"
+          ],
+          [
+            "multiselect",
+            "Multi select box"
+          ],
+          [
+            "h1",
+            "Header"
+          ],
+          [
+            "wysiwyg",
+            "WYSIWYG"
+          ],
+          [
+            "number",
+            "Number field"
+          ],
+          [
+            "calendar",
+            "Calendar"
+          ]
+        ]
+      },
+      "field_mustbe": {
+        "shownName": "Mandatory field",
+        "helpText": "is the field mandatory?"
+      },
+      "field_values": {
+        "shownName": "Values",
+        "helpText": "input only if you have set <b>«select box» or «multi select box»<\/b> type.<br><br>\r\nFormat:<br>\r\n<u>[id][value]<\/u><br>\r\n<u>[id][value]<\/u><br><br>\r\nFor example:<br>\r\n[1][from friends]<br>\r\n[2][from friendly website]"
+      },
+      "field_default": {
+        "shownName": "Default value",
+        "helpText": "what should be shown in field by default?<br><br>\r\nIn case of «<b>checkbox<\/b>» type: if you want the checkbox to be checked, input «1».<br><br>\r\nIn case of «<b>multi select box<\/b>» type: if you want some of multi select box` checkboxes to be checked, input ids of those checkboxes with minus sign on the sides, e.g., «-1-2-5-»<br><br>\r\nIn case of «<b>select box<\/b>» type: input id of default selection here, e.g., «2»"
+      },
+      "show_if": {
+        "shownName": "Show only if",
+        "helpText": "the field will appear in application only if a specified value of another «select box» or «multi select box» has been already set."
+      },
+      "field_rights": {
+        "shownName": "Access rights",
+        "values": [
+          [
+            "1",
+            "gamemasters only"
+          ],
+          [
+            "2",
+            "player can view, but cannot edit"
+          ],
+          [
+            "3",
+            "player can view and edit"
+          ],
+          [
+            "4",
+            "player can view and edit + the field can be seen in an application in roles list"
+          ]
+        ]
+      },
+      "field_help": {
+        "shownName": "helpText",
+        "helpText": "a helpful text describing the field for players."
+      },
+      "field_code": {
+        "shownName": "Priority",
+        "helpText": "fields order in application. Field with priority 0 will be shown on top of an application form."
+      },
+      "field_height": {
+        "shownName": "Height",
+        "helpText": "in pixels."
+      },
+      "ingame_settings": {
+        "shownName": "Show in player's module",
+        "values": [
+          [
+            "game",
+            "in an ingame passport tab"
+          ],
+          [
+            "out_of_game",
+            "in characters information tab"
+          ]
+        ]
+      },
+      "show_in_filters": {
+        "shownName": "Use as a filter",
+        "helpText": "if checkbox is set, gamemasters are able to search applications by this field in «<a href=\"\/application\/\">Applications list<\/a>»."
+      },
+      "show_in_table": {
+        "shownName": "Show in applications table"
+      },
+      "hide_field_on_application_create": {
+        "shownName": "Hide field during application creation",
+        "helpText": "if checkbox is set, player will not see this field during application creation. Such field cannot be mandatory."
+      }
+    }
+  }
+}

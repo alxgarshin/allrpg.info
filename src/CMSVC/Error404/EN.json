@@ -1,0 +1,7 @@
+{
+  "global": {
+    "title": "404 - not found",
+    "text": "The page you are looking for was not found!<br>It is possible that you are not authorized to view the page.",
+    "to_main_page": "Switch to the main page"
+  }
+}

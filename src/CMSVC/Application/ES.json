@@ -1,0 +1,249 @@
+{
+  "global": {
+    "to_filterset": "Guardar como conjunto de filtros",
+    "type_data_to_search": "Buscar: introducir los datos de contacto de un participante o el texto de un campo principal de la solicitud",
+    "type_data_to_search_comments": "Buscar: en comentarios",
+    "comments": "Comentarios",
+    "change_comments_order": "en orden de calendario",
+    "man": "hombre",
+    "woman": "mujer",
+    "birth": "",
+    "telegram": "Telegram",
+    "skype": "Skype",
+    "facebook_visible": "Facebook",
+    "vkontakte": "VK",
+    "twitter": "Twitter",
+    "livejournal": "LiveJournal",
+    "googleplus": "Google+",
+    "linkedin": "LinkedIn",
+    "jabber": "Jabber",
+    "icq": "ICQ",
+    "sickness": "Contraindicaciones médicas",
+    "too_many_applications_for_comments": "Los comentarios no se incluyen debido a la exportación de %s+ aplicaciones.",
+    "too_many_applications_for_plots": "Los gráficos no se incluyen debido a la exportación de %s+ aplicaciones.",
+    "conversation_text_global": "Comentario y correo a todas las aplicaciones filtradas",
+    "conversation_text": "Comentario",
+    "conversation_sub_obj_types": [
+      [
+        "{gamemaster}",
+        "a los gamemasters"
+      ],
+      [
+        "{to_player}",
+        "al jugador"
+      ]
+    ],
+    "titles_conversation_sub_obj_types": {
+      "gamemaster": "a los gamemasters",
+      "to_player": "al jugador",
+      "from_player": "del jugador"
+    },
+    "conversation_sub_obj_type_filter": [
+      [
+        "{filter}",
+        "a todos Aplicaciones filtradas"
+      ]
+    ],
+    "show_all_conversations": "mostrar más comentarios",
+    "switch_to_mine": "mis aplicaciones",
+    "switch_to_deleted": "eliminado por el jugador",
+    "switch_to_non_replied_comments": "comentarios sin respuesta",
+    "switch_to_need_response": "necesita solución",
+    "switch_to_non_filled_mustbes": "campos obligatorios sin rellenar",
+    "switch_to_non_settled": "jugadores sin liquidar",
+    "switch_to_payment_approve": "pagos no confirmados",
+    "switch_to_all": "todas las aplicaciones",
+    "switch_to_plots_count_on": "mostrar el recuento de parcelas",
+    "switch_to_plots_count_off": "ocultar el recuento de parcelas",
+    "export_to_excel": "exportar a Excel",
+    "export_to_excel_2": "exportar a Excel (equipo)",
+    "set_special_group": "establecer grupo especial",
+    "set_special_group_title": "establecer una trama o un grupo de gamemaster para todas las aplicaciones filtradas",
+    "generate_documents": "generar documentos",
+    "total": "activos",
+    "room_description": "%s (%s). %s de %s ocupados",
+    "transfer_application": "ofrecer la aplicación a otro jugador",
+    "transfer_application_cancel": "cancelar la oferta de la aplicación",
+    "changes_history": "historial",
+    "back_to_application": "volver a la aplicación",
+    "prev_change": "anterior",
+    "next_change": "posterior",
+    "to_comments": "A los comentarios",
+    "messages": {
+      "set_special_group": "El grupo está configurado",
+      "conversation_sub_obj_type_filter_success": "El comentario se agregó correctamente a las solicitudes seleccionadas.",
+      "payment_provided_accepted": "Pago confirmado.",
+      "payment_provided_accepted_need_check": "Los organizadores deben proporcionar un cheque electrónico.",
+      "payment_provided_declined": "Pago no confirmado.",
+      "group_request_accepted": "Solicitud de grupo aceptada.",
+      "group_request_declined": "Solicitud de grupo rechazada.",
+      "application_deleted_by_player": "Solicitud eliminada por el jugador.",
+      "transfer_application_success": "Solicitud ofrecida a «%s».",
+      "transfer_application_cancel_success": "Oferta de solicitud cancelada.",
+      "application_autonewrole_success": "Solicitud separada correctamente para un nuevo personaje en los mismos grupos.",
+      "application_change_to_gamemasters_subject": "El Gamemaster cambió la solicitud «%s» en el proyecto «%s»",
+      "application_change_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%speople\/%s\/\">«%s»<\/a> ha sido modificada por <a href=\"%speople\/%s\/\">el gamemaster «%s»<\/a>.",
+      "application_change_to_player_subject": "Tu solicitud «%s» en el proyecto «%s» ha sido modificada",
+      "application_change_to_player_message": "¡Buen día!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Tu solicitud «%s»<\/a> ha sido modificada Modificado <a href=\"%speople\/%s\/\">por el gamemaster «%s»<\/a>.",
+      "application_deleted_success": "La solicitud se eliminó correctamente de la lista de solicitudes y el jugador recibió una notificación por correo electrónico.",
+      "application_delete_to_gamemasters_subject": "El gamemaster eliminó la solicitud «%s» en el proyecto «%s».",
+      "application_delete_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%speople\/%s\/\">«%s»<\/a> ha sido eliminada por el <a href=\"%speople\/%s\/\">gamemaster «%s»<\/a>.",
+      "application_delete_to_player_subject": "Tu aplicación «%s» en el proyecto «%s» ha sido eliminada",
+      "application_delete_to_player_message": "¡Buen día!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Tu aplicación «%s»<\/a> ha sido eliminada <a href=\"%speople\/%s\/\">por gamemaster «%s»<\/a>.",
+      "application_declined": "El usuario rechazó la oferta de la aplicación."
+    }
+  },
+  "fraym_model": {
+    "object_name": "aplicación",
+    "object_messages": [
+      "Aplicación creada correctamente.",
+      "Aplicación modificada correctamente.",
+      "Aplicación eliminada correctamente."
+    ],
+    "elements": {
+      "h1_1": {
+        "shownName": "Jugador"
+      },
+      "creator_id": {
+        "shownName": "Jugador"
+      },
+      "h1_2": {
+        "shownName": "Aplicación"
+      },
+      "status": {
+        "shownName": "Estado",
+        "values": [
+          [
+            "1",
+            "enviado"
+          ],
+          [
+            "2",
+            "procesado"
+          ],
+          [
+            "3",
+            "aceptado"
+          ],
+          [
+            "4",
+            "rechazado"
+          ]
+        ]
+      },
+      "responsible_gamemaster_id": {
+        "shownName": "Maestro de juego responsable"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      },
+      "player_registered": {
+        "shownName": "El jugador se ha registrado en el área de juego"
+      },
+      "team_application": {
+        "shownName": "Tipo",
+        "values": [
+          [
+            "0",
+            "personal"
+          ],
+          [
+            "1",
+            "equipo"
+          ]
+        ]
+      },
+      "h1_3": {
+        "with_rooms": "Cuota y liquidación",
+        "no_rooms": "Cuota"
+      },
+      "project_fee_ids": {
+        "shownName": "Opciones de cuota de participación"
+      },
+      "money": {
+        "shownName": "Cuota de participación"
+      },
+      "money_provided": {
+        "shownName": "Pagado",
+        "helpText": "Si usas la sección de presupuesto, debes modificar las cuotas mediante las solicitudes de los jugadores o añadiéndolas manualmente al historial de cuotas."
+      },
+      "money_paid": {
+        "shownName": "Cuota pagada en su totalidad"
+      },
+      "h1_5": {
+        "shownName": "Liquidación"
+      },
+      "rooms_selector": {
+        "shownName": "Liquidación",
+        "helpText": "<a href=\"/rooms/\" target=\"_blank\">configurar la liquidación</a>"
+      },
+      "room_neighboors": {
+        "shownName": "Residentes de la liquidación"
+      },
+      "eco_money_paid": {
+        "shownName": "Cuota ecológica pagada"
+      },
+      "h1_4": {
+        "shownName": "Lista de roles"
+      },
+      "project_character_id": {
+        "shownName": "Personaje",
+        "helpText": "<a href=\"/character/\" target=\"_blank\">cambiar a personaje</a>"
+      },
+      "project_group_ids": {
+        "shownName": "Grupos"
+      },
+      "user_requested_project_group_ids": {
+        "shownName": "Grupos solicitados por el usuario"
+      },
+      "application_team_count": {
+        "shownName": "Cantidad de personas en el equipo"
+      },
+      "applications_needed_count": {
+        "shownName": "Cantidad de personas necesarias en el equipo"
+      },
+      "registration_comments": {
+        "shownName": "Comentarios del registro equipo"
+      },
+      "sorter": {
+        "shownName": "",
+        "fix_character_name_by_sorter": "<a id=\"fix_character_name_by_sorter\" obj_id=\"%s\">Corregir el nombre del personaje en la lista de roles<\/a>"
+      },
+      "distributed_item_ids": {
+        "shownName": "Elementos distribuidos"
+      },
+      "qrpg_key": {
+        "shownName": "QRpg: claves \/ propiedades",
+        "helpText": "configuración: <a href=\"/qrpgkey/\" target=\"_blank\">claves \/ propiedades<\/a> y <a href=\"/qrpgcode/\" target=\"_blank\">códigos \/ objetos<\/a>."
+      },
+      "players_bank_values": {
+        "shownName": "Banco de juegos: saldo",
+        "helpText": "setup: <a href=\"/bank_transaction/\" target=\"_blank\">transacciones<\/a> y <a href=\"/bank_currency/\" target=\"_blank\">recursos<\/a>."
+      },
+      "player_got_info": {
+        "shownName": "El jugador obtuvo toda la información"
+      },
+      "user_sickness": {
+        "shownName": "Contraindicaciones médicas"
+      },
+      "plots": {
+        "shownName": "Gráficos"
+      },
+      "plots_data": {
+        "shownName": "Lista completa de gráficos"
+      },
+      "last_update_user_id": {
+        "shownName": "<span class=\"sbi sbi-user\"><\/span><div class=\"hidden\">Última actualización por<\/div>"
+      },
+      "id": {
+        "shownName": "<span class=\"sbi sbi-link\"><\/span><div class=\"hidden\">Historias<\/div>"
+      },
+      "deleted_by_player": {
+        "shownName": "Eliminado por el jugador"
+      },
+      "created_at": {
+        "shownName": "Fecha de envío de la solicitud"
+      }
+    }
+  }
+}

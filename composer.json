@@ -1,0 +1,80 @@
+{
+  "type": "project",
+  "license": "proprietary",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.3.0",
+    "ext-ctype": "*",
+    "ext-curl": "*",
+    "ext-gd": "*",
+    "ext-iconv": "*",
+    "ext-imagick": "*",
+    "ext-openssl": "*",
+    "ext-pdo": "*",
+    "minishlink/web-push": "^9.0",
+    "phpdocumentor/reflection-docblock": "^5.3",
+    "phpmailer/phpmailer": "*",
+    "phpstan/phpdoc-parser": "^1.22.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true
+    },
+    "optimize-autoloader": true,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "drop": "./bin/recreateDb",
+    "drop-force": "@drop --force",
+    "test-fixtures": [
+      "@drop-force"
+    ],
+    "app:cache:clear": "./bin/d clear-var",
+    "app:test:unit": "./bin/phpunit",
+    "app:stan:check": "@php vendor/bin/phpstan analyse",
+    "app:stan:baseline": "@php vendor/bin/phpstan analyse --generate-baseline --allow-empty-baseline",
+    "app:cs:check": "./vendor/bin/php-cs-fixer check -v --config=.php-cs-fixer.dist.php",
+    "app:cs:fix": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+    "app:lint": [
+      "@app:cs:fix",
+      "@app:stan:check"
+    ],
+    "app:full:precommit:check": [
+      "@app:lint",
+      "@test-fixtures",
+      "@app:test:unit"
+    ],
+    "post-install-cmd": [
+      "@app:cache:clear"
+    ],
+    "post-update-cmd": [
+      "@app:cache:clear"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/",
+      "Fraym\\": "lib/fraym/",
+      "Captcha\\": "src/Lib/captcha/",
+      "Ical\\": "src/Lib/ical/",
+      "Identicon\\": "src/Lib/identicon",
+      "PhpQrCode\\": "src/Lib/phpQrCode/",
+      "WideImage\\": "src/Lib/wideimage/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.64",
+    "phpstan/phpstan": "^1.12",
+    "phpunit/phpunit": "^9.5",
+    "vimeo/psalm": "^5.13"
+  }
+}

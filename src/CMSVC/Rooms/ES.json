@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Asentamiento",
+    "taken_of": "%s de %s",
+    "switch_to_list": "Listar todas las habitaciones",
+    "switch_to_all": "Volver a la tabla"
+  },
+  "fraym_model": {
+    "object_name": "Tipo de asentamiento \/ habitación",
+    "object_messages": [
+      "Tipo de asentamiento \/ habitación creado correctamente.",
+      "Tipo de asentamiento \/ habitación cambiado correctamente",
+      "Tipo de asentamiento \/ habitación eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título",
+        "helpText": "Si usa punto y coma al introducir nombres, p. ej.: Edificio 1: 1 piso: #7, el sistema desglosará todo correctamente en una lista al cambiar a la vista de lista."
+      },
+      "one_place_price": {
+        "shownName": "Precio por plaza"
+      },
+      "places_count": {
+        "shownName": "Total de plazas"
+      },
+      "allow_player_select": {
+        "shownName": "El jugador puede seleccionar este tipo de asentamiento",
+        "helpText": "De lo contrario, solo los gamemasters podrán asignarlo."
+      },
+      "description": {
+        "shownName": "Descripción"
+      },
+      "room_neighboors": {
+        "shownName": "Residentes del asentamiento"
+      },
+      "id": {
+        "shownName": "Total de plazas ocupadas"
+      }
+    }
+  }
+}

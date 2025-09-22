@@ -1,0 +1,33 @@
+{
+  "global": {
+    "title": "QRpg: история считываний"
+  },
+  "fraym_model": {
+    "object_name": "QRpg-транзакция",
+    "object_messages": [
+      "",
+      "",
+      ""
+    ],
+    "elements": {
+      "creator_id": {
+        "shownName": "Сканировал(-а)"
+      },
+      "qrpg_code_id": {
+        "shownName": "QRpg-код"
+      },
+      "codes_successes": {
+        "shownName": "Успешность"
+      },
+      "remove_copies_successes": {
+        "shownName": "Уменьшение копий кодов"
+      },
+      "currencies_successes": {
+        "shownName": "Получение ресурса"
+      },
+      "created_at": {
+        "shownName": "Дата"
+      }
+    }
+  }
+}

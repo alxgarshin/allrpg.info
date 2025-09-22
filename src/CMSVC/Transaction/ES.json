@@ -1,0 +1,59 @@
+{
+  "global": {
+    "title": "Historial de comisiones"
+  },
+  "fraym_model": {
+    "object_name": "transaction",
+    "object_messages": [
+      "Transacción creada correctamente.",
+      "Transacciones modificadas correctamente.",
+      "Transacción eliminada correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      },
+      "project_application_id": {
+        "shownName": "Solicitud"
+      },
+      "pay_by_card": {
+        "shownName": "No se puede pagar en línea, me gustaría probar otra forma de pago"
+      },
+      "test_payment": {
+        "shownName": "Pago de prueba (solo para autores del proyecto)"
+      },
+      "payment_datetime": {
+        "shownName": "Fecha y hora del pago"
+      },
+      "content": {
+        "shownName": "Comentario"
+      },
+      "project_payment_type_id": {
+        "shownName": "Cuenta"
+      },
+      "helper_before_transaction_add": {
+        "shownName": "Instrucción"
+      },
+      "amount": {
+        "shownName": "Importe"
+      },
+      "comission_percent": {
+        "shownName": "Comisiones e impuestos (%)"
+      },
+      "comission_value": {
+        "shownName": "Comisiones e impuestos (%)"
+      },
+      "hasCheck": {
+        "shownName": "Cheque",
+        "helpText": "Tiene un cheque de nalog.ru."
+      },
+      "verified": {
+        "shownName": "<span class=\"sbi sbi-check hiddenInFilters\"><\/span><span class=\"hidden displayedInFilters\">Verificado<\/span>",
+        "helpText": "verificado."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

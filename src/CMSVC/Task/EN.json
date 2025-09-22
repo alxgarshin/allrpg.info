@@ -1,0 +1,260 @@
+{
+  "global": {
+    "title": "Tasks",
+    "author": "Author",
+    "was_registered": "Created",
+    "modal_header_task_members": "Task participants",
+    "modal_group_admin": "author",
+    "modal_group_admin_first_letter": "Author",
+    "modal_group_responsible": "responsible",
+    "modal_group_responsible_first_letter": "Responsible",
+    "modal_group_member": "participant",
+    "modal_group_member_first_letter": "P",
+    "percentage": "status",
+    "state_name_closed": "closed",
+    "state_name_hot": "urgent",
+    "state_name_current": "current",
+    "state_name_future": "future",
+    "no_due_date": "no due date",
+    "no_start_date": "no start date",
+    "priority": "Priority",
+    "status": "Status",
+    "state_name_lowercase": "state",
+    "edit_task_capitalized": "Edit task",
+    "members_management_capitalized": "Manage rights",
+    "leave_task_capitalized": "Leave task",
+    "access_request_sent": "Request sent",
+    "request_access": "Ask for participation",
+    "get_access": "Join the task",
+    "place": "Place",
+    "task_members": "Participants of the task",
+    "members": "Task members",
+    "members_alt": "Members rights",
+    "group_authors": "Authors",
+    "group_responsibles": "Responsible",
+    "group_members": "Members",
+    "edit_task": "Edit task",
+    "invite_into_task": "Invite to task",
+    "create_task_chat": "Create a task conversation",
+    "open_task_chat": "Open task conversation",
+    "copy_task": "Copy task",
+    "show_qr_code": "Show QR-code",
+    "materials": "Materials",
+    "documents": "Documents",
+    "starting_dcouments": "Incoming Documents",
+    "resources": "Resources",
+    "upload": "Upload",
+    "add_a_link": "Add a link",
+    "change_resources": "Edit",
+    "result": "Required result",
+    "stories": "Proofcases",
+    "story_add": "Add a proofcase",
+    "history": "History",
+    "input_message": "Type a message, edit responsible, status and priority",
+    "request_access_capitalized": "Request access",
+    "rerequest_access_capitalized": "Request access again",
+    "project": "Project",
+    "community": "Group",
+    "parent_task": "Part of",
+    "child_task": "Consists of",
+    "following_task": "Following",
+    "preceding_task": "Previous",
+    "messages": {
+      "successfully_joined": "You have successfully joined the task.",
+      "community": "Group",
+      "task_change_message_1": "Hello.<br><br>%s have changed%s a task <a href=\"%stask\/%s\/\">%s<\/a>.<br><br><b>Status:<\/b> ",
+      "task_change_message_2": "Priority",
+      "task_change_message_3": "Beginning Date and Time",
+      "task_change_message_4": "Ending Date and Time",
+      "task_change_message_5": "Description",
+      "task_change_message_10": "Target result",
+      "task_change_message_6": "Task has changed",
+      "task_change_message_7": "Hello.<br><br>%s has set %s you to be a responsible for the task <a href=\"%stask\/%s\/\">%s<\/a>.",
+      "task_change_message_8": "You were assigned responsible for this task",
+      "task_change_message_9": "Task created.",
+      "have_no_rights": "You don't have rights for the specified",
+      "have_no_rights_project": "project",
+      "have_no_rights_community": "group",
+      "remove_access_success": "You've successfully left the task.",
+      "remove_access_fail": "Unable to remove the task rights.",
+      "get_access_word": "task",
+      "cant_follow_parent": "A task cannot follow and be a child to the same task simultaneously.",
+      "have_no_rights_in_this_task": "You have no rights to manage this task.",
+      "dates_changed_successfully": "Dates changed successfully.",
+      "dates_change_message": "Dates being changed. Beginning Date and Time: %s. Ending Date and Time: %s.",
+      "task_created_successfully": "Task created successfully.",
+      "tasks_have_different_parents": "It’s impossible to tie tasks of different projects to each other.",
+      "tasks_cant_loop": "Task cannot be a part of another task and consist of it simultaneously."
+    }
+  },
+  "fraym_model": {
+    "object_name": "task",
+    "object_messages": [
+      "Task created successfully.",
+      "Task changed successfully.",
+      "Task deleted successfully."
+    ],
+    "elements": {
+      "status": {
+        "values": [
+          [
+            "{new}",
+            "new"
+          ],
+          [
+            "{ready}",
+            "ready for work"
+          ],
+          [
+            "{data_needed}",
+            "need more details"
+          ],
+          [
+            "{working}",
+            "in work"
+          ],
+          [
+            "{checking}",
+            "must be checked"
+          ],
+          [
+            "{delayed}",
+            "postponed"
+          ],
+          [
+            "{closed}",
+            "closed"
+          ],
+          [
+            "{rejected}",
+            "declined"
+          ]
+        ],
+        "shownName": "Status"
+      },
+      "priority": {
+        "values": [
+          [
+            "1",
+            "immediate"
+          ],
+          [
+            "2",
+            "urgent"
+          ],
+          [
+            "3",
+            "high"
+          ],
+          [
+            "4",
+            "normal"
+          ],
+          [
+            "5",
+            "low"
+          ]
+        ],
+        "shownName": "Priority"
+      },
+      "obj_id": {
+        "shownName": "Group"
+      },
+      "user_id": {
+        "shownName": "Participants"
+      },
+      "responsible": {
+        "shownName": "Responsible"
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "place": {
+        "shownName": "Location"
+      },
+      "result": {
+        "shownName": "Desirable result"
+      },
+      "description": {
+        "shownName": "Description"
+      },
+      "date_from": {
+        "shownName": "Beginning Date and Time"
+      },
+      "date_to": {
+        "shownName": "Ending Date and Time"
+      },
+      "do_not_count_as_busy": {
+        "shownName": "Do not count as busy while determining availability"
+      },
+      "repeat_mode": {
+        "shownName": "Repeat task",
+        "values": [
+          [
+            "single",
+            "do not repeat"
+          ],
+          [
+            "everyday",
+            "every day"
+          ],
+          [
+            "every_workday",
+            "every workday"
+          ],
+          [
+            "once_per_week",
+            "every week"
+          ],
+          [
+            "every_month",
+            "every month"
+          ],
+          [
+            "every_year",
+            "every year"
+          ]
+        ]
+      },
+      "repeat_until": {
+        "shownName": "Repeat until"
+      },
+      "attachments": {
+        "shownName": "Incoming documents"
+      },
+      "percentage": {
+        "shownName": "% readiness"
+      },
+      "parent_task": {
+        "shownName": "Is a part of",
+        "values": [
+          [
+            "nothing_found",
+            "no tasks found"
+          ]
+        ]
+      },
+      "following_task": {
+        "shownName": "Follows",
+        "values": [
+          [
+            "nothing_found",
+            "no tasks found"
+          ]
+        ]
+      },
+      "competences": {
+        "shownName": "Certifies competences"
+      },
+      "tags": {
+        "shownName": "Tags"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      },
+      "back_to_project": {
+        "shownName": "Return to project after saving"
+      }
+    }
+  }
+}

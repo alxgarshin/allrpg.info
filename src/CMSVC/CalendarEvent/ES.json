@@ -1,0 +1,106 @@
+{
+  "global": {
+    "title": "Eventos",
+    "add_to_portfolio": "Añadir al portafolio",
+    "already_in_portfolio": "Ya está en el portafolio",
+    "add_report": "Añadir un informe",
+    "report_done": "Informe ya existente",
+    "create_google_cal": "Añadir a Google Calendar",
+    "go_to_kogdaigra": "Evento en kogda-igra.ru",
+    "go_to_project": "Proyecto allrpg.info",
+    "allrpg_project": "Proyecto allrpg.info",
+    "allrpg_project2": "aquí",
+    "apply": "Aplicar",
+    "notion": "Nociones",
+    "wall_input_text": "Introducir noción",
+    "show_previous": "Mostrar nociones anteriores",
+    "rating": "Calificación",
+    "description": "Descripción",
+    "report": "Informes",
+    "name": "Título",
+    "autor": "Autor",
+    "fecha": "Fecha",
+    "galería": "Foto y vídeo",
+    "add_photo": "Añadir un enlace",
+    "master": "Maestros del juego",
+    "support": "Soporte",
+    "participante": "Participantes",
+    "mensajes": {
+      "wascancelled": "Evento cancelado.",
+      "moved": "Las fechas del evento se van a cambiar. Aún no se han establecido nuevas fechas.",
+      "calendar_event_present": "Ya hay un evento similar en el calendario. Por favor, <a href=\"\/calendar_event\/%s\/\" target=\"_blank\">consúltalo aquí<\/a> si intentas añadir un evento doble. Por favor, contacta con la administración si no es así."
+    }
+  },
+  "fraym_model": {
+    "object_name": "event",
+    "object_messages": [
+      "Evento añadido correctamente.",
+      "Evento modificado correctamente.",
+      "Estado del evento establecido en «Cancelado» correctamente."
+    ],
+    "elements": {
+      "togame": {
+        "shownName": "Evento en la base de conocimientos"
+      },
+      "name": {
+        "shownName": "Título"
+      },
+      "wascancelled": {
+        "shownName": "Evento cancelado"
+      },
+      "moved": {
+        "shownName": "Fechas cambiadas (y aún no establecidas)"
+      },
+      "region": {
+        "shownName": "Región"
+      },
+      "area": {
+        "helpText": "¿No encontraste el área que necesitas? Añádela <a href=\"\/area\/act=add\">aquí<\/a>.",
+        "shownName": "Área"
+      },
+      "gametype": {
+        "shownName": "Género"
+      },
+      "gametype2": {
+        "shownName": "Tipo"
+      },
+      "gametype3": {
+        "shownName": "Mundo del juego"
+      },
+      "gametype4": {
+        "shownName": "Adicional"
+      },
+      "mg": {
+        "shownName": "Grupo de Gamemasters",
+        "helpText": "<b>Se recomienda encarecidamente<\/b> consultar la lista actual de GG <a href=\"\/gamemaster\/\" target=\"_blank\">aquí<\/a>. Si se necesita un GG, por favor, copia su nombre. De lo contrario, el evento no se mostrará correctamente. Puedes usar comas para indicar más de un GG."
+      },
+      "site": {
+        "shownName": "Sitio web"
+      },
+      "orderpage": {
+        "shownName": "Página web de aplicaciones"
+      },
+      "date_from": {
+        "shownName": "Fecha de inicio"
+      },
+      "date_to": {
+        "shownName": "Fecha de finalización"
+      },
+      "date_arrival": {
+        "shownName": "Fecha de llegada"
+      },
+      "playernum": {
+        "shownName": "Número de jugadores"
+      },
+      "content": {
+        "shownName": "Descripción"
+      },
+      "logo": {
+        "shownName": "Logotipo del evento"
+      },
+      "agroup": {
+        "shownName": "Grupo de eventos"
+      }
+    }
+  }
+}

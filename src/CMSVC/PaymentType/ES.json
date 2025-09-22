@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Tipos de pago",
+    "base_name": "Al gamemaster personalmente",
+    "pk_type": "A través de PayKeeper",
+    "pk_add_btn": "Configurar el sistema de pagos en línea",
+    "pm_type": "A través de PayMaster",
+    "pm_add_btn": "Configurar el sistema de pagos en línea",
+    "yk_type": "A través de YooKassa",
+    "yk_add_btn": "Configurar el sistema de pagos en línea",
+    "paw_type": "Con tarjeta de crédito a través de PayAnyWay",
+    "paw_add_btn": "Configurar el sistema de pagos con tarjeta de crédito",
+    "add_card_type": "Añadir el tipo de pago de las tarjetas de crédito",
+    "add_card_type_text_pk": "Por ahora, debes estar registrado como contribuyente en la Federación Rusa para recibir pagos en línea.",
+    "add_card_type_text_paw": "Si tienes una entidad legal de SRL, puedes configurar <a href=\"https:\/\/www.payanyway.ru\" target=\"_blank\">PayAnyWay<\/a> sistema de pagos con tarjeta de crédito para tu proyecto. Es muy sencillo.\r\n<ul>\r\n<li>La comisión de PAW es del 2,7% por cada pago, el mínimo absoluto del mercado.<\/li>\r\n<li>Sin comisiones de ningún tipo.<\/li>\r\n<li>Configuración gratuita.<\/li>\r\n<li>Puedes retirar fondos con la frecuencia que necesites.<\/li>\r\n<li>allrpg.info no participa en el proceso, lo que agiliza enormemente tu comunicación con PAW.<\/li>\r\n<\/ul><br>\r\nPara configurar la función de pagos con tarjeta de crédito, sigue estos pasos:\r\n<ul>\r\n<li>Leer nuestra <a href=\"\/publication\/186\/\" target=\"_blank\">oferta para organizadores de eventos en servicios de venta de entradas<\/a>;<\/li>\r\n<li>acéptala en su totalidad pulsando el botón «Configurar sistema de pagos con tarjeta de crédito» que aparece a continuación;<\/li>\r\n<li>proporciona todos los datos necesarios para no residentes y regístrate en PayAnyWay (serás transferido automáticamente);<\/li>\r\n<li>si tienes alguna dificultad, contacta con nuestro <a href=\"\/help\/\" target=\"_blank\">servicio de asistencia<\/a>;<\/li>\r\n<li>inicia sesión en tu área personal, cambia tu contraseña y proporciona una pregunta de seguridad;<\/li>\r\n<li>rellena todos los formularios necesarios definidos en tu área personal en el Globo «Formularios aún no proporcionados»;<\/li>\r\n<li>Espere a que PayAnyWay verifique y su transferencia esté en un estado correcto;<\/li>\r\n<li>Después de un mensaje de cambio de estado, cree una cuenta extendida en PayAnyWay: en su área personal verá un botón «Crear una cuenta extendida»;<\/li>\r\n<li>Configure durante la creación de la cuenta extendida:<ul>\r\n<li>En el campo «Alias» – el nombre de su proyecto;<\/li>\r\n<li>Pulse el botón «Mostrar campos adicionales»;<\/li>\r\n<li>En el campo «URL de pago» – \/\/includes\/payanyway.php;<\/li>\r\n<li>En el campo «Código de verificación de integridad de datos» – cualquier número y dígito latino (guarde el código, lo necesitará) más adelante);<\/li>\r\n<li>en el campo «Se requiere firma en el formulario de pago» – sí;<\/li>\r\n<li>en el campo «Se permite la reasignación de ajustes en la URL» – sí;<\/li>\r\n <\/ul><\/li>\r\n<li>proporciona el número de cuenta extendido y el código de verificación de integridad de datos en la <a href=\"\/project\/\/act=edit\" target=\"_blank\">configuración de tu proyecto<\/a>;<\/li>\r\n<li>debes enviar todos los documentos necesarios (disponibles en tu área personal, sección «Documentos») a PayAnyWay en el plazo de un mes por correo postal o correo electrónico (si están firmados digitalmente);<\/li>\r\n<li>y anunciar la nueva función a todos tus jugadores.<\/li>\r\n<\/ul>",
+    "add_card_type_text_yk": "Por ahora, debe estar registrado como contribuyente en la Federación Rusa para recibir pagos en línea.",
+    "add_card_type_text_pm": "Por ahora, debe estar registrado como contribuyente en la Federación Rusa para recibir pagos en línea."
+  },
+  "fraym_model": {
+    "object_name": "tipo de pago",
+    "object_messages": [
+      "Tipo de pago creado correctamente.",
+      "Tipo de pago cambiado correctamente",
+      "Tipo de pago eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      },
+      "user_id": {
+        "shownName": "Responsable"
+      },
+      "amount": {
+        "shownName": "Ingresos"
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

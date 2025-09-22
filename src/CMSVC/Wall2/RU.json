@@ -1,0 +1,18 @@
+{
+  "global": {
+    "title": "Обсуждения",
+    "conversations": "Обсуждения",
+    "create_conversation": "Создать тему",
+    "conversation_text": "Текст обсуждения",
+    "group_authors": "Авторы",
+    "group_management": "Менеджмент",
+    "group_technology": "Технология",
+    "group_business": "Предпринимательство",
+    "wall": "Стена",
+    "new_messages": "Обновления",
+    "all_messages": "Все",
+    "show_previous": "Показать предыдущие записи",
+    "no_projects_or_communities": "Вы еще не состоите ни в одном проекте и\/или группе.",
+    "no_new_threads": "Новых сообщений не обнаружено."
+  }
+}

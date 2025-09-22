@@ -1,0 +1,45 @@
+{
+  "global": {
+    "title": "Game bank: transactions",
+    "messages": {
+      "too_small_amount": "To how much should be over 0."
+    }
+  },
+  "fraym_model": {
+    "object_name": "transaction",
+    "object_messages": [
+      "Transaction created successfully.",
+      "Transactions changed successfully",
+      "Transaction deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Subject"
+      },
+      "from_project_application_id": {
+        "shownName": "From application"
+      },
+      "to_project_application_id": {
+        "shownName": "To application"
+      },
+      "amount_from": {
+        "shownName": "How much"
+      },
+      "currency_from_id": {
+        "shownName": "What"
+      },
+      "amount": {
+        "shownName": "To how much"
+      },
+      "bank_currency_id": {
+        "shownName": "To what"
+      },
+      "created_at": {
+        "shownName": "Date"
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

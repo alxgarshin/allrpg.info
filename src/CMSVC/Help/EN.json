@@ -1,0 +1,48 @@
+{
+  "global": {
+    "title": "Help \/ inform about error",
+    "button_text": "Send a question to developers",
+    "auto_button_text_to_replace": "Add question",
+    "captcha": "Verification code",
+    "captcha_help": "Enter the verification code that you can see in the picture. Letter case does not matter.",
+    "messages": {
+      "support": "Support",
+      "link_to_page": "Link to a page",
+      "technical_info": "Technical info",
+      "request_send_success": "Your request has been successfully sent.",
+      "please_fill_all_fields": "Please, fill in all the necessary fields.",
+      "wrong_captcha": "Wrong verification code! Please, try again.",
+      "look_like_bot": "Please, click <a id=\"approvement_link\">here<\/a> to confirm that you're not a bot."
+    }
+  },
+  "fraym_model": {
+    "object_name": "question",
+    "object_messages": [],
+    "elements": {
+      "beforeask": {
+        "shownName": "Before asking a question report about a mistake",
+        "defaultValue": "<ol><li>please, make sure that your question is not available in <a href=\"/faq/\">FAQ<\/a>.<\/li>\r\n<li>please, make sure that you are using the latest version of browser (Chrome, Mozilla Firefox, Opera, Internet Explorer).<\/li>\r\n<li>please, fill in all the details in the form below.<\/li>\r\n<\/ol>"
+      },
+      "name": {
+        "shownName": "What is your name?"
+      },
+      "em": {
+        "shownName": "Email"
+      },
+      "maintext": {
+        "shownName": "What is the question \/ mistake?"
+      },
+      "details": {
+        "shownName": "Detailed description of the question \/ mistake"
+      },
+      "link": {
+        "shownName": "Link to a page",
+        "helpText": "If an error occurs on a certain page report it here, please."
+      },
+      "technical": {
+        "shownName": "Technical information",
+        "helpText": "Which browser do you use (Internet Explorer, Mozilla Firefox, Opera)? If possible, please, specify your browser version."
+      }
+    }
+  }
+}

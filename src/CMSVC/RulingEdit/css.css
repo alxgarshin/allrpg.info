@@ -1,0 +1,50 @@
+/** nlgraph */
+.nlgraph_chart {
+    width: 900px;
+    height: 650px;
+    margin: 0 auto;
+}
+
+.nlgraph_chart .link {
+    fill: none;
+}
+
+.nlgraph_chart .unhighlighted {
+    opacity: .2 !important;
+}
+
+.nlgraph_chart text {
+    font: 8px sans-serif;
+    pointer-events: none;
+}
+
+.nlgraph_chart .label text {
+    font: 7px sans-serif;
+}
+
+.nlgraph_chart .node .question~text {
+    fill: var(--color-background-main) !important;
+}
+
+.nlgraph_chart.highlighted .node:not(.unhighlighted) .ifs_aggregator,
+.nlgraph_chart .node.selected .ifs_aggregator {
+    fill: var(--color-font-main) !important;
+}
+
+.nlgraph_chart .node.selected .question,
+.nlgraph_chart .node.selected .item {
+    stroke: var(--orange) !important;
+}
+
+.nlgraph_chart .node.selected_node .label {
+    font-weight: bold;
+    font-style: italic;
+}
+
+button.ruling_chart_btn {
+    margin-right: .5em;
+}
+
+button.ruling_chart_btn:disabled {
+    color: var(--color-background-main);
+}

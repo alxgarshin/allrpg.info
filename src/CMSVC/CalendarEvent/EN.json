@@ -1,0 +1,106 @@
+{
+  "global": {
+    "title": "Events",
+    "add_to_portfolio": "Add to portfolio",
+    "already_in_portfolio": "Already in portfolio",
+    "add_report": "Add a report",
+    "report_done": "Report already present",
+    "create_google_cal": "Add to Google Calendar",
+    "go_to_kogdaigra": "Event on kogda-igra.ru",
+    "go_to_project": "allrpg.info project",
+    "allrpg_project": "allrpg.info project",
+    "allrpg_project2": "here",
+    "apply": "apply",
+    "notion": "Notions",
+    "wall_input_text": "Enter notion",
+    "show_previous": "Show previous notions",
+    "rating": "Rating",
+    "description": "Description",
+    "report": "Reports",
+    "name": "Title",
+    "author": "Author",
+    "date": "Date",
+    "gallery": "Photo and video",
+    "add_photo": "Add a link",
+    "master": "Gamemasters",
+    "support": "Support",
+    "participant": "Participants",
+    "messages": {
+      "wascancelled": "Event was cancelled.",
+      "moved": "Event dates are going to be changed. New dates not set yet.",
+      "calendar_event_present": "A similar event is already present in calendar. Please, <a href=\"\/calendar_event\/%s\/\" target=\"_blank\">check it out here<\/a> in case you're trying to add a double. Please, contact administration if it is not the case."
+    }
+  },
+  "fraym_model": {
+    "object_name": "event",
+    "object_messages": [
+      "Event added successfully.",
+      "Event changed successfully.",
+      "Event status set to «Canceled» successfully."
+    ],
+    "elements": {
+      "togame": {
+        "shownName": "Event in the knowledge base"
+      },
+      "name": {
+        "shownName": "Title"
+      },
+      "wascancelled": {
+        "shownName": "Event was cancelled"
+      },
+      "moved": {
+        "shownName": "Dates changed (and are not yet set)"
+      },
+      "region": {
+        "shownName": "Region"
+      },
+      "area": {
+        "helpText": "couldn't find an area you need? Add it <a href=\"\/area\/act=add\">here<\/a>.",
+        "shownName": "Area"
+      },
+      "gametype": {
+        "shownName": "Genre"
+      },
+      "gametype2": {
+        "shownName": "Type"
+      },
+      "gametype3": {
+        "shownName": "Game world"
+      },
+      "gametype4": {
+        "shownName": "Additional"
+      },
+      "mg": {
+        "shownName": "Gamemasters group",
+        "helpText": "<b>it is strongly advised<\/b> to check current GG list <a href=\"\/gamemaster\/\" target=\"_blank\">here<\/a>. If a GG needed is present there, please, copy its name. Otherwise, event won't be displayed correctly. You can use commas to provide more than one GG."
+      },
+      "site": {
+        "shownName": "Website"
+      },
+      "orderpage": {
+        "shownName": "Applications webpage"
+      },
+      "date_from": {
+        "shownName": "Beginning date"
+      },
+      "date_to": {
+        "shownName": "Ending date"
+      },
+      "date_arrival": {
+        "shownName": "Arrival date"
+      },
+      "playernum": {
+        "shownName": "Players count"
+      },
+      "content": {
+        "shownName": "Description"
+      },
+      "logo": {
+        "shownName": "Event logo"
+      },
+      "agroup": {
+        "shownName": "Events group"
+      }
+    }
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "global": {
+    "title": "Группы",
+    "search": "Поиск по названию или описанию группы",
+    "my_communities": "Мои группы",
+    "all_communities": "Все группы",
+    "found_communities": "Результаты поиска среди групп",
+    "search_by_name_or_annotation": "Поиск по названию или описанию группы",
+    "author": "Автор",
+    "was_registered": "Создана",
+    "modal_header_community_members": "Участники группы",
+    "modal_header_community_projects": "Проекты группы",
+    "modal_group_admin": "автор",
+    "modal_group_admin_first_letter": "Автор",
+    "modal_group_moderator": "модератор",
+    "modal_group_moderator_first_letter": "Модератор",
+    "modal_group_member": "участник",
+    "modal_group_member_first_letter": "У",
+    "edit_community": "Редактировать группу",
+    "invite_to_community": "Пригласить друга",
+    "show_qr_code": "Показать QR-код",
+    "add_task": "Добавить задачу",
+    "add_event": "Добавить событие",
+    "add_project": "Добавить проект",
+    "add_community": "Добавить группу",
+    "professiogram_control": "Управление професиограммами",
+    "create_community_chat": "Создать диалог группы",
+    "open_community_chat": "Открыть диалог группы",
+    "create_foresight_map": "Создать форсайт-карту",
+    "edit_foresight_map": "Редактировать форсайт карту",
+    "leave_community": "Покинуть группу",
+    "access_request_sent": "Запрос отправлен",
+    "request_access": "Запросить подключение",
+    "get_access": "Вступить в сообщество",
+    "edit_community_capitalized": "Редактирование группы",
+    "members_management_capitalized": "Управление правами",
+    "today": "Сегодня",
+    "past_events": "Прошедшие события",
+    "future_events": "Ближайшие события",
+    "tasks": "Задачи (видно только авторам)",
+    "tasks_mine": "Ответственный",
+    "tasks_membered": "Участник",
+    "tasks_notmembered": "Чужие",
+    "tasks_delayed": "Отложенные",
+    "tasks_all": "Все",
+    "tasks_closed": "Закрытые",
+    "task_priority": "Приоритет",
+    "task_dates": "Сделать до",
+    "task_name": "Название",
+    "task_responsible": "Ответственный",
+    "task_members": "Участники",
+    "task_status": "Статус",
+    "task_closed": "Закрыта",
+    "task_result": "Результат",
+    "task_status_hot": "горящая",
+    "task_status_current": "текущая",
+    "task_status_future": "будущая",
+    "task_new_status_overdue": "Просроченные",
+    "task_new_status_today": "Сегодня",
+    "task_new_status_tomorrow": "Завтра",
+    "task_new_status_later": "Позже",
+    "task_new_status_no_date": "Без даты",
+    "foresight_map": "Форсайт-карта",
+    "calendar": "Календарь",
+    "calendar_today": "сегодня",
+    "calendar_hours": "часы",
+    "calendar_days": "дни",
+    "calendar_months": "месяцы",
+    "calendar_import": "импортировать",
+    "calendar_google_authorize_for_import": "Авторизоваться в Google для переноса задач из Google Calendar",
+    "conversations": "Обсуждения",
+    "create_conversation": "Создать тему",
+    "conversation_text": "Текст обсуждения",
+    "members": "Участники группы",
+    "members_alt": "Права участников",
+    "communities": "Связанные группы",
+    "projects": "Проекты группы",
+    "group_authors": "Авторы",
+    "group_moderators": "Модераторы",
+    "group_members": "Участники",
+    "documents": "Документы",
+    "documents_community": "Группы",
+    "documents_tasks": "Задач",
+    "documents_events": "Событий",
+    "documents_projects": "Проектов",
+    "documents_upload": "Загрузить",
+    "documents_add_link": "Добавить ссылку",
+    "wall": "Стена",
+    "wall_input_text": "Написать сообщение",
+    "show_previous": "Показать предыдущие записи",
+    "messages": {
+      "successfully_joined": "Вы успешно вступили в группу.",
+      "closed_community_join_only_by_invitation": "Вступление в закрытую группу осуществляется только по приглашению.",
+      "get_access_to_obj": "группе",
+      "successfully_quitted_community": "Вы успешно покинули группу.",
+      "couldnt_delete_rights": "Не удалось удалить права доступа к группе."
+    }
+  },
+  "fraym_model": {
+    "object_name": "группу",
+    "object_messages": [
+      "Группа успешно создана.",
+      "Настройки группы успешно изменены.",
+      "Группа успешно удалена."
+    ],
+    "elements": {
+      "type": {
+        "shownName": "Тип",
+        "helpText": "Открытая – пользователь может присоединиться самостоятельно. Закрытая – пользователь может присоединиться только по приглашению от участников. По запросу – пользователь может запросить доступ и присоединиться по подтверждению.",
+        "values": [
+          [
+            "{open}",
+            "открытая"
+          ],
+          [
+            "{close}",
+            "закрытая"
+          ],
+          [
+            "{request}",
+            "по запросу"
+          ]
+        ]
+      },
+      "name": {
+        "shownName": "Название"
+      },
+      "communities": {
+        "shownName": "Связана с группами"
+      },
+      "description": {
+        "shownName": "Полное описание"
+      },
+      "attachments": {
+        "shownName": "Аватар группы",
+        "helpText": "160 пикселей в ширину, 160 пикселей в высоту."
+      },
+      "access_to_childs": {
+        "shownName": "Доступ к событиям",
+        "helpText": "при предоставлении свободного доступа к событиям пользователи смогут вступать в них без запроса к их авторам.",
+        "values": [
+          [
+            "",
+            "по запросу"
+          ],
+          [
+            "1",
+            "свободный"
+          ]
+        ]
+      }
+    }
+  }
+}

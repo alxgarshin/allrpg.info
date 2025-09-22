@@ -1,0 +1,25 @@
+{
+  "global": {
+    "title": "Conjuntos de filtros"
+  },
+  "fraym_model": {
+    "object_name": "Conjunto de filtros",
+    "object_messages": [
+      "Conjunto de filtros creado correctamente.",
+      "Conjuntos de filtros modificados correctamente",
+      "Conjunto de filtros eliminado correctamente."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Título"
+      },
+      "link": {
+        "shownName": "Enlace",
+        "helpText": "Puede obtener un enlace a un conjunto de filtros en la lista de aplicaciones. Filtre sus aplicaciones y, al final de la lista, verá un enlace «Un enlace al conjunto de filtros actual». Haga clic derecho en él, cópielo y péguelo en este campo."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

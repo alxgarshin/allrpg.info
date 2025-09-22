@@ -1,0 +1,115 @@
+{
+  "global": {
+    "title": "События",
+    "add_to_portfolio": "Добавить в портфолио",
+    "already_in_portfolio": "Уже в портфолио",
+    "add_report": "Добавить отчет",
+    "report_done": "Отчет уже написан",
+    "create_google_cal": "Добавить в Google Calendar",
+    "go_to_kogdaigra": "Событие на kogda-igra.ru",
+    "go_to_project": "Проект на allrpg.info",
+    "allrpg_project": "Проект на allrpg.info",
+    "allrpg_project2": "перейти",
+    "apply": "подать заявку",
+    "notion": "Отзывы",
+    "wall_input_text": "Написать отзыв",
+    "show_previous": "Показать предыдущие отзывы",
+    "rating": "Рейтинг",
+    "description": "Описание",
+    "report": "Отчеты",
+    "name": "Название",
+    "author": "Автор",
+    "date": "Дата",
+    "gallery": "Фото и видео",
+    "add_photo": "Добавить ссылку",
+    "master": "Мастера",
+    "support": "Полигонщики",
+    "participant": "Участники",
+    "messages": {
+      "wascancelled": "Событие было отменено.",
+      "moved": "Событие перенесено. Новые даты не определены.",
+      "calendar_event_present": "Похожее событие уже внесено в календарь. Пожалуйста, <a href=\"\/calendar_event\/%s\/\" target=\"_blank\">убедитесь здесь<\/a>, что Вы не вносите дубль, и свяжитесь с администрацией, если это действительно не так."
+    }
+  },
+  "fraym_model": {
+    "object_name": "событие",
+    "object_messages": [
+      "Событие успешно добавлено в инфотеку.",
+      "Событие успешно изменено.",
+      "Событию успешно проставлен статус «Отменено»."
+    ],
+    "elements": {
+      "togame": {
+        "shownName": "Карточка события в инфотеке"
+      },
+      "creator_id": {
+        "shownName": "Событием управляет"
+      },
+      "name": {
+        "shownName": "Название"
+      },
+      "region": {
+        "shownName": "Регион"
+      },
+      "area": {
+        "shownName": "Полигон",
+        "helpText": "не нашли полигон? Добавьте его <a href=\"\/area\/act=add\">здесь<\/a>."
+      },
+      "gametype": {
+        "shownName": "Жанр"
+      },
+      "gametype2": {
+        "shownName": "Тип"
+      },
+      "gametype3": {
+        "shownName": "Мир"
+      },
+      "gametype4": {
+        "shownName": "Дополнительно"
+      },
+      "mg": {
+        "shownName": "Мастерская группа",
+        "helpText": "<b>крайне рекомендуем<\/b> ознакомиться с имеющимся списком МГ <a href=\"\/gamemaster\/\" target=\"_blank\">здесь<\/a>. Если нужная МГ уже есть в данном списке, скопируйте название МГ, иначе событие будет неверно отображаться в этом списке. Можно перечислять несколько МГ через запятую."
+      },
+      "site": {
+        "shownName": "Сайт"
+      },
+      "orderpage": {
+        "shownName": "Страница подачи заявок"
+      },
+      "date_from": {
+        "shownName": "Дата начала"
+      },
+      "date_to": {
+        "shownName": "Дата окончания"
+      },
+      "date_arrival": {
+        "shownName": "Дата заезда"
+      },
+      "playernum": {
+        "shownName": "Количество участников"
+      },
+      "content": {
+        "shownName": "Описание события"
+      },
+      "logo": {
+        "shownName": "Логотип события"
+      },
+      "kogdaigra_id": {
+        "shownName": "Kogda-igra id"
+      },
+      "agroup": {
+        "shownName": "Группа событий"
+      },
+      "wascancelled": {
+        "shownName": "Событие отменено"
+      },
+      "moved": {
+        "shownName": "Событие перенесено (новые даты не определены)"
+      },
+      "updated_at": {
+        "shownName": "Последнее изменение"
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+/** Просмотр статей */
+
+if (withDocumentEvents) {
+
+}

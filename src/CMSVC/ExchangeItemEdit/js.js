@@ -1,0 +1,5 @@
+/** Склад: предметы */
+
+if (withDocumentEvents) {
+
+}

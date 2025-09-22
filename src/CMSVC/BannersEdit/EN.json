@@ -1,0 +1,50 @@
+{
+  "global": {
+    "title": "Editing banners"
+  },
+  "fraym_model": {
+    "object_name": "banner",
+    "object_messages": [
+      "Banner uploaded successfully.",
+      "Banners changed successfully",
+      "Banner deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "description": {
+        "shownName": "Description"
+      },
+      "link": {
+        "shownName": "Link",
+        "helpText": "which page does this banner lead to?"
+      },
+      "img": {
+        "shownName": "Image",
+        "helpText": "no more than 1600 pixels wide and no more than 520 pixels high."
+      },
+      "type": {
+        "shownName": "Type",
+        "helpText": "if you place several banners of one type, they will be shown in it in random order.",
+        "values": [
+          [
+            "1",
+            "main page background"
+          ],
+          [
+            "2",
+            "some other banner"
+          ]
+        ]
+      },
+      "active": {
+        "shownName": "Activity",
+        "helpText": "if you untick this box, you will temporarily switch off the demonstration of this banner on the website, but the settings will remain and the image will not be deleted."
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

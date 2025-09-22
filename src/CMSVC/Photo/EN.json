@@ -1,0 +1,37 @@
+{
+  "global": {
+    "title": "Propose a photo",
+    "button_text": "Send a proposal to developers",
+    "auto_button_text_to_replace": "Add proposal",
+    "messages": {
+      "photo": "New photo request",
+      "request_send_success": "Your request has been successfully sent. Thank you.",
+      "please_fill_all_fields": "Please, fill in all the necessary fields.",
+      "wrong_captcha": "Wrong verification code! Please, try again.",
+      "look_like_bot": "Please, click <a id=\"approvement_link\">here<\/a> to confirm that you're not a bot."
+    }
+  },
+  "fraym_model": {
+    "object_name": "proposal",
+    "object_messages": [],
+    "elements": {
+      "name": {
+        "shownName": "What is your name?"
+      },
+      "em": {
+        "shownName": "Email"
+      },
+      "details": {
+        "shownName": "Information about photo",
+        "helpText": "author; a link to project website."
+      },
+      "link": {
+        "shownName": "Link to a photo"
+      },
+      "agreed": {
+        "shownName": "All participants gave their permission",
+        "helpText": "to avoid any misunderstandings by checking this field you confirm that you have received permission to publish this photo from each and every participant."
+      }
+    }
+  }
+}

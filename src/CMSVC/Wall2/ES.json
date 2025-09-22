@@ -1,0 +1,18 @@
+{
+  "global": {
+    "title": "Muro",
+    "conversations": "Conversaciones",
+    "create_conversation": "Crear un tema",
+    "conversation_text": "Texto de la conversación",
+    "group_authors": "Autores",
+    "group_management": "Gestión",
+    "group_technology": "Tecnología",
+    "group_business": "Emprendimiento",
+    "wall": "Muro",
+    "new_messages": "Mostrar nuevos",
+    "all_messages": "Mostrar todos",
+    "show_previous": "Mostrar anteriores",
+    "no_projects_or_communities": "Aún no formas parte de ningún grupo o proyecto.",
+    "no_new_threads": "No se encontraron nuevos hilos."
+  }
+}

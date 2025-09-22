@@ -1,0 +1,25 @@
+{
+  "global": {
+    "title": "Iniciar sesión",
+    "enter": "Ingresar",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "login_button": "Ingresar",
+    "remind_button": "¿Olvidaste tu contraseña?",
+    "register_button": "Registro",
+    "enter_using": "O ingresa a través de una red social:",
+    "enter_using_vkontakte": "Ingresar usando Vkontakte",
+    "enter_using_facebook": "Ingresar usando Facebook",
+    "remind": "Recordar",
+    "input_your_email": "Ingresa tu correo electrónico",
+    "do_remind": "Recordar",
+    "messages": {
+      "remind_message": ",\r\nSolicitaste que te recordáramos tu contraseña en %s.\r\nTu nombre de usuario: tu correo electrónico.\r\nTu nueva contraseña: %s",
+      "remind_subject": "Restableciendo contraseña en el sitio web",
+      "new_pass_sent": "Se ha enviado un correo electrónico con una nueva contraseña a su correo electrónico.",
+      "error_while_sending": "Hubo problemas en el servidor al enviar el correo electrónico.",
+      "no_email_found_in_db": "El correo electrónico solicitado no existe en la base de datos.",
+      "need_to_login_or_register_for_that": "Debe registrarse o iniciar sesión. Después, será redirigido a la página correspondiente."
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "global": {
+    "title": "Генератор документов",
+    "generate_documents": "Сгенерировать документы",
+    "list_of_roles_name": "Заявки",
+    "pagebreak": "<br><br>Используйте тег &lt;p class=\"pagebreak\">&lt;\/p> в HTML-режиме правки шаблона для указания принудительного места разрыва страницы на печати.",
+    "messages": {
+      "no_application_selected": "Пожалуйста, выберите хотя бы одну заявку."
+    }
+  },
+  "fraym_model": {
+    "object_name": "шаблон",
+    "object_messages": [
+      "Шаблон успешно добавлен.",
+      "Шаблон успешно изменен.",
+      "Шаблон успешно удален."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Название",
+        "helpText": "не более 255 символов."
+      },
+      "possible_fields": {
+        "shownName": "Доступные поля"
+      },
+      "content": {
+        "shownName": "Шаблон"
+      },
+      "outer_css": {
+        "shownName": "Внешний css-файл",
+        "helpText": "автоматически подключается при генерации документов."
+      }
+    }
+  }
+}

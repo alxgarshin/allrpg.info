@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]
+then
+  echo '
+Usage:  d COMMAND
+
+Configuring and running the development environment
+
+Management Commands:
+
+  install    Initialize configuration after clone repository
+
+  up          Run Docker containers  (local server)
+  down        Stop Docker  (local server)
+
+  app         Enter in php container
+
+  rebuild     Rebuild containers using cache
+
+  cache       Clear cache
+
+  ps          List running Docker containers
+  start       Start Docker containers (local server)
+  stop        Stop Docker containers (local server)
+  remove-all  Delete all Docker containers (local server)
+  '
+  exit 1
+fi
+
+PHP_CONTAINER="allrpg-app"
+
+BUID=$(id -u)
+BUSER=$(id -un)
+
+if [ "app" == "$1" ]
+then
+  docker exec -ti "${PHP_CONTAINER}" bash
+fi
+
+if [ "install" == "$1" ]
+then
+  bin/d clear-var
+  rm -Rf vendor/
+  if [ -d "$2" ]
+    then
+      docker compose -f docker-compose.yml -f docker-compose.$2.yml build --no-cache --build-arg UID="${BUID}" --build-arg USER="${BUSER}"
+      docker compose -f docker-compose.yml -f docker-compose.$2.yml up -d --remove-orphans
+      docker exec -ti "${PHP_CONTAINER}" composer install --no-dev
+      docker exec -ti "${PHP_CONTAINER}" /var/www/bin/console make:migration
+    else
+      docker compose build --no-cache --build-arg UID="${BUID}" --build-arg USER="${BUSER}" #add "--progress=plain" after "build" if you need debug
+      docker compose up -d --remove-orphans
+      docker exec -ti "${PHP_CONTAINER}" composer install
+      docker exec -ti "${PHP_CONTAINER}" /var/www/bin/recreateDb --force
+  fi
+fi
+
+if [ "ps" == "$1" ]
+then
+  docker ps
+fi
+
+if [ "up" == "$1" ]
+then
+  docker compose down -v
+  bin/d clear-var
+  if [ -d "$2" ]
+    then
+      docker compose -f docker-compose.yml -f docker-compose.$2.yml up -d --remove-orphans
+    else
+      docker compose up -d --remove-orphans
+  fi
+fi
+
+if [ "down" == "$1" ]
+then
+  docker compose down -v
+fi
+
+if [ "rebuild" == "$1" ]
+then
+  bin/d clear-var
+  docker compose down
+  if [ -d "$2" ]
+    then
+      docker compose -f docker-compose.yml -f docker-compose.$2.yml up --build --force-recreate -d --remove-orphans
+      docker exec -ti "${PHP_CONTAINER}" composer install --no-dev
+      docker exec -ti "${PHP_CONTAINER}" /var/www/bin/console make:migration
+    else
+      docker compose up --build --force-recreate -d --remove-orphans
+      docker exec -ti "${PHP_CONTAINER}" composer install
+      docker exec -ti "${PHP_CONTAINER}" /var/www/bin/recreateDb --force
+  fi
+fi
+
+if [ "start" == "$1" ]
+then
+  docker compose start
+fi
+
+if [ "stop" == "$1" ]
+then
+  docker compose stop
+fi
+
+if [ "remove-all" == "$1" ]
+then
+  docker rm -v $(docker ps -aq)
+fi
+
+if [ "clear-var" == "$1" ]
+then
+  rm -Rf var/
+  if [ ! -d docker ]; then mkdir docker ; fi
+  if [ ! -d docker/db ]; then mkdir docker/db ; fi
+  if [ ! -d docker/db/data ]; then mkdir docker/db/data ; fi
+  mkdir var/
+  mkdir var/log
+  touch var/log/access.log
+  touch var/log/error.log
+  touch var/log/nginx-access.log
+  touch var/log/nginx-error.log
+  chmod 777 var/log
+  chmod 666 var/log/*.log
+  mkdir var/log/xdebug
+  chmod 777 var/log/xdebug
+  mkdir var/log/supervisor
+  touch var/log/supervisor/supervisord.log
+  chmod 777 var/log/supervisor
+  chmod 666 var/log/supervisor/*
+  mkdir var/log/cron
+  touch var/log/cron/cron.log
+  chmod 777 var/log/cron
+  chmod 666 var/log/cron/*
+  echo "Cache cleared successfully"
+fi

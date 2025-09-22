@@ -1,0 +1,295 @@
+{
+  "fraym_actions": {
+    "in_string": "en la cadena №",
+    "in_strings": "en las cadenas №№",
+    "blocked_resave": "No se puede guardar de nuevo.",
+    "maxminchar_in_fields": "Longitud de texto incorrecta en los campos:",
+    "maxminchar_in_field": "Longitud de texto incorrecta en el campo",
+    "obligatory_fields_not_filled": "Campos obligatorios no configurados:",
+    "obligatory_field_not_filled": "Campo obligatorio no configurado",
+    "wrong_format_in_fields": "Formato de datos incorrecto en los campos:",
+    "wrong_format_in_field": "Formato de datos incorrecto en el campo",
+    "unmatched_passwords_in_fields": "Las contraseñas no coinciden en las cadenas №№",
+    "unmatched_passwords_in_field": "Las contraseñas no coinciden.",
+    "login_taken_in_fields": "Las sesiones iniciadas en las cadenas №№%s ya están disponibles. Por favor, elija otra.",
+    "login_taken_in_field": "La sesión iniciada ya está disponible. Por favor, elija otra.",
+    "old_data_in_fields": "Sus datos en las cadenas №№%s están desactualizados. Recargue la página antes de volver a insertarlos.<br>Es posible que alguien los esté modificando.",
+    "old_data_in_field": "Sus datos están desactualizados. Recargue la página antes de volver a insertarlos.<br>Es posible que alguien los esté modificando.",
+    "not_found_id_in_data": "No se pudo encontrar el ID ni el registro en la cadena №%s: es imposible operar sin él.",
+    "update_error": "Actualizar datos Error en la cadena №%s.",
+    "delete_error": "Eliminar error de datos en la cadena №%s."
+  },
+  "basefunc": {
+    "wrong_login_or_password": "¡Correo electrónico o contraseña incorrectos!",
+    "must_revalidate_user": "¡La sesión ha expirado. ¡Necesita volver a iniciar sesión!",
+    "wrong_locale": "Este idioma no es compatible.",
+    "switched_to_your_profile": "Se ha cambiado la información de su cuenta.",
+    "switched_to_other_user": "Se ha cambiado al usuario №%s.",
+    "top_level": "Nivel superior",
+    "not_set": "No establecido"
+  },
+  "filters": {
+    "search_in_all_text_fields": "Buscar en campos de texto",
+    "search_in_all_text_fields_values": [
+      [
+        "search_in",
+        "buscar en"
+      ],
+      [
+        "search_empty",
+        "encontrar vacío"
+      ],
+      [
+        "search_non_empty",
+        "encontrar no vacío"
+      ]
+    ],
+    "show_children": "Mostrar objetos secundarios",
+    "any_match": "cualquier coincidencia",
+    "strict_match": "coincidencia precisa",
+    "doesnt_matter": "no importante",
+    "not_set": "no establecido",
+    "filters_not_set": "¡Los filtros no están establecidos!",
+    "filter": "Filtros",
+    "apply": "Aplicar",
+    "cancel": "Borrar",
+    "copy_filters_link": "Un enlace a los filtros actuales establecidos"
+  },
+  "dynamiccreate": {
+    "sort": "Ordenar",
+    "descending": "descendiente",
+    "ascending": "ascendente",
+    "addCapitalized": "Añadir",
+    "delete": "eliminar",
+    "save_changes": "Guardar cambios",
+    "saveCapitalized": "Guardar",
+    "deleteCapitalized": "Eliminar",
+    "add": "añadir",
+    "top_level": "NIVEL SUPERIOR",
+    "not_set": "no establecido",
+    "default": "predeterminado",
+    "next": "Siguiente",
+    "last": "Último",
+    "how_much": "pantalla activada: %s | total: %s",
+    "previous": "Anterior",
+    "first": "Primero",
+    "go_back_after_save": "Volver a la página anterior"
+  },
+  "classes": {
+    "objects": {
+      "time": "Hora",
+      "date": "Fecha"
+    },
+    "emails": {
+      "obligatory_field_not_filled": "Falta uno de los campos obligatorios.",
+      "text_must_be_longer_than_10": "El texto debe tener más de 10 símbolos.",
+      "wrong_format_in_field": "Formato incorrecto en el campo «%s»."
+    },
+    "select": {
+      "choose": "– Choose –",
+      "for_search_input_text_here": "Introduce el texto aquí hasta buscar"
+    },
+    "helper": {
+      "choose": "– Choose –",
+      "search_text": "Introduce el texto aquí hasta buscar"
+    },
+    "multiselect": {
+      "choose": "– Choose –",
+      "do_not_choose": "no elegir",
+      "add": "añadir",
+      "for_search_or_create_input_text_here": "Introduce el texto aquí hasta añadir o buscar",
+      "for_search_input_text_here": "Introduce el texto aquí hasta buscar",
+      "select_all": "Seleccionar todos",
+      "deselect_all": "Deseleccionar todos"
+    },
+    "file": {
+      "edit": "editar",
+      "delete": "eliminar"
+    },
+    "wysiwyg": {
+      "bold": "Negrita (Ctrl+B)",
+      "italic": "Cursiva (Ctrl+I)",
+      "underline": "Subrayado (Ctrl+U)",
+      "fontsize": "Tamaño de fuente",
+      "insert_link": "Insertar enlace",
+      "delete_link": "Eliminar enlace",
+      "insert_image": "Insertar imagen",
+      "unordered_list": "Lista desordenada",
+      "ordered_list": "Lista ordenada",
+      "increase_outdent": "Aumentar sangría",
+      "decrease_outdent": "Disminuir sangría",
+      "align_left": "Alinear texto a la izquierda",
+      "align_center": "Alinear texto al centro",
+      "align_right": "Alinear texto a la derecha",
+      "justify_width": "Justificar ancho de texto",
+      "text_color": "Color del texto",
+      "background_color": "Color de fondo",
+      "undo": "Deshacer",
+      "redo": "Rehacer",
+      "view_as_html": "Ver como HTML",
+      "create_table": "Crear una tabla",
+      "link": "Enlace:",
+      "ok": "Aceptar",
+      "cancel": "Cancelar",
+      "image": "Imagen:",
+      "image_alignment": "Alineación:",
+      "image_alignment_default": "predeterminado",
+      "image_alignment_left": "izquierda",
+      "image_alignment_right": "derecha",
+      "image_width": "Ancho:",
+      "image_title": "Descripción:",
+      "header1": "Encabezado 1",
+      "header2": "Encabezado 2",
+      "header3": "Encabezado 3",
+      "or_input_size": "o tamaño de entrada:",
+      "color": "Color:",
+      "rows": "Filas:",
+      "cols": "Columnas:",
+      "table_cells_merge": "Combinar celdas",
+      "table_insert_row_above": "Insertar una fila arriba",
+      "table_insert_row_below": "Insertar una fila abajo",
+      "table_insert_column_before": "Insertar una columna antes",
+      "table_insert_column_after": "Insertar una columna después",
+      "table_delete_row": "Eliminar fila",
+      "table_delete_column": "Eliminar columna"
+    },
+    "UploadHandler": {
+      "error_messages": {
+        "1": "¡El archivo subido supera el límite de carga!",
+        "2": "¡El archivo subido supera el límite de carga!",
+        "3": "¡El archivo se cargó solo parcialmente!",
+        "4": "¡No se identificó el archivo para subir!",
+        "6": "¡Falta la carpeta temporal!",
+        "7": "¡Error al grabar archivos hasta el disco!",
+        "8": "¡La extensión PHP detuvo la subida del archivo!",
+        "post_max_size": "¡El archivo subido supera el límite de tamaño de carga!",
+        "max_file_size": "¡El archivo es demasiado grande!",
+        "min_file_size": "¡El archivo es demasiado pequeño!",
+        "accept_file_types": "¡No se pueden subir archivos de este tipo!",
+        "max_number_of_files": "¡Se alcanzó el número máximo de archivos!",
+        "max_width": "¡El ancho de la imagen es mayor que el requerido!",
+        "min_width": "¡El ancho de la imagen es menor que el requerido!",
+        "max_height": "¡La altura de la imagen es mayor que la requerida!",
+        "min_height": "¡La altura de la imagen es menor que la requerida!"
+      }
+    }
+  },
+  "rights": {
+    "messages": {
+      "add_rights_success": "Los derechos se agregaron correctamente.",
+      "add_rights_fail": "Error al agregar los derechos.",
+      "change_rights_success": "Los derechos se cambiaron correctamente.",
+      "change_rights_fail": "Error al cambiar los derechos.",
+      "delete_rights_success": "Los derechos se eliminaron correctamente.",
+      "delete_rights_fail": "Error al eliminar permisos."
+    }
+  },
+  "functions": {
+    "edit": "editar",
+    "new": "añadir",
+    "delete": "eliminar",
+    "view": "ver",
+    "here": "aquí",
+    "upload": "subir",
+    "add_link": "añadir un enlace",
+    "create_folder": "crear carpeta",
+    "create_subfolder": "crear subcarpeta",
+    "access_to_all": "acceso libre",
+    "access_specified": "acceso restringido",
+    "open_in_a_new_window": "abrir en una nueva ventana"
+  },
+  "months": {
+    "1": "enero",
+    "2": "febrero",
+    "3": "marzo",
+    "4": "abril",
+    "5": "mayo",
+    "6": "junio",
+    "7": "julio",
+    "8": "Agosto",
+    "9": "septiembre",
+    "10": "octubre",
+    "11": "noviembre",
+    "12": "diciembre"
+  },
+  "months_base": {
+    "1": "enero",
+    "2": "febrero",
+    "3": "marzo",
+    "4": "abril",
+    "5": "mayo",
+    "6": "junio",
+    "7": "julio",
+    "8": "agosto",
+    "9": "septiembre",
+    "10": "octubre",
+    "11": "noviembre",
+    "12": "diciembre"
+  },
+  "days_of_week": {
+    "mo": "lun",
+    "tu": "mar",
+    "we": "mie",
+    "th": "jue",
+    "fr": "vie",
+    "sa": "sab",
+    "su": "dom"
+  },
+  "datetime": {
+    "yesterday": "ayer",
+    "today": "hoy",
+    "minutes": "minutos",
+    "few_seconds": "hace unos momentos",
+    "seconds": "segundos",
+    "before": "hace",
+    "at": "a",
+    "from": "desde",
+    "to": "hasta"
+  },
+  "file": {
+    "size_not_counted": "No se puede obtener el tamaño",
+    "messages": {
+      "file_add_success": "Archivo añadido correctamente a la biblioteca.",
+      "file_add_fail": "No tienes permisos para añadir un archivo a la biblioteca.",
+      "file_edit_success": "Archivo modificado correctamente.",
+      "file_edit_fail": "No tienes permisos para editar este archivo.",
+      "file_remove_success": "Archivo eliminado correctamente.",
+      "file_remove_fail": "No tienes permisos para eliminar este archivo."
+    }
+  },
+  "page_switcher": {
+    "counter": "%s muestra de %s"
+  },
+  "decline": {
+    "neuter": {
+      "lots": "",
+      "one": "",
+      "little": ""
+    },
+    "female": {
+      "lots": "",
+      "one": {
+        "1": "",
+        "2": ""
+      },
+      "little": ""
+    },
+    "male": {
+      "lots": "s",
+      "one": "",
+      "little": ""
+    },
+    "male_adjective": {
+      "one": "",
+      "other": ""
+    },
+    "neuter_adjective": {
+      "one": "",
+      "other": ""
+    },
+    "verb": {
+      "female": "",
+      "male": ""
+    }
+  }
+}

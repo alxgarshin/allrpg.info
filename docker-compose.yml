@@ -1,0 +1,28 @@
+networks:
+  default:
+    name: nw-external
+    external: true
+
+services:
+  app:
+    container_name: allrpg-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        USER: ${USER:-dev}
+        UID: ${UID:-1000}
+    restart: always
+    environment:
+      PHP_IDE_CONFIG: "serverName=allrpg"
+      VIRTUAL_HOST: allrpg.loc,www.allrpg.loc
+      VIRTUAL_PORT: 8000
+      VIRTUAL_PROTO: fastcgi
+    volumes:
+      - ./:/var/www:rw
+    expose:
+      - 8000
+    # for xdebug and etc
+    extra_hosts:
+      - host.docker.internal:host-gateway

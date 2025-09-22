@@ -1,0 +1,5 @@
+/** Публикации */
+
+if (withDocumentEvents) {
+
+}

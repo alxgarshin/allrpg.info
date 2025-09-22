@@ -1,0 +1,61 @@
+{
+  "global": {
+    "title": "Budget",
+    "total": "Planned expenses total",
+    "total10": "+10%",
+    "player_count": "Players count",
+    "recommended": "Recomnd. fee (+20%)",
+    "set": "Fee minimum set",
+    "overdraft": "Overdraft",
+    "paid": "Fees paid",
+    "paid_application": "by field «Paid» in applications",
+    "comission": "Comissions and taxes",
+    "not_paid": "Fees to be paid",
+    "needed": "Fees needed atm",
+    "spent": "Spent",
+    "remaining": "Remaining",
+    "from_fee": "From fees",
+    "options": "Management",
+    "nullify_fees": "nullify all fees"
+  },
+  "fraym_model": {
+    "object_name": "position",
+    "object_messages": [
+      "Position created successfully.",
+      "Positions changed successfully",
+      "Position deleted successfully."
+    ],
+    "elements": {
+      "name": {
+        "shownName": "Title"
+      },
+      "price": {
+        "shownName": "Price"
+      },
+      "quantity_needed": {
+        "shownName": "Need"
+      },
+      "quantity": {
+        "shownName": "Paid"
+      },
+      "description": {
+        "shownName": "Comments"
+      },
+      "responsible_id": {
+        "shownName": "Responsible"
+      },
+      "bought_by": {
+        "shownName": "At own expense"
+      },
+      "distributed_item": {
+        "helpText": "distributed item."
+      },
+      "is_category": {
+        "helpText": "this is category."
+      },
+      "updated_at": {
+        "shownName": "Last change"
+      }
+    }
+  }
+}

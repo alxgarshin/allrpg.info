@@ -1,0 +1,28 @@
+/** Фильтры по персонажу / заявкам / группам */
+span.group_list_additional_data {
+    float: right;
+    margin-left: 1em;
+    margin-bottom: .5em;
+    display: flex;
+}
+
+.group_list_additional_data a {
+    display: flex;
+    align-items: center;
+}
+
+span.group_list_additional_data span.sbi {
+    margin-left: .2em;
+}
+
+span.group_list_additional_data span.sbi.sbi-user {
+    margin-right: .3em;
+    margin-left: .1em;
+}
+
+span.group_list_additional_data span.sbi.sbi-file-filled {
+    font-size: 90%;
+    margin-right: .7em;
+}
+
+@media only screen and (max-device-width: 767px) {}

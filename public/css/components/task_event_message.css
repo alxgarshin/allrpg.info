@@ -1,0 +1,110 @@
+/** Стена задач / событий */
+div.task_message_container {
+    border-top: 1px var(--blocks-borders-and-separators) solid;
+}
+
+div#task_wall div.block_data>div:first-of-type,
+div#task_wall div.conversation_form+div.task_message_container {
+    border-top: none;
+}
+
+div.task_message {
+    padding: 3em 0;
+    display: flex;
+}
+
+div.task_message div.task_message_photo {
+    flex: 1;
+    width: 5em;
+    max-width: 5em;
+    min-width: 5em;
+}
+
+div.task_message div.photoName {
+    width: 100%;
+    margin: 0;
+}
+
+div.task_message div.photoName div.photoName_photo_wrapper {
+    width: 100%;
+    margin: 0;
+}
+
+div.task_message div.task_message_data {
+    flex: 1;
+    vertical-align: top;
+    margin-left: 1.5em;
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 6.5em);
+}
+
+div.task_message div.task_message_data.unread {
+    background-color: var(--forms-background);
+}
+
+div.task_message div.task_message_data div.task_message_creator {
+    font-weight: bold;
+    margin-bottom: 1em;
+    order: 1;
+    font-size: 1.2em;
+}
+
+div.task_message div.task_message_data div.task_message_content {
+    margin-bottom: 1em;
+    overflow-wrap: break-word;
+    text-align: justify;
+    order: 5;
+    font-size: 1.2em;
+}
+
+div.task_message div.task_message_data div.task_message_content a {
+    overflow-wrap: break-word;
+}
+
+div.task_message div.task_message_data div.task_message_time {
+    display: flex;
+    align-items: center;
+    order: 10;
+}
+
+div.task_message div.task_message_data div.task_changes {
+    position: absolute;
+    text-align: right;
+    z-index: 1;
+    clear: right;
+    margin: 0 0 .5em .5em;
+    min-width: 16em;
+    border: 1px #e7e7e7 solid;
+    padding: .5em;
+    max-width: 20em;
+    right: 0;
+    top: 2em;
+}
+
+div.task_message div.task_message_data div.task_changes div.photoName {
+    float: right;
+    width: 2.5em;
+    margin-left: .5em !important;
+}
+
+div.task_message div.task_message_data div.task_id {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    margin-bottom: .5em;
+}
+
+div.block_header.task_comment_form div.conversation_form div.conversation_form_controls select,
+div.block_header.task_comment_form div.conversation_form div.conversation_form_controls input.dpkr_time {
+    font-size: .9em;
+    margin-bottom: .5em;
+}
+
+div.block_header.task_comment_form div.conversation_form div.conversation_form_controls input.dpkr_time {
+    display: none;
+}
+
+div.block_header.task_comment_form div.conversation_form div.conversation_form_controls input.dpkr_time.shown {
+    display: inline-block;
+}

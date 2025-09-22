@@ -1,0 +1,36 @@
+networks:
+  default:
+    name: nw-external
+    external: true
+
+services:
+  nginx-proxy:
+    image: nginx-proxy/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/etc/nginx/certs:ro
+      - ./vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./../allrpg.info/public:/var/html/allrpg
+
+  nginx-proxy-acme:
+    image: nginx-proxy/acme-companion
+    container_name: nginx-proxy-acme
+    restart: always
+    environment:
+      DEFAULT_EMAIL: alxgarshin@gmail.com
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - .:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
+
+volumes:
+  acme:
+  html:

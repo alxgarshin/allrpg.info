@@ -1,0 +1,116 @@
+@import url('/css/components/myapplication_project_selection.min.css');
+@import url('/css/components/conversation_form.min.css');
+@import url('/css/components/conversations.min.css');
+@import url('/css/components/application_conversations.min.css');
+@import url('/css/components/plot.min.css');
+@import url('/css/components/history_view.min.css');
+
+div.maincontent_data.autocreated form#form_myapplication div[id^="field_project_character_id"] {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+form#form_myapplication div.plot div.plot_name_and_participants {
+    font-size: 115%;
+}
+
+form#form_myapplication div.plot a.show_hidden {
+    font-size: 70%;
+    display: inline-block;
+    padding: 0;
+    text-align: left;
+    border: 0;
+    margin: 0;
+    line-height: normal;
+}
+
+div.provide_payment_form {
+    display: none;
+    border-bottom: 1px solid var(--blocks-borders-and-separators);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+div.provide_payment_form.shown {
+    display: block;
+}
+
+div.provide_payment_form div[id="field_go_back_after_save[0]"] {
+    display: none;
+}
+
+div.provide_payment_form div[id^="field_helper_before_transaction_add"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+}
+
+div.provide_payment_form div[id^="field_helper_before_transaction_add"] div.fieldname {
+    display: none;
+}
+
+div.provide_payment_form div[id^="field_helper_before_transaction_add"] div.fieldvalue {
+    font-weight: bold;
+    color: var(--main-red);
+    background-color: var(--color-background-main);
+}
+
+div.provide_payment_form div[id^="field_payment_datetime"]+div[id^="field_content"] {
+    width: 48% !important;
+    max-width: 48% !important;
+    min-width: 48% !important;
+}
+
+form#form_myapplication div[id="div_room_neighboors[0]"] {
+    background-color: transparent;
+}
+
+form#form_myapplication div[id="div_room_neighboors[0]"] a {
+    display: inline-block;
+    padding: .7em;
+    width: 100%;
+    border-radius: .7em;
+}
+
+form#form_myapplication div[id="div_room_neighboors[0]"] a.string2 {
+    background-color: var(--underlay-gray);
+}
+
+div.maincontent_data.autocreated div.fieldvalue.read[id^="div_plots_data"] {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+
+div.fieldvalue.read[id^="div_qrpg_key"] img {
+    max-height: 1em;
+    vertical-align: middle;
+    margin-right: .3em;
+}
+
+@media only screen and (max-device-width: 767px) {
+    form#form_myapplication textarea {
+        min-height: 5em;
+    }
+
+    th#th_header_status {
+        min-width: 4em;
+    }
+
+    th#th_header_last_update_user_id {
+        min-width: 3em;
+    }
+
+    th#th_header_updated_at {
+        min-width: 7em;
+    }
+
+    th#th_header_sorter {
+        min-width: 8em;
+    }
+
+    th#th_header_project_group_ids {
+        min-width: 6em;
+    }
+}

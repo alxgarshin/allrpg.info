@@ -1,0 +1,160 @@
+{
+  "global": {
+    "title": "QRpg: códigos y objetos",
+    "generate_qrpg_code": "blanco y negro",
+    "generate_qrpg_code_color": "en color"
+  },
+  "fraym_model": {
+    "object_name": "Código QRpg",
+    "object_messages": [
+      "Código QRpg creado correctamente.",
+      "Código QRpg modificado correctamente.",
+      "Código QRpg eliminado correctamente."
+    ],
+    "elements": {
+      "sid": {
+        "shownName": "ID del código"
+      },
+      "category": {
+        "shownName": "Grupo de códigos",
+        "helpText": "Se utiliza para agrupar códigos en la lista completa de códigos para agilizar la búsqueda del código necesario."
+      },
+      "location": {
+        "shownName": "Ubicación \/ nombre"
+      },
+      "settings": {
+        "shownName": "Configuración adicional",
+        "values": [
+          [
+            1,
+            "no imprimir"
+          ],
+          [
+            2,
+            "tipo 1"
+          ],
+          [
+            3,
+            "tipo 2"
+          ],
+          [
+            4,
+            "tipo 3"
+          ],
+          [
+            5,
+            "tipo 4"
+          ],
+          [
+            6,
+            "tipo 5"
+          ]
+        ]
+      },
+      "copies": {
+        "shownName": "Número de copias",
+        "helpText": "0 significa infinito. Consulte el campo a continuación para obtener detalles sobre la disminución del valor de este campo."
+      },
+      "h1_1": {
+        "shownName": "Variaciones de interacción del código QRpg"
+      },
+      "conditions": {
+        "shownName": "Condiciones"
+      },
+      "description": {
+        "shownName": "Texto del resultado",
+        "help_text": "Usa el formato [#code_id] para insertar automáticamente otro código QRpg en el texto. Al hacer clic en este código, el usuario accederá inmediatamente a su descripción. Si añades enlaces a archivos MP3, estos se reemplazarán automáticamente por un reproductor MP3. Si añades [loop] justo después de un enlace a un archivo MP3, el archivo se reproducirá en bucle. Usa el formato [conversation|user id] para insertar un formulario para enviar un mensaje al usuario especificado."
+      },
+      "description_bad": {
+        "shownName": "Texto del resultado",
+        "help_text": "Usa el formato [#code_id] para insertar automáticamente otro código QRpg en el texto. Al hacer clic en este código, el usuario accederá inmediatamente a su descripción. Si añades enlaces a archivos MP3, estos se reemplazarán automáticamente por un reproductor MP3. Si añades [loop] justo después de un enlace a un archivo MP3, el archivo se reproducirá en bucle. Usa el formato [conversation|user id] para insertar un formulario para enviar un mensaje al usuario especificado."
+      },
+      "qrpg_keys": {
+        "shownName": "El usuario necesitará <b>todas<\/b> estas claves QRpg para obtener el resultado"
+      },
+      "not_qrpg_keys": {
+        "shownName": "El usuario necesitará <b>cualquiera<\/b> de estas claves QRpg que falten",
+        "helpText": "Si necesita que falten algunas claves, cree una clave adicional con las claves y selecciónela aquí."
+      },
+      "hacking_settings": {
+        "shownName": "Y también gana en un minijuego",
+        "values": [
+          [
+            "min",
+            "en un nivel de dificultad mínimo"
+          ],
+          [
+            "avg",
+            "en un nivel de dificultad medio"
+          ],
+          [
+            "max",
+            "en un nivel de dificultad máximo"
+          ]
+        ]
+      },
+      "text_to_access": {
+        "shownName": "Y \/ o introduce este texto",
+        "helpText": "El texto puede tener cualquier longitud y contenido; se comprobará sin distinguir entre mayúsculas y minúsculas."
+      },
+      "on_fail": {
+        "shownName": "Si falla"
+      },
+      "gives_bad_qrpg_keys": {
+        "shownName": "Un intento de escaneo fallido otorga las siguientes claves QRpg"
+      },
+      "gives_bad_qrpg_keys_for_minutes": {
+        "shownName": "durante minutos"
+      },
+      "on_success": {
+        "shownName": "Si tiene éxito"
+      },
+      "removes_qrpg_keys_user": {
+        "shownName": "El escaneo de código eliminará las siguientes claves QRpg del usuario que lo escanea"
+      },
+      "removes_qrpg_keys": {
+        "shownName": "El escaneo de código eliminará las siguientes claves QRpg de todos los usuarios excepto del que escanea",
+        "helpText": "Muy conveniente para la mecánica de algunos objetos, por ejemplo: el código QRpg en un objeto otorgará un La clave QRpg de este artículo se le otorga al usuario que lo escanea y se eliminará de los demás usuarios. De esta manera, solo un usuario tiene control sobre un artículo en un momento dado."
+      },
+      "removes_copies_of_qrpg_codes": {
+        "shownName": "El escaneo del código eliminará una copia de los siguientes códigos QRpg",
+        "helpText": "Un nuevo escaneo por parte del mismo usuario con el mismo resultado no eliminará copias adicionales."
+      },
+      "gives_qrpg_keys": {
+        "shownName": "El escaneo del código otorgará las siguientes claves al usuario que lo escanea"
+      },
+      "gives_qrpg_keys_for_minutes": {
+        "shownName": "por minutos",
+        "helpText": "0 significa permanente y las claves se añadirán a la aplicación del usuario. Si es mayor que 0, las claves no se añadirán a la aplicación."
+      },
+      "give_currency": {
+        "shownName": "Ganancia de recursos"
+      },
+      "gives_bank_currency_amount": {
+        "shownName": "El escaneo de código otorgará una cantidad de recursos",
+        "helpText": "puede ser negativo (para eliminar un recurso del jugador)."
+      },
+      "gives_bank_currency": {
+        "shownName": "Tipo de recurso otorgado"
+      },
+      "gives_bank_currency_total_times": {
+        "shownName": "No otorgar más de N veces durante el proyecto",
+        "helpText": "0 significa que un recurso se otorgará cualquier número de veces."
+      },
+      "gives_bank_currency_once_in_minutes": {
+        "shownName": "No otorgar con más frecuencia que N minutos."
+      },
+      "gives_bank_currency_total_times_user": {
+        "shownName": "No otorgar más de N veces durante el proyecto por usuario",
+        "helpText": "0 significa que un recurso se otorgará a un usuario cualquier número de veces, pero no más de N veces durante el proyecto."
+      },
+      "gives_bank_currency_once_in_minutes_user": {
+        "shownName": "No otorgar con una frecuencia mayor a N minutos por usuario",
+        "helpText": "Se recomienda establecer más de 0 aquí para proteger los datos de errores de conexión y escaneos repetidos por parte del mismo usuario."
+      },
+      "updated_at": {
+        "shownName": "Último cambio"
+      }
+    }
+  }
+}

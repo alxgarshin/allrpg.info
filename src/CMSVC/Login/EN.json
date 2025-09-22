@@ -1,0 +1,25 @@
+{
+  "global": {
+    "title": "Login",
+    "enter": "Enter",
+    "email": "email",
+    "password": "Password",
+    "login_button": "Enter",
+    "remind_button": "Forgot your password?",
+    "register_button": "Registration",
+    "enter_using": "Or enter through a social network:",
+    "enter_using_vkontakte": "enter using Vkontakte",
+    "enter_using_facebook": "enter using Facebook",
+    "remind": "Remind",
+    "input_your_email": "Enter your Email",
+    "do_remind": "Remind",
+    "messages": {
+      "remind_message": ",\r\nYou have asked to remind your password at %s.\r\nYour login: your email.\r\nYour new password: %s",
+      "remind_subject": "Resetting password on the website",
+      "new_pass_sent": "A letter with a new password has been sent to your email.",
+      "error_while_sending": "There were problems on the server while sending a letter.",
+      "no_email_found_in_db": "Requested email does not exist in the database.",
+      "need_to_login_or_register_for_that": "You have to register or login, you will be transferred to the page needed after that."
+    }
+  }
+}
