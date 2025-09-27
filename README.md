@@ -62,7 +62,7 @@ https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
 
 8) Выполните клонирование рабочего проекта. Он будет установлен в отдельный каталог **allrpg**.
     ```shell script
-    git clone git@github.com:alxgarshin/allrpg.info.git
+    git clone https://github.com/alxgarshin/allrpg.info.git
     ```
 
 9) Перейдите в `/home/USER/dev/allrpg/` и отключите сохранение прав у файлов в репозитории:
