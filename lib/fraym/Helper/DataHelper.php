@@ -365,7 +365,7 @@ abstract class DataHelper implements Helper
         $result = [];
 
         if ($data !== '') {
-            preg_match_all('#\[([^]]+)]\[(.*?)]&#msu', $data, $matches);
+            preg_match_all('#\[([^]]+)]\[(.*?)]\r\n#msu', $data, $matches);
 
             foreach ($matches[0] as $key => $value) {
                 $result[$matches[1][$key]] = DataHelper::escapeOutput($matches[2][$key]);

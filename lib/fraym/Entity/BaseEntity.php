@@ -548,7 +548,7 @@ abstract class BaseEntity
                         $stringVirtualDataArray = $data[$dataStringId][$this->virtualField];
 
                         foreach ($stringVirtualDataArray as $stringVirtualDataItem) {
-                            $stringVirtualDataString .= '[' . $stringVirtualDataItem[0]->getName() . '][' . $stringVirtualDataItem[1] . ']&lt;br&gt;';
+                            $stringVirtualDataString .= '[' . $stringVirtualDataItem[0]->getName() . '][' . $stringVirtualDataItem[1] . ']' . chr(13) . chr(10);
                         }
                         $data[$dataStringId][$this->virtualField] = $stringVirtualDataString;
                     }

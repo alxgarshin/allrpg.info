@@ -760,7 +760,7 @@ class MyapplicationService extends BaseService
                 $reencodeData = $gamemastersAllinfo[$elem->getName()] ?? '';
                 $reencodeData = str_replace('[', '&open;', $reencodeData);
                 $reencodeData = str_replace(']', '&close;', $reencodeData);
-                $gamemastersAllinfoData .= '[' . $elem->getName() . '][' . $reencodeData . ']&lt;br&gt;';
+                $gamemastersAllinfoData .= '[' . $elem->getName() . '][' . $reencodeData . ']' . chr(13) . chr(10);
             }
         }
 

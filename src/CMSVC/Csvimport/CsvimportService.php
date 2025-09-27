@@ -392,7 +392,7 @@ class CsvimportService extends BaseService
                                 }
 
                                 if ($allinfoAddData !== '') {
-                                    $allinfo .= '[' . $applicationField->getName() . '][' . $allinfoAddData . ']&lt;br&gt;';
+                                    $allinfo .= '[' . $applicationField->getName() . '][' . $allinfoAddData . ']' . chr(13) . chr(10);
                                 }
                             }
                         }
