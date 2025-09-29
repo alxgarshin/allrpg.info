@@ -9,10 +9,15 @@ if ($value !== '') {
 
     $filepath = urldecode(preg_replace('#escq#', '?', $value));
 
-    if (getimagesize($filepath)) {
+    if (@getimagesize($filepath)) {
         $image = WideImage\WideImage::loadFromFile($filepath);
         $image->resize(800, 200, 'inside', 'down')->output('webp');
     } else {
-        echo $filepath;
+        $filePath = INNER_PATH . 'public' . $_ENV['DESIGN_PATH'] . 'ajax-loader.gif';
+
+        header("Content-Length: " . filesize($filePath));
+        header("Content-Type: application/octet-stream;");
+        readfile($filePath);
+        exit;
     }
 }
