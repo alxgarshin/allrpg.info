@@ -545,7 +545,7 @@ class RolesService extends BaseService
                                     if ($projectGroupData[2] < $level) {
                                         $level = $projectGroupData[2];
 
-                                        if (($projectGroupData[0] ?? false) && is_array($charactersGroupsToRolesData[$projectGroupData[0]])) {
+                                        if (($projectGroupData[0] ?? false) && ($projectGroupData[0] ?? false) && is_array($charactersGroupsToRolesData[$projectGroupData[0]] ?? false)) {
                                             while (
                                                 in_array(
                                                     $roleData['character_id'],
