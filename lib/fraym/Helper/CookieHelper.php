@@ -28,7 +28,7 @@ abstract class CookieHelper implements Helper
                     self::deleteCookieFromHeaders($cookieKey);
                 }
 
-                setcookie($cookieKey, is_array($cookie) ? DataHelper::jsonFixedEncode($cookie) : $cookie, CookieHelper::getOptions($time));
+                setcookie($cookieKey, is_array($cookie) ? DataHelper::jsonFixedEncode($cookie) : (string) $cookie, CookieHelper::getOptions($time));
             }
         }
     }
