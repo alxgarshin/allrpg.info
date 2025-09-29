@@ -637,12 +637,13 @@ class GroupService extends BaseService
 
             if ($theLevel > $minLevel) {
                 $parentKey = $groupKey - 1;
-                $prevGroupData = $projectGroupsList[$parentKey];
+                $prevGroupData = $projectGroupsList[$parentKey] ?? [];
 
-                while ($prevGroupData[2] !== $theLevel - 1) {
+                while (($prevGroupData[2] ?? false) && $prevGroupData[2] !== $theLevel - 1) {
                     --$parentKey;
                     $prevGroupData = $projectGroupsList[$parentKey];
                 }
+
                 $path = $prevGroupData[1] . ' &rarr; ';
             }
             $path .= $projectGroupsList[$groupKey][1];
