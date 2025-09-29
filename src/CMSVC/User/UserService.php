@@ -995,7 +995,7 @@ class UserService extends BaseService
         if ($email !== null || $login !== null) {
             $tryName = md5(md5($email !== null ? $email : $login) . $_ENV['PROJECT_HASH_WORD']);
 
-            if (file_exists(INNER_PATH . 'public/' . $_ENV['UPLOADS_PATH'] . $uploads[2]['path'] . $tryName . '.png')) {
+            if (file_exists(INNER_PATH . 'public' . $_ENV['UPLOADS_PATH'] . $uploads[2]['path'] . $tryName . '.png')) {
                 $name = $tryName;
             } else {
                 $identicon = new Identicon();
@@ -1021,7 +1021,7 @@ class UserService extends BaseService
                 $imageData = ob_get_clean();
                 imagedestroy($image);
 
-                if ($imageData && file_put_contents(INNER_PATH . 'public/' . $_ENV['UPLOADS_PATH'] . $uploads[2]['path'] . $tryName . '.png', $imageData)) {
+                if ($imageData && file_put_contents(INNER_PATH . 'public' . $_ENV['UPLOADS_PATH'] . $uploads[2]['path'] . $tryName . '.png', $imageData)) {
                     $name = $tryName;
 
                     if (!$photo || str_contains($photo, 'identicon')) {
