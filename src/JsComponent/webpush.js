@@ -32,7 +32,7 @@ if (withDocumentEvents) {
         }
 
         if (subscription === null) {
-            if (permission !== 'granted') {
+            if (permission !== 'granted' && localStorage.getItem('webpush') !== 'blocked') {
                 localStorage.setItem('webpush', 'false');
             }
 

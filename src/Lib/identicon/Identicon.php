@@ -386,13 +386,12 @@ class Identicon
         $centers = $this->centers[$x][$y];
         $invert2 = abs($invert - 1);
         $points = $this->identicon_calc_x_y($this->square, $centers);
-        $num = count($points) / 2;
-        imagefilledpolygon($this->im, $points, $num, $this->colors[$invert2]);
+        imagefilledpolygon($this->im, $points, $this->colors[$invert2]);
 
         foreach ($shape as $subshape) {
             $points = $this->identicon_calc_x_y($subshape, $centers, $rotation + $this->rotations[$x][$y]);
             $num = count($points) / 2;
-            imagefilledpolygon($this->im, $points, $num, $this->colors[$invert]);
+            imagefilledpolygon($this->im, $points, $this->colors[$invert]);
         }
     }
 

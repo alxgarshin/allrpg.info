@@ -2309,12 +2309,12 @@ function mobilecheck() {
 
 /** Создаём/читаем deviceId из localStorage (уникален для этого браузера/устройства) **/
 function getOrCreateDeviceId() {
-    const webpushDeviceKey = 'webpushDeviceId';
-    let id = localStorage.getItem(webpushDeviceKey);
+    const deviceKey = 'deviceId';
+    let id = localStorage.getItem(deviceKey);
 
     if (!id) {
         id = crypto.randomUUID();
-        localStorage.setItem(webpushDeviceKey, id);
+        localStorage.setItem(deviceKey, id);
     }
 
     return id;
