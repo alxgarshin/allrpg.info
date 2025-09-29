@@ -105,7 +105,9 @@ div.fullpage_cover {
 input,
 select,
 textarea,
-div.dropfield {
+div.dropfield,
+div.fieldvalue .ql-container,
+div.fieldvalue .ql-toolbar {
     color: var(--color-font-main);
     background-color: var(--color-background-main);
 }
