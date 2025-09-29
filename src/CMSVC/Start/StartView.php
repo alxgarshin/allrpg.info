@@ -395,7 +395,7 @@ class StartView extends BaseView
         foreach ($exchange_data as $exchange_item_data) {
             $userModel = $userService->arrayToModel($exchange_item_data);
             $filepath = $userService->photoUrl($userModel, true);
-            $inFilePath = ABSOLUTE_PATH . 'thumbnails' . $_ENV['UPLOADS_PATH'] . $_ENV['UPLOADS'][16]['path'] . $exchange_item_data['exchange_item_id'] . '.jpg';
+            $inFilePath = ABSOLUTE_PATH . '/thumbnails' . $_ENV['UPLOADS_PATH'] . $_ENV['UPLOADS'][16]['path'] . $exchange_item_data['exchange_item_id'] . '.jpg';
 
             if (FileHelper::checkImageExists($inFilePath)) {
                 $filepath = $inFilePath;
