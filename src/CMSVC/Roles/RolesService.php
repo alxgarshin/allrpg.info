@@ -540,9 +540,9 @@ class RolesService extends BaseService
 
                                 while ($level > 0) {
                                     --$idInProjectGroupsList;
-                                    $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList];
+                                    $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList] ?? [];
 
-                                    if ($projectGroupData[2] < $level) {
+                                    if ($projectGroupData && $projectGroupData[2] < $level) {
                                         $level = $projectGroupData[2];
 
                                         if (($projectGroupData[0] ?? false) && ($projectGroupData[0] ?? false) && is_array($charactersGroupsToRolesData[$projectGroupData[0]] ?? false)) {
@@ -605,8 +605,8 @@ class RolesService extends BaseService
 
                             if (
                                 ($objType !== 'application' && $objType !== 'character')
-                                || ($objType === 'application' && $roleData['application_id'] > 0 && in_array($roleData['application_id'], $objId))
-                                || ($objType === 'character' && $roleData['character_id'] > 0 && in_array($roleData['character_id'], $objId))
+                                || ($objType === 'application' && ($roleData['application_id'] ?? 0) > 0 && in_array(($roleData['application_id'] ?? false), $objId))
+                                || ($objType === 'character' && ($roleData['character_id'] ?? 0) > 0 && in_array(($roleData['character_id'] ?? false), $objId))
                             ) {
                                 $characterId = $roleData['character_id'] ?? 0;
 
