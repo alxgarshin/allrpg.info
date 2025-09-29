@@ -737,7 +737,7 @@ class RolesService extends BaseService
                     while ($lookingForChilds) {
                         ++$key;
 
-                        if ($objectsTree[$key][2] > $theLevel) {
+                        if (($objectsTree[$key] ?? false) && $objectsTree[$key][2] > $theLevel) {
                             $tempObjectsChildsBranch[] = array_merge(
                                 $objectsTree[$key],
                                 ['chopOffStatus' => 'child'],

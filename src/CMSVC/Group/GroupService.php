@@ -644,7 +644,9 @@ class GroupService extends BaseService
                     $prevGroupData = $projectGroupsList[$parentKey];
                 }
 
-                $path = $prevGroupData[1] . ' &rarr; ';
+                if ($prevGroupData) {
+                    $path = $prevGroupData[1] . ' &rarr; ';
+                }
             }
             $path .= $projectGroupsList[$groupKey][1];
         }
