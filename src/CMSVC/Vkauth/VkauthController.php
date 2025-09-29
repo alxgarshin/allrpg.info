@@ -6,7 +6,7 @@ namespace App\CMSVC\Vkauth;
 
 use App\CMSVC\User\UserService;
 use Fraym\BaseObject\{BaseController, CMSVC};
-use Fraym\Helper\{CMSVCHelper, DataHelper};
+use Fraym\Helper\{AuthHelper, CMSVCHelper, DataHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\HtmlResponse;
 
@@ -104,6 +104,8 @@ class VkauthController extends BaseController
                         if ($checkUser) {
                             CURRENT_USER->authSetUserData($checkUser);
 
+                            AuthHelper::generateAndSaveRefreshToken();
+
                             $vkAuthService->outputRedirect();
                         } else {
                             $checkUser = DB->select(
@@ -140,6 +142,8 @@ class VkauthController extends BaseController
                                     $userService->postRegister($id);
                                     $userData = DB->select('user', ['id' => $id], true);
                                     CURRENT_USER->authSetUserData($userData);
+
+                                    AuthHelper::generateAndSaveRefreshToken();
 
                                     $vkAuthService->outputRedirect();
                                 } else {

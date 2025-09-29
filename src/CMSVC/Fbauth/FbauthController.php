@@ -6,7 +6,7 @@ namespace App\CMSVC\Fbauth;
 
 use App\CMSVC\User\UserService;
 use Fraym\BaseObject\{BaseController, CMSVC};
-use Fraym\Helper\{CMSVCHelper, DataHelper};
+use Fraym\Helper\{AuthHelper, CMSVCHelper, DataHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\HtmlResponse;
 
@@ -114,6 +114,8 @@ class FbauthController extends BaseController
                         if ($checkUser) {
                             CURRENT_USER->authSetUserData($checkUser);
 
+                            AuthHelper::generateAndSaveRefreshToken();
+
                             $fbAuthService->outputRedirect();
                         } else {
                             $checkUser = DB->select(
@@ -148,6 +150,8 @@ class FbauthController extends BaseController
                                     $userService->postRegister($id);
                                     $userData = DB->select('user', ['id' => $id], true);
                                     CURRENT_USER->authSetUserData($userData);
+
+                                    AuthHelper::generateAndSaveRefreshToken();
 
                                     $fbAuthService->outputRedirect();
                                 } else {
