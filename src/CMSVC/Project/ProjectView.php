@@ -62,6 +62,10 @@ class ProjectView extends BaseView
 
         $objData = $projectService->get(DataHelper::getId());
 
+        if (!$objData) {
+            return null;
+        }
+
         $objType = 'project';
 
         $projectAdmin = $projectService->isProjectAdmin();

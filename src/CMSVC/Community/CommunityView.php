@@ -54,6 +54,10 @@ class CommunityView extends BaseView
 
         $objData = $communityService->get(DataHelper::getId());
 
+        if (!$objData) {
+            return null;
+        }
+
         $objType = 'community';
 
         $communityAdmin = $communityService->isCommunityAdmin($objData->id->getAsInt());

@@ -16,8 +16,6 @@ class RolesView extends BaseView
 {
     public function Response(): ?Response
     {
-        $rolesMinJsUpdateDate = '20181112_2000';
-
         $LOCALE = $this->getLOCALE();
         $LOCALE_PROJECT = LocaleHelper::getLocale(['project']);
         $LOCALE_GROUP = LocaleHelper::getLocale(['group', 'global']);
@@ -25,6 +23,10 @@ class RolesView extends BaseView
         $rolesService = $this->getService();
 
         $projectData = $rolesService->getProjectData(DataHelper::getId());
+
+        if (!$projectData) {
+            return null;
+        }
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($projectData->name->get() ?? mb_strtolower($LOCALE['title']));
 
