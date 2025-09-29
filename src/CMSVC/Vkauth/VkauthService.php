@@ -14,7 +14,7 @@ class VkauthService extends BaseService
     {
         $redirectPath = ResponseHelper::createRedirect();
 
-        if ($redirectPath !== '') {
+        if ($redirectPath) {
             ResponseHelper::redirect($redirectPath);
         } else {
             ResponseHelper::redirect(ABSOLUTE_PATH . '/start/');
