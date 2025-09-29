@@ -946,10 +946,12 @@ class RolesService extends BaseService
                 $GLOBALS['kind'] = 'roles_gamemaster'; // чтобы в именах пользователей показывались все возможные данные
             }
 
+            $userModel = $this->getUserService()->arrayToModel($applicationData);
+
             $result .= '<div class="allrpgRolesListApplicationString"><div class="allrpgRolesListApplication"><div class="allrpgRolesListApplicationsList">';
             $result .= '<div class="allrpgRolesListApplicationsListApplication" data-obj-type="application" data-obj-id="' . $applicationData['application_id'] . '">' . ($applicationData['application_id'] !== '' ? (
-                $this->projectGamemaster ? '<a href="/application/' . $applicationData['application_id'] . '/">' . $this->getUserService()->showNameWithId($this->getUserService()->arrayToModel($applicationData)) . '</a>' : $this->getUserService()->showNameExtended(
-                    $applicationData,
+                $this->projectGamemaster ? '<a href="/application/' . $applicationData['application_id'] . '/">' . $this->getUserService()->showNameWithId($userModel) . '</a>' : $this->getUserService()->showNameExtended(
+                    $userModel,
                     true,
                     true,
                     '',
