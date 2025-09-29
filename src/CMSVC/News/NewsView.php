@@ -66,7 +66,7 @@ class NewsView extends BaseView
 	<div class="news_date">' . ($newsDate['range'] ? $LOCALE['range'] . ': ' : $LOCALE['published'] . ': ') . $newsDate['date'] . '</div>
 	<div class="publication_content">';
 
-                if (strip_tags($newsData->content->get()) !== '') {
+                if (strip_tags($newsData->content->get() ?? '') !== '') {
                     $text = $newsData->content->get();
                 } else {
                     $text = $newsData->annotation->get();
