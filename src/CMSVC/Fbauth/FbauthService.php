@@ -15,9 +15,11 @@ class FbauthService extends BaseService
         $redirectPath = ResponseHelper::createRedirect();
 
         if ($redirectPath) {
-            ResponseHelper::redirect($redirectPath);
+            header('Location: ' . $redirectPath);
+            exit;
         } else {
-            ResponseHelper::redirect(ABSOLUTE_PATH . '/start/');
+            header('Location: ' . ABSOLUTE_PATH . '/start/');
+            exit;
         }
     }
 }
