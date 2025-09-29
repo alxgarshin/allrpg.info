@@ -41,7 +41,7 @@ class File extends BaseElement
             preg_match_all('#{([^:]+):([^}]+)}#', $value, $matches);
 
             foreach ($matches[0] as $key => $value) {
-                if (!$_ENV['HIDE_NON_EXISTING_FILES'] || file_exists($_ENV['UPLOADS_PATH'] . $uploadData['path'] . $matches[2][$key])) {
+                if (!$_ENV['HIDE_NON_EXISTING_FILES'] || file_exists(INNER_PATH . 'public' . $_ENV['UPLOADS_PATH'] . $uploadData['path'] . $matches[2][$key])) {
                     $uploadedFiles[] = [
                         'name_shown' => $matches[1][$key],
                         'name' => $matches[2][$key],
