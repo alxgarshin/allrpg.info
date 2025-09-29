@@ -81,13 +81,29 @@ if ($name && !preg_match('#\.(php)$#i', $name)) {
                 }
 
                 if ($field && $table) {
-                    $result = DB->select(
-                        $table,
-                        [
-                            [$field, '%' . $name . '%', [OperandEnum::LIKE]]
-                        ],
-                        true
-                    );
+                    if (is_array($table)) {
+                        foreach ($table as $individualTable) {
+                            $result = DB->select(
+                                $individualTable,
+                                [
+                                    [$field, '%' . $name . '%', [OperandEnum::LIKE]]
+                                ],
+                                true
+                            );
+
+                            if ($result) {
+                                break;
+                            }
+                        }
+                    } else {
+                        $result = DB->select(
+                            $table,
+                            [
+                                [$field, '%' . $name . '%', [OperandEnum::LIKE]]
+                            ],
+                            true
+                        );
+                    }
                 }
             }
         }
