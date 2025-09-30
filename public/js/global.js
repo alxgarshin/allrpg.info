@@ -711,7 +711,7 @@ async function projectInit(withDocumentEvents, updateHash) {
             let playSound = false;
 
             _each(jsonData['new_events']['conversation'], function (value, key) {
-                const messageDiv = _(`div.message[c_id=${key}]`);
+                const messageDiv = _(`div.message[c_id="${key}"]`);
 
                 //предпринимаем активные действия, только если в диалоге есть непрочтенные сообщения
                 if (value['count'] > 0) {
@@ -785,14 +785,14 @@ async function projectInit(withDocumentEvents, updateHash) {
                         }
                     }
 
-                    if (el(`div.message[c_id=${key}]`)) {
+                    if (el(`div.message[c_id="${key}"]`)) {
                         _('div.conversation_message_switcher_scroller').insert(messageDiv, 'begin');
 
                         messageDiv.find('div.content_preview')?.addClass('unread').addClass('counter');
                         messageDiv.find('div.content_preview')?.attr('data-content', value['count']);
                         messageDiv.find('div.content_preview')?.html(value['content_preview']);
 
-                        playSound = !(`div.message[c_id=${key}]`).find('div.content_preview')?.hasClass('unread');
+                        playSound = !(`div.message[c_id="${key}"]`).find('div.content_preview')?.hasClass('unread');
                     } else if (el('div.conversation_message_switcher')) {
                         //у нас нет этого диалога в списке вообще, хотя мы и находимся в разделе сообщений, поэтому перезагружаем список сообщений
                         const loadWall = elFromHTML('a.load_wall[obj_type="conversation"][obj_id="{main_conversation}"]');
@@ -815,7 +815,7 @@ async function projectInit(withDocumentEvents, updateHash) {
                 const self = _(this);
 
                 if (self.text() != '' && (jsonData['new_events']['conversation'][self.attr('obj_id')] === undefined || jsonData['new_events']['conversation'][self.attr('obj_id')]['count'] == '-1')) {
-                    const divMessage = _(`div.message[c_id=${self.attr('obj_id')}]`);
+                    const divMessage = _(`div.message[c_id="${self.attr('obj_id')}"]`);
 
                     self.text('').hide();
 
