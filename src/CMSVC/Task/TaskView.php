@@ -227,13 +227,18 @@ class TaskView extends BaseView
             $RESPONSE_DATA .= '
                 </div>';
         } elseif ($taskParentAccess) {
-            $checkAccessData = DB->query(
-                'SELECT c.id, cm.updated_at FROM conversation c LEFT JOIN conversation_message cm ON cm.conversation_id=c.id WHERE cm.message_action_data="{task_id:' . DataHelper::getId() . '}" AND cm.message_action="{get_access}" AND cm.creator_id=' . CURRENT_USER->id(),
-                [],
-                true,
-            );
+            $checkAccessData = [];
+
+            if (CURRENT_USER->isLogged()) {
+                $checkAccessData = DB->query(
+                    'SELECT c.id, cm.updated_at FROM conversation c LEFT JOIN conversation_message cm ON cm.conversation_id=c.id WHERE cm.message_action_data="{task_id:' . DataHelper::getId() . '}" AND cm.message_action="{get_access}" AND cm.creator_id=' . CURRENT_USER->id(),
+                    [],
+                    true,
+                );
+            }
+
             $RESPONSE_DATA .= '
-                <div class="actions_list_button"><a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . DataHelper::getId() . '/action=get_access"><span>' . ($checkAccessData['id'] !== '' ? $LOCALE['access_request_sent'] : ($accessToChilds ? $LOCALE['get_access'] : $LOCALE['request_access'])) . '</span></a></div>';
+                <div class="actions_list_button"><a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . DataHelper::getId() . '/action=get_access"><span>' . ($checkAccessData ? $LOCALE['access_request_sent'] : ($accessToChilds ? $LOCALE['get_access'] : $LOCALE['request_access'])) . '</span></a></div>';
         }
 
         $RESPONSE_DATA .= '

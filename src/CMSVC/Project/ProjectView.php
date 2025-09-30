@@ -168,13 +168,18 @@ class ProjectView extends BaseView
 
                 $RESPONSE_DATA .= '<a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . $objData->id->getAsInt() . '/action=remove_access" class="careful">' . $LOCALE['leave_project'] . '</a>';
             } else {
-                $check_access_data = DB->query(
-                    'SELECT c.id, cm.updated_at FROM conversation c LEFT JOIN conversation_message cm ON cm.conversation_id=c.id WHERE cm.message_action_data="{project_id:' . $objData->id->getAsInt() . '}" AND cm.message_action="{get_access}" AND cm.creator_id=' . CURRENT_USER->id(),
-                    [],
-                    true,
-                );
+                $checkAccessData = [];
+
+                if (CURRENT_USER->isLogged()) {
+                    $checkAccessData = DB->query(
+                        'SELECT c.id, cm.updated_at FROM conversation c LEFT JOIN conversation_message cm ON cm.conversation_id=c.id WHERE cm.message_action_data="{project_id:' . $objData->id->getAsInt() . '}" AND cm.message_action="{get_access}" AND cm.creator_id=' . CURRENT_USER->id(),
+                        [],
+                        true,
+                    );
+                }
+
                 $RESPONSE_DATA .= '
-                    <a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . $objData->id->getAsInt() . '/action=get_access"><span>' . ($objData->type->get() === '{open}' ? $LOCALE['get_access'] : ($check_access_data['id'] !== '' ? $LOCALE['access_request_sent'] : $LOCALE['request_access'])) . '</span></a>';
+                    <a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . $objData->id->getAsInt() . '/action=get_access"><span>' . ($objData->type->get() === '{open}' ? $LOCALE['get_access'] : ($checkAccessData ? $LOCALE['access_request_sent'] : $LOCALE['request_access'])) . '</span></a>';
             }
 
             if ($applicationData) {
@@ -204,17 +209,18 @@ class ProjectView extends BaseView
             $RESPONSE_DATA .= '
                 </div>';
         } else {
-            $check_access_data = [];
+            $checkAccessData = [];
 
             if (CURRENT_USER->isLogged()) {
-                $check_access_data = DB->query(
+                $checkAccessData = DB->query(
                     'SELECT c.id, cm.updated_at FROM conversation c LEFT JOIN conversation_message cm ON cm.conversation_id=c.id WHERE cm.message_action_data="{project_id:' . $objData->id->getAsInt() . '}" AND cm.message_action="{get_access}" AND cm.creator_id=' . CURRENT_USER->id(),
                     [],
                     true,
                 );
             }
+
             $RESPONSE_DATA .= '
-                    <div class="actions_list_button"><a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . $objData->id->getAsInt() . '/action=get_access"><span>' . ($objData->type->get() === '{open}' ? $LOCALE['get_access'] : ($check_access_data['id'] !== '' ? $LOCALE['access_request_sent'] : $LOCALE['request_access'])) . '</span></a></div>';
+                    <div class="actions_list_button"><a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . $objData->id->getAsInt() . '/action=get_access"><span>' . ($objData->type->get() === '{open}' ? $LOCALE['get_access'] : ($checkAccessData ? $LOCALE['access_request_sent'] : $LOCALE['request_access'])) . '</span></a></div>';
         }
 
         $RESPONSE_DATA .= '

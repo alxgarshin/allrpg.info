@@ -821,8 +821,8 @@ class RolesService extends BaseService
         $applicationsToBeAcceptedCount = 0;
 
         /* мы еще не выводили инфу по данному персонажу, а значит, должны вывести всё, что записано в него, а заодно посчитать общее количество набранных и предварительно набранных позиций */
-        if ($applicationData['character_id'] > 0) {
-            if ($applicationData['character_taken'] !== null) {
+        if ($applicationData['character_id'] ?? false) {
+            if ($applicationData['character_taken'] ?? false) {
                 $takenClone = explode(',', DataHelper::escapeOutput($applicationData['character_taken']));
 
                 foreach ($takenClone as $value) {
