@@ -116,7 +116,7 @@ class FbauthController extends BaseController
 
                             AuthHelper::generateAndSaveRefreshToken();
 
-                            $fbAuthService->outputRedirect();
+                            return $fbAuthService->outputRedirect();
                         } else {
                             $checkUser = DB->select(
                                 'user',
@@ -153,7 +153,7 @@ class FbauthController extends BaseController
 
                                     AuthHelper::generateAndSaveRefreshToken();
 
-                                    $fbAuthService->outputRedirect();
+                                    return $fbAuthService->outputRedirect();
                                 } else {
                                     $authError = true;
                                 }
@@ -187,7 +187,7 @@ class FbauthController extends BaseController
 </div>
 </div>';
             } else {
-                $fbAuthService->outputRedirect();
+                return $fbAuthService->outputRedirect();
             }
         }
 

@@ -106,7 +106,7 @@ class VkauthController extends BaseController
 
                             AuthHelper::generateAndSaveRefreshToken();
 
-                            $vkAuthService->outputRedirect();
+                            return $vkAuthService->outputRedirect();
                         } else {
                             $checkUser = DB->select(
                                 'user',
@@ -145,7 +145,7 @@ class VkauthController extends BaseController
 
                                     AuthHelper::generateAndSaveRefreshToken();
 
-                                    $vkAuthService->outputRedirect();
+                                    return $vkAuthService->outputRedirect();
                                 } else {
                                     $authError = true;
                                 }
@@ -179,7 +179,7 @@ class VkauthController extends BaseController
 </div>
 </div>';
             } else {
-                $vkAuthService->outputRedirect();
+                return $vkAuthService->outputRedirect();
             }
         }
 
