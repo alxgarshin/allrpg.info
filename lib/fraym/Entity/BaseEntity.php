@@ -1182,7 +1182,7 @@ abstract class BaseEntity
                             }
                         }
                     } else {
-                        $RESPONSE_DATA .= $rotatedArrayIndexes[$sortingItem->getTableFieldName()][$fieldValue];
+                        $RESPONSE_DATA .= $rotatedArrayIndexes[$sortingItem->getTableFieldName()][$fieldValue] ?? '';
                     }
                 } elseif ($modelElement instanceof Checkbox) {
                     if ($fieldValue) {
