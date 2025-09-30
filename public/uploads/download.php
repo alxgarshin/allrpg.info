@@ -110,7 +110,7 @@ if ($name && !preg_match('#\.(php)$#i', $name)) {
 
         $downloadedFileName = $name;
 
-        if ($result) {
+        if ($result && ($result[$field] ?? false)) {
             preg_match_all('#{([^:]+):([^}]+)}#', $result[$field], $matches);
 
             foreach ($matches[1] as $key => $value) {

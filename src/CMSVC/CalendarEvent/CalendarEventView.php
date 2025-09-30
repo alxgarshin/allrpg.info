@@ -119,7 +119,12 @@ class CalendarEventView extends BaseView
         $areaId = $objData->area->get()[0] ?? null;
         $areaData = $areaService->get($areaId);
         $regionData = DB->select('geography', ['id' => $objData->region->get()], true);
-        $regionParentData = DB->select('geography', ['id' => $regionData['parent']], true);
+
+        $regionParentData = null;
+
+        if ($regionData) {
+            $regionParentData = DB->select('geography', ['id' => $regionData['parent']], true);
+        }
 
         $mgData = '';
 
@@ -179,7 +184,7 @@ class CalendarEventView extends BaseView
             . $LOCALE['allrpg_project2'] . '</a><br>' : '') . '
                 ' . ($regionData ? '<span class="gray">' . $objData->region->getShownName() .
             ':</span><a href="' . ABSOLUTE_PATH . '/calendar_event/search_region=' . $regionData['id'] . '&action=setFilters">' .
-            DataHelper::escapeOutput($regionData['name']) . ' (' . DataHelper::escapeOutput($regionParentData['name']) . ')</a><br>' : '') . '
+            DataHelper::escapeOutput($regionData['name']) . ($regionParentData ? ' (' . DataHelper::escapeOutput($regionParentData['name']) . ')</a>' : '') : '<br>') . '
                 ' . ($objData->playernum->get() > 0 ? '<span class="gray">' . $objData->playernum->getShownName() . ':</span><span>' .
             DataHelper::escapeOutput($objData->playernum->get()) . '</span><br>' : '') . '
                 <a class="show_hidden">' . $LOCALE_GLOBAL['show_next'] . '</a>
@@ -498,7 +503,7 @@ class CalendarEventView extends BaseView
 
             if ($i === 4 && $notion_count > 4) {
                 $RESPONSE_DATA .= '
-                    <a class="show_hidden">' . $LOCALE['show_hidden'] . '</a>
+                    <a class="show_hidden">' . $LOCALE_GLOBAL['show_hidden'] . '</a>
                     <div class="hidden">';
             }
         }

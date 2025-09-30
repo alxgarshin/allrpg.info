@@ -615,6 +615,10 @@ final class Filters
 
                     if (is_array($defaultValue) && count($defaultValue) > 0) {
                         $defaultValue = $defaultValue[key($defaultValue)];
+
+                        if (is_array($defaultValue) && count($defaultValue) > 0) {
+                            $defaultValue = $defaultValue[key($defaultValue)];
+                        }
                     } elseif (is_array($defaultValue)) {
                         $defaultValue = null;
                     }

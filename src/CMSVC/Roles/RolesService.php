@@ -516,7 +516,7 @@ class RolesService extends BaseService
                             $roleData['application_id'] > 0
                             && $this->showOnlyAcceptedRoles
                             && $roleData['application_status'] !== '3'
-                            && is_array($charactersGroupsToRolesData[$roleData['group_id']])
+                            && is_array($charactersGroupsToRolesData[$roleData['group_id']] ?? null)
                             && in_array($roleData['character_id'] ?? null, $charactersGroupsToRolesData[$roleData['group_id']])
                         ) {
                         } else {
@@ -625,13 +625,13 @@ class RolesService extends BaseService
                                     } else {
                                         $hideApply = false;
 
-                                        if ($roleData['character_id'] > 0 && ($roleData['character_id'] !== $prevCharacterId || $prevGroupId !== $roleData['group_id'])) {
+                                        if (($roleData['character_id'] ?? null) > 0 && ($roleData['character_id'] !== $prevCharacterId || $prevGroupId !== $roleData['group_id'])) {
                                             $startMicrotimer = microtime(true);
                                             $responseData .= $this->showCharacter($roleData);
                                             $endMicrotimer = number_format(microtime(true) - $startMicrotimer, 10);
                                             $responseTimerData['showCharacter'] += (float) $endMicrotimer;
                                             $prevCharacterId = $roleData['character_id'];
-                                        } elseif ($roleData['character_id'] === $prevCharacterId && $prevGroupId === $roleData['group_id']) {
+                                        } elseif (($roleData['character_id'] ?? null) === $prevCharacterId && $prevGroupId === ($roleData['group_id'] ?? null)) {
                                             $hideApply = true;
                                         }
                                         $startMicrotimer = microtime(true);

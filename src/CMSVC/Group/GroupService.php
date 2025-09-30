@@ -641,7 +641,7 @@ class GroupService extends BaseService
 
                 while (($prevGroupData[2] ?? false) && $prevGroupData[2] !== $theLevel - 1) {
                     --$parentKey;
-                    $prevGroupData = $projectGroupsList[$parentKey];
+                    $prevGroupData = $projectGroupsList[$parentKey] ?? null;
                 }
 
                 if ($prevGroupData) {

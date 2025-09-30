@@ -36,22 +36,26 @@ class RulingService extends BaseService
             $childTagIds = [];
             $currentTagLevel = false;
 
-            foreach ($listOfTags as $key => $tagData) {
-                if ($currentTagLevel !== false) {
-                    if ($tagData[2] > $currentTagLevel) {
-                        $childTagIds[] = $tagData[0];
-                    } else {
-                        break;
+            if ($listOfTags) {
+                foreach ($listOfTags as $key => $tagData) {
+                    if ($currentTagLevel !== false) {
+                        if ($tagData[2] > $currentTagLevel) {
+                            $childTagIds[] = $tagData[0];
+                        } else {
+                            break;
+                        }
                     }
-                }
 
-                if ($tagData[0] === $rulingTagId) {
-                    $currentTagLevel = $tagData[2];
+                    if ($tagData[0] === $rulingTagId) {
+                        $currentTagLevel = $tagData[2];
+                    }
                 }
             }
 
-            foreach ($childTagIds as $childTagId) {
-                $childTagSelectString .= ' OR ruling_tag_ids LIKE "%-' . $childTagId . '-%"';
+            if ($childTagIds) {
+                foreach ($childTagIds as $childTagId) {
+                    $childTagSelectString .= ' OR ruling_tag_ids LIKE "%-' . $childTagId . '-%"';
+                }
             }
 
             $rulingItems = $rulingItemEditService->arraysToModels(
