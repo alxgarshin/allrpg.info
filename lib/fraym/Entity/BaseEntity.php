@@ -1286,7 +1286,7 @@ abstract class BaseEntity
         if ($this->virtualField) {
             foreach ($data as $dataKey => $dataValue) {
                 if ($dataValue[$this->virtualField] ?? false) {
-                    $data[$dataKey] = array_merge($dataValue, DataHelper::unmakeVirtual($dataValue[$this->virtualField]));
+                    $data[$dataKey] = array_merge(DataHelper::unmakeVirtual($dataValue[$this->virtualField]), $dataValue);
                 }
             }
         }

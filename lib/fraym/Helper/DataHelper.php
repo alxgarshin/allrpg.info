@@ -368,7 +368,9 @@ abstract class DataHelper implements Helper
             preg_match_all('#\[([^]]+)]\[(.*?)]\r\n#msu', $data, $matches);
 
             foreach ($matches[0] as $key => $value) {
-                $result[$matches[1][$key]] = DataHelper::escapeOutput($matches[2][$key]);
+                if (str_starts_with($matches[1][$key], 'virtual')) {
+                    $result[$matches[1][$key]] = DataHelper::escapeOutput($matches[2][$key]);
+                }
             }
         }
 
