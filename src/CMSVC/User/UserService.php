@@ -859,8 +859,8 @@ class UserService extends BaseService
             if (
                 (
                     ($userData->em->get() !== null && $userData->em_verified->get() === '1')
-                    || $userData->facebook->get() !== null
-                    || $userData->vkontakte->get() !== null
+                    || $userData->facebook_visible->get() !== null
+                    || $userData->vkontakte_visible->get() !== null
                     || $userData->telegram->get() !== null
                 )
                 && $userData->fio->get() !== null
@@ -874,8 +874,8 @@ class UserService extends BaseService
                 $profileCompletion = 100;
             } elseif (
                 ($userData->em->get() !== null && $userData->em_verified->get() === '1')
-                || $userData->facebook->get() !== null
-                || $userData->vkontakte->get() !== null
+                || $userData->facebook_visible->get() !== null
+                || $userData->vkontakte_visible->get() !== null
                 || $userData->telegram->get() !== null
             ) {
                 $profileCompletion = 50;

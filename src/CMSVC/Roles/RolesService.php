@@ -582,7 +582,7 @@ class RolesService extends BaseService
 
                     if (count($this->rolesDataArray) > 0) {
                         foreach ($this->rolesDataArray as $roleKey => $roleData) {
-                            if ($prevGroupId !== $roleData['group_id'] && $roleData['group_id'] > 0 && $roleData['group_rights'] <= '1') {
+                            if ($prevGroupId !== $roleData['group_id'] && $roleData['group_id'] > 0 && $roleData['group_rights'] <= '1' && ($projectGroupsInfo[$roleData['group_id']] ?? false)) {
                                 if ($listStringsOpened) {
                                     $responseData .= $this->getExcelView() ? '' : '</div>';
                                 }

@@ -381,6 +381,16 @@ abstract class BaseEntity
         $dataStringsIds = $useFixedId ? [0] : array_keys(ID);
         $dataStringsIds = $dataStringsIds === [] ? [0] : $dataStringsIds;
 
+        /** Предействие из сервиса, если есть */
+        if (!is_null($service)) {
+            match (ACTION) {
+                ActionEnum::create => $service->getPreCreate() ? $service->{$service->getPreCreate()}() : null,
+                ActionEnum::change => $service->getPreChange() ? $service->{$service->getPreChange()}() : null,
+                ActionEnum::delete => $service->getPreDelete() ? $service->{$service->getPreDelete()}() : null,
+                default => null,
+            };
+        }
+
         /** Валидация */
         $globalValidationSuccess = true;
         $troubledStrings = [];
@@ -528,16 +538,6 @@ abstract class BaseEntity
         }
 
         if ($globalValidationSuccess) {
-            /** Предействие из сервиса, если есть */
-            if (!is_null($service)) {
-                match (ACTION) {
-                    ActionEnum::create => $service->getPreCreate() ? $service->{$service->getPreCreate()}() : null,
-                    ActionEnum::change => $service->getPreChange() ? $service->{$service->getPreChange()}() : null,
-                    ActionEnum::delete => $service->getPreDelete() ? $service->{$service->getPreDelete()}() : null,
-                    default => null,
-                };
-            }
-
             /** Действие */
             $data = $this->getDataAfterValidation();
 
