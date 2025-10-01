@@ -851,7 +851,7 @@ class RolesService extends BaseService
             $showApplyLink = false;
         }
 
-        if ($applicationData['character_applications_needed_count'] <= count($taken) + $applicationsAcceptedCount && $applicationData['character_applications_needed_count'] > 0) {
+        if (($applicationData['character_applications_needed_count'] ?? 0) <= count($taken) + $applicationsAcceptedCount && $applicationData['character_applications_needed_count'] > 0) {
             $showApplyLink = false;
         }
 
