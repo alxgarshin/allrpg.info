@@ -538,7 +538,7 @@ class RolesService extends BaseService
                                 $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList];
                                 $level = $projectGroupData[2];
 
-                                while ($level > 0) {
+                                while ($level > 0 && $idInProjectGroupsList > 0) {
                                     --$idInProjectGroupsList;
                                     $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList] ?? [];
 
@@ -761,6 +761,7 @@ class RolesService extends BaseService
                         --$groupKey;
                         $prevGroupData = $objectsTree[$groupKey];
                     }
+
                     $tempObjectsBranch[] = array_merge($objectsTree[$groupKey], ['chopOffStatus' => 'parent']);
                     --$theLevel;
                 }
@@ -790,10 +791,11 @@ class RolesService extends BaseService
                 --$parentKey;
                 $prevGroupData = $this->projectGroupsList[$parentKey];
 
-                while ($prevGroupData[2] !== $theLevel - 1) {
+                while ($prevGroupData && $prevGroupData[2] !== $theLevel - 1) {
                     --$parentKey;
                     $prevGroupData = $this->projectGroupsList[$parentKey];
                 }
+
                 $path = $this->groupPath(
                     $parentKey,
                 ) . '<span class="allrpgRolesListGroupNamePathSeparator">&rarr;</span>';
