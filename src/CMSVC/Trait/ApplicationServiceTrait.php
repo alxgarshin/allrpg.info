@@ -181,7 +181,7 @@ trait ApplicationServiceTrait
 
     public function getCharacterData(?int $characterId = null): ?CharacterModel
     {
-        if ($characterId > 0) {
+        if ($characterId) {
             /** @var CharacterService */
             $characterService = CMSVCHelper::getService('character');
             $this->characterData = $characterService->get(
