@@ -592,7 +592,7 @@ class PlotService extends BaseService
                                 } elseif (str_contains($applications2SideId, 'all')) {
                                     $projectCharacterData = $characterService->get((int) str_replace('all', '', $applications2SideId), ['project_id' => $projectId]);
 
-                                    if ($projectCharacterData->name->get()) {
+                                    if ($projectCharacterData?->name->get()) {
                                         if (!$forPlayer) {
                                             $tempResult2 .= '<a href="' . ABSOLUTE_PATH . '/character/' . $projectCharacterData->id->getAsInt() . '/">' .
                                                 $projectCharacterData->name->get() . '</a>, ';
@@ -924,7 +924,7 @@ class PlotService extends BaseService
                                 $applicationsCount = 0;
 
                                 if (str_contains($applications2SideId, 'group')) {
-                                    if ($fullGroupData[str_replace('group', '', $applications2SideId)][0] !== '') {
+                                    if ($fullGroupData[str_replace('group', '', $applications2SideId)][0] ?? false) {
                                         $resultAbout .= $fullGroupData[str_replace('group', '', $applications2SideId)][0];
                                     } else {
                                         $resultAbout .= '<i>' . $LOCALE['deleted_group_2'] . '</i>';
@@ -933,7 +933,7 @@ class PlotService extends BaseService
                                     $checkFollowup = true;
                                     $gotSomeCharacter = true;
                                 } elseif (str_contains($applications2SideId, 'all')) {
-                                    if ($fullCharacterData[str_replace('all', '', $applications2SideId)][0] !== '') {
+                                    if ($fullCharacterData[str_replace('all', '', $applications2SideId)][0] ?? false) {
                                         $resultAbout .= $fullCharacterData[str_replace('all', '', $applications2SideId)][0];
                                     } elseif ($applications2SideId === 0) {
                                         $resultAbout .= '<i>' . $LOCALE['global_story_2'] . '</i>';

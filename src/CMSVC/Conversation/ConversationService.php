@@ -408,7 +408,7 @@ class ConversationService extends BaseService
             $userCount = count($userIds);
 
             if ($userCount === 1) {
-                $contactData = $userService->get($userIds[0]);
+                $contactData = $userService->get($userIds[key($userIds)]);
                 $avatarUrl = $userService->photoNameLink($contactData, '', false, '', false, false, false, false);
             } else {
                 $contactsData = $userService->getAll(['id' => $userIds]);

@@ -1628,12 +1628,8 @@ abstract class MessageHelper implements Helper
                 } else {
                     $html .= '<div class="commands"><div class="done">' . $LOCALE['actions']['request_sent'] . '</div></div>';
                 }
-                $html .= '<div class="additional">' . $LOCALE['actions']['request_access_to'] . ' ' . $obj['type'] . ($obj['id'] > 0 ? ' «<a href="' . ABSOLUTE_PATH . '/' . $obj['kind'] . '/' . $obj['id'] . '/" target="_blank">' . (DataHelper::escapeOutput(
-                    $obj['sorter'],
-                ) !== '' ? DataHelper::escapeOutput($obj['sorter']) : DataHelper::escapeOutput($obj['name'])) . '</a>»' : '') . '</div>';
-                $responseContent['content'] = $LOCALE['actions']['request_access_to'] . ' ' . $obj['type'] . ($obj['id'] > 0 ? ' «' . (DataHelper::escapeOutput(
-                    $obj['sorter'],
-                ) !== '' ? DataHelper::escapeOutput($obj['sorter']) : DataHelper::escapeOutput($obj['name'])) . '»' : '');
+                $html .= '<div class="additional">' . $LOCALE['actions']['request_access_to'] . ' ' . $obj['type'] . ($obj['id'] > 0 ? ' «<a href="' . ABSOLUTE_PATH . '/' . $obj['kind'] . '/' . $obj['id'] . '/" target="_blank">' . (($obj['sorter'] ?? false) ? DataHelper::escapeOutput($obj['sorter']) : DataHelper::escapeOutput($obj['name'])) . '</a>»' : '') . '</div>';
+                $responseContent['content'] = $LOCALE['actions']['request_access_to'] . ' ' . $obj['type'] . ($obj['id'] > 0 ? ' «' . (($obj['sorter'] ?? false) ? DataHelper::escapeOutput($obj['sorter']) : DataHelper::escapeOutput($obj['name'])) . '»' : '');
                 $responseContent['link'] = ($obj['id'] > 0 ? ABSOLUTE_PATH . '/' . $obj['kind'] . '/' . $obj['id'] . '/' : null);
             } elseif ($messageAction === '{send_invitation}') {
                 if (isset($actionData[3]) || !isset($obj['id'])) {
