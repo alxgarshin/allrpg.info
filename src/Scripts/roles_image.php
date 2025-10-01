@@ -9,6 +9,8 @@ if ($value !== '') {
 
     $filepath = urldecode(preg_replace('#escq#', '?', $value));
 
+    $filepath = preg_replace('#&amp;amp;#', '&', $filepath);
+
     if (@getimagesize($filepath)) {
         $image = WideImage\WideImage::loadFromFile($filepath);
         $image->resize(800, 200, 'inside', 'down')->output('webp');
