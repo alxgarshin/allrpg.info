@@ -34,16 +34,16 @@ class LoginService extends BaseService
             $myname = str_replace(['http://', 'https://', 'www', '/'], '', ABSOLUTE_PATH);
             $contactemail = $em;
 
-            $message = DataHelper::escapeOutput($userData['fio']) . sprintf($LOCALE['remind_message'], $myname, $newPassword);
-            $subject = $LOCALE['remind_subject'] . ' ' . $myname;
+            $message = DataHelper::escapeOutput($userData['fio']) . sprintf($LOCALE['messages']['remind_message'], $myname, $newPassword);
+            $subject = $LOCALE['messages']['remind_subject'] . ' ' . $myname;
 
             if (EmailHelper::sendMail($myname, '', $contactemail, $subject, $message)) {
-                ResponseHelper::responseOneBlock('success', $LOCALE['new_pass_sent']);
+                ResponseHelper::responseOneBlock('success', $LOCALE['messages']['new_pass_sent']);
             } else {
-                ResponseHelper::responseOneBlock('error', $LOCALE['error_while_sending']);
+                ResponseHelper::responseOneBlock('error', $LOCALE['messages']['error_while_sending']);
             }
         } else {
-            ResponseHelper::responseOneBlock('error', $LOCALE['no_email_found_in_db']);
+            ResponseHelper::responseOneBlock('error', $LOCALE['messages']['no_email_found_in_db']);
         }
     }
 }

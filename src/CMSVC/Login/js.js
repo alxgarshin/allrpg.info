@@ -12,6 +12,7 @@ if (el('div.mainpage_login')) {
         delay(200).then(() => {
             _('#login_choices').hide();
             _('#login_remind').show().addClass('fadeFromTransparent');
+            blockDefaultSubmit = true;
         })
     });
 
@@ -41,6 +42,7 @@ if (el('div.mainpage_login')) {
         const regex = /^([а-яёa-zA-Z0-9_.\-+])+@(([а-яёa-zA-Z0-9\-])+\.)+([а-яёa-zA-Z0-9]{2,4})+$/;
 
         if (regex.test(_('#em_global').val())) {
+            blockDefaultSubmit = false;
             _(this).closest('form').submit();
         } else {
             showMessage({
