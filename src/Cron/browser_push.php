@@ -46,23 +46,25 @@ foreach ($result as $data) {
         || in_array(DataHelper::clearBraces($data['obj_type']), ['application', 'myapplication'])
     ) {
         /** Отправляем уведомление в браузере, если есть токен у пользователя */
-        $subscription = Subscription::create([
-            'endpoint' => $data['endpoint'],
-            'keys' => [
-                'p256dh' => $data['p256dh'],
-                'auth'   => $data['auth'],
-            ],
-            'contentEncoding' => $data['content_encoding'] ?? 'aesgcm',
-        ]);
+        if (($data['endpoint'] ?? false) && ($data['p256dh'] ?? false) && ($data['auth'] ?? false)) {
+            $subscription = Subscription::create([
+                'endpoint' => $data['endpoint'],
+                'keys' => [
+                    'p256dh' => $data['p256dh'],
+                    'auth'   => $data['auth'],
+                ],
+                'contentEncoding' => $data['content_encoding'] ?? 'aesgcm',
+            ]);
 
-        $payload = DataHelper::jsonFixedEncode([
-            'title' => $title,
-            'body'  => $body,
-            'icon' => $icon,
-            'url'   => $clickAction,
-        ]);
+            $payload = DataHelper::jsonFixedEncode([
+                'title' => $title,
+                'body'  => $body,
+                'icon' => $icon,
+                'url'   => $clickAction,
+            ]);
 
-        $webPush->queueNotification($subscription, $payload, ['TTL' => 60, 'urgency' => 'normal']);
+            $webPush->queueNotification($subscription, $payload, ['TTL' => 60, 'urgency' => 'normal']);
+        }
     }
 
     DB->delete(
