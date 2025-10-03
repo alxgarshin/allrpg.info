@@ -736,7 +736,7 @@ trait ApplicationServiceTrait
             foreach ($bankBalance as $currencyId => $summ) {
                 $summText = KIND === 'ingame' ? '<span>' . $summ . '</span>' : ' ' . $summ;
 
-                $bankBalanceText .= '<div>' . ($currencyId > 0 ? $currenciesInverted[$currencyId] . ':' : $LOCALE_INGAME['balance']) . $summText . '</div>';
+                $bankBalanceText .= '<div>' . ($currencyId > 0 && ($currenciesInverted[$currencyId] ?? false) ? $currenciesInverted[$currencyId] . ':' : $LOCALE_INGAME['balance']) . $summText . '</div>';
             }
         }
 

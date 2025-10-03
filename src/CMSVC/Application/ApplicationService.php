@@ -825,7 +825,7 @@ class ApplicationService extends BaseService
             DB->insert(
                 tableName: 'project_character',
                 data: [
-                    'project_group_ids' => $characterData->project_group_ids->get(),
+                    'project_group_ids' => DataHelper::arrayToMultiselect($characterData->project_group_ids->get()),
                     'setparentgroups' => $characterData->setparentgroups->get(),
                     'disallow_applications' => 1,
                     'team_character' => $characterData->team_character->get(),

@@ -853,7 +853,7 @@ class RolesService extends BaseService
             $showApplyLink = false;
         }
 
-        if (($applicationData['character_applications_needed_count'] ?? 0) <= count($taken) + $applicationsAcceptedCount && $applicationData['character_applications_needed_count'] > 0) {
+        if (($applicationData['character_applications_needed_count'] ?? 0) <= count($taken) + $applicationsAcceptedCount && ($applicationData['character_applications_needed_count'] ?? 0) > 0) {
             $showApplyLink = false;
         }
 
@@ -868,10 +868,7 @@ class RolesService extends BaseService
         $result .= '<div class="allrpgRolesListApplicationsList">';
 
         if ($showApplyLink) {
-            $result .= '<div class="allrpgRolesListApplicationsListApplicationApply"><a href="' . ABSOLUTE_PATH . '/go/' . $projectData->id->getAsInt() . '/' . ($applicationData['character_id'] > 0 ? $applicationData['character_id'] : '') . '">' . $LOCALE['apply'] . ($applicationData['character_applications_needed_count'] > 1 ? ' ' . sprintf(
-                $LOCALE['up_to'],
-                $applicationData['character_applications_needed_count'],
-            ) : '') . '</a></div>';
+            $result .= '<div class="allrpgRolesListApplicationsListApplicationApply"><a href="' . ABSOLUTE_PATH . '/go/' . $projectData->id->getAsInt() . '/' . (($applicationData['character_id'] ?? 0) > 0 ? $applicationData['character_id'] : '') . '">' . $LOCALE['apply'] . (($applicationData['character_applications_needed_count'] ?? 0) > 1 ? ' ' . sprintf($LOCALE['up_to'], $applicationData['character_applications_needed_count']) : '') . '</a></div>';
         }
 
         if ($this->projectGamemaster) {

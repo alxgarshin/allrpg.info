@@ -37,9 +37,9 @@ class ProfileController extends BaseController
             if ($userData->em_verified->get() !== '1') {
                 if ($verifyId === md5($userData->id->getAsInt() . $userData->created_at->getAsTimeStamp() . $userData->em->get() . $_ENV['PROJECT_HASH_WORD'])) {
                     DB->update('user', ['em_verified' => 1], ['id' => CURRENT_USER->id()]);
-                    ResponseHelper::success($LOCALE['verification_link_good']);
+                    ResponseHelper::success($LOCALE['messages']['verification_link_good']);
                 } else {
-                    ResponseHelper::error($LOCALE['verification_link_bad']);
+                    ResponseHelper::error($LOCALE['messages']['verification_link_bad']);
                 }
             }
         }
