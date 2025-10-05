@@ -276,7 +276,7 @@ div.fullpage_cover.shown {
     z-index: 30000;
     content: attr(data-tooltip-text);
     position: absolute;
-    max-width: 25em;
+    max-width: 20em;
     background: var(--color-background-main);
     color: var(--color-font-main);
     border-radius: .9em;
