@@ -857,7 +857,7 @@ class RolesService extends BaseService
             $showApplyLink = false;
         }
 
-        if ($applicationData['character_disallow_applications'] === '1' || $applicationData['group_disallow_applications'] === '1') {
+        if (($applicationData['character_disallow_applications'] ?? false) === '1' || ($applicationData['group_disallow_applications'] ?? false) === '1') {
             $showApplyLink = false;
         }
 
