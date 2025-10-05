@@ -85,7 +85,7 @@ if (withDocumentEvents) {
 
         if (params['dynamic_load']) {
             //динамическая подгрузка, нужно убрать кнопку подгрузки предыдущих сообщений
-            target.parent().find('div.message_content.unread').removeClass('unread');
+            target.parent().find('div.message_content.unread')?.removeClass('unread');
 
             //динамически подгрузили новые сообщения, нужно промотать вниз принудительно
             _('div.conversation_message_maincontent_scroller_wrap').scrollTop(_('div.conversation_message_maincontent_scroller_wrap').asDomElement().scrollHeight);
@@ -102,7 +102,7 @@ if (withDocumentEvents) {
         }
 
         //если есть непрочитанные сообщения, уменьшаем общий каунтер непрочитанности тут же и ставим их бэкграунд на исчезновение
-        if (_('div.conversation_message_maincontent_scroller_wrap').find('div.message_content.unread')) {
+        if (el('div.conversation_message_maincontent_scroller_wrap div.message_content.unread')) {
             const count = _('div.conversation_message_maincontent_scroller_wrap').find('div.message_content.unread').length;
             const unreadCount = parseInt(_('span#new_messages_counter').first().text());
             const unreadCount2 = parseInt(_('span#new_personal_counter').first().text());

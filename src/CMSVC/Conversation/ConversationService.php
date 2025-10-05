@@ -948,7 +948,7 @@ class ConversationService extends BaseService
 
                 if ($message['message_action'] === '{get_access}' && $match[2] > 0) {
                     if (RightsHelper::checkRights('{admin}', $obj['kind'], $match[2]) || CURRENT_USER->isAdmin()) {
-                        if ($action === 'grant_access') {
+                        if ($action === 'grantAccess') {
                             $me = $userService->get(CURRENT_USER->id());
                             RightsHelper::addRights('{member}', $obj['kind'], $match[2], '{user}', $user->id->getAsInt());
                             $conversationId = RightsHelper::findOneByRights(
@@ -975,26 +975,29 @@ class ConversationService extends BaseService
                                 'response' => 'success',
                                 'response_text' => sprintf($LOCALE['messages']['access_granted_extended'], $obj['word']),
                             ];
-                        } elseif ($action === 'deny_access') {
+                        } elseif ($action === 'denyAccess') {
                             $resolvedId = $this->messageService->newMessage($message['conversation_id'], $LOCALE['messages']['access_denied']);
                             $returnArr = [
                                 'response' => 'success',
                                 'response_text' => sprintf($LOCALE['messages']['access_denied_extended'], $obj['word']),
                             ];
                         }
-                        DB->update(
-                            'conversation_message',
-                            [
-                                'message_action_data' => mb_substr($message['message_action_data'], 0, mb_strlen($message['message_action_data']) - 1) .
-                                    ',resolved:' . $resolvedId . '}',
-                            ],
-                            ['id' => $message['id']],
-                        );
+
+                        if ($resolvedId > 0) {
+                            DB->update(
+                                'conversation_message',
+                                [
+                                    'message_action_data' => mb_substr($message['message_action_data'], 0, mb_strlen($message['message_action_data']) - 1) .
+                                        ', resolved:' . $resolvedId . '}',
+                                ],
+                                ['id' => $message['id']],
+                            );
+                        }
                     }
                 } elseif ($message['message_action'] === '{send_invitation}' && $match[2] > 0) {
                     $me = $userService->get(CURRENT_USER->id());
 
-                    if ($action === 'accept_invitation') {
+                    if ($action === 'acceptInvitation') {
                         if (DataHelper::clearBraces($obj['kind']) === 'project_room') { // принятие приглашений к совместному проживанию
                             $roomId = $match[2];
 
@@ -1181,7 +1184,7 @@ class ConversationService extends BaseService
                                 'response_text' => $LOCALE['messages']['invitation_accepted_extended'],
                             ];
                         }
-                    } elseif ($action === 'decline_invitation') {
+                    } elseif ($action === 'declineInvitation') {
                         $resolvedId = $this->messageService->newMessage(
                             $message['conversation_id'],
                             $LOCALE['messages']['invitation_declined'] . LocaleHelper::declineVerb($me) . '.',
@@ -1213,7 +1216,7 @@ class ConversationService extends BaseService
                             'conversation_message',
                             [
                                 'message_action_data' => mb_substr($message['message_action_data'], 0, mb_strlen($message['message_action_data']) - 1) .
-                                    ',resolved:' . $resolvedId . '}',
+                                    ', resolved:' . $resolvedId . '}',
                             ],
                             ['id' => $message['id']],
                         );
@@ -1221,7 +1224,7 @@ class ConversationService extends BaseService
                 } elseif ($message['message_action'] === '{become_friends}' && $match[2] > 0) {
                     $me = $userService->get(CURRENT_USER->id());
 
-                    if ($action === 'accept_friend') {
+                    if ($action === 'acceptFriend') {
                         RightsHelper::addRights('{friend}', '{user}', $message['creator_id'], '{user}', $me->id->getAsInt());
                         RightsHelper::addRights('{friend}', '{user}', $me->id->getAsInt(), '{user}', $message['creator_id']);
                         $resolvedId = $this->messageService->newMessage(
@@ -1232,7 +1235,7 @@ class ConversationService extends BaseService
                             'response' => 'success',
                             'response_text' => $LOCALE['messages']['friend_accepted_extended'],
                         ];
-                    } elseif ($action === 'decline_friend') {
+                    } elseif ($action === 'declineFriend') {
                         $resolvedId = $this->messageService->newMessage(
                             $message['conversation_id'],
                             $LOCALE['messages']['friend_declined'] . LocaleHelper::declineVerb($me) . '.',
@@ -1242,14 +1245,17 @@ class ConversationService extends BaseService
                             'response_text' => $LOCALE['messages']['friend_declined_extended'],
                         ];
                     }
-                    DB->update(
-                        'conversation_message',
-                        [
-                            'message_action_data' => mb_substr($message['message_action_data'], 0, mb_strlen($message['message_action_data']) - 1) .
-                                ',resolved:' . $resolvedId . '}',
-                        ],
-                        ['id' => $message['id']],
-                    );
+
+                    if ($resolvedId > 0) {
+                        DB->update(
+                            'conversation_message',
+                            [
+                                'message_action_data' => mb_substr($message['message_action_data'], 0, mb_strlen($message['message_action_data']) - 1) .
+                                    ', resolved:' . $resolvedId . '}',
+                            ],
+                            ['id' => $message['id']],
+                        );
+                    }
                 }
 
                 // отмечаем resolved_id в $message['conversation_id'], как прочитанный, для всех, кроме автора запроса
