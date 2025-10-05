@@ -203,11 +203,11 @@ abstract class DateHelper extends \Fraym\Helper\DateHelper
     }
 
     /** Вывод даты события */
-    public static function dateFromToEvent(string $dateFrom, string $dateTo, bool $hideYear = false): string
+    public static function dateFromToEvent(?string $dateFrom, ?string $dateTo, bool $hideYear = false): string
     {
         $eventDate = '';
 
-        if ($dateFrom !== '' && $dateTo !== '') {
+        if ($dateFrom && $dateTo) {
             if (date('Y', strtotime($dateFrom)) !== date('Y', strtotime($dateTo))) {
                 $eventDate = date('j', strtotime($dateFrom)) . ' ' . DateHelper::monthname(date('m', strtotime($dateFrom))) .
                     ($hideYear ? '' : ' ' . date('Y', strtotime($dateFrom))) .
