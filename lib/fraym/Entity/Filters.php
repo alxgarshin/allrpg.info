@@ -611,18 +611,25 @@ final class Filters
                     $objName = $filtersViewItem->getName();
                     $objValue = $this->getParameterByName($objName, $kind);
 
-                    $defaultValue = $filtersViewItem->getDefaultValue();
+                    if (!is_null($objValue) && method_exists($filtersViewItem, 'getDefaultValue')) {
+                        $defaultValue = $filtersViewItem->getDefaultValue();
 
-                    if (is_array($defaultValue) && count($defaultValue) > 0) {
-                        $defaultValue = $defaultValue[key($defaultValue)];
-                    }
+                        if (is_array($defaultValue) && count($defaultValue) > 0) {
+                            $defaultValue = $defaultValue[key($defaultValue)];
+                        }
 
-                    if (is_array($defaultValue)) {
-                        $defaultValue = null;
-                    }
-
-                    if (method_exists($filtersViewItem, 'getDefaultValue') && (string) $objValue !== (string) $defaultValue) {
-                        if (!is_null($objValue)) {
+                        if (
+                            (
+                                is_array($objValue) &&
+                                is_array($defaultValue) &&
+                                count(array_diff($objValue, $defaultValue)) !== 0
+                            ) ||
+                            (
+                                !is_array($objValue) &&
+                                !is_array($defaultValue) &&
+                                (string) $objValue !== (string) $defaultValue
+                            )
+                        ) {
                             if (is_array($objValue)) {
                                 foreach ($objValue as $objValueItem) {
                                     $currentFiltersLink .= '&' . $objName . '[' . $objValueItem . ']=on';
