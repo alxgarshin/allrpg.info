@@ -17,7 +17,7 @@ abstract class DesignHelper implements Helper
     }
 
     /** Добавление залоговка к формам ввода */
-    public static function insertHeader(string $content, string $header): string
+    public static function insertHeader(string $content, ?string $header): string
     {
         if (preg_match('#<div class="maincontent_data([^"]*)"><h1 class="form_header">.*?</h1>#', $content)) {
             return preg_replace(
@@ -41,9 +41,9 @@ abstract class DesignHelper implements Helper
     }
 
     /** Оборачивание залоговка страницы в ссылку */
-    public static function changePageHeaderTextToLink(string $text, ?string $href = null): string
+    public static function changePageHeaderTextToLink(?string $text, ?string $href = null): string
     {
-        return (!is_null($href) ? '<a href="' . $href . '">' : '') . $text . (!is_null($href) ? '</a>' : '');
+        return (!is_null($href) ? '<a href="' . $href . '">' : '') . (string) $text . (!is_null($href) ? '</a>' : '');
     }
 
     /** Замена {user_id} и {user_sid} блоков в пунктах меню */
