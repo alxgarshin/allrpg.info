@@ -64,7 +64,7 @@ class ProjectController extends BaseController
         $result = RightsHelper::getAccess(KIND);
 
         $childObjId = (int) CookieHelper::getCookie('additional_redirectid');
-        $childObjType = DataHelper::addBraces(CookieHelper::getCookie('additional_redirectobj'));
+        $childObjType = CookieHelper::getCookie('additional_redirectobj') ? DataHelper::addBraces(CookieHelper::getCookie('additional_redirectobj')) : null;
 
         if ($childObjType && $childObjId > 0) {
             if (RightsHelper::checkRights('{child}', DataHelper::addBraces(KIND), DataHelper::getId(), $childObjType, $childObjId)) {
