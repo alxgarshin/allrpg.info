@@ -139,7 +139,7 @@ class VkauthController extends BaseController
                                 if ($id > 0) {
                                     unset($vkEmail);
 
-                                    $userService->postRegister($id);
+                                    $userService->postRegister((int) $id);
                                     $userData = DB->select('user', ['id' => $id], true);
                                     CURRENT_USER->authSetUserData($userData);
 

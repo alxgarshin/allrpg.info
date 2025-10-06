@@ -65,15 +65,15 @@ ini_set("memory_limit", "500M");
 set_time_limit(60);
 
 /** Инициализируем кэш */
-/** @const CacheService CACHE */
+/** @var CacheService */
 define('CACHE', CacheService::getInstance());
 
 /** Подключаемся к базе данных */
-/** @const SQLDatabaseService DB */
+/** @var SQLDatabaseService */
 define('DB', SQLDatabaseService::getInstance());
 
 /** Инициализируем пользователя */
-/** @const CurrentUser CURRENT_USER */
+/** @var CurrentUser */
 define('CURRENT_USER', CurrentUser::getInstance());
 CURRENT_USER->auth();
 

@@ -147,7 +147,7 @@ class FbauthController extends BaseController
                                 $id = DB->lastInsertId();
 
                                 if ($id > 0) {
-                                    $userService->postRegister($id);
+                                    $userService->postRegister((int) $id);
                                     $userData = DB->select('user', ['id' => $id], true);
                                     CURRENT_USER->authSetUserData($userData);
 
