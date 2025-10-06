@@ -1,5 +1,5 @@
 // cacheName for cache versioning
-const cacheName = '20250902_1400';
+const cacheName = '20250902_1500';
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
