@@ -350,7 +350,7 @@ class ConversationService extends BaseService
                 $openedDialogData &&
                 (
                     !isset($openedDialogData['visible']) ||
-                    $openedDialogData['visible'] === 'true'
+                    $openedDialogData['visible']
                 )
             ) {
                 $this->setRead($messagesUnread);

@@ -409,10 +409,10 @@ if (withDocumentEvents) {
                                 action: 'conversation/set_dialog_position',
                                 obj_id: params['obj_id'],
                                 user_id: params['user_id'],
-                                left: dialogWindow.asDomElement().style.left,
-                                top: dialogWindow.asDomElement().style.top,
+                                left: '',
+                                top: '',
                                 visible: true,
-                                sound: dialogWindow.find('.conversations_widget_list_sound').hasClass('mute') ? 'mute' : 'on'
+                                sound: 'on'
                             });
 
                             delay(100).then(() => {

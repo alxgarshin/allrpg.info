@@ -1,8 +1,6 @@
 loadJsComponent('application').then(function () {
     /** Мои заявки */
 
-    blockDefaultSubmit = true;
-
     if (el('form#form_myapplication')) {
         /** Форма оплаты */
         _('a#provide_payment').on('click', function () {
@@ -58,9 +56,27 @@ loadJsComponent('application').then(function () {
         /** Проверка на наличие неотправленного коммента при сохранении заявки */
         let commentsChecked = false;
 
+        _('div.conversation_form_data textarea[name="content"]').on('change', function () {
+            const self = _(this);
+
+            if (self.val()) {
+                blockDefaultSubmit = true;
+                commentsChecked = false;
+            }
+        });
+
+        _('div.conversation_form_data button.main').on('click', function () {
+            const self = _(this);
+
+            blockDefaultSubmit = false;
+            commentsChecked = true;
+
+            self.closest('form').trigger('submit');
+        });
+
         _('form#form_myapplication').on('submit', function () {
-            if (!commentsChecked) {
-                if (_('div.conversation_form_data textarea[name="content"]')?.val() && _('input[id="go_back_after_save[0]"]').is(':checked') && blockDefaultSubmit) {
+            if (!commentsChecked && blockDefaultSubmit) {
+                if (_('div.conversation_form_data textarea[name="content"]')?.val() && _('input[id="go_back_after_save[0]"]').is(':checked')) {
                     fraymNotyPrompt(
                         null,
                         LOCALE.leavingApplicationWithComment,
