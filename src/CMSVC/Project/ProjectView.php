@@ -114,7 +114,7 @@ class ProjectView extends BaseView
 
         $authorData = $userService->get($objData->creator_id->getAsInt());
 
-        if ($authorData->id->getAsInt() > 0) {
+        if ($authorData?->id->getAsInt() > 0) {
             $RESPONSE_DATA .= '
                 <div class="object_author"><span>' . $LOCALE['author'] . ':</span>
                 <span class="sbi sbi-send"></span>' . $userService->showName($authorData, true) . '</div>';
