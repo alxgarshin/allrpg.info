@@ -642,7 +642,7 @@ class RolesService extends BaseService
                                         $endMicrotimer = number_format(microtime(true) - $startMicrotimer, 10);
                                         $responseTimerData['showApplication'] += (float) $endMicrotimer;
 
-                                        if ($roleData['character_id'] > 0) {
+                                        if (($roleData['character_id'] ?? 0) > 0) {
                                             $this->charactersAlreadyShown[] = $roleData['character_id'];
                                         }
                                     }
@@ -875,7 +875,7 @@ class RolesService extends BaseService
             $GLOBALS['kind'] = 'roles_gamemaster'; // чтобы в именах пользователей показывались все возможные данные
         }
 
-        if ($applicationData['group_rights'] !== '1' && $applicationData['character_hide_applications'] !== '1') {
+        if ($applicationData['group_rights'] !== '1' && ($applicationData['character_hide_applications'] ?? false) !== '1') {
             if ($applicationData['id'] !== null && (!$this->showOnlyAcceptedRoles || $applicationData['application_status'] === '3')) {
                 $userModel = $this->getUserService()->arrayToModel($applicationData);
 

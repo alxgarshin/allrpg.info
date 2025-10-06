@@ -889,6 +889,8 @@ class ApplicationService extends BaseService
 
             $_REQUEST['project_character_id'][0] = $_REQUEST['project_character_id'][0] = $newCharacterId;
 
+            $newCharacterId = (int) $newCharacterId;
+
             $characterData = $this->getCharacterData($newCharacterId);
 
             ResponseHelper::success($this->getLOCALE()['messages']['application_autonewrole_success']);
