@@ -70,7 +70,13 @@ class Checkbox extends BaseElement
 
     public function getDefaultValue(): ?bool
     {
-        return $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        $defaultValue = $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+
+        if (is_null($defaultValue) || is_bool($defaultValue)) {
+            return $defaultValue;
+        }
+
+        return null;
     }
 
     public function get(): ?bool
