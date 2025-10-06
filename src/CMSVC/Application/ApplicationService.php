@@ -602,11 +602,11 @@ class ApplicationService extends BaseService
     {
         $LOCALE_APPLICATION = $this->getLocale();
         $LOCALE_REGISTRATION = LocaleHelper::getLocale(['registration', 'global']);
-        $LOCALE_PROFILE = LocaleHelper::getLocale(['profile', 'fraym_model']);
+        $LOCALE_USER = LocaleHelper::getLocale(['user', 'fraym_model']);
 
         $objName = mb_strtolower($objName);
 
-        $responseData = '<table class="menutable applications_search_table"><thead><tr class="menu"><th id="th_header_application">' . $LOCALE_REGISTRATION['th_header_application'] . '</th><th id="th_header_user">' . $LOCALE_REGISTRATION['th_header_user'] . '</th><th id="th_header_vkontakte">' . $LOCALE_APPLICATION['vkontakte'] . '</th><th id="th_header_telegram">' . $LOCALE_APPLICATION['telegram'] . '</th><th id="th_header_phone">' . $LOCALE_PROFILE['elements']['phone']['shownName'] . '</th></tr></thead><tbody>';
+        $responseData = '<table class="menutable applications_search_table"><thead><tr class="menu"><th id="th_header_application">' . $LOCALE_REGISTRATION['th_header_application'] . '</th><th id="th_header_user">' . $LOCALE_REGISTRATION['th_header_user'] . '</th><th id="th_header_vkontakte">' . $LOCALE_APPLICATION['vkontakte'] . '</th><th id="th_header_telegram">' . $LOCALE_APPLICATION['telegram'] . '</th><th id="th_header_phone">' . $LOCALE_USER['elements']['phone']['shownName'] . '</th></tr></thead><tbody>';
 
         if ($objName !== '') {
             $result = DB->query(
@@ -672,11 +672,11 @@ class ApplicationService extends BaseService
     {
         $LOCALE_APPLICATION = $this->getLocale();
         $LOCALE_REGISTRATION = LocaleHelper::getLocale(['registration', 'global']);
-        $LOCALE_PROFILE = LocaleHelper::getLocale(['profile', 'fraym_model']);
+        $LOCALE_USER = LocaleHelper::getLocale(['user', 'fraym_model']);
 
         $objName = mb_strtolower($objName);
 
-        $responseData = '<table class="menutable applications_search_table"><thead><tr class="menu"><th id="th_header_application">' . $LOCALE_REGISTRATION['th_header_application'] . '</th><th id="th_header_user">' . $LOCALE_REGISTRATION['th_header_user'] . '</th><th id="th_header_vkontakte">' . $LOCALE_APPLICATION['vkontakte'] . '</th><th id="th_header_telegram">' . $LOCALE_APPLICATION['telegram'] . '</th><th id="th_header_phone">' . $LOCALE_PROFILE['elements']['phone']['shownName'] . '</th></tr></thead><tbody>';
+        $responseData = '<table class="menutable applications_search_table"><thead><tr class="menu"><th id="th_header_application">' . $LOCALE_REGISTRATION['th_header_application'] . '</th><th id="th_header_user">' . $LOCALE_REGISTRATION['th_header_user'] . '</th><th id="th_header_vkontakte">' . $LOCALE_APPLICATION['vkontakte'] . '</th><th id="th_header_telegram">' . $LOCALE_APPLICATION['telegram'] . '</th><th id="th_header_phone">' . $LOCALE_USER['elements']['phone']['shownName'] . '</th></tr></thead><tbody>';
 
         if ($objName !== '') {
             $result = DB->query(

@@ -94,13 +94,14 @@ class AreaView extends BaseView
         $RESPONSE_DATA .= !is_null($field->get()) ? '<span class="gray">' . $field->getShownName() . ':</span>' . $field->asHTML(false) . '<br>' : '';
 
         if (!is_null($objData->city->get())) {
-            $region_data = DB->select('geography', ['id' => $objData->city->get()], true);
-            $region_parent_data = DB->select('geography', ['id' => $region_data['parent']], true);
+            $regionData = DB->select('geography', ['id' => $objData->city->get()], true);
 
-            $field = $objData->city;
-            $RESPONSE_DATA .= ($region_data ? '<span class="gray">' . $field->getShownName() .
-                ':</span><a href="' . ABSOLUTE_PATH . '/area/search_city=' . $region_data['id'] . '&action=setFilters">' .
-                $region_data['name'] . ' (' . $region_parent_data['name'] . ')</a><br>' : '');
+            if ($regionData) {
+                $regionParentData = DB->select('geography', ['id' => $regionData['parent']], true);
+
+                $field = $objData->city;
+                $RESPONSE_DATA .= '<span class="gray">' . $field->getShownName() . ':</span><a href="' . ABSOLUTE_PATH . '/area/search_city=' . $regionData['id'] . '&action=setFilters">' . $regionData['name'] . ($regionParentData ? ' (' . $regionParentData['name'] . ')' : '') . '</a><br>';
+            }
         }
 
         $RESPONSE_DATA .= '
