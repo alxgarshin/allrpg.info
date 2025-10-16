@@ -4,11 +4,14 @@ if (el('form#form_group')) {
     /** Отключение кнопки "Удалить" в группе, которая запрещена к изменению */
     _('input[name="disable_changes[0]"]').on('change', function () {
         const self = _(this);
+        const deleteBtn = _('form#form_group').find('button.careful');
 
-        if (self.is(':checked')) {
-            _('form#form_group').find('button.careful').disable();
-        } else {
-            _('form#form_group').find('button.careful').enable();
+        if (deleteBtn) {
+            if (self.is(':checked')) {
+                deleteBtn.disable();
+            } else {
+                deleteBtn.enable();
+            }
         }
     });
     _('input[name="disable_changes[0]"]').change();

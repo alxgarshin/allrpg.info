@@ -59,7 +59,7 @@ class GroupController extends BaseController
 
         return $this->asArray(
             $groupService->getChildGroups(
-                (int) OBJ_ID,
+                is_null(OBJ_ID) ? null : (int) OBJ_ID,
                 (int) ($_REQUEST['group_id'] ?? false),
             ),
         );
