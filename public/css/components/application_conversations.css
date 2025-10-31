@@ -1,4 +1,6 @@
 /** Диалоги в заявках */
+@import url('/css/components/message.min.css');
+
 div.application_conversations div.conversation_form {
     width: auto;
     margin-bottom: 1em;
