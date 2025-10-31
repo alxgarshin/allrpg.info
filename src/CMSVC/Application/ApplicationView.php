@@ -329,7 +329,7 @@ class ApplicationView extends BaseView
                         $plotsToCount = 0;
 
                         foreach ($plotsInfo as $plotInfo) {
-                            if (preg_match('#-' . $applicationId . '-#', ($plotInfo['applications_1_side_ids'] ?? '')) || preg_match('#-all' . $applicationData['project_character_id'] . '-#', ($plotInfo['applications_1_side_ids'] ?? null))) {
+                            if (preg_match('#-' . $applicationId . '-#', ($plotInfo['applications_1_side_ids'] ?? '')) || preg_match('#-all' . $applicationData['project_character_id'] . '-#', ($plotInfo['applications_1_side_ids'] ?? ''))) {
                                 ++$plotsFromPersonalCount;
 
                                 if (($plotInfo['todo'] ?? '') !== '' || ($plotInfo['plot_todo'] ?? '') !== '') {
