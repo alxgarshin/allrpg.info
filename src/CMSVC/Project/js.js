@@ -2,7 +2,7 @@
 
 if (withDocumentEvents) {
     _arSuccess('load_projects_communities_list', function (jsonData, params, target) {
-        target.parent().append(jsonData['response_text']);
+        target.parent().insert(jsonData['response_text'], 'append');
 
         target.remove();
     })
