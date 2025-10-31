@@ -320,9 +320,10 @@ class PopupHelperService extends BaseService
                             $canSee = true;
                         } else {
                             $checkApplications = DB->query(
-                                "SELECT pa2.id FROM project_application pa2 LEFT JOIN project_application pa ON pa.project_id=pa2.project_id AND pa.creator_id=:creator_id AND pa.deleted_by_player='0' AND pa.deleted_by_gamemaster='0' WHERE pa2.creator_id=:creator_id AND pa2.deleted_by_player='0' AND pa2.deleted_by_gamemaster='0' AND pa.id IS NOT NULL AND pa.project_id=:project_id",
+                                "SELECT pa2.id FROM project_application pa2 LEFT JOIN project_application pa ON pa.project_id=pa2.project_id AND pa.creator_id=:creator_id_1 AND pa.deleted_by_player='0' AND pa.deleted_by_gamemaster='0' WHERE pa2.creator_id=:creator_id_2 AND pa2.deleted_by_player='0' AND pa2.deleted_by_gamemaster='0' AND pa.id IS NOT NULL AND pa.project_id=:project_id",
                                 [
-                                    ['creator_id', $objId],
+                                    ['creator_id_1', $objId],
+                                    ['creator_id_2', $objId],
                                     ['project_id', $projectId],
                                 ],
                                 true,
