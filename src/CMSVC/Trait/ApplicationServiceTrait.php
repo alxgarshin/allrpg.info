@@ -551,7 +551,7 @@ trait ApplicationServiceTrait
 
     public function getProjectCharacterDefault(): ?int
     {
-        return ($_REQUEST['character_id'] ?? false) ? (int) ($_REQUEST['character_id'] ?? false) : null;
+        return ($_REQUEST['character_id'] ?? false) ? (int) $_REQUEST['character_id'] : null;
     }
 
     public function getProjectCharacterIdsContext(): array
@@ -682,7 +682,7 @@ trait ApplicationServiceTrait
         if ($this->getProjectData() && $this->getProjectCharacterDefault()) {
             $projectCharacterData = $this->getCharacterData($this->getProjectCharacterDefault());
 
-            return $projectCharacterData['team_applications_needed_count'];
+            return $projectCharacterData->team_applications_needed_count->get();
         }
 
         return null;

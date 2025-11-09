@@ -887,7 +887,7 @@ class ApplicationService extends BaseService
                 ],
             );
 
-            $_REQUEST['project_character_id'][0] = $_REQUEST['project_character_id'][0] = $newCharacterId;
+            $_REQUEST['project_character_id'][0] = $newCharacterId;
 
             $newCharacterId = (int) $newCharacterId;
 

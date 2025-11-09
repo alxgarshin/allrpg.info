@@ -43,7 +43,7 @@ loadJsComponent('application').then(function () {
         _('select[name="project_payment_type_id[0]"]').change();
 
         /** Выставление групп в соответствии с выбранным персонажем */
-        _('input[name="project_character_id[0]"]').on('change', function () {
+        _('input[name="project_character_id[0]"]').on('change, load', function () {
             const self = _(this);
 
             actionRequest({
@@ -51,7 +51,7 @@ loadJsComponent('application').then(function () {
                 obj_id: self.val()
             });
         });
-        _('input[name="project_character_id[0]"]:checked').change();
+        _('input[name="project_character_id[0]"]:checked').trigger('load');
 
         /** Проверка на наличие неотправленного коммента при сохранении заявки */
         let commentsChecked = false;

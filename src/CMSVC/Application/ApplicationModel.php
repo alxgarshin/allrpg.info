@@ -201,6 +201,7 @@ class ApplicationModel extends BaseModel
         useInFilters: true,
         context: 'getProjectCharacterIdsContext',
         obligatory: true,
+        defaultValue: 'getProjectCharacterDefault',
     )]
     public Item\Multiselect $project_character_id;
 
