@@ -138,11 +138,11 @@ if (withDocumentEvents) {
         doDropfieldRefresh = false;
 
         _each(jsonData['response_data']['remove'], function (value) {
-            target.find(convertName(`input#project_group_ids[0][${value}]`)).checked(false).change();
+            target.find(convertName(`input#project_group_ids[0][${value}]`))?.checked(false).change();
         });
 
         _each(jsonData['response_data']['add'], function (value) {
-            target.find(convertName(`input#project_group_ids[0][${value}]`)).checked(true).change();
+            target.find(convertName(`input#project_group_ids[0][${value}]`))?.checked(true).change();
         });
 
         doDropfieldRefresh = true;
