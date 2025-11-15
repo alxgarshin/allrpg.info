@@ -811,7 +811,7 @@ class ApplicationService extends BaseService
         /** Выделяем заявку в нового персонажа, если у персонажа выставлен такой признак */
         if (
             $characterData?->auto_new_character_creation->get()
-            && $characterData?->applications_needed_count->get() > 1
+            && $characterData->applications_needed_count->get() > 1
             && in_array(($_REQUEST['status'][0] ?? null), [2, 3])
         ) {
             $sorterFieldName = $characterData->team_character->get() ? 'sorter2' : 'sorter';

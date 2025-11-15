@@ -335,13 +335,13 @@ class ApplicationView extends BaseView
                                 if (($plotInfo['todo'] ?? '') !== '' || ($plotInfo['plot_todo'] ?? '') !== '') {
                                     ++$plotsFromNotVisibleCount;
                                 }
-                            } elseif (preg_match('#-group(' . implode('|', ($applicationData['project_group_ids'] ?? [])) . ')-#', ($plotInfo['applications_1_side_ids'] ?? ''))) {
+                            } elseif (preg_match('#-group(' . implode('|', $applicationData['project_group_ids']) . ')-#', ($plotInfo['applications_1_side_ids'] ?? ''))) {
                                 ++$plotsFromCount;
 
                                 if (($plotInfo['todo'] ?? '') !== '' || ($plotInfo['plot_todo'] ?? '') !== '') {
                                     ++$plotsFromNotVisibleCount;
                                 }
-                            } elseif (preg_match('#-' . $applicationId . '-#', ($plotInfo['applications_2_side_ids'] ?? '')) || preg_match('#-all' . $applicationData['project_character_id'] . '-#', ($plotInfo['applications_2_side_ids'] ?? '')) || preg_match('#-group[' . implode('|', ($applicationData['project_group_ids'] ?? [])) . ']-#', ($plotInfo['applications_2_side_ids'] ?? ''))) {
+                            } elseif (preg_match('#-' . $applicationId . '-#', ($plotInfo['applications_2_side_ids'] ?? '')) || preg_match('#-all' . $applicationData['project_character_id'] . '-#', ($plotInfo['applications_2_side_ids'] ?? '')) || preg_match('#-group[' . implode('|', $applicationData['project_group_ids']) . ']-#', ($plotInfo['applications_2_side_ids'] ?? ''))) {
                                 ++$plotsToCount;
                             }
                         }

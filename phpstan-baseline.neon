@@ -1,2 +1,11 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: "#^PHPDoc tag @var does not specify variable name\\.$#"
+			count: 3
+			path: lib/fraym/AppStart.php
+
+		-
+			message: "#^Parameter \\#1 \\$fieldValue of method Fraym\\\\Interface\\\\ElementItem\\:\\:set\\(\\) expects null, mixed given\\.$#"
+			count: 1
+			path: lib/fraym/Entity/BaseEntity.php

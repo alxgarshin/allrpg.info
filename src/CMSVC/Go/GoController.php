@@ -15,6 +15,8 @@ class GoController extends BaseController
 {
     public function Response(): ?Response
     {
+        define('CANONICAL_URL', ABSOLUTE_PATH . '/myapplication/');
+
         $forProjectId = DataHelper::getId();
 
         $characterId = false;

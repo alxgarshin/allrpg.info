@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use Fraym\BaseObject\CurrentUser;
 use Fraym\Enum\{ActEnum, ActionEnum, RequestTypeEnum};
-use Fraym\Helper\{CookieHelper, LocaleHelper};
+use Fraym\Helper\{CookieHelper, DataHelper, LocaleHelper};
 use Fraym\Service\{CacheService, EnvService, GlobalTimerService, SQLDatabaseService};
 
 require_once __DIR__ . '/BaseVar.php';
@@ -52,6 +52,7 @@ define('CMSVC', $_REQUEST['cmsvc'] ?? KIND);
 define('ID', ($_REQUEST['id'] ?? false) ? (is_array($_REQUEST['id']) ? $_REQUEST['id'] : [(int) $_REQUEST['id']]) : []);
 define('PAGE', (int) ($_REQUEST['page'] ?? 0));
 define('SORTING', (int) ($_REQUEST['sorting'] ?? 0));
+define('CANONICAL_URL', ABSOLUTE_PATH . '/' . KIND . '/' . (DataHelper::getId() ? DataHelper::getId() . '/' : ''));
 
 /** Выставляем рекомендуемые базовые настройки */
 mb_internal_encoding('UTF-8');

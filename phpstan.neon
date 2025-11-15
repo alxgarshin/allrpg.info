@@ -10,6 +10,7 @@ parameters:
 		- MODAL
 		- TEST_MODE
 		- REQUEST_PROJECT_ID
+		- CANONICAL_URL
 	bootstrapFiles:
 		- src/bootstrap.php
 	level: 5

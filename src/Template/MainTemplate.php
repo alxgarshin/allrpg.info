@@ -354,6 +354,8 @@ final class MainTemplate implements Template
 <meta property="twitter:image" content="' . ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'social_network_logo.png" />
 <meta property="twitter:url" content="https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '" />
 
+<link rel="canonical" href="' . CANONICAL_URL . '" />
+
 <title><!--pagetitle--></title>
 
 <link href="/vendor/fraym/locale/' . $LOCALE_NAME . '/locale.json" class="localeUrl" data-locale="' . $LOCALE_NAME . '" crossOrigin>
