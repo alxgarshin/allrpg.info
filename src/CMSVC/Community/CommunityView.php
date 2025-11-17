@@ -437,11 +437,15 @@ class CommunityView extends BaseView
         <div id="fraymtabs-projects">';
 
                 $projectsData = DB->findObjectsByIds($bindedProjects, 'project');
+
+                if ($projectsData) {
+                    $projectsData = iterator_to_array($projectsData);
+                }
                 $projectsDataSort = [];
 
                 foreach ($projectsData as $key => $projectData) {
                     if ($projectData['id'] !== '') {
-                        $projectsDataSort[$key] = mb_strtolower(trim(str_replace(['"', '«'], '', DataHelper::escapeOutput($projectsData[$key]['name']))));
+                        $projectsDataSort[$key] = mb_strtolower(trim(str_replace(['"', '«'], '', DataHelper::escapeOutput($projectData['name']))));
                     } else {
                         unset($projectsData[$key]);
                     }
