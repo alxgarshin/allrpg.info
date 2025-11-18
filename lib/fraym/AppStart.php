@@ -96,4 +96,4 @@ if (!CookieHelper::getCookie('locale')) {
     CookieHelper::batchSetCookie(['locale' => 'RU']);
 }
 
-$_ENV['CANONICAL_URL'] = ABSOLUTE_PATH . '/' . KIND . '/' . (DataHelper::getId() ? DataHelper::getId() . '/' : '');
+$_ENV['CANONICAL_URL'] = ABSOLUTE_PATH . '/' . KIND . '/' . (DataHelper::getId() ? DataHelper::getId() . '/' : (PAGE > 0 ? 'page=' . PAGE : ''));
