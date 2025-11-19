@@ -88,8 +88,10 @@ abstract class AuthHelper implements Helper
             $password = self::addProjectHashWord($password);
         }
 
-        return password_hash($password, PASSWORD_BCRYPT, [
-            'cost' => 12,
+        return password_hash($password, PASSWORD_ARGON2ID, [
+            'memory_cost' => 1 << 17,
+            'time_cost'   => 3,
+            'threads'     => 1,
         ]);
     }
 
