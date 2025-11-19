@@ -74,6 +74,27 @@ abstract class AuthHelper implements Helper
     {
         CookieHelper::batchDeleteCookie(['refreshToken']);
     }
+
+    /** Добавление проеектного хэша к строке */
+    public static function addProjectHashWord(string $string): string
+    {
+        return $string . $_ENV['PROJECT_HASH_WORD'];
+    }
+
+    /** Хэширование паролей */
+    public static function hashPassword(string $password, bool $usePepper = true): string
+    {
+        if ($usePepper) {
+            $password = self::addProjectHashWord($password);
+        }
+
+        return password_hash($password, PASSWORD_ARGON2ID, [
+            'memory_cost' => 1 << 17,
+            'time_cost'   => 3,
+            'threads'     => 1,
+        ]);
+    }
+
     /** Создание токена авторизации */
     private static function generateJWTAuthToken(array $headers, array $payload): string
     {

@@ -132,7 +132,7 @@ class UserModel extends BaseModel
         maxChar: 20,
         context: [self::CONTEXT, self::REGISTER_CONTEXT],
     )]
-    public Item\Password $pass;
+    public Item\Password $password_hashed;
 
     #[Attribute\Password(
         minChar: 3,

@@ -118,7 +118,7 @@ class RegisterService extends BaseService
     {
         $model
             ->changeElementsOrder('em', 'photo')
-            ->changeElementsOrder('pass', 'photo')
+            ->changeElementsOrder('password_hashed', 'photo')
             ->changeElementsOrder('pass2', 'photo')
             ->changeElementsOrder('fio', 'photo')
             ->changeElementsOrder('phone', 'photo')
@@ -126,7 +126,7 @@ class RegisterService extends BaseService
             ->changeElementsOrder('city', 'photo')
             ->changeElementsOrder('gender', 'photo');
 
-        $model->getElement('pass')->getAttribute()->setObligatory(true);
+        $model->getElement('password_hashed')->getAttribute()->setObligatory(true);
         $model->getElement('pass2')->getAttribute()->setObligatory(true);
         $model->getElement('birth')->getAttribute()->setObligatory(false);
         $model->getElement('city')->getAttribute()->setObligatory(false);

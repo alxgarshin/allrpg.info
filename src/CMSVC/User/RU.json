@@ -152,7 +152,7 @@
       "em": {
         "shownName": "Email"
       },
-      "pass": {
+      "password_hashed": {
         "shownName": "Пароль",
         "helpText": "не менее 3 и не более 20 символов."
       },

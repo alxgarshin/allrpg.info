@@ -152,7 +152,7 @@
       "em": {
         "shownName": "Correo electrónico"
       },
-      "pass": {
+      "password_hashed": {
         "shownName": "Contraseña",
         "helpText": "Mínimo de 3 y máximo de 20 símbolos."
       },

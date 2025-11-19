@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\CMSVC\Login;
 
 use Fraym\BaseObject\{BaseService, Controller};
-use Fraym\Helper\{DataHelper, EmailHelper, ResponseHelper};
+use Fraym\Helper\{AuthHelper, DataHelper, EmailHelper, ResponseHelper};
 
 #[Controller(LoginController::class)]
 class LoginService extends BaseService
@@ -29,7 +29,7 @@ class LoginService extends BaseService
                 $newPassword .= $tmp;
                 ++$i;
             }
-            DB->update('user', ['pass' => md5($newPassword . $_ENV['PROJECT_HASH_WORD'])], ['id' => $userData['id']]);
+            DB->update('user', ['password_hashed' => AuthHelper::hashPassword($newPassword)], ['id' => $userData['id']]);
 
             $myname = str_replace(['http://', 'https://', 'www', '/'], '', ABSOLUTE_PATH);
             $contactemail = $em;

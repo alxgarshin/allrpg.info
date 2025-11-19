@@ -1561,7 +1561,7 @@ abstract class BaseEntity
                         }
                     }
                 } elseif ($element instanceof Password) {
-                    $value = $value !== null ? md5($value . $_ENV['PROJECT_HASH_WORD']) : null;
+                    $value = $value !== null ? AuthHelper::hashPassword($value) : null;
                 } elseif ($element instanceof Calendar) {
                     $value = is_null($value) ? null : date('Y-m-d H:i:s', (is_numeric($value) ? $value : strtotime($value)));
                 } elseif ($element instanceof Checkbox) {

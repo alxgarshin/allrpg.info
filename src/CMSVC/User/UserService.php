@@ -11,7 +11,7 @@ use App\CMSVC\Task\TaskService;
 use App\Helper\{DesignHelper, FileHelper, MessageHelper, RightsHelper, UniversalHelper};
 use Fraym\BaseObject\{BaseService, Controller};
 use Fraym\Enum\OperandEnum;
-use Fraym\Helper\{CMSVCHelper, CookieHelper, DataHelper, EmailHelper, LocaleHelper};
+use Fraym\Helper\{AuthHelper, CMSVCHelper, CookieHelper, DataHelper, EmailHelper, LocaleHelper};
 use Identicon\Identicon;
 
 /** @extends BaseService<UserModel> */
@@ -2347,7 +2347,7 @@ class UserService extends BaseService
             DB->update(
                 tableName: 'user',
                 data: [
-                    'pass' => md5($pass . $_ENV['PROJECT_HASH_WORD']),
+                    'password_hashed' => AuthHelper::hashPassword($pass),
                 ],
                 criteria: [
                     'id' => $userData['id'],

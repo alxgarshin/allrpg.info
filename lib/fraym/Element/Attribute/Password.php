@@ -15,7 +15,7 @@ namespace Fraym\Element\Attribute;
 
 use Attribute;
 use Fraym\Element\Attribute\Trait\{MinMaxChar};
-use Fraym\Element\Validator\{MinMaxCharValidator, RepeatPasswordValidator};
+use Fraym\Element\Validator\{MinMaxCharValidator, ObligatoryValidator, RepeatPasswordValidator};
 use Fraym\Interface\MinMaxChar as InterfaceMinMaxChar;
 
 /** Пароль */
@@ -26,6 +26,7 @@ class Password extends BaseElement implements InterfaceMinMaxChar
 
     protected array $basicElementValidators = [
         MinMaxCharValidator::class,
+        ObligatoryValidator::class,
         RepeatPasswordValidator::class,
     ];
 

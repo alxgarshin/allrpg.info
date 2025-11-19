@@ -148,21 +148,13 @@ final class CurrentUser
 
         /** Если ничего не подошло, но действие = login, то проверяем логин и пароль */
         if ('login' === ACTION && isset($_REQUEST['password'])) {
-            $hashedPassword = md5($_REQUEST['password'] . $_ENV['PROJECT_HASH_WORD']);
-            $loginData = DB->select(
-                'user',
-                [
-                    'login' => $_REQUEST['login'],
-                    'pass' => $hashedPassword,
-                ],
-                true,
-            );
+            $loginData = $this->checkPassword();
 
-            if ($loginData === false) {
-                ResponseHelper::responseOneBlock('error', $LOCALE['wrong_login_or_password']);
-            } else {
+            if ($loginData) {
                 CURRENT_USER->authSetUserData($loginData);
                 AuthHelper::generateAndSaveRefreshToken();
+            } else {
+                ResponseHelper::responseOneBlock('error', $LOCALE['wrong_login_or_password']);
             }
         }
 
@@ -318,5 +310,45 @@ final class CurrentUser
         $this->adminData = $adminData;
 
         return $this;
+    }
+
+    private function checkPassword(): array|false
+    {
+        $loginData = DB->select(
+            'user',
+            [
+                'login' => $_REQUEST['login'],
+            ],
+            true,
+        );
+
+        if ($loginData === false || !($loginData['password_hashed'] ?? false)) {
+            return false;
+        }
+
+        $hashedPassword = AuthHelper::addProjectHashWord($_REQUEST['password']);
+
+        if (($loginData['hash_version'] ?? false) && $loginData['hash_version'] === 'wrapped_v1') {
+            if (!password_verify(md5($hashedPassword), $loginData['password_hashed'])) {
+                return false;
+            }
+
+            $final = AuthHelper::hashPassword($hashedPassword, false);
+
+            DB->update(
+                tableName: 'user',
+                data: [
+                    'password_hashed' => $final,
+                    'hash_version'    => 'final_v2',
+                ],
+                criteria: [
+                    'id' => $loginData['id'],
+                ],
+            );
+        } elseif (!password_verify($hashedPassword, $loginData['password_hashed'])) {
+            return false;
+        }
+
+        return $loginData;
     }
 }
