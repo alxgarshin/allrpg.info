@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Report;
 
 use App\CMSVC\HelperGamesList\HelperGamesListController;
-use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(ReportController::class)]

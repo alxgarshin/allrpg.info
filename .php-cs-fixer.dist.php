@@ -101,6 +101,7 @@ return (new PhpCsFixer\Config())
         'strict_comparison' => true,
         'no_unused_imports' => true,
     ])
+    ->setUnsupportedPhpVersionAllowed(true)
     ->setRiskyAllowed(true)
     ->setFinder($finder)
 ;

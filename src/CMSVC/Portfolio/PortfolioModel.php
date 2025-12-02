@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Portfolio;
 
 use App\CMSVC\HelperGamesList\HelperGamesListController;
-use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(PortfolioController::class)]

@@ -103,7 +103,7 @@ abstract class DateHelper extends \Fraym\Helper\DateHelper
         }
         $time = time();
 
-        if ($time - $timestamp > 3600 * 48 || date('d', $time) - date('d', $timestamp) > 1) {
+        if ($time - $timestamp > 3600 * 48 || (int) date('d', $time) - (int) date('d', $timestamp) > 1) {
             if (date('Y', $timestamp) < date('Y', $time)) {
                 $str = date('d ', $timestamp) . DateHelper::monthname(date('n', $timestamp)) . ' ' . date('Y', $timestamp) . ' ' .
                     $LOCALE_FRAYM['datetime']['at'] . ' ' . date('H:i', $timestamp);
@@ -119,7 +119,7 @@ abstract class DateHelper extends \Fraym\Helper\DateHelper
                     $str = date('d ', $timestamp) . mb_substr(DateHelper::monthname(date('n', $timestamp)), 0, 3);
                 }
             }
-        } elseif ($time - $timestamp >= 3600 * 24 || date('d', $time) - date('d', $timestamp) === 1) {
+        } elseif ($time - $timestamp >= 3600 * 24 || (int) date('d', $time) - (int) date('d', $timestamp) === 1) {
             $str = $LOCALE_FRAYM['datetime']['yesterday'] . ' ' . $LOCALE_FRAYM['datetime']['at'] . ' ' . date('H:i', $timestamp);
 
             if ($shortestVersion) {

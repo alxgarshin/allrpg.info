@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\User;
 
 use App\CMSVC\HelperGeographyCity\HelperGeographyCityController;
-use Fraym\BaseObject\Trait\CreatedUpdatedAtTrait;
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\CreatedUpdatedAtTrait;
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(UserController::class)]

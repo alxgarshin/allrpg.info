@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\QrpgHistory;
 
-use Fraym\BaseObject\Trait\{IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{IdTrait};
 use Fraym\Element\{Attribute as Attribute, Item as Item};
 
 #[Controller(QrpgHistoryController::class)]

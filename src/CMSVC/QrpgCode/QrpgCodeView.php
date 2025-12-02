@@ -6,8 +6,8 @@ namespace App\CMSVC\QrpgCode;
 
 use App\Helper\DesignHelper;
 use Fraym\BaseObject\{BaseView, Controller};
-use Fraym\Entity\TableEntity;
 use Fraym\Entity\{EntitySortingItem, Rights};
+use Fraym\Entity\TableEntity;
 use Fraym\Enum\{SubstituteDataTypeEnum};
 use Fraym\Helper\{DataHelper, LocaleHelper};
 use Fraym\Interface\Response;

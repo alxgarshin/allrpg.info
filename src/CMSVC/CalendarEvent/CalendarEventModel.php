@@ -6,8 +6,8 @@ namespace App\CMSVC\CalendarEvent;
 
 use App\CMSVC\HelperGeographyCity\HelperGeographyCityController;
 use App\CMSVC\HelperUsersList\HelperUsersListController;
-use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, IdTrait};
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(CalendarEventController::class)]

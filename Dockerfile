@@ -1,4 +1,4 @@
-ARG PHP_VERSION="8.3"
+ARG PHP_VERSION="8.4"
 
 FROM php:${PHP_VERSION}-fpm AS php
 
@@ -18,9 +18,11 @@ RUN apt-get update -y && \
     libffi-dev \
     libgsasl7-dev \
     libmagickwand-dev \
-    libmcrypt-dev \
     libpq-dev \
     libpng-dev \
+    libjpeg-dev \
+    libwebp-dev \
+    libfreetype6-dev \
     librabbitmq-dev \
     libssl-dev \
     libxml2-dev \
@@ -50,11 +52,9 @@ RUN apt-get update -y && \
 RUN pecl channel-update pecl.php.net && \
     pecl install -o -f amqp apcu imagick && \
     docker-php-ext-configure gd \
-    --prefix=/usr \
     --with-jpeg \
     --with-webp \
-    --with-freetype; \
-    docker-php-ext-configure zip && \
+    --with-freetype && \
     docker-php-ext-install \
     ctype \
     intl \
@@ -112,8 +112,6 @@ USER $USER:$USER
 
 
 FROM base AS dev
-
-ENV PHP_CS_FIXER_IGNORE_ENV=1
 
 USER root:root
 

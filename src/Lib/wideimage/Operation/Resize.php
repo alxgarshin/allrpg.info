@@ -24,9 +24,9 @@ declare(strict_types=1);
 
 namespace WideImage\Operation;
 
+use WideImage\{Coordinate, PaletteImage, TrueColorImage};
 use WideImage\Exception\GDFunctionResultException;
 use WideImage\Operation\Exception\{InvalidFitMethodException, InvalidResizeDimensionException};
-use WideImage\{Coordinate, PaletteImage, TrueColorImage};
 
 /**
  * Resize operation class.

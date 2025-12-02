@@ -238,14 +238,14 @@ abstract class BaseElement implements ElementItem
     {
         return
             !(
-                ($this instanceof Select || $this instanceof Multiselect) &&
-                !$this->getValues() &&
-                (!$this instanceof Select || $this->getHelper() === null) &&
-                !$this->getObligatory()
+                !$this->getObligatory() &&
+                (
+                    ($this instanceof Select && !$this->getValues()) ||
+                    ($this instanceof Multiselect && !$this->getValues())
+                ) &&
+                (!$this instanceof Select || $this->getHelper() === null)
             ) &&
-            !(
-                $this instanceof Tab
-            );
+            !($this instanceof Tab);
     }
 
     public function checkDOMVisibility(): bool

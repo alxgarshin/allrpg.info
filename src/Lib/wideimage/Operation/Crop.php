@@ -24,8 +24,8 @@ declare(strict_types=1);
 
 namespace WideImage\Operation;
 
-use WideImage\Exception\{Exception, GDFunctionResultException};
 use WideImage\{Coordinate, PaletteImage};
+use WideImage\Exception\{Exception, GDFunctionResultException};
 
 /**
  * Crop operation class.

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\BannersEdit;
 
-use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, IdTrait};
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(BannersEditController::class)]

@@ -1350,22 +1350,20 @@ class IngameService extends BaseService
                                                     if ($nextIsRowOrCol === 'row') {
                                                         $oldRow = $row;
 
-                                                        /** @phpstan-ignore-next-line */
-                                                        while ($row === $oldRow || $alreadyChosen[$row][$col]) {
+                                                        while ($row === $oldRow || ($alreadyChosen[$row][$col] ?? false)) {
                                                             $row = rand(0, $matrixHeight - 1);
                                                         }
                                                     } else {
                                                         $oldCol = $col;
 
-                                                        /** @phpstan-ignore-next-line */
-                                                        while ($col === $oldCol || $alreadyChosen[$row][$col]) {
+                                                        while ($col === $oldCol || ($alreadyChosen[$row][$col] ?? false)) {
                                                             $col = rand(0, $matrixWidth - 1);
                                                         }
                                                     }
 
-                                                    /** @phpstan-ignore-next-line */
                                                     $nextIsRowOrCol = $nextIsRowOrCol === 'col' ? 'row' : 'col';
                                                 }
+
                                                 $sequences[] = $sequenceArray;
                                             }
 

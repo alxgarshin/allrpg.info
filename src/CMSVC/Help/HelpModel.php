@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\Help;
 
-use Fraym\BaseObject\Trait\IdTrait;
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\IdTrait;
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(HelpController::class)]

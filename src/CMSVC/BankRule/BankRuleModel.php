@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\BankRule;
 
 use App\CMSVC\Trait\ProjectIdTrait;
-use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(BankRuleController::class)]

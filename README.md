@@ -12,7 +12,7 @@
 
 #### Возможности и особенности
 
-- **PHP 8.3**
+- **PHP 8.4**
 - Базы данных: **MySQL 5.7**
 - Веб-сервер **Nginx** ([сервер](https://github.com/nginx-proxy/nginx-proxy), [менеджер](https://github.com/nginx-proxy/acme-companion))
 

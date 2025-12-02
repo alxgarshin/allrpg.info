@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\QrpgCode;
 
 use App\CMSVC\Trait\ProjectIdTrait;
-use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, IdTrait};
 use Fraym\Element\{Attribute as Attribute, Item as Item};
 
 #[Controller(QrpgCodeController::class)]

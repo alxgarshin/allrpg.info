@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\PublicationsEdit;
 
-use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\BaseObject\{BaseModel, Controller};
+use Fraym\BaseObject\Trait\{CreatedUpdatedAtTrait, CreatorIdTrait, IdTrait};
 use Fraym\Element\{Attribute, Item};
 
 #[Controller(PublicationsEditController::class)]
