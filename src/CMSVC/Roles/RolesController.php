@@ -6,6 +6,7 @@ namespace App\CMSVC\Roles;
 
 use App\Helper\RightsHelper;
 use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\Helper\DataHelper;
 use Fraym\Interface\Response;
 
 /** @extends BaseController<RolesService> */
@@ -15,6 +16,13 @@ use Fraym\Interface\Response;
 )]
 class RolesController extends BaseController
 {
+    public function Response(): ?Response
+    {
+        $_ENV['CANONICAL_URL'] = ABSOLUTE_PATH . '/' . KIND . '/' . (DataHelper::getId() ? DataHelper::getId() . '/' . (OBJ_TYPE ? OBJ_TYPE . '/' . (OBJ_ID ? OBJ_ID . '/' : '') : '') : '');
+
+        return parent::Response();
+    }
+
     #[IsAccessible(
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectKindAccessAndRedirect',
