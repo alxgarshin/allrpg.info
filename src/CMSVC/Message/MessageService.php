@@ -1370,7 +1370,7 @@ class MessageService extends BaseService
 
                             if (!$isContact) {
                                 $checkSupport = $userService->get($contactData_1);
-                                $isContact = in_array('10', $checkSupport->rights->get());
+                                $isContact = in_array('help', $checkSupport->rights->get());
                             }
                             break;
                         }
