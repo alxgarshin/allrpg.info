@@ -455,7 +455,7 @@ class PlotService extends BaseService
                                 if (str_contains($applications1SideId, 'group')) {
                                     $projectGroupData = $groupService->get((int) str_replace('group', '', $applications1SideId), ['project_id' => $projectId]);
 
-                                    if ($projectGroupData->name->get()) {
+                                    if ($projectGroupData?->name->get()) {
                                         $tempResult .= '<a href="' . ABSOLUTE_PATH . '/group/' . $projectGroupData->id->getAsInt() . '/">' .
                                             $projectGroupData->name->get() . '</a>, ';
                                         $query = "SELECT * FROM project_application WHERE project_group_ids LIKE :project_group_ids AND deleted_by_gamemaster='0' AND project_id=:project_id";
@@ -468,7 +468,7 @@ class PlotService extends BaseService
                                 } elseif (str_contains($applications1SideId, 'all')) {
                                     $projectCharacterData = $characterService->get((int) str_replace('all', '', $applications1SideId), ['project_id' => $projectId]);
 
-                                    if ($projectCharacterData->name->get()) {
+                                    if ($projectCharacterData?->name->get()) {
                                         $tempResult .= '<a href="' . ABSOLUTE_PATH . '/character/' . $projectCharacterData->id->getAsInt() . '/">' . $projectCharacterData->name->get() . '</a>, ';
                                         $query = "SELECT * FROM project_application WHERE project_character_id=:project_character_id AND deleted_by_gamemaster='0' AND project_id=:project_id";
                                         $queryParams[] = ['project_character_id', $projectCharacterData->id->getAsInt()];
@@ -869,7 +869,7 @@ class PlotService extends BaseService
                                 $applicationsCount = 0;
 
                                 if (str_contains($applications1SideId, 'group')) {
-                                    if ($fullGroupData[str_replace('group', '', $applications1SideId)][0] !== '') {
+                                    if ($fullGroupData[str_replace('group', '', $applications1SideId)][0]) {
                                         $resultFor .= $fullGroupData[str_replace('group', '', $applications1SideId)][0];
                                     } else {
                                         $resultFor .= '<i>' . $LOCALE['deleted_group'] . '</i>';
@@ -878,7 +878,7 @@ class PlotService extends BaseService
                                     $checkFollowup = true;
                                     $gotSomeCharacter = true;
                                 } elseif (str_contains($applications1SideId, 'all')) {
-                                    if ($fullCharacterData[str_replace('all', '', $applications1SideId)][0] !== '') {
+                                    if ($fullCharacterData[str_replace('all', '', $applications1SideId)][0]) {
                                         $resultFor .= $fullCharacterData[str_replace('all', '', $applications1SideId)][0];
                                     } elseif ($applications1SideId === 0) {
                                         $resultFor .= '<i>' . $LOCALE['global_story'] . '</i>';

@@ -454,9 +454,10 @@ class CharacterService extends BaseService
                         ],
                     );
 
-                    if ((int) $lastCharacterInGroup['comment'] > 0) {
+                    if ($lastCharacterInGroup && (int) $lastCharacterInGroup['comment'] > 0) {
                         $code = (int) $lastCharacterInGroup['comment'] + 1;
                     }
+
                     RightsHelper::addRights(
                         '{member}',
                         '{group}',
