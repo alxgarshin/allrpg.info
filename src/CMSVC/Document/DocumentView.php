@@ -42,7 +42,7 @@ class DocumentView extends BaseView
             $listOfRoles = $this->getService()->getListOfRolesElem();
 
             $content = '<br>
-<form action="/document/" method="POST" enctype="multipart/form-data" id="form_generate_documents" no_dynamic_content>
+<form action="/document/" method="POST" enctype="multipart/form-data" id="form_generate_documents" no_dynamic_content target="_blank">
 <input type="hidden" name="kind" value="document">
 <input type="hidden" name="action" value="generate_documents">
 <input type="hidden" name="template_id" value="' . DataHelper::getId() . '">
