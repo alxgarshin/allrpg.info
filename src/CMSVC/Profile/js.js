@@ -20,4 +20,10 @@ if (el('form#form_profile')) {
             }
         });
     }
+
+    if (withDocumentEvents) {
+        _arSuccess('reverify_em', function (jsonData, params, target) {
+            showMessageFromJsonData(jsonData);
+        })
+    }
 }

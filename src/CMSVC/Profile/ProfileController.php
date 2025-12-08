@@ -22,7 +22,7 @@ use Fraym\Response\HtmlResponse;
 )]
 class ProfileController extends BaseController
 {
-    public function verifyEm(): null
+    public function verifyEm(): ?Response
     {
         $verifyId = $_REQUEST['verify_id'] ?? false;
 
@@ -44,7 +44,7 @@ class ProfileController extends BaseController
             }
         }
 
-        return null;
+        return $this->Default();
     }
     protected function Default(): ?Response
     {
