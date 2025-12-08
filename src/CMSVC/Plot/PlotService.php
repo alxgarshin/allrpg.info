@@ -583,7 +583,7 @@ class PlotService extends BaseService
                                                     'application_sorter' => DataHelper::escapeOutput($projectApplicationData['application_sorter']),
                                                 ];
                                             }
-                                            $tempResult2 .= '<a href="' . ABSOLUTE_PATH . '/roles/' . $projectId . '/#group_' . $projectGroupData['id'] . '" target="_blank">' . $projectGroupData->name->get() . '</a>, ';
+                                            $tempResult2 .= '<a href="' . ABSOLUTE_PATH . '/roles/' . $projectId . '/#group_' . $projectGroupData->id->get() . '" target="_blank">' . $projectGroupData->name->get() . '</a>, ';
                                         }
                                     } else {
                                         $tempResult2 .= '<i>' . $LOCALE['deleted_group_2'] . '</i>, ';
