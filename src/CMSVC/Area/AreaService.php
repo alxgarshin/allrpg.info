@@ -15,7 +15,7 @@ class AreaService extends BaseService
 {
     public function checkRightsViewRestrict(): ?string
     {
-        if ($this->getAct() === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
+        if ($this->act === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
             if (CURRENT_USER->isLogged()) {
                 return ($_REQUEST['mine'] ?? false) && $_REQUEST['mine'] === 1 ? 'creator_id=' . CURRENT_USER->id() : '';
             } else {
@@ -28,7 +28,7 @@ class AreaService extends BaseService
 
     public function checkRightsChangeRestrict(): ?string
     {
-        if ($this->getAct() === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
+        if ($this->act === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
             if (CURRENT_USER->isAdmin()) {
                 return null;
             } elseif (CURRENT_USER->isLogged()) {
@@ -45,7 +45,7 @@ class AreaService extends BaseService
     {
         if (CURRENT_USER->isAdmin() || CURRENT_USER->checkAllRights('info')) {
             return true;
-        } elseif ($this->getAct() === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
+        } elseif ($this->act === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
             return true;
         }
 
@@ -59,14 +59,14 @@ class AreaService extends BaseService
 
     public function getSortTipe(): array
     {
-        $LOCALE = $this->getEntity()->getLOCALE();
+        $LOCALE = $this->entity->LOCALE;
 
         return $LOCALE['elements']['tipe']['values'];
     }
 
     public function getToAreaDefault(): string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
             $LOCALE = LocaleHelper::getLocale(['fraym']);
 
             return '<a href="' . ABSOLUTE_PATH . '/area/' . DataHelper::getId() . '/" target="_blank">' . $LOCALE['functions']['open_in_a_new_window'] . '</a>';
@@ -87,7 +87,7 @@ class AreaService extends BaseService
 
     public function getCoordinatesContext(): array
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
             return ['area:view', 'area:create', 'area:update'];
         }
 

@@ -26,7 +26,7 @@ trait ProjectDataTrait
                     } elseif (KIND === 'ingame' && CookieHelper::getCookie('ingame_application_id')) {
                         $applicationData = DB->findObjectById(CookieHelper::getCookie('ingame_application_id'), 'project_application');
                         $this->activatedProjectId = $applicationData['project_id'];
-                    } elseif ($this->getAct() === ActEnum::add && ($_REQUEST['project_id'] ?? false)) {
+                    } elseif ($this->act === ActEnum::add && ($_REQUEST['project_id'] ?? false)) {
                         $this->activatedProjectId = (int) $_REQUEST['project_id'];
                     } elseif (ACTION === ActionEnum::create && ($_REQUEST['project_id'][0] ?? false)) {
                         $this->activatedProjectId = (int) $_REQUEST['project_id'][0];

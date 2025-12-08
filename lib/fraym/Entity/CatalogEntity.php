@@ -26,36 +26,12 @@ final class CatalogEntity extends BaseEntity implements CatalogInterface, Tabbed
     use Tabs;
 
     /** Наследующая сущность */
-    protected CatalogItemEntity $catalogItemEntity;
+    public CatalogItemEntity $catalogItemEntity;
 
     /** Массив оригинальных id, найденных при фильтрах и ограничениях видимости в запросе */
-    protected array $catalogEntityFoundIds = [];
+    public array $catalogEntityFoundIds = [];
 
     private array $ITEMS = [];
-
-    public function getCatalogItemEntity(): CatalogItemEntity
-    {
-        return $this->catalogItemEntity;
-    }
-
-    public function setCatalogItemEntity(CatalogItemEntity $catalogItemEntity): self
-    {
-        $this->catalogItemEntity = $catalogItemEntity;
-
-        return $this;
-    }
-
-    public function getCatalogEntityFoundIds(): array
-    {
-        return $this->catalogEntityFoundIds;
-    }
-
-    public function setCatalogEntityFoundIds(array $catalogEntityFoundIds): self
-    {
-        $this->catalogEntityFoundIds = $catalogEntityFoundIds;
-
-        return $this;
-    }
 
     public function viewActList(array $DATA_FILTERED_BY_CONTEXT): string
     {
@@ -63,17 +39,17 @@ final class CatalogEntity extends BaseEntity implements CatalogInterface, Tabbed
 
         $RESPONSE_DATA = '';
 
-        if ($this->getView()->getViewRights()->getAddRight()) {
-            $RESPONSE_DATA .= '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->getName()) .
+        if ($this->view->viewRights->addRight) {
+            $RESPONSE_DATA .= '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->name) .
                 '/act=add" class="ctrlink"><span class="sbi sbi-plus"></span>' .
                 $GLOBAL_LOCALE['add'] . ' ' . $this->getObjectName() . '</a>' .
-                '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->getCatalogItemEntity()->getName()) .
+                '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->catalogItemEntity->name) .
                 '/act=add" class="ctrlink"><span class="sbi sbi-plus"></span>' .
-                $GLOBAL_LOCALE['add'] . ' ' . $this->getCatalogItemEntity()->getObjectName() . '</a>';
+                $GLOBAL_LOCALE['add'] . ' ' . $this->catalogItemEntity->getObjectName() . '</a>';
         }
         $RESPONSE_DATA .= '<div class="clear"></div>';
 
-        $catalogItemEntity = $this->getCatalogItemEntity();
+        $catalogItemEntity = $this->catalogItemEntity;
 
         if (count($DATA_FILTERED_BY_CONTEXT) > 0) {
             $previousCatalogLevel = 0;
@@ -120,23 +96,23 @@ final class CatalogEntity extends BaseEntity implements CatalogInterface, Tabbed
 
     public function drawCatalogLine(array $DATA_ITEM): string
     {
-        $catalogEntityFoundIds = $this->getCatalogEntityFoundIds();
+        $catalogEntityFoundIds = $this->catalogEntityFoundIds;
 
         $RESPONSE_DATA = '<li><span class="sbi sbi-folder"></span>';
 
         if (in_array($DATA_ITEM['id'], $catalogEntityFoundIds)) {
-            $RESPONSE_DATA .= '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->getName()) . '/' . $DATA_ITEM['id'] . '/act=' .
-                $this->getDefaultItemActType()->value . '">';
+            $RESPONSE_DATA .= '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->name) . '/' . $DATA_ITEM['id'] . '/act=' .
+                $this->defaultItemActType->value . '">';
         }
 
         if ($DATA_ITEM['id'] === '0') {
             $RESPONSE_DATA .= '<b>' . mb_strtoupper($DATA_ITEM['name']) . '</b>';
         } else {
-            foreach ($this->getSortingData() as $sortingItem) {
-                if (!($this->ITEMS[$sortingItem->getTableFieldName()] ?? false)) {
-                    $this->ITEMS[$sortingItem->getTableFieldName()] = $this->getModel()->getElement($sortingItem->getTableFieldName());
+            foreach ($this->sortingData as $sortingItem) {
+                if (!($this->ITEMS[$sortingItem->tableFieldName] ?? false)) {
+                    $this->ITEMS[$sortingItem->tableFieldName] = $this->model->getElement($sortingItem->tableFieldName);
                 }
-                $ITEM = $this->ITEMS[$sortingItem->getTableFieldName()];
+                $ITEM = $this->ITEMS[$sortingItem->tableFieldName];
 
                 if (!is_null($ITEM)) {
                     $RESPONSE_DATA .= $this->drawElementValue($ITEM, $DATA_ITEM, $sortingItem);
@@ -158,10 +134,10 @@ final class CatalogEntity extends BaseEntity implements CatalogInterface, Tabbed
     /** Поиск и удаление объектов-детей и приложенных к ним файлов */
     public function clearDataByParent(string|int $id): void
     {
-        $parentField = $this->getCatalogItemEntity()->getTableFieldWithParentId();
+        $parentField = $this->catalogItemEntity->tableFieldWithParentId;
 
         $data = DB->select(
-            tableName: $this->getTable(),
+            tableName: $this->table,
             criteria: [
                 $parentField => $id,
             ],
@@ -176,6 +152,6 @@ final class CatalogEntity extends BaseEntity implements CatalogInterface, Tabbed
 
     public function detectEntityType(array $data): CatalogEntity|CatalogItemEntity
     {
-        return $this->getCatalogItemEntity()->detectEntityType($data);
+        return $this->catalogItemEntity->detectEntityType($data);
     }
 }

@@ -18,27 +18,50 @@ use Fraym\BaseObject\BaseHelper;
 use Fraym\Element\Validator\ObligatoryValidator;
 use Fraym\Interface\HasDefaultValue;
 use Generator;
+use InvalidArgumentException;
 
 /** Выпадающий список */
+/** @implements HasDefaultValue<null|string|int> */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Select extends BaseElement implements HasDefaultValue
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
     ];
 
+    /** Значение по умолчанию */
+    public mixed $defaultValue {
+        get => $this->_val;
+        set {
+            if (!is_null($value) && !is_string($value) && !is_int($value)) {
+                throw new InvalidArgumentException('Wrong defaultValue type');
+            }
+
+            $this->_val = $value;
+        }
+    }
+
+    private null|string|int $_val = null;
+
     public function __construct(
-        /** Значение по умолчанию */
-        private null|string|int $defaultValue = null,
+        mixed $defaultValue = null,
 
         /** Массив возможных значений: массив или строка с callback функции */
-        private null|string|array $values = null,
+        public null|string|array $values = null {
+            set(null|string|array|Generator $values) {
+                if ($values instanceof Generator) {
+                    $values = iterator_to_array($values);
+                }
+
+                $this->values = $values;
+            }
+        },
 
         /** Заблокированные к изменению значения: массив или строка с callback функции */
-        private null|string|array $locked = null,
+        public null|string|array $locked = null,
 
         /** Механизм динамического поиска списка значений на основе ввода пользователя */
-        private ?BaseHelper $helper = null,
+        public ?BaseHelper $helper = null,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -72,56 +95,7 @@ class Select extends BaseElement implements HasDefaultValue
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
 
-    public function getDefaultValue(): null|string|int
-    {
-        return $this->defaultValue;
-    }
-
-    public function setDefaultValue(null|string|int $defaultValue = null): static
-    {
         $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    public function getValues(): null|string|array
-    {
-        return $this->values;
-    }
-
-    public function setValues(null|string|array|Generator $values): static
-    {
-        if ($values instanceof Generator) {
-            $values = iterator_to_array($values);
-        }
-        $this->values = $values;
-
-        return $this;
-    }
-
-    public function getLocked(): null|string|array
-    {
-        return $this->locked;
-    }
-
-    public function setLocked(null|string|array $locked): static
-    {
-        $this->locked = $locked;
-
-        return $this;
-    }
-
-    public function getHelper(): ?BaseHelper
-    {
-        return $this->helper;
-    }
-
-    public function setHelper(?BaseHelper $helper): static
-    {
-        $this->helper = $helper;
-
-        return $this;
     }
 }

@@ -15,7 +15,7 @@ class QrpgGeneratorView extends BaseView
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $projectId = (int) ($_REQUEST['project_id'] ?? false);
         $qrpgCodeId = (int) ($_REQUEST['qrpg_code_id'] ?? false);

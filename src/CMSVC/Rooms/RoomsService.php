@@ -99,7 +99,7 @@ class RoomsService extends BaseService
 
     public function array2ul($array): string
     {
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
 
         $out = '<ul>';
 
@@ -128,7 +128,7 @@ class RoomsService extends BaseService
 
     private function prepareData(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $roomsData = [];
         $fullRoomsData = [];

@@ -30,7 +30,7 @@ class RulingItemEditService extends BaseService
 
     public function getObjHelper2Default(): string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
             $LOCALE = LocaleHelper::getLocale(['fraym']);
 
             return '<a href="' . ABSOLUTE_PATH . '/ruling/' . DataHelper::getId() . '/" target="_blank">' . $LOCALE['functions']['open_in_a_new_window'] . '</a>';
@@ -41,7 +41,7 @@ class RulingItemEditService extends BaseService
 
     public function getObjHelper3Default(): string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
             $LOCALE = LocaleHelper::getLocale(['fraym']);
 
             return '<a href="' . ABSOLUTE_PATH . '/ruling_edit/ruling_item_id=' . DataHelper::getId() . '" target="_blank">' . $LOCALE['functions']['open_in_a_new_window'] . '</a>';

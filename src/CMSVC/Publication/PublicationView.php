@@ -18,7 +18,7 @@ class PublicationView extends BaseView
     public function Response(): ?Response
     {
         /** @var PublicationService $publicationService */
-        $publicationService = $this->getCMSVC()->getService();
+        $publicationService = $this->CMSVC->service;
 
         /** @var PublicationsEditService $publicationsEditService */
         $publicationsEditService = CMSVCHelper::getService('publications_edit');
@@ -26,7 +26,7 @@ class PublicationView extends BaseView
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_PEOPLE = LocaleHelper::getLocale(['people', 'global']);

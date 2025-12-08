@@ -32,7 +32,7 @@ class PlotController extends BaseController
         return $this->asArray(
             [
                 'response' => 'success',
-                'response_data' => $this->getService()->getApplicationsListInPlot(OBJ_ID),
+                'response_data' => $this->service->getApplicationsListInPlot(OBJ_ID),
             ],
         );
     }

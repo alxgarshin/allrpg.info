@@ -18,10 +18,10 @@ class ArticlesEditService extends BaseService
 {
     public function checkValidData(): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
 
         if (
-            $this->getEntity()->getName() === CMSVC
+            $this->entity->name === CMSVC
             && $_REQUEST['parent'][0] === 0
             && $_REQUEST['attachments'][0] === ''
         ) {
@@ -29,7 +29,7 @@ class ArticlesEditService extends BaseService
         }
 
         if (
-            $this->getEntity()->getName() === CMSVC
+            $this->entity->name === CMSVC
             && $_REQUEST['attachments'][0] !== ''
             && preg_match('#[^a-z]#', $_REQUEST['attachments'][0])
         ) {

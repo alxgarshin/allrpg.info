@@ -79,14 +79,14 @@ class ApplicationView extends BaseView
 
     public function preViewHandler(): void
     {
-        $applicationService = $this->getService();
+        $applicationService = $this->service;
 
         /** Проверяем наборы фильтров и устанавливаем доп.ограничения, если есть */
         $applicationService->checkFilterSets();
 
         /** Если включен какой-либо быстрый фильтр, то фактически убираем пагинацию */
         if ($applicationService->getDeletedView() || $applicationService->getNoReplyView() || $applicationService->getPaymentApproveView()) {
-            $this->getEntity()->setElementsPerPage(5000);
+            $this->entity->elementsPerPage = 5000;
         }
 
         /** Переключаемся на формирование excel'я, если выставлен excelView: дальнейшая обработка не происходит */
@@ -103,7 +103,7 @@ class ApplicationView extends BaseView
                 substituteDataTableId: 'id',
                 substituteDataTableField: 'name',
             );
-            $this->getEntity()->insertEntitySortingData($entitySortingItem, 2);
+            $this->entity->insertEntitySortingData($entitySortingItem, 2);
         }
 
         /** Добавляем колонку групп, если они вообще есть */
@@ -115,7 +115,7 @@ class ApplicationView extends BaseView
                 substituteDataTableId: 'id',
                 substituteDataTableField: 'name',
             );
-            $this->getEntity()->insertEntitySortingData($entitySortingItem, 2);
+            $this->entity->insertEntitySortingData($entitySortingItem, 2);
         }
 
         /** Добавляем колонку счетчика завязок, если включен режим их просмотра */
@@ -124,12 +124,12 @@ class ApplicationView extends BaseView
                 tableFieldName: 'id',
                 doNotUseIfNotSortedByThisField: true,
             );
-            $this->getEntity()->addEntitySortingData($entitySortingItem);
+            $this->entity->addEntitySortingData($entitySortingItem);
         }
 
         /** Добавление динамических полей колонками таблицы */
-        foreach ($this->getModel()->getElements() as $applicationField) {
-            if ($applicationField->getVirtual() && ($applicationField->getAttribute()->getAdditionalData()['show_in_table'] ?? false) === '1') {
+        foreach ($this->model->elementsList as $applicationField) {
+            if ($applicationField->getVirtual() && ($applicationField->getAttribute()->additionalData['show_in_table'] ?? false) === '1') {
                 $substituteDataType = null;
                 $substituteDataArray = null;
 
@@ -139,32 +139,32 @@ class ApplicationView extends BaseView
                 }
 
                 $entitySortingItem = new EntitySortingItem(
-                    tableFieldName: $applicationField->getName(),
+                    tableFieldName: $applicationField->name,
                     doNotUseIfNotSortedByThisField: true,
                     substituteDataType: $substituteDataType,
                     substituteDataArray: $substituteDataArray,
                 );
-                $this->getEntity()->addEntitySortingData($entitySortingItem);
+                $this->entity->addEntitySortingData($entitySortingItem);
             }
         }
     }
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $applicationService = $this->getService();
+        $applicationService = $this->service;
         $userService = $applicationService->getUserService();
 
         /** @var FiltersetService */
         $filtersetService = CMSVCHelper::getService('filterset');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_MYAPPLICATION = LocaleHelper::getLocale(['myapplication', 'global']);
         $LOCALE_PLOT = LocaleHelper::getLocale(['plot', 'global']);
         $LOCALE_PROJECT = LocaleHelper::getLocale(['project', 'global']);
         $LOCALE_SUBSCRIPTION = $LOCALE_GLOBAL['subscription'];
 
-        $model = $this->getModel();
+        $model = $this->model;
 
         $title = $LOCALE_GLOBAL['project_control_items'][KIND][0];
         $RESPONSE_DATA = $response->getHtml();
@@ -263,18 +263,19 @@ class ApplicationView extends BaseView
 
                     $commentContentHistory = '<div class="filter"><a class="fixed_select right">' . DateHelper::showDateTimeUsual((string) $historyViewNowData->updated_at->getAsTimeStamp()) . ' ' . $userService->showNameWithId($userService->get($historyViewNowData->creator_id->getAsInt())) . '</a></div><form>';
 
-                    $this->getEntity()
-                        ->setTable('project_application_history');
-                    $this->getViewRights()
-                        ->setAddRight(false)
-                        ->setChangeRight(false)
-                        ->setDeleteRight(false)
-                        ->setViewRestrict('')
-                        ->setChangeRestrict('')
-                        ->setDeleteRestrict('');
+                    $this->entity->table = 'project_application_history';
+
+                    $viewRights = $this->viewRights;
+
+                    $viewRights->addRight = false;
+                    $viewRights->changeRight = false;
+                    $viewRights->deleteRight = false;
+                    $viewRights->viewRestrict = '';
+                    $viewRights->changeRestrict = '';
+                    $viewRights->deleteRestrict = '';
 
                     /** @var HtmlResponse */
-                    $historyHtml = $this->getEntity()->view(ActEnum::view, $historyViewIds['now']);
+                    $historyHtml = $this->entity->view(ActEnum::view, $historyViewIds['now']);
                     $historyHtml = DesignHelper::insertHeader($historyHtml->getHtml(), '&nbsp;');
 
                     $historyHtml = preg_replace('#maincontent_data autocreated#', 'maincontent_data autocreated table_cell history_view_old', $historyHtml);
@@ -282,9 +283,9 @@ class ApplicationView extends BaseView
                     $RESPONSE_DATA = preg_replace('#</h1>#', '</h1>' . $commentContent, $RESPONSE_DATA, 1) . '</form>' . preg_replace('#</h1>#', '</h1>' . $commentContentHistory, $historyHtml, 1) . '</form>';
                 }
             }
-        } elseif (DataHelper::getActDefault($this->getEntity()) === ActEnum::list) {
+        } elseif (DataHelper::getActDefault($this->entity) === ActEnum::list) {
             /** Считаем завязки у видимых в списке заявок */
-            $LIST_OF_FOUND_IDS = $this->getEntity()->getListOfFoundIds();
+            $LIST_OF_FOUND_IDS = $this->entity->listOfFoundIds;
 
             if ($applicationService->getPlotsCountView() && count($LIST_OF_FOUND_IDS) > 0) {
                 $listOfIds = [];
@@ -369,18 +370,16 @@ class ApplicationView extends BaseView
             }
 
             $masterGroupSelector = new Item\Select();
-            $masterGroupSelector
-                ->setName('master_group_selector')
-                ->setShownName('Список мастерских групп');
+            $masterGroupSelector->name = 'master_group_selector';
+            $masterGroupSelector->shownName = 'Список мастерских групп';
             $masterGroupSelectorAttribute = new Attribute\Select(
                 values: $applicationService->getMasterGroupSelectorValues(),
             );
             $masterGroupSelector->setAttribute($masterGroupSelectorAttribute);
 
             $documentsGeneratorSelector = new Item\Select();
-            $documentsGeneratorSelector
-                ->setName('documents_generator_selector')
-                ->setShownName('');
+            $documentsGeneratorSelector->name = 'documents_generator_selector';
+            $documentsGeneratorSelector->shownName = '';
             $documentsGeneratorSelectorAttribute = new Attribute\Select(
                 values: $applicationService->getGenerateDocumentValues(),
             );
@@ -409,7 +408,7 @@ class ApplicationView extends BaseView
             );
 
             if (!(!Filters::hasFiltersCookie('application', 'application') && !in_array(ACTION, ActionEnum::getFilterValues()))) {
-                $filtersetLink = str_replace(ABSOLUTE_PATH . '/application/object=application&action=setFilters&', '', $this->getEntity()->getFilters()->getPreparedCurrentFiltersLink());
+                $filtersetLink = str_replace(ABSOLUTE_PATH . '/application/object=application&action=setFilters&', '', $this->entity->filters->getPreparedCurrentFiltersLink());
                 $filtersetNamesAndValues = explode('&', $filtersetLink);
                 $filtersetNames = explode('=', $filtersetNamesAndValues[preg_match('#searchAllTextFields#', $filtersetNamesAndValues[0]) ? 1 : 0]);
                 $filtersetObj = str_replace('search_', '', $filtersetNames[0]);
@@ -421,7 +420,7 @@ class ApplicationView extends BaseView
                 $element = $model->getElement($filtersetObj);
 
                 if ($element) {
-                    $filtersetName = $element->getShownName();
+                    $filtersetName = $element->shownName;
 
                     if ($filtersetValue) {
                         if ($element instanceof Item\Select || $element instanceof Item\Multiselect) {
@@ -465,36 +464,36 @@ class ApplicationView extends BaseView
             'updated_at',
         ];
 
-        $applicationService = $this->getService();
+        $applicationService = $this->service;
 
-        $userService = $this->getService()->getUserService();
+        $userService = $this->service->getUserService();
 
         /** @var PlotService */
         $plotService = CMSVCHelper::getService('plot');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_INGAME = LocaleHelper::getLocale(['myapplication', 'global']);
 
         $excelHtml = '<tr><th>#</th><th>' . $LOCALE_INGAME['to_application'] . '</th>';
 
-        foreach ($this->getModel()->getElements() as $element) {
-            if (!$element instanceof Item\H1 && !in_array($element->getName(), $excludeElements)) {
-                $excelHtml .= '<th' . ($element->getName() === 'plots_data' ? ' style="width: 40em;"' : '') . '>' . $element->getShownName() . '</th>';
+        foreach ($this->model->elementsList as $element) {
+            if (!$element instanceof Item\H1 && !in_array($element->name, $excludeElements)) {
+                $excelHtml .= '<th' . ($element->name === 'plots_data' ? ' style="width: 40em;"' : '') . '>' . $element->shownName . '</th>';
             }
         }
 
-        $createdAt = $this->getModel()->getElement('created_at');
+        $createdAt = $this->model->getElement('created_at');
 
         if ($createdAt instanceof Item\Timestamp) {
-            $createdAt->getAttribute()
-                ->setContext([ApplicationModel::APPLICATION_VIEW_CONTEXT, ApplicationModel::APPLICATION_WRITE_CONTEXT])
-                ->setShowInObjects(true);
+            $createdAt->getAttribute()->context = [ApplicationModel::APPLICATION_VIEW_CONTEXT, ApplicationModel::APPLICATION_WRITE_CONTEXT];
+
+            $createdAt->getAttribute()->showInObjects = true;
         }
 
         $excelHtml .= '<th style="width: 40em;">' . $LOCALE['comments'] . '</th></tr>';
 
-        $searchQuerySql = $this->getEntity()->getFilters()->getPreparedSearchQuerySql();
+        $searchQuerySql = $this->entity->filters->getPreparedSearchQuerySql();
 
         $applicationsData = DB->query(
             'SELECT DISTINCT t1.*, t1.id as application_id, u.*, t1.status as status, g1.name as g_city, g2.name as g_area, t1.created_at AS created_at FROM project_application t1 LEFT JOIN user u ON u.id=t1.creator_id LEFT JOIN geography g1 ON g1.id=u.city LEFT JOIN geography g2 ON g2.id=g1.parent WHERE t1.project_id=' . $applicationService->getActivatedProjectId() . ' AND t1.deleted_by_gamemaster="0" AND t1.team_application="' . ($applicationService->getExcelType() > 0 ? $applicationService->getExcelType() : 0) . '"' .
@@ -505,7 +504,7 @@ class ApplicationView extends BaseView
                 ($applicationService->getNoFillObligView() ? ' AND t1.id IN (' . (count($applicationService->getNoFillObligIds()) > 0 ? implode(',', $applicationService->getNoFillObligIds()) : '0') . ')' : '') .
                 ($applicationService->getNonSettledView() ? ' AND id IN (' . (count($applicationService->getNonSettledIds()) > 0 ? implode(',', $applicationService->getNonSettledIds()) : '0') . ')' : '') .
                 ($searchQuerySql ? ' AND' . $searchQuerySql : ''),
-            $this->getEntity()->getFilters()->getPreparedSearchQueryParams(),
+            $this->entity->filters->getPreparedSearchQueryParams(),
         );
         $applicationsDataCount = count($applicationsData);
 
@@ -515,9 +514,9 @@ class ApplicationView extends BaseView
 
                 $applicationData = array_merge($applicationData, DataHelper::unmakeVirtual($applicationData['allinfo']));
 
-                foreach ($this->getModel()->getElements() as $element) {
-                    if (!$element instanceof Item\H1 && !in_array($element->getName(), $excludeElements)) {
-                        if ($element->getName() === 'plots_data') {
+                foreach ($this->model->elementsList as $element) {
+                    if (!$element instanceof Item\H1 && !in_array($element->name, $excludeElements)) {
+                        if ($element->name === 'plots_data') {
                             if ($applicationsDataCount < $applicationsLimitForPlots) {
                                 $plotsData = $plotService->generateAllPlots($applicationService->getActivatedProjectId(), '{application}', $applicationData['application_id']);
                                 $plotsData = preg_replace('#<div[^>]+>#', '', $plotsData);
@@ -526,7 +525,7 @@ class ApplicationView extends BaseView
                                 $plotsData = sprintf($LOCALE['too_many_applications_for_plots'], $applicationsLimitForPlots);
                             }
                             $element->set($plotsData);
-                        } elseif ($element->getName() === 'creator_id') {
+                        } elseif ($element->name === 'creator_id') {
                             if ($element instanceof Item\Select) {
                                 $userInfo = [
                                     [
@@ -551,11 +550,11 @@ class ApplicationView extends BaseView
                                             ($applicationData['sickness'] !== '' ? $LOCALE['sickness'] . ': ' . DataHelper::escapeOutput($applicationData['sickness']) . '<br>' : ''),
                                     ],
                                 ];
-                                $element->getAttribute()->setValues($userInfo);
-                                $element->set($applicationData[$element->getName()] ?? null);
+                                $element->getAttribute()->values = $userInfo;
+                                $element->set($applicationData[$element->name] ?? null);
                             }
                         } else {
-                            $element->set($applicationData[$element->getName()] ?? null);
+                            $element->set($applicationData[$element->name] ?? null);
                         }
 
                         $excelHtml .= '<td>' . $this->prepareForExcel($element->asHTML(false)) . '</td>';

@@ -26,12 +26,12 @@ class QrpgCodeService extends BaseService
 
     public function getSortSettings(): array
     {
-        return LocaleHelper::getElementText($this->getEntity(), $this->getModel()->getElement('settings'), LocalableFieldsEnum::values);
+        return LocaleHelper::getElementText($this->entity, $this->model->getElement('settings'), LocalableFieldsEnum::values);
     }
 
     public function getGenerateDefault(): string
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         return '<a href="/qrpg_generator/project_id=' . $this->getActivatedProjectId() . '&qrpg_code_id=' . DataHelper::getId() . '" target="_blank" class="qrpg_code_generate_link">' . $LOCALE['generate_qrpg_code'] . '</a><a href="/qrpg_generator/project_id=' . $this->getActivatedProjectId() . '&qrpg_code_id=' . DataHelper::getId() . '&color=1" target="_blank" class="qrpg_code_generate_link">' . $LOCALE['generate_qrpg_code_color'] . '</a>';
     }

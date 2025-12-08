@@ -20,7 +20,7 @@ use Fiber;
 use Fraym\Element\{Attribute as Attribute, Item as Item};
 use Fraym\Entity\BaseEntity;
 use Fraym\Enum\{ActEnum, EscapeModeEnum};
-use Fraym\Interface\{ElementAttribute, ElementItem, HasDefaultValue, Helper};
+use Fraym\Interface\{ElementItem, HasDefaultValue, Helper};
 use Fraym\Vendor\StripTags\StripTags;
 use Generator;
 use JsonException;
@@ -34,9 +34,9 @@ abstract class DataHelper implements Helper
 
         if (is_null($act)) {
             if (DataHelper::getId() > 0) {
-                $act = !is_null($entity) ? $entity->getDefaultItemActType() : ActEnum::edit;
+                $act = !is_null($entity) ? $entity->defaultItemActType : ActEnum::edit;
             } else {
-                $act = !is_null($entity) ? $entity->getDefaultListActType() : ActEnum::list;
+                $act = !is_null($entity) ? $entity->defaultListActType : ActEnum::list;
             }
         }
 
@@ -451,60 +451,55 @@ abstract class DataHelper implements Helper
 
             $field = new $itemClassName();
 
-            if ($field instanceof ElementItem) {
-                $fieldAttribute = new $attributeClassName();
+            $fieldAttribute = new $attributeClassName();
 
-                if ($fieldAttribute instanceof ElementAttribute) {
-                    $field
-                        ->setAttribute($fieldAttribute)
-                        ->setName('virtual' . ($fieldData['id'] ?? ''))
-                        ->setShownName($fieldData[$prefix . 'name'] ?? null)
-                        ->setHelpText($fieldData[$prefix . 'help'] ?? null);
+            $field->setAttribute($fieldAttribute);
+            $field->name = 'virtual' . ($fieldData['id'] ?? '');
+            $field->shownName = $fieldData[$prefix . 'name'] ?? null;
+            $field->helpText = $fieldData[$prefix . 'help'] ?? null;
 
-                    $fieldAttribute
-                        ->setVirtual(true)
-                        ->setContext([$read, $write])
-                        ->setObligatory($obligatory)
-                        ->setGroup($fieldData[$prefix . 'group'] ?? null)
-                        ->setUseInFilters((bool) ($fieldData['show_in_filters'] ?? false));
+            $fieldAttribute->context = [$read, $write];
 
-                    if ($fieldAttribute instanceof HasDefaultValue) {
-                        $fieldAttribute->setDefaultValue(DataHelper::escapeOutput($fieldData[$prefix . 'default'] ?? null));
-                    }
+            $fieldAttribute->virtual = true;
+            $fieldAttribute->obligatory = $obligatory;
+            $fieldAttribute->group = $fieldData[$prefix . 'group'] ?? null;
+            $fieldAttribute->useInFilters = (bool) ($fieldData['show_in_filters'] ?? false);
 
-                    if (method_exists($fieldAttribute, 'setValues')) {
-                        /** @var Attribute\Multiselect|Attribute\Select $fieldAttribute */
-                        $fieldAttribute->setValues($values);
-                    }
+            if ($fieldAttribute instanceof HasDefaultValue) {
+                $fieldAttribute->defaultValue = DataHelper::escapeOutput($fieldData[$prefix . 'default'] ?? null);
+            }
 
-                    $additionalData = [];
+            if (method_exists($fieldAttribute, 'setValues')) {
+                /** @var Attribute\Multiselect|Attribute\Select $fieldAttribute */
+                $fieldAttribute->values = $values;
+            }
 
-                    foreach ($additionalDataFields as $additionalDataField) {
-                        $additionalData[$additionalDataField] = $fieldData[$additionalDataField] ?? null;
-                    }
-                    $fieldAttribute->setAdditionalData($additionalData);
+            $additionalData = [];
 
-                    if ('file' === ($fieldData[$prefix . 'type'] ?? false)) {
-                        /** @var Attribute\File $fieldAttribute */
-                        if (isset($uploads[0]['virtual'])) {
-                            $new_upload = [
-                                'path' => $uploads[0]['virtual']['path'],
-                                'columnname' => 'virtual' . $fieldData['id'],
-                                'extensions' => $uploads[0]['virtual']['extensions'],
-                            ];
-                            $_ENV['UPLOADS'][] = $new_upload;
-                            end($_ENV['UPLOADS']);
-                            $fieldAttribute->setUploadNum(key($_ENV['UPLOADS']));
-                        } else {
-                            ResponseHelper::error('Virtual upload data not set.');
-                            $field = null;
-                        }
-                    }
+            foreach ($additionalDataFields as $additionalDataField) {
+                $additionalData[$additionalDataField] = $fieldData[$additionalDataField] ?? null;
+            }
+            $fieldAttribute->additionalData = $additionalData;
 
-                    if (!is_null($field)) {
-                        yield $fieldData['id'] => $field;
-                    }
+            if ('file' === ($fieldData[$prefix . 'type'] ?? false)) {
+                /** @var Attribute\File $fieldAttribute */
+                if (isset($uploads[0]['virtual'])) {
+                    $new_upload = [
+                        'path' => $uploads[0]['virtual']['path'],
+                        'columnname' => 'virtual' . $fieldData['id'],
+                        'extensions' => $uploads[0]['virtual']['extensions'],
+                    ];
+                    $_ENV['UPLOADS'][] = $new_upload;
+                    end($_ENV['UPLOADS']);
+                    $fieldAttribute->uploadNum = key($_ENV['UPLOADS']);
+                } else {
+                    ResponseHelper::error('Virtual upload data not set.');
+                    $field = null;
                 }
+            }
+
+            if (!is_null($field)) {
+                yield $fieldData['id'] => $field;
             }
         }
         unset($fieldsData);

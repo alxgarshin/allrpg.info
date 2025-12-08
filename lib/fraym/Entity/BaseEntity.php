@@ -18,7 +18,7 @@ use Fraym\Element\Item\{Calendar, Checkbox, Email, File, H1, Login, Multiselect,
 use Fraym\Entity\Trait\PageCounter;
 use Fraym\Enum\{ActEnum, ActionEnum, MultiObjectsEntitySubTypeEnum, SubstituteDataTypeEnum};
 use Fraym\Helper\{AuthHelper, CookieHelper, DataHelper, DateHelper, LocaleHelper, ObjectsHelper, ResponseHelper, TextHelper};
-use Fraym\Interface\{DeletedAt, ElementItem, Response, Validator};
+use Fraym\Interface\{DeletedAt, ElementItem, Response};
 use Fraym\Response\{ArrayResponse, HtmlResponse};
 use Fraym\Service\GlobalTimerService;
 use PDOException;
@@ -27,63 +27,87 @@ abstract class BaseEntity
 {
     use PageCounter;
 
-    /** Языковая локаль сущности  */
-    protected ?array $LOCALE;
+    /** Языковая локаль сущности */
+    public ?array $LOCALE {
+        get => $this->LOCALE;
+        set => $this->LOCALE = LocaleHelper::getLocale($value);
+    }
 
     /** Фильтры */
-    protected ?Filters $filters = null;
+    public ?Filters $filters = null {
+        get {
+            /** У наследующих сущностей каталога нет своих фильтров: они подчинены фильтрам родительской сущности */
+            if (!($this instanceof CatalogItemEntity) && $this->filters === null) {
+                $this->filters = new Filters($this);
+            }
+
+            return $this->filters;
+        }
+        set => $this->filters = $value;
+    }
 
     /** Вьюшка, к которой привязан данный instance BaseEntity */
-    protected BaseView $view;
+    public BaseView $view;
 
     /** Массив найденных при последнем запросе id сущностей */
-    protected array $listOfFoundIds = [];
+    public array $listOfFoundIds = [];
 
     /** Перевернутые для удобства массивы сортировки */
-    protected array $rotatedArrayIndexes = [];
+    public array $rotatedArrayIndexes = [];
 
     /** Все ошибки валидации в формате: [класс валидатора => [строка запроса => [номер группы (-1, если нет) => [непрошедший элемент]]]] */
-    protected array $validationErrors = [];
+    public array $validationErrors = [];
 
     /** Отформатированные данные после валидации */
-    protected array $dataAfterValidation = [];
+    public array $dataAfterValidation = [];
 
     /** Подготовленные сообщения в результате стандартных действий: create, change и delete */
-    protected array $fraymActionMessages = [];
+    public array $fraymActionMessages = [];
 
     /** Путь, по которому нужно перенаправить пользователя по завершению стандартного действия */
-    protected ?string $fraymActionRedirectPath = null;
+    public ?string $fraymActionRedirectPath = null;
 
+    public ?BaseModel $model {
+        get => $this->view->model;
+    }
+
+    public ?BaseController $controller {
+        get => $this->view->controller;
+    }
+
+    /**
+     * @param EntitySortingItem[] $sortingData
+     */
     public function __construct(
         /** Имя сущности, чаще всего совпадающее с URL раздела на сайте */
-        protected string $name,
+        public string $name,
 
         /** Таблица данных сущности */
-        protected string $table,
+        public string $table,
 
-        /** @var EntitySortingItem[] Информация по сортировке данных сущности */
-        protected array $sortingData,
+        /** Информация по сортировке данных сущности */
+        public array $sortingData,
 
         /** Опциональный параметр, указывающий на колонку, в которой нужно хранить данные JSON-виртуальных полей, сделанных конструктором */
-        protected ?string $virtualField = null,
+        public ?string $virtualField = null,
 
         /** Количество выводимых на страницу строк в объекте */
-        protected ?int $elementsPerPage = 50,
+        public ?int $elementsPerPage = 50,
 
         /** Использовать для просмотра сушности view из CMSVC. В ином случае просмотр приравнен к редактированию объекта. */
-        protected bool $useCustomView = false,
+        public bool $useCustomView = false,
 
         /** Использовать для списка сущностей view из CMSVC. В ином случае будет применен автоматический view. */
-        protected bool $useCustomList = false,
+        public bool $useCustomList = false,
 
         /** В какой ACT (тип карточки сущности) осуществляется по умолчанию переход из общего списка сущностей? */
-        protected ActEnum $defaultItemActType = ActEnum::edit,
+        public ActEnum $defaultItemActType = ActEnum::edit,
 
         /** В какой ACT попадает по умолчанию пользователь при переходе на список сущностей? */
-        protected ActEnum $defaultListActType = ActEnum::list,
+        public ActEnum $defaultListActType = ActEnum::list,
     ) {
         foreach ($this->sortingData as $sortingData) {
-            $sortingData->setEntity($this);
+            $sortingData->entity = $this;
         }
     }
 
@@ -91,59 +115,9 @@ abstract class BaseEntity
 
     abstract public function viewActItem(array $DATA_ITEM, ?ActEnum $act = null, ?string $contextName = null): string;
 
-    public function getLOCALE(): array
-    {
-        return $this->LOCALE;
-    }
-
-    public function setLOCALE(array $entityPathInLocale): ?array
-    {
-        $this->LOCALE = LocaleHelper::getLocale($entityPathInLocale);
-
-        return $this->LOCALE;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getTable(): string
-    {
-        return $this->table;
-    }
-
-    public function setTable(string $table): static
-    {
-        $this->table = $table;
-
-        return $this;
-    }
-
-    /** @return EntitySortingItem[] */
-    public function getSortingData(): array
-    {
-        return $this->sortingData;
-    }
-
-    /** @param EntitySortingItem[] $sortingData */
-    public function setSortingData(array $sortingData): self
-    {
-        $this->sortingData = $sortingData;
-
-        return $this;
-    }
-
     public function addEntitySortingData(EntitySortingItem $entitySortingItem): self
     {
-        $entitySortingItem->setEntity($this);
+        $entitySortingItem->entity = $this;
 
         $this->sortingData[] = $entitySortingItem;
 
@@ -152,7 +126,7 @@ abstract class BaseEntity
 
     public function insertEntitySortingData(EntitySortingItem $entitySortingItem, int $offset): self
     {
-        $entitySortingItem->setEntity($this);
+        $entitySortingItem->entity = $this;
 
         $sortingData = $this->sortingData;
         array_splice(
@@ -166,161 +140,9 @@ abstract class BaseEntity
         return $this;
     }
 
-    public function getVirtualField(): ?string
-    {
-        return $this->virtualField;
-    }
-
-    public function setVirtualField(?string $virtualField): static
-    {
-        $this->virtualField = $virtualField;
-
-        return $this;
-    }
-
-    public function getElementsPerPage(): ?int
-    {
-        return $this->elementsPerPage;
-    }
-
-    public function setElementsPerPage(?int $elementsPerPage): static
-    {
-        $this->elementsPerPage = $elementsPerPage;
-
-        return $this;
-    }
-
-    public function getUseCustomView(): bool
-    {
-        return $this->useCustomView;
-    }
-
-    public function setUseCustomView(bool $useCustomView): static
-    {
-        $this->useCustomView = $useCustomView;
-
-        return $this;
-    }
-
-    public function getUseCustomList(): bool
-    {
-        return $this->useCustomList;
-    }
-
-    public function setUseCustomList(bool $useCustomList): static
-    {
-        $this->useCustomList = $useCustomList;
-
-        return $this;
-    }
-
-    public function getDefaultItemActType(): ActEnum
-    {
-        return $this->defaultItemActType;
-    }
-
-    public function setDefaultItemActType(ActEnum $defaultItemActType): static
-    {
-        $this->defaultItemActType = $defaultItemActType;
-
-        return $this;
-    }
-
-    public function getDefaultListActType(): ActEnum
-    {
-        return $this->defaultListActType;
-    }
-
-    public function setDefaultListActType(ActEnum $defaultListActType): static
-    {
-        $this->defaultListActType = $defaultListActType;
-
-        return $this;
-    }
-
-    public function getFilters(): ?Filters
-    {
-        /** У наследующих сущностей каталога нет своих фильтров: они подчинены фильтрам родительской сущности */
-        if (!($this instanceof CatalogItemEntity) && $this->filters === null) {
-            $this->setFilters(new Filters($this));
-        }
-
-        return $this->filters;
-    }
-
-    public function setFilters(?Filters $filters): static
-    {
-        $this->filters = $filters;
-
-        return $this;
-    }
-
-    public function getView(): BaseView
-    {
-        return $this->view;
-    }
-
-    public function setView(BaseView $view): static
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    public function getModel(): ?BaseModel
-    {
-        return $this->getView()->getModel();
-    }
-
-    public function getController(): ?BaseController
-    {
-        return $this->getView()->getController();
-    }
-
-    public function getListOfFoundIds(): array
-    {
-        return $this->listOfFoundIds;
-    }
-
-    public function setListOfFoundIds(array $listOfFoundIds): static
-    {
-        $this->listOfFoundIds = $listOfFoundIds;
-
-        return $this;
-    }
-
-    public function getRotatedArrayIndexes(): array
-    {
-        return $this->rotatedArrayIndexes;
-    }
-
-    public function setRotatedArrayIndexes(array $rotatedArrayIndexes): static
-    {
-        $this->rotatedArrayIndexes = $rotatedArrayIndexes;
-
-        return $this;
-    }
-
-    public function getFraymActionMessages(): array
-    {
-        return $this->fraymActionMessages;
-    }
-
     public function addFraymActionMessage(array $fraymActionMessage): static
     {
         $this->fraymActionMessages[] = $fraymActionMessage;
-
-        return $this;
-    }
-
-    public function getFraymActionRedirectPath(): ?string
-    {
-        return $this->fraymActionRedirectPath;
-    }
-
-    public function setFraymActionRedirectPath(?string $fraymActionRedirectPath): static
-    {
-        $this->fraymActionRedirectPath = $fraymActionRedirectPath;
 
         return $this;
     }
@@ -359,16 +181,16 @@ abstract class BaseEntity
     {
         $FRAYM_ACTIONS_LOCALE = LocaleHelper::getLocale(['fraym', 'fraymActions']);
 
-        $service = $this->view->getCMSVC()?->getService();
+        $service = $this->view->CMSVC?->service;
 
-        $objectRights = $this->view->getViewRights();
+        $objectRights = $this->view->viewRights;
 
         /** Проверка авторизации пользователя */
         if (
             match (ACTION) {
-                ActionEnum::create => !$objectRights->getAddRight(),
-                ActionEnum::change => !$objectRights->getChangeRight(),
-                ActionEnum::delete => !$objectRights->getDeleteRight(),
+                ActionEnum::create => !$objectRights->addRight,
+                ActionEnum::change => !$objectRights->changeRight,
+                ActionEnum::delete => !$objectRights->deleteRight,
                 default => false,
             }
             ||
@@ -384,9 +206,9 @@ abstract class BaseEntity
         /** Предействие из сервиса, если есть */
         if (!is_null($service)) {
             match (ACTION) {
-                ActionEnum::create => $service->getPreCreate() ? $service->{$service->getPreCreate()}() : null,
-                ActionEnum::change => $service->getPreChange() ? $service->{$service->getPreChange()}() : null,
-                ActionEnum::delete => $service->getPreDelete() ? $service->{$service->getPreDelete()}() : null,
+                ActionEnum::create => $service->preCreate ? $service->{$service->preCreate}() : null,
+                ActionEnum::change => $service->preChange ? $service->{$service->preChange}() : null,
+                ActionEnum::delete => $service->preDelete ? $service->{$service->preDelete}() : null,
                 default => null,
             };
         }
@@ -397,16 +219,16 @@ abstract class BaseEntity
         $troubledElements = [];
         $activeEntity = $this;
 
-        $objectName = $this->getView()->getCMSVC()?->getObjectName() ?? $activeEntity->getName();
+        $objectName = $this->view->CMSVC->objectName ?? $activeEntity->name;
 
-        if ($this instanceof CatalogEntity && TextHelper::camelCaseToSnakeCase($this->getCatalogItemEntity()->getName()) === CMSVC) {
-            $activeEntity = $this->getCatalogItemEntity();
-            $objectName = $activeEntity->getName();
+        if ($this instanceof CatalogEntity && TextHelper::camelCaseToSnakeCase($this->catalogItemEntity->name) === CMSVC) {
+            $activeEntity = $this->catalogItemEntity;
+            $objectName = $activeEntity->name;
         }
 
         if (
-            (ACTION === ActionEnum::create && $objectRights->getAddRight()) ||
-            (ACTION === ActionEnum::change && $objectRights->getChangeRight())
+            (ACTION === ActionEnum::create && $objectRights->addRight) ||
+            (ACTION === ActionEnum::change && $objectRights->changeRight)
         ) {
             $groupsMaxValues = [];
 
@@ -416,14 +238,14 @@ abstract class BaseEntity
                 $checkReadOnly = $_REQUEST['readonly'][$dataStringId] ?? null;
 
                 if (is_null($checkReadOnly)) {
-                    foreach ($activeEntity->getModel()->getElements() as $element) {
+                    foreach ($activeEntity->model->elementsList as $element) {
                         if ($element->checkWritable($act, $objectName)) {
                             if (!$element->getNoData()) {
-                                $elementValue = $_REQUEST[$element->getName()][$dataStringId] ?? ($element->getGroup() ? [] : null);
+                                $elementValue = $_REQUEST[$element->name][$dataStringId] ?? ($element->getGroup() ? [] : null);
 
                                 if ($element->getGroup()) {
                                     /** Определяем максимальные порядковые номера заполненных полей в каждой из групп полей */
-                                    foreach ($this->getModel()->getElements() as $groupElement) {
+                                    foreach ($this->model->elementsList as $groupElement) {
                                         if (!is_null($groupElement->getGroup())) {
                                             /** Сначала выясняем количество непустых строк (максимальный id строки) в группе */
                                             if (!($groupsMaxValues[$dataStringId] ?? false)) {
@@ -433,10 +255,10 @@ abstract class BaseEntity
                                             if (!($groupsMaxValues[$dataStringId][$groupElement->getGroup()] ?? false)) {
                                                 $groupsMaxValues[$dataStringId][$groupElement->getGroup()] = 0;
 
-                                                foreach ($this->getModel()->getElements() as $groupCheckField) {
+                                                foreach ($this->model->elementsList as $groupCheckField) {
                                                     if ($groupCheckField->getGroup() === $groupElement->getGroup() && !$groupCheckField->getNoData()) {
                                                         $max = 0;
-                                                        $stringsKeys = array_keys($_REQUEST[$groupCheckField->getName()][$dataStringId] ?? []);
+                                                        $stringsKeys = array_keys($_REQUEST[$groupCheckField->name][$dataStringId] ?? []);
 
                                                         if ($stringsKeys) {
                                                             $max = (int) max($stringsKeys);
@@ -446,7 +268,7 @@ abstract class BaseEntity
                                                          * данного поля реально есть данные: таким образом, отсекаем лишние, полностью пустые группы
                                                          */
                                                         for ($i = $max; $i >= 0; $i--) {
-                                                            if ($_REQUEST[$groupCheckField->getName()][$dataStringId][$i] ?? false) {
+                                                            if ($_REQUEST[$groupCheckField->name][$dataStringId][$i] ?? false) {
                                                                 $max = $i;
                                                                 break;
                                                             }
@@ -454,7 +276,7 @@ abstract class BaseEntity
 
                                                         if (
                                                             $max > $groupsMaxValues[$dataStringId][$groupElement->getGroup()] &&
-                                                            ($_REQUEST[$groupCheckField->getName()][$dataStringId][$max] ?? false)
+                                                            ($_REQUEST[$groupCheckField->name][$dataStringId][$max] ?? false)
                                                         ) {
                                                             $groupsMaxValues[$dataStringId][$groupElement->getGroup()] = $max;
                                                         }
@@ -475,8 +297,8 @@ abstract class BaseEntity
                                         if (count($failedValidatorsNames) > 0) {
                                             $globalValidationSuccess = false;
 
-                                            foreach ($failedValidatorsNames as $validationError) {
-                                                $this->appendValidationErrors($validationError, $dataStringId, $groupId, $element);
+                                            foreach ($failedValidatorsNames as $failedValidatorName) {
+                                                $this->appendValidationErrors($failedValidatorName, $dataStringId, $groupId, $element);
                                             }
                                         } elseif (!is_null($groupElementValue)) {
                                             $groupElementValues[$groupId] = $groupElementValue;
@@ -498,8 +320,8 @@ abstract class BaseEntity
                                     if (count($failedValidatorsNames) > 0) {
                                         $globalValidationSuccess = false;
 
-                                        foreach ($failedValidatorsNames as $validationError) {
-                                            $this->appendValidationErrors($validationError, $dataStringId, -1, $element);
+                                        foreach ($failedValidatorsNames as $failedValidatorName) {
+                                            $this->appendValidationErrors($failedValidatorName, $dataStringId, -1, $element);
                                         }
                                     } else {
                                         $this->appendDataAfterValidation(
@@ -521,7 +343,7 @@ abstract class BaseEntity
                 $validationErrors = $this->validationErrors;
 
                 foreach ($validationErrors as $validatorClass => $validationError) {
-                    /** @var Validator $validatorClass */
+                    /** @var class-string $validatorClass */
                     $this->addFraymActionMessage(['error', $validatorClass::getMessage($validationError)]);
 
                     foreach ($validationError as $stringId => $groupData) {
@@ -529,7 +351,7 @@ abstract class BaseEntity
 
                         foreach ($groupData as $groupId => $elementsArray) {
                             foreach ($elementsArray as $element) {
-                                $troubledElements[] = $element->getName() . '[' . $stringId . ']' . ($groupId > 0 ? '[' . $groupId . ']' : '');
+                                $troubledElements[] = $element->name . '[' . $stringId . ']' . ($groupId > 0 ? '[' . $groupId . ']' : '');
                             }
                         }
                     }
@@ -539,7 +361,7 @@ abstract class BaseEntity
 
         if ($globalValidationSuccess) {
             /** Действие */
-            $data = $this->getDataAfterValidation();
+            $data = $this->dataAfterValidation;
 
             if (ACTION !== ActionEnum::delete) {
                 if ($this->virtualField) {
@@ -548,7 +370,7 @@ abstract class BaseEntity
                         $stringVirtualDataArray = $data[$dataStringId][$this->virtualField];
 
                         foreach ($stringVirtualDataArray as $stringVirtualDataItem) {
-                            $stringVirtualDataString .= '[' . $stringVirtualDataItem[0]->getName() . '][' . $stringVirtualDataItem[1] . ']' . chr(13) . chr(10);
+                            $stringVirtualDataString .= '[' . $stringVirtualDataItem[0]->name . '][' . $stringVirtualDataItem[1] . ']' . chr(13) . chr(10);
                         }
                         $data[$dataStringId][$this->virtualField] = $stringVirtualDataString;
                     }
@@ -557,7 +379,7 @@ abstract class BaseEntity
 
             $successfulResultsIds = [];
 
-            if (ACTION === ActionEnum::create && $objectRights->getAddRight()) {
+            if (ACTION === ActionEnum::create && $objectRights->addRight) {
                 $hasErrors = false;
 
                 foreach ($dataStringsIds as $dataStringId) {
@@ -565,9 +387,9 @@ abstract class BaseEntity
                         $stringData = $data[$dataStringId];
                         $checkData = $stringData;
 
-                        foreach ($activeEntity->getModel()->getElements() as $element) {
+                        foreach ($activeEntity->model->elementsList as $element) {
                             if ($element instanceof Timestamp) {
-                                unset($checkData[$element->getName()]);
+                                unset($checkData[$element->name]);
                             }
                         }
                         $checkDoubledSaveItem = DB->select($this->table, $checkData, true);
@@ -589,7 +411,7 @@ abstract class BaseEntity
                 if (!$hasErrors) {
                     $this->fraymActionRedirectPath = ResponseHelper::redirectConstruct();
                 }
-            } elseif (ACTION === ActionEnum::change  && $objectRights->getChangeRight()) {
+            } elseif (ACTION === ActionEnum::change  && $objectRights->changeRight) {
                 $successfullySavedStringIds = [];
 
                 foreach ($dataStringsIds as $dataStringId) {
@@ -598,9 +420,9 @@ abstract class BaseEntity
                         $id = $_REQUEST['id'][$dataStringId] ?? null;
 
                         if (!is_null($id)) {
-                            if (!is_null($objectRights->getChangeRestrict())) {
+                            if (!is_null($objectRights->changeRestrict)) {
                                 $result = DB->query(
-                                    'SELECT * FROM ' . $this->table . ' WHERE ' . $objectRights->getChangeRestrict() . ' AND id=:id',
+                                    'SELECT * FROM ' . $this->table . ' WHERE ' . $objectRights->changeRestrict . ' AND id=:id',
                                     [['id', $id]],
                                     true,
                                 );
@@ -610,13 +432,13 @@ abstract class BaseEntity
 
                             if ($result) {
                                 try {
-                                    foreach ($activeEntity->getModel()->getElements() as $element) {
+                                    foreach ($activeEntity->model->elementsList as $element) {
                                         if ($element instanceof File) {
                                             unset($fileNames);
-                                            preg_match_all('#{([^:]+):([^}]+)}#', ($result[$element->getName()] ?? ''), $fileNames);
+                                            preg_match_all('#{([^:]+):([^}]+)}#', ($result[$element->name] ?? ''), $fileNames);
 
                                             foreach ($fileNames[2] as $fileName) {
-                                                if (!preg_match('#:' . $fileName . '}#', ($stringData[$element->getName()] ?? ''))) {
+                                                if (!preg_match('#:' . $fileName . '}#', ($stringData[$element->name] ?? ''))) {
                                                     $element->remove($fileName);
                                                 }
                                             }
@@ -682,14 +504,14 @@ abstract class BaseEntity
                         $this->fraymActionRedirectPath = $checkRedirectPath;
                     }
                 }
-            } elseif (ACTION === ActionEnum::delete && $objectRights->getDeleteRight()) {
+            } elseif (ACTION === ActionEnum::delete && $objectRights->deleteRight) {
                 $arrayOfIds = $useFixedId ? [0] : ID;
 
                 foreach ($arrayOfIds as $key => $id) {
                     if (!is_null($id)) {
-                        if (!is_null($objectRights->getDeleteRestrict())) {
+                        if (!is_null($objectRights->deleteRestrict)) {
                             $result = DB->query(
-                                'SELECT * FROM ' . $this->table . ' WHERE ' . $objectRights->getDeleteRestrict() . ' AND id=:id',
+                                'SELECT * FROM ' . $this->table . ' WHERE ' . $objectRights->deleteRestrict . ' AND id=:id',
                                 [['id', $id]],
                                 true,
                             );
@@ -708,7 +530,7 @@ abstract class BaseEntity
                                 $isCatalog = $this instanceof CatalogInterface && $this->detectEntityType($result) instanceof CatalogEntity;
 
                                 if ($isCatalog) {
-                                    $catalogEntity = $this instanceof CatalogItemEntity ? $this->getCatalogEntity() : $this;
+                                    $catalogEntity = $this instanceof CatalogItemEntity ? $this->catalogEntity : $this;
                                     $catalogEntity->clearDataByParent($id);
                                     $this->addFraymActionMessage(['success', $this->getObjectMessages($catalogEntity)[3]]);
                                 } else {
@@ -739,9 +561,9 @@ abstract class BaseEntity
             /** Постдействие из сервиса, если есть */
             if (!is_null($service)) {
                 match (ACTION) {
-                    ActionEnum::create => $service->getPostCreate() ? $service->{$service->getPostCreate()}($successfulResultsIds) : null,
-                    ActionEnum::change => $service->getPostChange() ? $service->{$service->getPostChange()}($successfulResultsIds) : null,
-                    ActionEnum::delete => $service->getPostDelete() ? $service->{$service->getPostDelete()}($successfulResultsIds) : null,
+                    ActionEnum::create => $service->postCreate ? $service->{$service->postCreate}($successfulResultsIds) : null,
+                    ActionEnum::change => $service->postChange ? $service->{$service->postChange}($successfulResultsIds) : null,
+                    ActionEnum::delete => $service->postDelete ? $service->{$service->postDelete}($successfulResultsIds) : null,
                     default => null,
                 };
             }
@@ -757,7 +579,7 @@ abstract class BaseEntity
                 CookieHelper::batchDeleteCookie(['messages']);
             }
 
-            $errouneousFields = $this instanceof MultiObjectsEntity && $this->getSubType() === MultiObjectsEntitySubTypeEnum::Excel ?
+            $errouneousFields = $this instanceof MultiObjectsEntity && $this->subType === MultiObjectsEntitySubTypeEnum::Excel ?
                 $troubledStrings :
                 $troubledElements;
 
@@ -774,7 +596,7 @@ abstract class BaseEntity
         $FILTERS_LOCALE = LocaleHelper::getLocale(['fraym', 'filters']);
 
         if ($this instanceof CatalogItemEntity) {
-            $OBJECT_LOCALE = $CATALOG_LOCALE = LocaleHelper::getLocale([$this->getCatalogEntity()->getNameUsedInLocale() . '/' . $this->getNameUsedInLocale()]);
+            $OBJECT_LOCALE = $CATALOG_LOCALE = LocaleHelper::getLocale([$this->catalogEntity->getNameUsedInLocale() . '/' . $this->getNameUsedInLocale()]);
             $PAGETITLE = $CATALOG_LOCALE['global']['title'] ?? '';
         } else {
             $PAGETITLE = $OBJECT_LOCALE['global']['title'] ?? '';
@@ -797,9 +619,9 @@ abstract class BaseEntity
             $id = DataHelper::getId();
         }
 
-        if ($this->view->getViewRights()->getViewRight()) {
+        if ($this->view->viewRights->viewRight) {
             if ($act === ActEnum::list) {
-                $filtersHtml = $this->getFilters()->getFiltersHtml();
+                $filtersHtml = $this->filters->getFiltersHtml();
 
                 if ($_ENV['GLOBALTIMERDRAWREPORT']) {
                     $RESPONSE_DATA .= $_GLOBALTIMERDRAWREPORT->getTimerDiffStr('<!-- filters prepare time: %ss-->');
@@ -813,10 +635,10 @@ abstract class BaseEntity
 
                 $mainTablePrefix = "t1.";
 
-                $preparedViewRestrictSql = $this->view->getViewRights()->getViewRestrict();
+                $preparedViewRestrictSql = $this->view->viewRights->viewRestrict;
 
                 if (is_null($preparedViewRestrictSql)) {
-                    $this->view->getViewRights()->setViewRestrict(null);
+                    $this->view->viewRights->viewRestrict = null;
                 } else {
                     $preparedViewRestrictSql = preg_replace(
                         '# (and|or) (\(?)#i',
@@ -831,7 +653,7 @@ abstract class BaseEntity
 
                 $QUERY_PARAMS = [];
 
-                $filtersQueryParams = $this->getFilters()->getPreparedSearchQueryParams();
+                $filtersQueryParams = $this->filters->getPreparedSearchQueryParams();
 
                 if (count($filtersQueryParams) > 0) {
                     $QUERY_PARAMS = $filtersQueryParams;
@@ -839,10 +661,10 @@ abstract class BaseEntity
 
                 $QUERY = "SELECT t1.*" . $leftJoinedFieldsSql . " FROM " . $this->table . " AS t1" . $leftJoinedTablesSql . $preparedViewRestrictSql;
 
-                if (!is_null($preparedViewRestrictSql) && $this->getFilters()->getPreparedSearchQuerySql() !== "") {
+                if (!is_null($preparedViewRestrictSql) && $this->filters->getPreparedSearchQuerySql() !== "") {
                     $QUERY .= " AND";
                 }
-                $QUERY .= $this->getFilters()->getPreparedSearchQuerySql() .
+                $QUERY .= $this->filters->getPreparedSearchQuerySql() .
                     ($ORDER !== "" ? " ORDER BY " . $ORDER : "");
 
                 /** В случае сущности-каталога необходимо провести полную пересборку списка полученных результатов: нужно получить полное дерево до
@@ -864,8 +686,8 @@ abstract class BaseEntity
                     /** Формируем полное дерево объектов */
 
                     /** @var CatalogItemEntity $catalogItemEntity */
-                    $catalogItemEntity = $this->getCatalogItemEntity();
-                    $parentFieldName = $catalogItemEntity->getTableFieldWithParentId();
+                    $catalogItemEntity = $this->catalogItemEntity;
+                    $parentFieldName = $catalogItemEntity->tableFieldWithParentId;
 
                     $additionalWhere = preg_replace('# WHERE #', '', $preparedViewRestrictSql ?? '');
 
@@ -875,7 +697,7 @@ abstract class BaseEntity
                         $parentFieldName,
                         null,
                         $additionalWhere,
-                        $mainTablePrefix . $catalogItemEntity->getTableFieldToDetectType() . "='{menu}' DESC, " . $ORDER,
+                        $mainTablePrefix . $catalogItemEntity->tableFieldToDetectType . "='{menu}' DESC, " . $ORDER,
                         1,
                         'id',
                         'name',
@@ -887,7 +709,7 @@ abstract class BaseEntity
                     $catalogEntityFullTree = DB->chopOffTreeOfItemsBranches(
                         $catalogEntityFullTree,
                         $catalogEntityFoundIds,
-                        $catalogItemEntity->getTableFieldWithParentId(),
+                        $catalogItemEntity->tableFieldWithParentId,
                     );
 
                     /** К оставшемуся дереву объектов применяем LIMIT и OFFSET к верхнему уровню каталога. И фиксируем финальный $ITEMS_TOTAL. */
@@ -930,7 +752,7 @@ abstract class BaseEntity
                             $DATA[] = [
                                 'id' => $catalogEntitySelectedTreeItem[0],
                                 'name' => $catalogEntitySelectedTreeItem[1],
-                                $catalogItemEntity->getTableFieldToDetectType() => '{menu}',
+                                $catalogItemEntity->tableFieldToDetectType => '{menu}',
                                 'catalogLevel' => 0,
                             ];
                         } else {
@@ -958,7 +780,7 @@ abstract class BaseEntity
                 if (!REQUEST_TYPE->isApiRequest()) {
                     /** Открываем div.maincontent_data */
                     $RESPONSE_DATA .= '<div class="maincontent_data autocreated' .
-                        ($this->getFilters()->getFiltersState() ? ' with_indexer' : '') .
+                        ($this->filters->getFiltersState() ? ' with_indexer' : '') .
                         ' kind_' . KIND . ' ' . TextHelper::camelCaseToSnakeCase(ObjectsHelper::getClassShortName($this::class)) . ' ' . $act->value . '">';
 
                     if ($PAGETITLE !== '') {
@@ -968,7 +790,7 @@ abstract class BaseEntity
                     /** Добавляем переключатель фильтров */
                     if ($filtersHtml !== '') {
                         $RESPONSE_DATA .= '<div class="indexer_toggle' .
-                            ($this->getFilters()->getFiltersState() ? ' indexer_shown' : '') .
+                            ($this->filters->getFiltersState() ? ' indexer_shown' : '') .
                             '"><span class="indexer_toggle_text">' . $FILTERS_LOCALE['filter'] . '</span><span class="sbi sbi-search"></span></div>';
                     }
 
@@ -986,8 +808,8 @@ abstract class BaseEntity
                         }
 
                         /** Ссылка на текущий набор фильтров */
-                        if ($this->getFilters()->getPreparedCurrentFiltersLink() !== '' && $this->getFilters()->getFiltersState()) {
-                            $RESPONSE_DATA .= '<div class="copy_filters_link"><a href="' . $this->getFilters()->getPreparedCurrentFiltersLink() .
+                        if ($this->filters->getPreparedCurrentFiltersLink() !== '' && $this->filters->getFiltersState()) {
+                            $RESPONSE_DATA .= '<div class="copy_filters_link"><a href="' . $this->filters->getPreparedCurrentFiltersLink() .
                                 '" target="_blank">' . $FILTERS_LOCALE['copy_filters_link'] . '</a></div>';
                         }
 
@@ -1012,7 +834,7 @@ abstract class BaseEntity
                 }
             } elseif (in_array($act, [ActEnum::add, ActEnum::view, ActEnum::edit])) {
                 $DATA = [];
-                $modelRights = $this->view->getViewRights();
+                $modelRights = $this->view->viewRights;
 
                 if ($id > 0) {
                     $DATA = DB->select($this->table, ['id' => $id], true);
@@ -1022,43 +844,43 @@ abstract class BaseEntity
                     }
 
                     if (is_null($DATA['id'] ?? null)) {
-                        $modelRights->setViewRight(false)
-                            ->setChangeRight(false)
-                            ->setDeleteRight(false);
+                        $modelRights->viewRight = false;
+                        $modelRights->changeRight = false;
+                        $modelRights->deleteRight = false;
                     } else {
-                        if (in_array($act, [ActEnum::view, ActEnum::edit]) && !is_null($modelRights->getViewRestrict())) {
+                        if (in_array($act, [ActEnum::view, ActEnum::edit]) && !is_null($modelRights->viewRestrict)) {
                             $viewCheckData = DB->query(
-                                'SELECT * FROM ' . $this->table . ' WHERE id=:id AND ' . $modelRights->getViewRestrict(),
+                                'SELECT * FROM ' . $this->table . ' WHERE id=:id AND ' . $modelRights->viewRestrict,
                                 [['id', $id]],
                                 true,
                             );
 
                             if (!$viewCheckData) {
-                                $modelRights->setViewRight(false);
+                                $modelRights->viewRight = false;
                             }
                         }
 
-                        if (in_array($act, [ActEnum::edit]) && !is_null($modelRights->getChangeRestrict())) {
+                        if (in_array($act, [ActEnum::edit]) && !is_null($modelRights->changeRestrict)) {
                             $changeCheckData = DB->query(
-                                'SELECT * FROM ' . $this->table . ' WHERE id=:id AND ' . $modelRights->getChangeRestrict(),
+                                'SELECT * FROM ' . $this->table . ' WHERE id=:id AND ' . $modelRights->changeRestrict,
                                 [['id', $id]],
                                 true,
                             );
 
                             if (!$changeCheckData) {
-                                $modelRights->setChangeRight(false);
+                                $modelRights->changeRight = false;
                             }
                         }
 
-                        if (in_array($act, [ActEnum::edit]) && !is_null($modelRights->getDeleteRestrict())) {
+                        if (in_array($act, [ActEnum::edit]) && !is_null($modelRights->deleteRestrict)) {
                             $deleteCheckData = DB->query(
-                                'SELECT * FROM ' . $this->table . ' WHERE id=:id AND ' . $modelRights->getDeleteRestrict(),
+                                'SELECT * FROM ' . $this->table . ' WHERE id=:id AND ' . $modelRights->deleteRestrict,
                                 [['id', $id]],
                                 true,
                             );
 
                             if (!$deleteCheckData) {
-                                $modelRights->setDeleteRight(false);
+                                $modelRights->deleteRight = false;
                             }
                         }
                     }
@@ -1079,7 +901,7 @@ abstract class BaseEntity
                 [$DATA_FILTERED_BY_CONTEXT, $LIST_OF_FOUND_IDS] = $this->filterDataByContext($DATA, $contexts);
                 $RESPONSE_ARRAY = $DATA_FILTERED_BY_CONTEXT;
 
-                if (!REQUEST_TYPE->isApiRequest() && $modelRights->getViewRight()) {
+                if (!REQUEST_TYPE->isApiRequest() && $modelRights->viewRight) {
                     /** Открываем div.maincontent_data */
                     $RESPONSE_DATA .= '<div class="maincontent_data autocreated kind_' . KIND .
                         ' ' . TextHelper::camelCaseToSnakeCase(ObjectsHelper::getClassShortName($this::class)) . ' ' . $act->value . '">';
@@ -1090,8 +912,8 @@ abstract class BaseEntity
 
                     $activeEntity = $this;
 
-                    if ($this instanceof CatalogEntity && TextHelper::camelCaseToSnakeCase($this->getCatalogItemEntity()->getName()) === CMSVC) {
-                        $activeEntity = $this->getCatalogItemEntity();
+                    if ($this instanceof CatalogEntity && TextHelper::camelCaseToSnakeCase($this->catalogItemEntity->name) === CMSVC) {
+                        $activeEntity = $this->catalogItemEntity;
                     }
                     $viewActData = $activeEntity->viewActItem($DATA_FILTERED_BY_CONTEXT[0] ?? [], $act, $contextName);
 
@@ -1135,15 +957,15 @@ abstract class BaseEntity
     {
         $RESPONSE_DATA = '';
 
-        if (is_null($sortingItem) || $sortingItem->getShowFieldDataInEntityTable()) {
-            if ($modelElement->checkVisibility() || $sortingItem->getSubstituteDataType() === SubstituteDataTypeEnum::TABLE || $sortingItem->getSubstituteDataType() === SubstituteDataTypeEnum::ARRAY) {
-                if (($DATA_ITEM[$modelElement->getName()] ?? null) !== null) {
-                    $modelElement->set($DATA_ITEM[$modelElement->getName()]);
+        if (is_null($sortingItem) || $sortingItem->showFieldDataInEntityTable) {
+            if ($modelElement->checkVisibility() || $sortingItem->substituteDataType === SubstituteDataTypeEnum::TABLE || $sortingItem->substituteDataType === SubstituteDataTypeEnum::ARRAY) {
+                if (($DATA_ITEM[$modelElement->name] ?? null) !== null) {
+                    $modelElement->set($DATA_ITEM[$modelElement->name]);
                 }
 
                 if ($this instanceof CatalogEntity || $this instanceof CatalogItemEntity) {
-                    if ($sortingItem->getShowFieldShownNameInCatalogItemString()) {
-                        $RESPONSE_DATA .= $modelElement->getShownName() . ': ';
+                    if ($sortingItem->showFieldShownNameInCatalogItemString) {
+                        $RESPONSE_DATA .= $modelElement->shownName . ': ';
                     }
                     $RESPONSE_DATA .= '<b>';
                 }
@@ -1152,39 +974,39 @@ abstract class BaseEntity
 
                 if (is_null($fieldValue) || (is_string($fieldValue) && trim($fieldValue) === '')) {
                     $GLOBAL_LOCALE = LocaleHelper::getLocale(['fraym', 'dynamiccreate']);
-                    $useText = ($modelElement->getName() === 'name' && in_array($DATA_ITEM['code'] ?? '', ['default', '1'])) ?
+                    $useText = ($modelElement->name === 'name' && in_array($DATA_ITEM['code'] ?? '', ['default', '1'])) ?
                         'default' :
                         'not_set';
                     $RESPONSE_DATA .= '<i>' . $GLOBAL_LOCALE[$useText] . '</i>';
-                } elseif ($sortingItem->getSubstituteDataType() === SubstituteDataTypeEnum::TABLE) {
+                } elseif ($sortingItem->substituteDataType === SubstituteDataTypeEnum::TABLE) {
                     if ($modelElement instanceof Multiselect) {
                         foreach ($fieldValue as $fieldValueItem) {
                             $RESPONSE_DATA .= (DataHelper::getFlatArrayElement($fieldValueItem, $modelElement->getValues())[1] ?? '') . '<br>';
                         }
                     } else {
-                        $RESPONSE_DATA .= $DATA_ITEM[$sortingItem->getSubstituteDataTableName() .
-                            TextHelper::mb_ucfirst($sortingItem->getSubstituteDataTableField())];
+                        $RESPONSE_DATA .= $DATA_ITEM[$sortingItem->substituteDataTableName .
+                            TextHelper::mb_ucfirst($sortingItem->substituteDataTableField)];
                     }
-                } elseif ($sortingItem->getSubstituteDataType() === SubstituteDataTypeEnum::ARRAY) {
-                    $rotatedArrayIndexes = $this->getRotatedArrayIndexes();
+                } elseif ($sortingItem->substituteDataType === SubstituteDataTypeEnum::ARRAY) {
+                    $rotatedArrayIndexes = $this->rotatedArrayIndexes;
 
-                    if (!isset($rotatedArrayIndexes[$sortingItem->getTableFieldName()])) {
-                        $rotatedArrayIndexes[$sortingItem->getTableFieldName()] = [];
+                    if (!isset($rotatedArrayIndexes[$sortingItem->tableFieldName])) {
+                        $rotatedArrayIndexes[$sortingItem->tableFieldName] = [];
 
-                        foreach ($sortingItem->getSubstituteDataArray() as $substituteDataArrayItem) {
-                            $rotatedArrayIndexes[$sortingItem->getTableFieldName()][$substituteDataArrayItem[0]] = $substituteDataArrayItem[1];
+                        foreach ($sortingItem->substituteDataArray as $substituteDataArrayItem) {
+                            $rotatedArrayIndexes[$sortingItem->tableFieldName][$substituteDataArrayItem[0]] = $substituteDataArrayItem[1];
                         }
-                        $this->setRotatedArrayIndexes($rotatedArrayIndexes);
+                        $this->rotatedArrayIndexes = $rotatedArrayIndexes;
                     }
 
                     if ($modelElement instanceof Multiselect) {
                         foreach ($fieldValue as $fieldValueItem) {
-                            if ($rotatedArrayIndexes[$sortingItem->getTableFieldName()][$fieldValueItem] ?? false) {
-                                $RESPONSE_DATA .= $rotatedArrayIndexes[$sortingItem->getTableFieldName()][$fieldValueItem] . '<br>';
+                            if ($rotatedArrayIndexes[$sortingItem->tableFieldName][$fieldValueItem] ?? false) {
+                                $RESPONSE_DATA .= $rotatedArrayIndexes[$sortingItem->tableFieldName][$fieldValueItem] . '<br>';
                             }
                         }
                     } else {
-                        $RESPONSE_DATA .= $rotatedArrayIndexes[$sortingItem->getTableFieldName()][$fieldValue] ?? '';
+                        $RESPONSE_DATA .= $rotatedArrayIndexes[$sortingItem->tableFieldName][$fieldValue] ?? '';
                     }
                 } elseif ($modelElement instanceof Checkbox) {
                     if ($fieldValue) {
@@ -1204,7 +1026,7 @@ abstract class BaseEntity
                 if ($this instanceof CatalogEntity || $this instanceof CatalogItemEntity) {
                     $RESPONSE_DATA .= '</b>';
 
-                    if (count($this->sortingData) > 1 && !$sortingItem->getRemoveDotAfterText()) {
+                    if (count($this->sortingData) > 1 && !$sortingItem->removeDotAfterText) {
                         $RESPONSE_DATA .= '. ';
                     }
                 }
@@ -1217,13 +1039,13 @@ abstract class BaseEntity
     /** Удаление / мягкое удаление объекта */
     public function deleteItem(string|int $id): void
     {
-        $model = $this->getModel();
+        $model = $this->model;
 
         if ($model instanceof DeletedAt) {
             $deletedAtValue = $model->getDeletedAtTime();
 
             DB->update(
-                tableName: $this->$this->getTable(),
+                tableName: $this->table,
                 data: [
                     'deleted_at' => $deletedAtValue,
                 ],
@@ -1233,7 +1055,7 @@ abstract class BaseEntity
             );
         } else {
             $item = DB->select(
-                tableName: $this->getTable(),
+                tableName: $this->table,
                 criteria: [
                     'id' => $id,
                 ],
@@ -1241,15 +1063,15 @@ abstract class BaseEntity
             );
 
             if ($this instanceof CatalogInterface) {
-                $elements = $this->detectEntityType($item)->getModel()->getElements();
+                $elements = $this->detectEntityType($item)->model->elementsList;
             } else {
-                $elements = $this->getModel()->getElements();
+                $elements = $this->model->elementsList;
             }
 
             foreach ($elements as $element) {
                 if ($element instanceof File) {
                     unset($fileNames);
-                    preg_match_all('#{([^:]+):([^}]+)}#', ($item[$element->getName()] ?? ''), $fileNames);
+                    preg_match_all('#{([^:]+):([^}]+)}#', ($item[$element->name] ?? ''), $fileNames);
 
                     foreach ($fileNames[2] as $fileName) {
                         $element->remove($fileName);
@@ -1269,7 +1091,7 @@ abstract class BaseEntity
     private function getFraymModelLocale(?BaseEntity $activeEntity = null): ?array
     {
         $activeEntity = $activeEntity ?? $this;
-        $activeEntityName = $activeEntity instanceof CatalogItemEntity ? $activeEntity->getCatalogEntity()->getNameUsedInLocale() . '/' . $activeEntity->getNameUsedInLocale() : $activeEntity->getNameUsedInLocale();
+        $activeEntityName = $activeEntity instanceof CatalogItemEntity ? $activeEntity->catalogEntity->getNameUsedInLocale() . '/' . $activeEntity->getNameUsedInLocale() : $activeEntity->getNameUsedInLocale();
 
         $LOCALE = LocaleHelper::getLocale([$activeEntityName]);
 
@@ -1297,13 +1119,13 @@ abstract class BaseEntity
 
         $itemsToFilter = ['id', 'catalogLevel'];
 
-        foreach ($this->getModel()->getElements() as $item) {
-            if (DataHelper::inArrayAny($contexts, $item->getAttribute()->getContext())) {
-                if ($item->getName() !== 'id') {
-                    $itemsToFilter[] = $item->getName();
+        foreach ($this->model->elementsList as $item) {
+            if (DataHelper::inArrayAny($contexts, $item->getAttribute()->context)) {
+                if ($item->name !== 'id') {
+                    $itemsToFilter[] = $item->name;
 
-                    if ($item->getAttribute()->getAlternativeDataColumnName()) {
-                        $alternativeDataColumnNames[$item->getAttribute()->getAlternativeDataColumnName()][] = $item->getName();
+                    if ($item->getAttribute()->alternativeDataColumnName) {
+                        $alternativeDataColumnNames[$item->getAttribute()->alternativeDataColumnName][] = $item->name;
                     }
                 }
             }
@@ -1314,22 +1136,22 @@ abstract class BaseEntity
         $itemsToFilterCatalogItem = ['id', 'catalogLevel'];
 
         if ($this instanceof CatalogEntity) {
-            $catalogItemEntity = $this->getCatalogItemEntity();
+            $catalogItemEntity = $this->catalogItemEntity;
             $catalogItemContext = $contexts;
 
             foreach ($contexts as $context) {
                 if (str_starts_with($context, ':')) {
-                    $catalogItemContext[] = $catalogItemEntity->getName() . $context;
+                    $catalogItemContext[] = $catalogItemEntity->name . $context;
                 }
             }
 
-            foreach ($catalogItemEntity->getModel()->getElements() as $item) {
-                if (DataHelper::inArrayAny($catalogItemContext, $item->getAttribute()->getContext())) {
-                    if ($item->getName() !== 'id') {
-                        $itemsToFilterCatalogItem[] = $item->getName();
+            foreach ($catalogItemEntity->model->elementsList as $item) {
+                if (DataHelper::inArrayAny($catalogItemContext, $item->getAttribute()->context)) {
+                    if ($item->name !== 'id') {
+                        $itemsToFilterCatalogItem[] = $item->name;
 
-                        if ($item->getAttribute()->getAlternativeDataColumnName()) {
-                            $alternativeDataColumnNames[$item->getAttribute()->getAlternativeDataColumnName()][] = $item->getName();
+                        if ($item->getAttribute()->alternativeDataColumnName) {
+                            $alternativeDataColumnNames[$item->getAttribute()->alternativeDataColumnName][] = $item->name;
                         }
                     }
                 }
@@ -1337,8 +1159,8 @@ abstract class BaseEntity
         }
 
         foreach ($this->sortingData as $sortingItem) {
-            if ($sortingItem->getSubstituteDataType() === SubstituteDataTypeEnum::TABLE) {
-                $itemsToFilter[] = $sortingItem->getSubstituteDataTableName() . TextHelper::mb_ucfirst($sortingItem->getSubstituteDataTableField());
+            if ($sortingItem->substituteDataType === SubstituteDataTypeEnum::TABLE) {
+                $itemsToFilter[] = $sortingItem->substituteDataTableName . TextHelper::mb_ucfirst($sortingItem->substituteDataTableField);
             }
         }
 
@@ -1380,7 +1202,7 @@ abstract class BaseEntity
         $sortingFieldNum = 0;
         $sortingOrder = "";
 
-        if (!is_null(SORTING)) {
+        if (SORTING > 0) {
             $sortingFieldNum = (int) (round(SORTING / 2) - 1);
             $sortingOrder = (SORTING % 2 === 1 ? "" : " DESC");
         }
@@ -1389,41 +1211,41 @@ abstract class BaseEntity
             $sortingItemNum = (int) $sortingItemNum;
 
             /** Если у $sortingItem выставлен параметр $doNotUseInSorting, мы вообще не включаем его в запрос сортировки данных, никогда */
-            if (!$sortingItem->getDoNotUseInSorting()) {
-                if ($sortingItem->getSubstituteDataType() === SubstituteDataTypeEnum::TABLE) {
-                    if ($this->getModel()->getElement($sortingItem->getTableFieldName()) instanceof Multiselect) {
+            if (!$sortingItem->doNotUseInSorting) {
+                if ($sortingItem->substituteDataType === SubstituteDataTypeEnum::TABLE) {
+                    if ($this->model->getElement($sortingItem->tableFieldName) instanceof Multiselect) {
                         /** Если вдруг указан мультиселект в качестве поля, нам нужно выдернуть первое значение из поля */
                         $leftJoinedTablesSql .= " LEFT JOIN " .
-                            $sortingItem->getSubstituteDataTableName() . " t" . $tablesUsedCount . " ON " .
-                            "SUBSTRING(t1." . $sortingItem->getTableFieldName() . ", 2, LOCATE('-', t1." . $sortingItem->getTableFieldName() . ", 2) - 2)=" .
-                            "t" . $tablesUsedCount . "." . $sortingItem->getSubstituteDataTableId();
+                            $sortingItem->substituteDataTableName . " t" . $tablesUsedCount . " ON " .
+                            "SUBSTRING(t1." . $sortingItem->tableFieldName . ", 2, LOCATE('-', t1." . $sortingItem->tableFieldName . ", 2) - 2)=" .
+                            "t" . $tablesUsedCount . "." . $sortingItem->substituteDataTableId;
                     } else {
-                        $leftJoinedFieldsSql .= ", t" . $tablesUsedCount . "." . $sortingItem->getSubstituteDataTableField() . " AS "
-                            . $sortingItem->getSubstituteDataTableName() . TextHelper::mb_ucfirst($sortingItem->getSubstituteDataTableField());
+                        $leftJoinedFieldsSql .= ", t" . $tablesUsedCount . "." . $sortingItem->substituteDataTableField . " AS "
+                            . $sortingItem->substituteDataTableName . TextHelper::mb_ucfirst($sortingItem->substituteDataTableField);
                         $leftJoinedTablesSql .= " LEFT JOIN " .
-                            $sortingItem->getSubstituteDataTableName() . " t" . $tablesUsedCount . " ON " .
-                            "t1." . $sortingItem->getTableFieldName() . "=" .
-                            "t" . $tablesUsedCount . "." . $sortingItem->getSubstituteDataTableId();
+                            $sortingItem->substituteDataTableName . " t" . $tablesUsedCount . " ON " .
+                            "t1." . $sortingItem->tableFieldName . "=" .
+                            "t" . $tablesUsedCount . "." . $sortingItem->substituteDataTableId;
                     }
 
-                    if (!$sortingItem->getDoNotUseIfNotSortedByThisField() || ($sortingItemNum === $sortingFieldNum && SORTING > 0)) {
+                    if (!$sortingItem->doNotUseIfNotSortedByThisField || ($sortingItemNum === $sortingFieldNum && SORTING > 0)) {
                         if ($sortingItemNum === $sortingFieldNum && SORTING > 0) {
-                            $ORDER = "t" . $tablesUsedCount . "." . $sortingItem->getSubstituteDataTableField() . $sortingOrder . ", " . $ORDER;
+                            $ORDER = "t" . $tablesUsedCount . "." . $sortingItem->substituteDataTableField . $sortingOrder . ", " . $ORDER;
                         } else {
-                            $ORDER .= "t" . $tablesUsedCount . "." . $sortingItem->getSubstituteDataTableField() .
-                                $sortingItem->getTableFieldOrder()->asText() . ", ";
+                            $ORDER .= "t" . $tablesUsedCount . "." . $sortingItem->substituteDataTableField .
+                                $sortingItem->tableFieldOrder->asText() . ", ";
                         }
                     }
                     ++$tablesUsedCount;
-                } elseif ($sortingItem->getSubstituteDataType() === SubstituteDataTypeEnum::ARRAY) {
+                } elseif ($sortingItem->substituteDataType === SubstituteDataTypeEnum::ARRAY) {
                     /** Если выставлен параметр doNotUseIfNotSortedByThisField в настройке сортировки, то мы сортируем по данному полю ТОЛЬКО
                      * в случае, если прямо по нему задана сортировка. Это серьезно облегчает запросы */
-                    if (!$sortingItem->getDoNotUseIfNotSortedByThisField() || ($sortingItemNum === $sortingFieldNum && SORTING > 0)) {
-                        $substituteDataArray = $sortingItem->getSubstituteDataArray();
+                    if (!$sortingItem->doNotUseIfNotSortedByThisField || ($sortingItemNum === $sortingFieldNum && SORTING > 0)) {
+                        $substituteDataArray = $sortingItem->substituteDataArray;
 
                         if (is_string($substituteDataArray) && method_exists($this->view, $substituteDataArray)) {
-                            $sortingItem->setSubstituteDataArray($this->view->{$substituteDataArray}());
-                            $substituteDataArray = $sortingItem->getSubstituteDataArray();
+                            $sortingItem->substituteDataArray = $this->view->{$substituteDataArray}();
+                            $substituteDataArray = $sortingItem->substituteDataArray;
                         }
 
                         if (count($substituteDataArray) > 0) {
@@ -1433,12 +1255,12 @@ abstract class BaseEntity
 
                                 foreach ($substituteDataArray as $substituteDataItem) {
                                     $count_fields++;
-                                    $ordField .= " WHEN " . $mainTablePrefix . $sortingItem->getTableFieldName() .
+                                    $ordField .= " WHEN " . $mainTablePrefix . $sortingItem->tableFieldName .
                                         "='" . $substituteDataItem[0] . "' THEN " . $count_fields;
                                 }
                                 $ordField .= " ELSE " . ($count_fields + 1) . " END";
                             } else {
-                                $ordField = "FIELD(" . $mainTablePrefix . $sortingItem->getTableFieldName();
+                                $ordField = "FIELD(" . $mainTablePrefix . $sortingItem->tableFieldName;
 
                                 foreach ($substituteDataArray as $substituteDataItem) {
                                     $ordField .= ", " . (is_numeric($substituteDataItem[0]) ? $substituteDataItem[0] : "'" . $substituteDataItem[0] . "'");
@@ -1449,22 +1271,22 @@ abstract class BaseEntity
                             if ($sortingItemNum === $sortingFieldNum && SORTING > 0) {
                                 $ORDER = $ordField . $sortingOrder . ', ' . $ORDER;
                             } else {
-                                $ORDER .= $ordField . $sortingItem->getTableFieldOrder()->asText() . ", ";
+                                $ORDER .= $ordField . $sortingItem->tableFieldOrder->asText() . ", ";
                             }
                         }
                     }
                 } else {
-                    $preparedSortName = $mainTablePrefix . $sortingItem->getTableFieldName();
+                    $preparedSortName = $mainTablePrefix . $sortingItem->tableFieldName;
 
-                    if (preg_match('#length\(#i', $sortingItem->getTableFieldName())) {
-                        $preparedSortName = preg_replace('#length\(#i', 'length(' . $mainTablePrefix, $sortingItem->getTableFieldName());
+                    if (preg_match('#length\(#i', $sortingItem->tableFieldName)) {
+                        $preparedSortName = preg_replace('#length\(#i', 'length(' . $mainTablePrefix, $sortingItem->tableFieldName);
                     }
 
-                    if (!$sortingItem->getDoNotUseIfNotSortedByThisField() || ($sortingItemNum === $sortingFieldNum && SORTING > 0)) {
+                    if (!$sortingItem->doNotUseIfNotSortedByThisField || ($sortingItemNum === $sortingFieldNum && SORTING > 0)) {
                         if ($sortingItemNum === $sortingFieldNum && SORTING > 0) {
                             $ORDER = $preparedSortName . $sortingOrder . ", " . $ORDER;
                         } else {
-                            $ORDER .= $preparedSortName . $sortingItem->getTableFieldOrder()->asText() . ", ";
+                            $ORDER .= $preparedSortName . $sortingItem->tableFieldOrder->asText() . ", ";
                         }
                     }
                 }
@@ -1482,44 +1304,39 @@ abstract class BaseEntity
         ];
     }
 
-    private function getDataAfterValidation(): array
-    {
-        return $this->dataAfterValidation;
-    }
-
     /** Перевод значений полей в нужный формат для дальнейшего сохранения */
     private function appendDataAfterValidation(string|int $dataStringId, ElementItem $element, mixed $value, ActEnum $act, bool $groupedValue = false): void
     {
         if (!$element instanceof H1 && !$element->getNoData()) {
-            if ($act === ActEnum::add && !is_null($element->getOnCreate())) {
-                if (!is_null($element->getOnCreate()->getData())) {
-                    $value = $element->getOnCreate()->getData();
+            if ($act === ActEnum::add && !is_null($element->create)) {
+                if (!is_null($element->create->data)) {
+                    $value = $element->create->data;
                 } else {
-                    $service = $this->view->getCMSVC()->getService();
+                    $service = $this->view->CMSVC->service;
 
-                    if (method_exists($service, $element->getOnCreate()->getCallback())) {
-                        $value = $service->{$element->getOnCreate()->getCallback()}();
+                    if (method_exists($service, $element->create->callback)) {
+                        $value = $service->{$element->create->callback}();
                     } else {
-                        $model = $this->getModel();
+                        $model = $this->model;
 
-                        if (method_exists($model, $element->getOnCreate()->getCallback())) {
-                            $value = $model->{$element->getOnCreate()->getCallback()}();
+                        if (method_exists($model, $element->create->callback)) {
+                            $value = $model->{$element->create->callback}();
                         }
                     }
                 }
-            } elseif ($act === ActEnum::edit && !is_null($element->getOnChange())) {
-                if (!is_null($element->getOnChange()->getData())) {
-                    $value = $element->getOnChange()->getData();
+            } elseif ($act === ActEnum::edit && !is_null($element->change)) {
+                if (!is_null($element->change->data)) {
+                    $value = $element->change->data;
                 } else {
-                    $service = $this->view->getCMSVC()->getService();
+                    $service = $this->view->CMSVC->service;
 
-                    if (method_exists($service, $element->getOnChange()->getCallback())) {
-                        $value = $service->{$element->getOnChange()->getCallback()}();
+                    if (method_exists($service, $element->change->callback)) {
+                        $value = $service->{$element->change->callback}();
                     } else {
-                        $model = $this->getModel();
+                        $model = $this->model;
 
-                        if (method_exists($model, $element->getOnChange()->getCallback())) {
-                            $value = $model->{$element->getOnChange()->getCallback()}();
+                        if (method_exists($model, $element->change->callback)) {
+                            $value = $model->{$element->change->callback}();
                         }
                     }
                 }
@@ -1529,13 +1346,17 @@ abstract class BaseEntity
                         $rehashedValues = [];
 
                         if (is_array($value)) {
+                            $hasArrayValues = false;
+
                             foreach ($value as $key => $item) {
                                 if ($item === 'on') {
                                     $rehashedValues[] = $key;
                                 } elseif (is_array($item)) {
                                     $rehashedValues[$key] = $item;
+                                    $hasArrayValues = true;
                                 }
                             }
+
                             $value = $rehashedValues;
                             unset($rehashedValues);
 
@@ -1546,7 +1367,7 @@ abstract class BaseEntity
                                 if (isset($value['new'])) {
                                     foreach ($value['new'] as $key => $item) {
                                         if ($item === 'on') {
-                                            $createdItemsIds[] = $creator->createItem($value['name'][$key], $this->view->getCMSVC()->getService());
+                                            $createdItemsIds[] = $creator->createItem($value['name'][$key], $this->view->CMSVC->service);
                                         }
                                     }
                                 }
@@ -1554,10 +1375,13 @@ abstract class BaseEntity
                                 if (count($createdItemsIds) > 0) {
                                     $value = array_merge($value, $createdItemsIds);
                                 }
+
                                 unset($value['new']);
                                 unset($value['name']);
                             }
-                            $value = DataHelper::arrayToMultiselect(array_unique($value));
+
+                            /** @phpstan-ignore-next-line */
+                            $value = DataHelper::arrayToMultiselect($hasArrayValues ? $value : array_unique($value));
                         }
                     }
                 } elseif ($element instanceof Password) {
@@ -1577,7 +1401,7 @@ abstract class BaseEntity
                         $value = round($value);
                     }
                 } elseif ($element instanceof Email) {
-                    $value = [$element->getName(), $value, ['email']];
+                    $value = [$element->name, $value, ['email']];
                 } elseif ($element instanceof Timestamp) {
                     $value = DateHelper::getNow();
                 } elseif ($element instanceof File) {
@@ -1587,14 +1411,14 @@ abstract class BaseEntity
                     }
                 }
 
-                if ($element->getAttribute()->getSaveHtml()) {
-                    $value = [$element->getName(), $value, ['html']];
+                if ($element->getAttribute()->saveHtml) {
+                    $value = [$element->name, $value, ['html']];
                 }
             }
 
             if (!$element instanceof Password || !is_null($value)) {
                 if (!$element->getVirtual()) {
-                    $this->dataAfterValidation[$dataStringId][$element->getAttribute()->getAlternativeDataColumnName() ?? $element->getName()] = $value;
+                    $this->dataAfterValidation[$dataStringId][$element->getAttribute()->alternativeDataColumnName ?? $element->name] = $value;
                 } else {
                     $this->dataAfterValidation[$dataStringId][$this->virtualField][] = [$element, $value];
                 }
@@ -1609,8 +1433,8 @@ abstract class BaseEntity
 
         $currentId = $_REQUEST['id'][$stringId] ?? null;
 
-        if ($element instanceof Password && $element->getAttribute()->getRepeatPasswordFieldName()) {
-            $repeatPasswordFieldName = $element->getAttribute()->getRepeatPasswordFieldName();
+        if ($element instanceof Password && $element->getAttribute()->repeatPasswordFieldName) {
+            $repeatPasswordFieldName = $element->getAttribute()->repeatPasswordFieldName;
             $compareValue = $_REQUEST[$repeatPasswordFieldName][$stringId] ?? null;
 
             if (!is_null($groupId)) {
@@ -1655,10 +1479,5 @@ abstract class BaseEntity
         $this->validationErrors = $validationErrors;
 
         return $this;
-    }
-
-    private function getValidationErrors(): array
-    {
-        return $this->validationErrors;
     }
 }

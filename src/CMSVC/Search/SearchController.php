@@ -18,17 +18,17 @@ class SearchController extends BaseController
     public function Response(): ?Response
     {
         /** @var SearchService $searchService */
-        $searchService = $this->getService();
+        $searchService = $this->service;
 
         if (PRE_REQUEST_CHECK) {
             if (!$searchService->checkIfSearch()) {
-                $LOCALE = $this->getLOCALE();
+                $LOCALE = $this->LOCALE;
                 ResponseHelper::responseOneBlock('error', $LOCALE['messages']['need_more_symbols']);
             } else {
                 return ResponseHelper::response([], 'submit');
             }
         }
 
-        return $this->getCMSVC()->getView()->Response();
+        return $this->CMSVC->view->Response();
     }
 }

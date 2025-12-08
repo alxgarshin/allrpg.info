@@ -16,21 +16,36 @@ namespace Fraym\Element\Attribute;
 use Attribute;
 use Fraym\Element\Validator\ObligatoryValidator;
 use Fraym\Interface\HasDefaultValue;
+use InvalidArgumentException;
 
 /** Число */
+/** @implements HasDefaultValue<null|string|int> */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Number extends BaseElement implements HasDefaultValue
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
     ];
 
+    /** Значение по умолчанию */
+    public mixed $defaultValue {
+        get => $this->_val;
+        set {
+            if (!is_null($value) && !is_string($value) && !is_int($value)) {
+                throw new InvalidArgumentException('Wrong defaultValue type');
+            }
+
+            $this->_val = $value;
+        }
+    }
+
+    private null|string|int $_val = null;
+
     public function __construct(
-        /** Значение по умолчанию */
-        private null|string|int $defaultValue = null,
+        mixed $defaultValue = null,
 
         /** Принудительное округление чисел в данном поле */
-        private bool $round = false,
+        public bool $round = false,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -64,29 +79,7 @@ class Number extends BaseElement implements HasDefaultValue
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
 
-    public function getDefaultValue(): null|string|int
-    {
-        return $this->defaultValue;
-    }
-
-    public function setDefaultValue(null|string|int $defaultValue = null): static
-    {
         $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    public function getRound(): ?bool
-    {
-        return $this->round;
-    }
-
-    public function setRound(?bool $round): static
-    {
-        $this->round = $round;
-
-        return $this;
     }
 }

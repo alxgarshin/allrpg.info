@@ -20,9 +20,6 @@ use Fraym\Interface\ElementItem;
 
 final class Filters
 {
-    /** Сущность */
-    private BaseEntity $entity;
-
     /** Строка, добавляемая в sql-запросы для фильтрации */
     private ?string $searchQuerySql = null;
 
@@ -40,10 +37,15 @@ final class Filters
      */
     private array $filtersBlocks = [];
 
+    /** Получение локали фильтров */
+    private ?array $LOCALE {
+        get => LocaleHelper::getLocale(['fraym', 'filters']);
+    }
+
     public function __construct(
-        BaseEntity $entity,
+        /** Сущность */
+        private BaseEntity $entity,
     ) {
-        $this->entity = $entity;
     }
 
     /** Вывод HTML-кода панели фильтров */
@@ -54,7 +56,7 @@ final class Filters
         }
 
         $entity = $this->entity;
-        $LOC = $this->getLocale();
+        $LOC = $this->LOCALE;
 
         if (count($this->filtersBlocks) === 0) {
             $this->prepareEntityItemsSet();
@@ -64,7 +66,7 @@ final class Filters
 
         foreach ($filtersBlocks as $filtersBlock) {
             foreach ($filtersBlock->getFiltersViewItems() as $filtersViewItem) {
-                $value = $this->getParameterByName($filtersViewItem->getName());
+                $value = $this->getParameterByName($filtersViewItem->name);
 
                 if ($value !== null) {
                     /** @phpstan-ignore-next-line */
@@ -77,11 +79,11 @@ final class Filters
 
         if (count($filtersBlocks) > 0) {
             $filtersContent = '
-<div class="indexer' . ($this->getFiltersState() ? ' shown' : '') . '"><div id="filters_' . TextHelper::camelCaseToSnakeCase($entity->getName()) . '">
+<div class="indexer' . ($this->getFiltersState() ? ' shown' : '') . '"><div id="filters_' . TextHelper::camelCaseToSnakeCase($entity->name) . '">
 <form action="' . ABSOLUTE_PATH . '/' . KIND . '/" method="POST" enctype="multipart/form-data" id="filter_form">
 <input type="hidden" name="kind" value="' . KIND . '">
 <input type="hidden" name="action" value="setFilters">
-<input type="hidden" name="cmsvc" value="' . TextHelper::camelCaseToSnakeCase($entity->getName()) . '">
+<input type="hidden" name="cmsvc" value="' . TextHelper::camelCaseToSnakeCase($entity->name) . '">
 <input type="hidden" name="sorting" value="' . SORTING . '">
 ';
 
@@ -95,19 +97,19 @@ final class Filters
                     );
 
                     if ($filtersViewItemKey === 0) {
-                        if ($filtersViewItem->getName() === 'searchAllTextFields') {
+                        if ($filtersViewItem->name === 'searchAllTextFields') {
                             $filtersPreContent = str_replace(" />", ' autocomplete="off" />', $filtersPreContent);
                         }
-                        $filtersContent .= '<div class="filtersName">' . $filtersViewItem->getShownName() . '</div>' . $filtersPreContent;
+                        $filtersContent .= '<div class="filtersName">' . $filtersViewItem->shownName . '</div>' . $filtersPreContent;
 
-                        if ($filtersViewItem->getName() === 'searchAllTextFields') {
+                        if ($filtersViewItem->name === 'searchAllTextFields') {
                             $filtersContent .= '<br>';
                         }
                     } else {
                         $filtersContent .= $filtersPreContent;
 
                         if ($filtersViewItem instanceof Item\Checkbox) {
-                            $filtersContent .= '<label for="' . $filtersViewItem->getName() . '">' . $filtersViewItem->getShownName() . '</label><br>';
+                            $filtersContent .= '<label for="' . $filtersViewItem->name . '">' . $filtersViewItem->shownName . '</label><br>';
                         }
                     }
                 }
@@ -118,7 +120,7 @@ final class Filters
                 (
                     $filtersOn ?
                     '<button class="nonimportant" href="' . ABSOLUTE_PATH . '/' . KIND . '/object=' . TextHelper::camelCaseToSnakeCase(
-                        $entity->getName(),
+                        $entity->name,
                     ) . '&action=clearFilters&sorting=' . SORTING . '">' .
                     $LOC['cancel'] . '</button>' :
                     ''
@@ -130,7 +132,7 @@ final class Filters
     }
 
     /** Подготовка SQL-инъекции в запросы сущности и ссылки на набор фильтров
-     * @return array<string>
+     * @return array{0: ?string, 1: array, 2: ?string}
      */
     public function prepareSearchSqlAndFiltersLink(bool $getDataFromCookies = false, string $kind = KIND): array
     {
@@ -141,13 +143,13 @@ final class Filters
         $tableFieldToDetectType = '';
 
         if ($entity instanceof CatalogEntity) {
-            $catalogItemEntity = $entity->getCatalogItemEntity();
-            $tableFieldToDetectType = $catalogItemEntity->getTableFieldToDetectType();
+            $catalogItemEntity = $entity->catalogItemEntity;
+            $tableFieldToDetectType = $catalogItemEntity->tableFieldToDetectType;
         }
 
-        $dataArray = ($getDataFromCookies ? ($this->getFiltersCookie()[$kind][$entity->getName()] ?? []) : $_REQUEST);
+        $dataArray = ($getDataFromCookies ? ($this->getFiltersCookie()[$kind][$entity->name] ?? []) : $_REQUEST);
 
-        $searchQuerySql = is_null($entity->getView()->getViewRights()->getViewRestrict()) ? " WHERE" : "";
+        $searchQuerySql = is_null($entity->view->viewRights->viewRestrict) ? " WHERE" : "";
         $searchQueryParams = [];
 
         /** Какой символ отправлять в функцию запроса к БД при поиске в групповых полях на разных типах базы? */
@@ -168,39 +170,39 @@ final class Filters
 
             if ($filtersBlock->getModelItems()[0] ?? false) {
                 $modelItem = $filtersBlock->getModelItems()[0];
-                $queryElementName = $modelItem->getAttribute()->getAlternativeDataColumnName() ?? $modelItem->getName();
+                $queryElementName = $modelItem->getAttribute()->alternativeDataColumnName ?? $modelItem->name;
             }
 
             if (!$getDataFromCookies) {
-                if ($dataArray[$filtersViewFirstItem->getName()] ?? false) {
-                    $this->setParameterByName($filtersViewFirstItem->getName(), $dataArray[$filtersViewFirstItem->getName()]);
+                if ($dataArray[$filtersViewFirstItem->name] ?? false) {
+                    $this->setParameterByName($filtersViewFirstItem->name, $dataArray[$filtersViewFirstItem->name]);
                 }
 
-                if (!is_null($filtersViewSecondItem) && ($dataArray[$filtersViewSecondItem->getName()] ?? false)) {
+                if (!is_null($filtersViewSecondItem) && ($dataArray[$filtersViewSecondItem->name] ?? false)) {
                     $defaultValue = $filtersViewSecondItem->getDefaultValue();
 
                     if (is_array($defaultValue)) {
                         $defaultValue = $defaultValue[0];
                     }
 
-                    if ((string) $defaultValue !== (string) $dataArray[$filtersViewSecondItem->getName()]) {
-                        $this->setParameterByName($filtersViewSecondItem->getName(), $dataArray[$filtersViewSecondItem->getName()]);
+                    if ((string) $defaultValue !== (string) $dataArray[$filtersViewSecondItem->name]) {
+                        $this->setParameterByName($filtersViewSecondItem->name, $dataArray[$filtersViewSecondItem->name]);
                     }
                 }
             }
 
-            if ($filtersViewFirstItem->getName() === 'searchAllTextFields') {
+            if ($filtersViewFirstItem->name === 'searchAllTextFields') {
                 $allTextFields = [];
 
-                if ($dataArray[$filtersViewSecondItem->getName()] ?? false) {
-                    $allTextFieldsQueryValues = $dataArray[$filtersViewSecondItem->getName()];
+                if ($dataArray[$filtersViewSecondItem->name] ?? false) {
+                    $allTextFieldsQueryValues = $dataArray[$filtersViewSecondItem->name];
                 } else {
                     $allTextFieldsQueryValues = '';
                 }
 
                 if (in_array($allTextFieldsQueryValues, ['search_in', ''])) {
-                    if ($dataArray[$filtersViewFirstItem->getName()] ?? false) {
-                        $allTextFieldsQuery = $dataArray[$filtersViewFirstItem->getName()];
+                    if ($dataArray[$filtersViewFirstItem->name] ?? false) {
+                        $allTextFieldsQuery = $dataArray[$filtersViewFirstItem->name];
                     } else {
                         $allTextFieldsQuery = '';
                     }
@@ -223,31 +225,31 @@ final class Filters
                     foreach ($filtersViewItems as $filtersViewItem) {
                         if ($filtersViewItem instanceof Item\Checkbox) {
                             if (!$getDataFromCookies) {
-                                $this->setParameterByName($filtersViewItem->getName(), $dataArray[$filtersViewItem->getName()] ?? null);
+                                $this->setParameterByName($filtersViewItem->name, $dataArray[$filtersViewItem->name] ?? null);
                             }
 
-                            $checkBoxValue = $dataArray[$filtersViewItem->getName()] ?? null;
+                            $checkBoxValue = $dataArray[$filtersViewItem->name] ?? null;
 
                             $blockSearchQuerySql = "";
 
-                            $modelItem = $this->getCorrespondingItem($filtersViewItem->getName(), $filtersBlock);
+                            $modelItem = $this->getCorrespondingItem($filtersViewItem->name, $filtersBlock);
 
                             if (!is_null($modelItem) && $checkBoxValue === 'on') {
-                                $queryElementName = $modelItem->getName();
+                                $queryElementName = $modelItem->name;
 
                                 $blockSearchQuerySql .= " (";
 
                                 if ($allTextFieldsQueryValues === 'search_empty') {
                                     if ($modelItem->getVirtual()) {
-                                        $blockSearchQuerySql .= "(t1." . $entity->getVirtualField() .
-                                            " " . $regexpWord . " '\\\[" . $queryElementName . "\\\]\\\[\\\]' OR t1." . $entity->getVirtualField() .
+                                        $blockSearchQuerySql .= "(t1." . $entity->virtualField .
+                                            " " . $regexpWord . " '\\\[" . $queryElementName . "\\\]\\\[\\\]' OR t1." . $entity->virtualField .
                                             " " . $antiRegexpWord . " '\\\[" . $queryElementName . "\\\]') AND ";
                                     } else {
                                         $blockSearchQuerySql .= "(t1." . $queryElementName . " IS NULL OR t1." . $queryElementName . "='') AND ";
                                     }
                                 } elseif ($allTextFieldsQueryValues === 'search_non_empty') {
                                     if ($modelItem->getVirtual()) {
-                                        $blockSearchQuerySql .= "t1." . $entity->getVirtualField() .
+                                        $blockSearchQuerySql .= "t1." . $entity->virtualField .
                                             " " . $regexpWord . " '\\\[" . $queryElementName . "\\\]\\\[[^]]+\\\]' AND ";
                                     } else {
                                         $blockSearchQuerySql .= "t1." . $queryElementName . " " . $regexpWord . " '";
@@ -263,7 +265,7 @@ final class Filters
                                 } elseif (count($allTextFields) > 0) {
                                     if ($modelItem->getVirtual()) {
                                         foreach ($allTextFields as $allTextField) {
-                                            $blockSearchQuerySql .= "LOWER(t1." . $entity->getVirtualField() . ") " . $regexpWord .
+                                            $blockSearchQuerySql .= "LOWER(t1." . $entity->virtualField . ") " . $regexpWord .
                                                 " '\\\[" . mb_strtolower($queryElementName) . "\\\]\\\[[^]]*" . mb_strtolower($allTextField) . "[^]]*\\\]' AND ";
                                         }
                                     } else {
@@ -313,7 +315,7 @@ final class Filters
                 $res = [];
                 $selectbreaks = true;
 
-                $itemDataArray = $dataArray[$filtersViewFirstItem->getName()] ?? [];
+                $itemDataArray = $dataArray[$filtersViewFirstItem->name] ?? [];
 
                 foreach ($vals as $key => $value) {
                     $blockSearchQuerySql = "";
@@ -342,11 +344,11 @@ final class Filters
 
                             if ($modelItem->getVirtual()) {
                                 if ($value[0] === 'not_set') {
-                                    $blockSearchQuerySql .= " (t1." . $entity->getVirtualField() .
-                                        " LIKE '%[" . $queryElementName . "][]%' OR t1." . $entity->getVirtualField() .
+                                    $blockSearchQuerySql .= " (t1." . $entity->virtualField .
+                                        " LIKE '%[" . $queryElementName . "][]%' OR t1." . $entity->virtualField .
                                         " NOT LIKE '%[" . $queryElementName . "][%')";
                                 } else {
-                                    $blockSearchQuerySql .= " t1." . $entity->getVirtualField() . " LIKE '%[" . $queryElementName . "][" . $value[0] . "]%'";
+                                    $blockSearchQuerySql .= " t1." . $entity->virtualField . " LIKE '%[" . $queryElementName . "][" . $value[0] . "]%'";
                                 }
                             } elseif ($modelItem->getGroup()) {
                                 if ($value[0] === 'not_set') {
@@ -366,7 +368,7 @@ final class Filters
                                     $selectbreaks = false;
                                 }
                                 /** Если здесь поставить AND, то при поиске в мультиселектах нужно будет совпадение со всеми поисковыми галочками,
-                                 * выставленными пользователями. Если OR, то хотя бы с одной из них */ elseif ($dataArray[$filtersViewSecondItem->getName()] === '2') {
+                                 * выставленными пользователями. Если OR, то хотя бы с одной из них */ elseif ($dataArray[$filtersViewSecondItem->name] === '2') {
                                     $blockSearchQuerySql .= " AND";
                                 } else {
                                     $blockSearchQuerySql .= " OR";
@@ -388,14 +390,14 @@ final class Filters
 
                             if ($modelItem->getVirtual()) {
                                 if ($value[0] === 'not_set') {
-                                    $blockSearchQuerySql .= " (t1." . $entity->getVirtualField() .
-                                        " LIKE '%[" . $queryElementName . "][]%' OR t1." . $entity->getVirtualField() .
-                                        " LIKE '%[" . $queryElementName . "][-]%' OR t1." . $entity->getVirtualField() .
-                                        " LIKE '%[" . $queryElementName . "][--]%' OR t1." . $entity->getVirtualField() .
+                                    $blockSearchQuerySql .= " (t1." . $entity->virtualField .
+                                        " LIKE '%[" . $queryElementName . "][]%' OR t1." . $entity->virtualField .
+                                        " LIKE '%[" . $queryElementName . "][-]%' OR t1." . $entity->virtualField .
+                                        " LIKE '%[" . $queryElementName . "][--]%' OR t1." . $entity->virtualField .
                                         " NOT LIKE '%[" . $queryElementName . "][%')";
                                 } else {
-                                    $blockSearchQuerySql .= " (t1." . $entity->getVirtualField() .
-                                        " " . $regexpWord . " '\\\[" . $queryElementName . "\\\]\\\[[^]]*-" . $value[0] . "-[^]]*' OR t1." . $entity->getVirtualField() .
+                                    $blockSearchQuerySql .= " (t1." . $entity->virtualField .
+                                        " " . $regexpWord . " '\\\[" . $queryElementName . "\\\]\\\[[^]]*-" . $value[0] . "-[^]]*' OR t1." . $entity->virtualField .
                                         " LIKE '%[" . $queryElementName . "][" . $stripped_val . "]%')";
                                 }
                             } elseif ($modelItem->getOne() && !($modelItem->getGroup() > 0)) {
@@ -417,7 +419,7 @@ final class Filters
 
                         if ($this->entity instanceof CatalogEntity) {
                             $blockSearchQuerySql .= " AND t1." . $tableFieldToDetectType .
-                                ($modelItem->getEntity() instanceof CatalogItemEntity ? "!" : "") . "='{menu}')";
+                                ($modelItem->entity instanceof CatalogItemEntity ? "!" : "") . "='{menu}')";
                         }
                     }
 
@@ -429,11 +431,11 @@ final class Filters
                 }
 
                 if (!$getDataFromCookies) {
-                    $this->setParameterByName($filtersViewFirstItem->getName(), $res);
+                    $this->setParameterByName($filtersViewFirstItem->name, $res);
                 }
 
                 if ($modelItem instanceof Item\Multiselect) {
-                    $array = $dataArray[$filtersViewFirstItem->getName()] ?? [];
+                    $array = $dataArray[$filtersViewFirstItem->name] ?? [];
                     $arrayKeys = [];
 
                     if (is_array($array)) {
@@ -445,30 +447,30 @@ final class Filters
                     }
 
                     if (!$getDataFromCookies) {
-                        $this->setParameterByName($filtersViewFirstItem->getName(), $arrayKeys);
-                        $this->setParameterByName($filtersViewSecondItem->getName(), $dataArray[$filtersViewSecondItem->getName()] ?? null);
+                        $this->setParameterByName($filtersViewFirstItem->name, $arrayKeys);
+                        $this->setParameterByName($filtersViewSecondItem->name, $dataArray[$filtersViewSecondItem->name] ?? null);
                     }
                 }
             } else {
-                if ($modelItem instanceof Item\File && ($dataArray[$filtersViewFirstItem->getName()] ?? '') === 'on') {
+                if ($modelItem instanceof Item\File && ($dataArray[$filtersViewFirstItem->name] ?? '') === 'on') {
                     /** @var Item\File $modelItem */
                     $queryElementName = $modelItem->getUploadData()['columnname'];
 
                     $blockSearchQuerySql .= " t1." . $queryElementName . "!=''";
                 } elseif (
                     $modelItem instanceof Item\Calendar &&
-                    ($dataArray[$filtersViewFirstItem->getName()] ?? '') !== '' &&
-                    ($dataArray[$filtersViewSecondItem->getName()] ?? '') !== ''
+                    ($dataArray[$filtersViewFirstItem->name] ?? '') !== '' &&
+                    ($dataArray[$filtersViewSecondItem->name] ?? '') !== ''
                 ) {
-                    $date_in_format = date("Y-m-d", strtotime($dataArray[$filtersViewSecondItem->getName()]));
+                    $date_in_format = date("Y-m-d", strtotime($dataArray[$filtersViewSecondItem->name]));
 
-                    $selectType = $dataArray[$filtersViewFirstItem->getName()];
+                    $selectType = $dataArray[$filtersViewFirstItem->name];
 
                     if ($filtersViewSecondItem->getVirtual()) {
                         if ($selectType === '1') {
-                            $blockSearchQuerySql .= " t1." . $entity->getVirtualField() . " LIKE '%[" . $queryElementName . "][" . $date_in_format . "]%'";
+                            $blockSearchQuerySql .= " t1." . $entity->virtualField . " LIKE '%[" . $queryElementName . "][" . $date_in_format . "]%'";
                         } elseif ($selectType === '2') {
-                            $blockSearchQuerySql .= " t1." . $entity->getVirtualField() . " NOT LIKE '%[" . $queryElementName . "][" . $date_in_format . "]%'";
+                            $blockSearchQuerySql .= " t1." . $entity->virtualField . " NOT LIKE '%[" . $queryElementName . "][" . $date_in_format . "]%'";
                         }
                     } else {
                         $blockSearchQuerySql .= " (t1." . $queryElementName . match ($selectType) {
@@ -487,13 +489,13 @@ final class Filters
                     }
                 } elseif (
                     $modelItem instanceof Item\Timestamp &&
-                    ($dataArray[$filtersViewFirstItem->getName()] ?? '') !== '' &&
-                    ($dataArray[$filtersViewSecondItem->getName()] ?? '') !== ''
+                    ($dataArray[$filtersViewFirstItem->name] ?? '') !== '' &&
+                    ($dataArray[$filtersViewSecondItem->name] ?? '') !== ''
                 ) {
-                    $thistime1 = strtotime($dataArray[$filtersViewSecondItem->getName()]);
+                    $thistime1 = strtotime($dataArray[$filtersViewSecondItem->name]);
                     $thistime2 = $thistime1 + (60 * 60 * 24);
 
-                    $blockSearchQuerySql .= " (t1." . $queryElementName . match ($dataArray[$filtersViewFirstItem->getName()]) {
+                    $blockSearchQuerySql .= " (t1." . $queryElementName . match ($dataArray[$filtersViewFirstItem->name]) {
                         '1' => ">=" . $thistime1 . " AND t1." . $queryElementName . "<" . $thistime2,
                         '2' => "<" . $thistime1 . " OR t1." . $queryElementName . ">=" . $thistime2,
                         '3' => ">=" . $thistime2,
@@ -504,23 +506,23 @@ final class Filters
                 } elseif (
                     $modelItem instanceof Item\Number &&
                     (
-                        (int) ($dataArray[$filtersViewSecondItem->getName()] ?? 0) > 0 ||
+                        (int) ($dataArray[$filtersViewSecondItem->name] ?? 0) > 0 ||
                         (
-                            (int) ($dataArray[$filtersViewSecondItem->getName()] ?? 0) === 0 &&
-                            ($dataArray[$filtersViewFirstItem->getName()] ?? '') !== ''
+                            (int) ($dataArray[$filtersViewSecondItem->name] ?? 0) === 0 &&
+                            ($dataArray[$filtersViewFirstItem->name] ?? '') !== ''
                         )
                     )
                 ) {
-                    if ($dataArray[$filtersViewFirstItem->getName()] ?? '' === '') {
-                        $dataArray[$filtersViewFirstItem->getName()] = '1';
+                    if (($dataArray[$filtersViewFirstItem->name] ?? '') === '') {
+                        $dataArray[$filtersViewFirstItem->name] = '1';
                     }
 
                     $searchvals = [];
                     $hasNull = false;
 
-                    if (str_contains($dataArray[$filtersViewSecondItem->getName()], ',')) {
+                    if (str_contains($dataArray[$filtersViewSecondItem->name], ',')) {
                         /** Это ряд значений через запятую */
-                        $searchvals = explode(",", $dataArray[$filtersViewSecondItem->getName()]);
+                        $searchvals = explode(",", $dataArray[$filtersViewSecondItem->name]);
 
                         foreach ($searchvals as $key => $value) {
                             $searchvals[$key] = (int) trim($value);
@@ -530,20 +532,20 @@ final class Filters
                             }
                         }
                     } else {
-                        $searchvals[] = (int) $dataArray[$filtersViewSecondItem->getName()];
+                        $searchvals[] = (int) $dataArray[$filtersViewSecondItem->name];
                     }
 
-                    $selectType = $dataArray[$filtersViewFirstItem->getName()];
+                    $selectType = $dataArray[$filtersViewFirstItem->name];
 
                     $blockSearchQuerySql .= " (";
 
                     if ($modelItem->getVirtual()) {
                         if ($selectType === '1') {
-                            $blockSearchQuerySql .= "t1." . $entity->getVirtualField() . " LIKE '%[" . $queryElementName . "][" .
-                                implode("]%' OR t1." . $entity->getVirtualField() . " LIKE '%[" . $queryElementName . "][", $searchvals) . "]%'";
+                            $blockSearchQuerySql .= "t1." . $entity->virtualField . " LIKE '%[" . $queryElementName . "][" .
+                                implode("]%' OR t1." . $entity->virtualField . " LIKE '%[" . $queryElementName . "][", $searchvals) . "]%'";
                         } elseif ($selectType === '2') {
-                            $blockSearchQuerySql .= "t1." . $entity->getVirtualField() . " NOT LIKE '%[" . $queryElementName . "][" .
-                                implode("]%' AND t1." . $entity->getVirtualField() . " NOT LIKE '%[" . $queryElementName . "][", $searchvals) . "]%'";
+                            $blockSearchQuerySql .= "t1." . $entity->virtualField . " NOT LIKE '%[" . $queryElementName . "][" .
+                                implode("]%' AND t1." . $entity->virtualField . " NOT LIKE '%[" . $queryElementName . "][", $searchvals) . "]%'";
                         }
                     } elseif ($selectType === '1') {
                         $blockSearchQuerySql .= "t1." . $queryElementName . "=" . implode(" OR t1." . $queryElementName . "=", $searchvals);
@@ -574,20 +576,20 @@ final class Filters
                         }
                     }
                     $blockSearchQuerySql .= ")";
-                } elseif ($modelItem instanceof Item\Checkbox && ($dataArray[$filtersViewFirstItem->getName()] ?? false) > 0) {
+                } elseif ($modelItem instanceof Item\Checkbox && ($dataArray[$filtersViewFirstItem->name] ?? false) > 0) {
                     if ($modelItem->getVirtual()) {
-                        if ($dataArray[$filtersViewFirstItem->getName()] === '1') {
-                            $blockSearchQuerySql .= " t1." . $entity->getVirtualField() . " LIKE '%[" . $queryElementName . "][1]%'";
-                        } elseif ($dataArray[$filtersViewFirstItem->getName()] === '2') {
-                            $blockSearchQuerySql .= " t1." . $entity->getVirtualField() . " NOT LIKE '%[" . $queryElementName . "][1]%'";
+                        if ($dataArray[$filtersViewFirstItem->name] === '1') {
+                            $blockSearchQuerySql .= " t1." . $entity->virtualField . " LIKE '%[" . $queryElementName . "][1]%'";
+                        } elseif ($dataArray[$filtersViewFirstItem->name] === '2') {
+                            $blockSearchQuerySql .= " t1." . $entity->virtualField . " NOT LIKE '%[" . $queryElementName . "][1]%'";
                         }
-                    } elseif ($dataArray[$filtersViewFirstItem->getName()] === '1') {
+                    } elseif ($dataArray[$filtersViewFirstItem->name] === '1') {
                         $blockSearchQuerySql .= " t1." . $queryElementName . "='1'";
-                    } elseif ($dataArray[$filtersViewFirstItem->getName()] === '2') {
+                    } elseif ($dataArray[$filtersViewFirstItem->name] === '2') {
                         $blockSearchQuerySql .= " (t1." . $queryElementName . "!='1' OR t1." . $queryElementName . " IS NULL)";
                     }
-                } elseif ($modelItem instanceof Item\Select && !is_null($modelItem->getHelper()) && ($dataArray[$filtersViewFirstItem->getName()] ?? false)) {
-                    $blockSearchQuerySql .= " t1." . $queryElementName . "=" . $dataArray[$filtersViewFirstItem->getName()];
+                } elseif ($modelItem instanceof Item\Select && !is_null($modelItem->getHelper()) && ($dataArray[$filtersViewFirstItem->name] ?? false)) {
+                    $blockSearchQuerySql .= " t1." . $queryElementName . "=" . $dataArray[$filtersViewFirstItem->name];
                 }
 
                 if ($blockSearchQuerySql !== "") {
@@ -604,14 +606,14 @@ final class Filters
 
         if (!in_array($searchQuerySql, [" WHERE", ""], true)) {
             /** Ссылка на текущий набор фильтров */
-            $currentFiltersLink = ABSOLUTE_PATH . '/' . $kind . '/object=' . TextHelper::camelCaseToSnakeCase($entity->getName()) . '&action=setFilters';
+            $currentFiltersLink = ABSOLUTE_PATH . '/' . $kind . '/object=' . TextHelper::camelCaseToSnakeCase($entity->name) . '&action=setFilters';
 
             foreach ($filtersBlocks as $filtersBlock) {
                 foreach ($filtersBlock->getFiltersViewItems() as $filtersViewItem) {
-                    $objName = $filtersViewItem->getName();
+                    $objName = $filtersViewItem->name;
                     $objValue = $this->getParameterByName($objName, $kind);
 
-                    if (!is_null($objValue) && method_exists($filtersViewItem, 'getDefaultValue')) {
+                    if (!is_null($objValue)) {
                         $defaultValue = $filtersViewItem->getDefaultValue();
 
                         if (is_array($defaultValue) && count($defaultValue) > 0) {
@@ -653,11 +655,11 @@ final class Filters
                     $fraymFilters[$kind] = [];
                 }
 
-                if (!array_key_exists($this->entity->getName(), $fraymFilters[$kind])) {
-                    $fraymFilters[$kind][$this->entity->getName()] = [];
+                if (!array_key_exists($this->entity->name, $fraymFilters[$kind])) {
+                    $fraymFilters[$kind][$this->entity->name] = [];
                 }
 
-                $fraymFilters[$kind][$this->entity->getName()] = $this->cookieValues;
+                $fraymFilters[$kind][$this->entity->name] = $this->cookieValues;
 
                 self::setFiltersCookie($fraymFilters);
             }
@@ -677,8 +679,8 @@ final class Filters
     {
         $fraymFilters = self::getFiltersCookie();
 
-        if ($fraymFilters[KIND][$this->entity->getName()] ?? false) {
-            unset($fraymFilters[KIND][$this->entity->getName()]);
+        if ($fraymFilters[KIND][$this->entity->name] ?? false) {
+            unset($fraymFilters[KIND][$this->entity->name]);
         }
 
         if (($fraymFilters[KIND] ?? null) === []) {
@@ -692,12 +694,6 @@ final class Filters
     public function getFiltersState(): bool
     {
         return !($this->getPreparedSearchQuerySql() === '' && !(in_array(ACTION, ActionEnum::getFilterValues())));
-    }
-
-    /** Получение локали фильтров */
-    public function getLocale(): ?array
-    {
-        return LocaleHelper::getLocale(['fraym', 'filters']);
     }
 
     /** Получение ранее подготовленной SQL-инъекции по фильтрам */
@@ -748,24 +744,24 @@ final class Filters
     private function prepareEntityItemsSet(): array
     {
         $entity = $this->entity;
-        $LOC = $this->getLocale();
+        $LOC = $this->LOCALE;
 
         /** Выбираем все item'ы модели с useInFilters, видимые в list текущей entity */
-        $modelItems = $entity->getModel()->getElements();
+        $modelItems = $entity->model->elementsList;
 
         foreach ($modelItems as $key => $modelItem) {
-            if (!$modelItem->getAttribute()->getUseInFilters()) {
+            if (!$modelItem->getAttribute()->useInFilters) {
                 unset($modelItems[$key]);
             }
         }
 
         /** Если это модель класса каталог, добавляем поля для поиска из наследующей сущности, но только если сущность отличается от базовой, т.е. не является просто необходимой заглушкой */
         if ($entity instanceof CatalogEntity) {
-            $catalogItemEntity = $entity->getCatalogItemEntity();
+            $catalogItemEntity = $entity->catalogItemEntity;
 
-            if ($catalogItemEntity->getModel()::class !== $entity->getModel()::class) {
-                foreach ($catalogItemEntity->getModel()->getElements() as $modelItem) {
-                    if ($modelItem->getAttribute()->getUseInFilters()) {
+            if ($catalogItemEntity->model::class !== $entity->model::class) {
+                foreach ($catalogItemEntity->model->elementsList as $modelItem) {
+                    if ($modelItem->getAttribute()->useInFilters) {
                         $modelItems[] = $modelItem;
                     }
                 }
@@ -786,29 +782,29 @@ final class Filters
         if ($textFieldsExistInSearch) {
             $filterBlock = @$filtersBlocks[] = new FiltersBlock();
 
-            $filterBlock->addFiltersViewItem(new Item\Text())
-                ->setName('searchAllTextFields')
-                ->setShownName($LOC['search_in_all_text_fields'])
-                ->setAttribute(new Attribute\Text());
+            $createdItem = $filterBlock->addFiltersViewItem(new Item\Text());
+            $createdItem->name = 'searchAllTextFields';
+            $createdItem->shownName = $LOC['search_in_all_text_fields'];
+            $createdItem->setAttribute(new Attribute\Text());
 
-            $filterBlock->addFiltersViewItem(new Item\Select())
-                ->setName('searchAllTextFieldsValues')
-                ->setShownName('')
-                ->setAttribute(
-                    new Attribute\Select(
-                        defaultValue: 'search_in',
-                        values: $LOC['search_in_all_text_fields_values'],
-                    ),
-                );
+            $createdItem = $filterBlock->addFiltersViewItem(new Item\Select());
+            $createdItem->name = 'searchAllTextFieldsValues';
+            $createdItem->shownName = '';
+            $createdItem->setAttribute(
+                new Attribute\Select(
+                    defaultValue: 'search_in',
+                    values: $LOC['search_in_all_text_fields_values'],
+                ),
+            );
 
             foreach ($modelItems as $modelItem) {
                 if ($modelItem instanceof Item\Text || $modelItem instanceof Item\Textarea || $modelItem instanceof Item\Wysiwyg) {
-                    $searchFieldName = 'search' . ($modelItem->getEntity() instanceof CatalogItemEntity ? '2' : '') . '_' . $modelItem->getName();
+                    $searchFieldName = 'search' . ($modelItem->entity instanceof CatalogItemEntity ? '2' : '') . '_' . $modelItem->name;
 
-                    $filterBlock->addFiltersViewItem(new Item\Checkbox())
-                        ->setName($searchFieldName)
-                        ->setShownName($modelItem->getShownName())
-                        ->setAttribute(new Attribute\Checkbox());
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Checkbox());
+                    $createdItem->name = $searchFieldName;
+                    $createdItem->shownName = $modelItem->shownName;
+                    $createdItem->setAttribute(new Attribute\Checkbox());
                     $filterBlock->addModelItem($modelItem);
                 }
             }
@@ -829,108 +825,105 @@ final class Filters
                 $filterBlock = @$filtersBlocks[] = new FiltersBlock();
                 $filterBlock->addModelItem($modelItem);
 
-                $searchFieldName = 'search' . ($modelItem->getEntity() instanceof CatalogItemEntity ? '2' : '') . '_' . $modelItem->getName();
+                $searchFieldName = 'search' . ($modelItem->entity instanceof CatalogItemEntity ? '2' : '') . '_' . $modelItem->name;
 
                 if ($modelItem instanceof Item\Select && !is_null($modelItem->getHelper())) {
-                    $filterBlock->addFiltersViewItem(clone($modelItem))
-                        ->setName($searchFieldName)
-                        ->getAttribute()->setObligatory(false);
+                    $createdItem = $filterBlock->addFiltersViewItem(clone($modelItem));
+                    $createdItem->name = $searchFieldName;
+                    $createdItem->getAttribute()->obligatory = false;
                 } elseif ($modelItem instanceof Item\Multiselect) {
                     /** @var Item\Multiselect */
-                    $clonedModelItem = $filterBlock->addFiltersViewItem(clone($modelItem))
-                        ->setName($searchFieldName);
+                    $clonedModelItem = $filterBlock->addFiltersViewItem(clone($modelItem));
+                    $clonedModelItem->name = $searchFieldName;
 
-                    $clonedModelItem->getAttribute()
-                        ->setCreator(null)
-                        ->setLocked([])
-                        ->setOne(false)
-                        ->setValues(
-                            array_merge([['not_set', '<i>' . $LOC['not_set'] . '</i>']], $clonedModelItem->getValues() ?? []),
-                        )
-                        ->setObligatory(false);
+                    $clonedModelItemAttribute = $clonedModelItem->getAttribute();
 
-                    $filterBlock->addFiltersViewItem(new Item\Multiselect())
-                        ->setName($searchFieldName . 'select')
-                        ->setAttribute(
-                            new Attribute\Multiselect(
-                                defaultValue: [1],
-                                values: [[1, $LOC['any_match']], [2, $LOC['strict_match']]],
-                                one: true,
-                            ),
-                        );
+                    $clonedModelItemAttribute->creator = null;
+                    $clonedModelItemAttribute->one = false;
+                    $clonedModelItemAttribute->locked = [];
+                    $clonedModelItemAttribute->values = array_merge([['not_set', '<i>' . $LOC['not_set'] . '</i>']], $clonedModelItem->getValues() ?? []);
+                    $clonedModelItemAttribute->obligatory = false;
+
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Multiselect());
+                    $createdItem->name = $searchFieldName . 'select';
+                    $createdItem->setAttribute(
+                        new Attribute\Multiselect(
+                            defaultValue: [1],
+                            values: [[1, $LOC['any_match']], [2, $LOC['strict_match']]],
+                            one: true,
+                        ),
+                    );
                 } elseif ($modelItem instanceof Item\Select) {
-                    $filterBlock->addFiltersViewItem(new Item\Multiselect())
-                        ->setName($searchFieldName)
-                        ->setShownName($modelItem->getShownName())
-                        ->setAttribute(
-                            new Attribute\Multiselect(
-                                values: array_merge([['not_set', '<i>' . $LOC['not_set'] . '</i>']], $modelItem->getValues() ?? []),
-                                search: true,
-                            ),
-                        );
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Multiselect());
+                    $createdItem->name = $searchFieldName;
+                    $createdItem->shownName = $modelItem->shownName;
+                    $createdItem->setAttribute(
+                        new Attribute\Multiselect(
+                            values: array_merge([['not_set', '<i>' . $LOC['not_set'] . '</i>']], $modelItem->getValues() ?? []),
+                            search: true,
+                        ),
+                    );
                 } elseif ($modelItem instanceof Item\Calendar || $modelItem instanceof Item\Number) {
-                    $filterBlock->addFiltersViewItem(new Item\Select())
-                        ->setName($searchFieldName . 'select')
-                        ->setShownName($modelItem->getShownName())
-                        ->setAttribute(
-                            new Attribute\Select(
-                                values: $modelItem->getVirtual() ? [['1', '='], ['2', '&lt;&gt;']] : [
-                                    ['1', '='],
-                                    ['2', '&lt;&gt;'],
-                                    ['3', '&gt;'],
-                                    ['4', '&lt;'],
-                                ],
-                            ),
-                        );
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Select());
+                    $createdItem->name = $searchFieldName . 'select';
+                    $createdItem->shownName = $modelItem->shownName;
+                    $createdItem->setAttribute(
+                        new Attribute\Select(
+                            values: $modelItem->getVirtual() ? [['1', '='], ['2', '&lt;&gt;']] : [
+                                ['1', '='],
+                                ['2', '&lt;&gt;'],
+                                ['3', '&gt;'],
+                                ['4', '&lt;'],
+                            ],
+                        ),
+                    );
 
                     /** @var Item\Calendar|Item\Number */
-                    $clonedModelItem =  $filterBlock->addFiltersViewItem(clone($modelItem))
-                        ->setName($searchFieldName);
-
-                    $clonedModelItem->getAttribute()
-                        ->setObligatory(false)
-                        ->setDefaultValue(null);
+                    $clonedModelItem = $filterBlock->addFiltersViewItem(clone($modelItem));
+                    $clonedModelItem->name = $searchFieldName;
+                    $clonedModelItem->getAttribute()->obligatory = false;
+                    $clonedModelItem->getAttribute()->defaultValue = null;
                 } elseif ($modelItem instanceof Item\File) {
-                    $filterBlock->addFiltersViewItem(new Item\Checkbox())
-                        ->setName($searchFieldName)
-                        ->setShownName($modelItem->getShownName())
-                        ->setAttribute(new Attribute\Checkbox());
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Checkbox());
+                    $createdItem->name = $searchFieldName;
+                    $createdItem->shownName = $modelItem->shownName;
+                    $createdItem->setAttribute(new Attribute\Checkbox());
                 } elseif ($modelItem instanceof Item\Checkbox) {
-                    $filterBlock->addFiltersViewItem(new Item\Multiselect())
-                        ->setName($searchFieldName)
-                        ->setShownName($modelItem->getShownName())
-                        ->setAttribute(
-                            new Attribute\Multiselect(
-                                values: [
-                                    [1, '<span class="sbi sbi-check"></span>'],
-                                    [2, '<span class="sbi sbi-times"></span>'],
-                                ],
-                                one: true,
-                            ),
-                        );
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Multiselect());
+                    $createdItem->name = $searchFieldName;
+                    $createdItem->shownName = $modelItem->shownName;
+                    $createdItem->setAttribute(
+                        new Attribute\Multiselect(
+                            values: [
+                                [1, '<span class="sbi sbi-check"></span>'],
+                                [2, '<span class="sbi sbi-times"></span>'],
+                            ],
+                            one: true,
+                        ),
+                    );
                 } elseif ($modelItem instanceof Item\Timestamp) {
-                    $filterBlock->addFiltersViewItem(new Item\Select())
-                        ->setName($searchFieldName . 'select')
-                        ->setShownName($modelItem->getShownName())
-                        ->setAttribute(
-                            new Attribute\Select(
-                                values: [
-                                    ['1', '='],
-                                    ['2', '<>'],
-                                    ['3', '>'],
-                                    ['4', '<'],
-                                ],
-                            ),
-                        );
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Select());
+                    $createdItem->name = $searchFieldName . 'select';
+                    $createdItem->shownName = $modelItem->shownName;
+                    $createdItem->setAttribute(
+                        new Attribute\Select(
+                            values: [
+                                ['1', '='],
+                                ['2', '<>'],
+                                ['3', '>'],
+                                ['4', '<'],
+                            ],
+                        ),
+                    );
 
-                    $filterBlock->addFiltersViewItem(new Item\Calendar())
-                        ->setName($searchFieldName)
-                        ->setShownName($modelItem->getShownName())
-                        ->setAttribute(
-                            new Attribute\Calendar(
-                                showDatetime: true,
-                            ),
-                        );
+                    $createdItem = $filterBlock->addFiltersViewItem(new Item\Calendar());
+                    $createdItem->name = $searchFieldName;
+                    $createdItem->shownName = $modelItem->shownName;
+                    $createdItem->setAttribute(
+                        new Attribute\Calendar(
+                            showDatetime: true,
+                        ),
+                    );
                 }
             }
         }
@@ -963,7 +956,7 @@ final class Filters
 
         if ($this->entity instanceof CatalogEntity) {
             $sql .= " AND t1." . $tableFieldToDetectType .
-                ($modelItem->getEntity() instanceof CatalogItemEntity ? "!" : "") . "='{menu}')";
+                ($modelItem->entity instanceof CatalogItemEntity ? "!" : "") . "='{menu}')";
         }
 
         return [$firstSearchQuery, $sql];
@@ -975,7 +968,7 @@ final class Filters
         $name = str_ireplace(['search_', 'search2_'], '', $name);
 
         foreach ($filtersBlock->getModelItems() as $modelItem) {
-            if ($modelItem->getName() === $name) {
+            if ($modelItem->name === $name) {
                 return $modelItem;
             }
         }
@@ -1026,7 +1019,7 @@ final class Filters
 
     private function getParameterByName(string $parameterName, string $kind = KIND): mixed
     {
-        return $this->cookieValues[$parameterName] ?? self::getFiltersCookie()[$kind][$this->entity->getName()][$parameterName] ?? null;
+        return $this->cookieValues[$parameterName] ?? self::getFiltersCookie()[$kind][$this->entity->name][$parameterName] ?? null;
     }
 
     private function setParameterByName(string $parameterName, mixed $value): void

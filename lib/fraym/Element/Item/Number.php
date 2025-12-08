@@ -74,7 +74,7 @@ class Number extends BaseElement
 
     public function getDefaultValue(): ?int
     {
-        $defaultValue = $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        $defaultValue = $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
 
         if (!is_null($defaultValue)) {
             $defaultValue = (int) $defaultValue;
@@ -111,6 +111,6 @@ class Number extends BaseElement
 
     public function getRound(): ?bool
     {
-        return $this->getAttribute()->getRound();
+        return $this->getAttribute()->round;
     }
 }

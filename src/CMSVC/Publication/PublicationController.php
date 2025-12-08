@@ -21,6 +21,6 @@ class PublicationController extends BaseController
     {
         $this->requestCheckSearch();
 
-        return $this->getCMSVC()->getView()->Response();
+        return $this->CMSVC->view->Response();
     }
 }

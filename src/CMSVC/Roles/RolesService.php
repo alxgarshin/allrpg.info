@@ -42,7 +42,7 @@ class RolesService extends BaseService
     /** Переключение режима показа сетки ролей: мастерам / всем */
     public function switchShowRoleslist(): array
     {
-        $LOCALE_ROLES = $this->getLocale();
+        $LOCALE_ROLES = $this->LOCALE;
         $LOCALE_PROJECT = LocaleHelper::getLocale(['project', 'fraym_model']);
 
         $projectData = $this->getProjectData();
@@ -69,7 +69,7 @@ class RolesService extends BaseService
     /** Переключение режима просмотра сетки ролей: мастер / игрок */
     public function switchViewRoleslistMode(): array
     {
-        $LOCALE_ROLES = $this->getLocale();
+        $LOCALE_ROLES = $this->LOCALE;
 
         $viewmode = 'gamemaster';
         $rightsData = DB->select(
@@ -121,7 +121,7 @@ class RolesService extends BaseService
         int $projectId,
         bool $excel,
     ): array {
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -810,7 +810,7 @@ class RolesService extends BaseService
 
     public function showApplication($roleKey, $hideApply)
     {
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
 
         $applicationData = $this->rolesDataArray[$roleKey];
         $projectData = $this->projectData;
@@ -984,7 +984,7 @@ class RolesService extends BaseService
     public function showCharacter($characterData)
     {
         $projectData = $this->projectData;
-        $LOCALE_ROLES = $this->getLocale();
+        $LOCALE_ROLES = $this->LOCALE;
 
         $applicationsTotal = 0;
 
@@ -1060,7 +1060,7 @@ class RolesService extends BaseService
     public function showGroup(array $groupData)
     {
         $projectData = $this->projectData;
-        $LOCALE_ROLES = $this->getLocale();
+        $LOCALE_ROLES = $this->LOCALE;
         $LOCALE_GROUP = LocaleHelper::getLocale(['group', 'global']);
 
         if ($this->getExcelView()) {

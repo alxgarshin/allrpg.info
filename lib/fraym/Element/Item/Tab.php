@@ -31,10 +31,10 @@ class Tab extends BaseElement
 
         if ($entity instanceof TableEntity) {
             $tabkey = 0;
-            $tabs = $entity->getTabs();
+            $tabs = $entity->tabs;
 
             foreach ($tabs as $key => $tab) {
-                if ($this->name === $tab->getName()) {
+                if ($this->name === $tab->name) {
                     $tabkey = $key;
                     break;
                 }

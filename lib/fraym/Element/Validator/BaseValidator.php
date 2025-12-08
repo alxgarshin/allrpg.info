@@ -42,7 +42,7 @@ abstract class BaseValidator implements Validator
                         $multiple++;
 
                         /** @var ElementItem $element */
-                        $message .= '«' . $element->getShownName() . '»';
+                        $message .= '«' . $element->shownName . '»';
 
                         if ($stringId > 0) {
                             $message .= ' ' . $LOC['in_string'] . $stringId;

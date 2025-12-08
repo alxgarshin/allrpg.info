@@ -812,7 +812,7 @@ class GroupService extends BaseService
         $savedGroupData = $this->savedGroupData;
 
         if (!is_null($savedGroupData) && ($_REQUEST['disable_changes'][0] ?? false) === 'on' && $savedGroupData->disable_changes->get()) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
             ResponseHelper::responseOneBlock('error', $LOCALE['messages']['disable_changes_active'], ['disable_changes[0]']);
         }
     }
@@ -856,8 +856,8 @@ class GroupService extends BaseService
     public function getSortRights(): array
     {
         /** @var Attribute\Multiselect $rightsAttribute */
-        $rightsAttribute = $this->getModel()->getElement('rights')->getAttribute();
-        $rightsValues = $rightsAttribute->getValues();
+        $rightsAttribute = $this->model->getElement('rights')->getAttribute();
+        $rightsValues = $rightsAttribute->values;
 
         return [
             [0, '<span class="sbi sbi-eye green" title="' . $rightsValues[0][1] . '"></span>'],
@@ -869,8 +869,8 @@ class GroupService extends BaseService
 
     public function getLinkToRolesDefault(): ?string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
-            $LOCALE = $this->getLOCALE();
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
+            $LOCALE = $this->LOCALE;
 
             return '<a href="/roles/' . $this->getActivatedProjectId() . '/group/' . DataHelper::getId() . '/" target="_blank"><span class="sbi sbi-list"></span> ' . $LOCALE['link_to_roles_default'] . '</a>';
         }
@@ -880,7 +880,7 @@ class GroupService extends BaseService
 
     public function getParentDefault(): ?string
     {
-        if ($this->getAct() === ActEnum::add) {
+        if ($this->act === ActEnum::add) {
             return $_REQUEST['parent'] ?? null;
         }
 
@@ -905,7 +905,7 @@ class GroupService extends BaseService
 
     public function getCodeValues(): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         return [[-1, $LOCALE['at_the_end']]];
     }

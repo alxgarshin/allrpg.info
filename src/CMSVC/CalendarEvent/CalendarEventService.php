@@ -24,7 +24,7 @@ class CalendarEventService extends BaseService
         if (is_null($this->matchedProjectData)) {
             $this->matchedProjectData = [];
 
-            if ($this->getAct() === ActEnum::add && ($_REQUEST['project_id'] ?? false)) {
+            if ($this->act === ActEnum::add && ($_REQUEST['project_id'] ?? false)) {
                 $this->matchedProjectData = DB->select('project', ['id' => $_REQUEST['project_id']], true);
             }
         }
@@ -34,7 +34,7 @@ class CalendarEventService extends BaseService
 
     public function preCreate(): void
     {
-        $LOC = $this->getLOCALE()['messages'];
+        $LOC = $this->LOCALE['messages'];
 
         $this->checkValidData();
 
@@ -59,7 +59,7 @@ class CalendarEventService extends BaseService
     public function preDelete(): void
     {
         DB->update('calendar_event', ['wascancelled' => 1], ['id' => DataHelper::getId()]);
-        ResponseHelper::response([['success', $this->getEntity()->getObjectMessages($this->getEntity())[2]]], '/' . KIND . '/');
+        ResponseHelper::response([['success', $this->entity->getObjectMessages($this->entity)[2]]], '/' . KIND . '/');
     }
 
     public function checkValidData(): void
@@ -88,7 +88,7 @@ class CalendarEventService extends BaseService
 
     public function checkRightsViewRestrict(): ?string
     {
-        if ($this->getAct() === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
+        if ($this->act === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
             if (CURRENT_USER->isLogged()) {
                 return ($_REQUEST['mine'] ?? false) && $_REQUEST['mine'] === 1 ? 'creator_id=' . CURRENT_USER->id() : '';
             } else {
@@ -101,7 +101,7 @@ class CalendarEventService extends BaseService
 
     public function checkRightsChangeRestrict(): ?string
     {
-        if ($this->getAct() === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
+        if ($this->act === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
             if (CURRENT_USER->isAdmin()) {
                 return null;
             } elseif (CURRENT_USER->isLogged()) {
@@ -118,7 +118,7 @@ class CalendarEventService extends BaseService
     {
         if (CURRENT_USER->isAdmin() || CURRENT_USER->checkAllRights('info')) {
             return true;
-        } elseif ($this->getAct() === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
+        } elseif ($this->act === ActEnum::edit || ($_REQUEST['mine'] ?? false) === '1' || in_array(ACTION, ActionEnum::getBaseValues())) {
             return true;
         }
 
@@ -132,7 +132,7 @@ class CalendarEventService extends BaseService
 
     public function getToGameDefault(): string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
             $LOCALE = LocaleHelper::getLocale(['fraym']);
 
             return '<a href="' . ABSOLUTE_PATH . '/calendar_event/' . DataHelper::getId() . '/" target="_blank">' . $LOCALE['functions']['open_in_a_new_window'] . '</a>';

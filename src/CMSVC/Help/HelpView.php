@@ -31,9 +31,9 @@ class HelpView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
-        $helpService = $this->getService();
+        $helpService = $this->service;
         $hash = $helpService->getHash();
 
         $html = $response->getHtml();

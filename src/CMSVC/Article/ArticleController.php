@@ -19,7 +19,7 @@ class ArticleController extends BaseController
     {
         $RESPONSE_DATA = '';
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $kind = KIND;
 

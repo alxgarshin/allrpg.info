@@ -18,7 +18,7 @@ class RulingQuestionEditService extends BaseService
 
     public function getObjHelper1Default(): string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
             $LOCALE = LocaleHelper::getLocale(['fraym']);
 
             return '<a href="' . ABSOLUTE_PATH . '/ruling_edit/ruling_question_id=' . DataHelper::getId() . '" target="_blank">' . $LOCALE['functions']['open_in_a_new_window'] . '</a>';

@@ -19,9 +19,9 @@ class IngameController extends BaseController
     public function Response(): ?Response
     {
         /** @var IngameView */
-        $ingameView = $this->getCMSVC()->getView();
+        $ingameView = $this->CMSVC->view;
 
-        if (!$this->getService()->getApplicationData()) {
+        if (!$this->service->getApplicationData()) {
             return $ingameView->chooseProjectsList();
         }
 
@@ -30,13 +30,13 @@ class IngameController extends BaseController
 
     public function createTransaction(): ?Response
     {
-        return $this->getService()->createBankTransaction();
+        return $this->service->createBankTransaction();
     }
 
     public function qrpgHackingStart(): ?Response
     {
         if (!CookieHelper::getCookie('ingame_application_id')) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             return $this->asArray(
                 [
@@ -46,7 +46,7 @@ class IngameController extends BaseController
             );
         } else {
             return $this->asArray(
-                $this->getService()->QRpgHackingStart(
+                $this->service->QRpgHackingStart(
                     (int) ($_REQUEST['qha_id'] ?? false),
                 ),
             );
@@ -56,7 +56,7 @@ class IngameController extends BaseController
     public function qrpgBankPay(): ?Response
     {
         if (!CookieHelper::getCookie('ingame_application_id')) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             return $this->asArray(
                 [
@@ -66,7 +66,7 @@ class IngameController extends BaseController
             );
         } else {
             return $this->asArray(
-                $this->getService()->qrpgBankPay(
+                $this->service->qrpgBankPay(
                     (int) ($_REQUEST['account_num_to'] ?? false),
                     (int) ($_REQUEST['bank_currency_id'] ?? false),
                     (int) ($_REQUEST['amount'] ?? false),
@@ -80,7 +80,7 @@ class IngameController extends BaseController
     {
         if (CookieHelper::getCookie('ingame_application_id')) {
             return $this->asArray(
-                $this->getService()->prepareQRpgBankCode(
+                $this->service->prepareQRpgBankCode(
                     (int) ($_REQUEST['bank_currency_id'] ?? false),
                     (int) ($_REQUEST['amount'] ?? false),
                     $_REQUEST['name'] ?? '',
@@ -95,7 +95,7 @@ class IngameController extends BaseController
     {
         if (CookieHelper::getCookie('ingame_application_id')) {
             return $this->asArray(
-                $this->getService()->setGeoposition(
+                $this->service->setGeoposition(
                     $_REQUEST['lat'] ?? false,
                     $_REQUEST['long'] ?? false,
                     $_REQUEST['acc'] ?? false,
@@ -110,7 +110,7 @@ class IngameController extends BaseController
     {
         if (CookieHelper::getCookie('ingame_application_id')) {
             return $this->asArray(
-                $this->getService()->qrpgGetKeysAndProperties(),
+                $this->service->qrpgGetKeysAndProperties(),
             );
         }
 
@@ -120,7 +120,7 @@ class IngameController extends BaseController
     public function qrpgDecode(): ?Response
     {
         if (!CookieHelper::getCookie('ingame_application_id')) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             return $this->asArray(
                 [
@@ -130,7 +130,7 @@ class IngameController extends BaseController
             );
         } else {
             return $this->asArray(
-                $this->getService()->qrpgDecode(
+                $this->service->qrpgDecode(
                     ($_REQUEST['data'] ?? false) ? json_decode($_REQUEST['data'], true) : null,
                     ($_REQUEST['hacking_sequence'] ?? false) ? json_decode($_REQUEST['hacking_sequence'], true) : null,
                     (int) ($_REQUEST['qha_id'] ?? false),

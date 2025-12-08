@@ -17,7 +17,7 @@ class RulingEditView extends BaseView
         /** @var RulingEditService $rulingEditService */
         $rulingEditService = CMSVCHelper::getService('rulingEdit');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);

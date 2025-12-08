@@ -225,7 +225,7 @@ class Multiselect extends BaseElement
 
     public function getDefaultValue(): array
     {
-        $defaultValue = $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        $defaultValue = $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
 
         return is_array($defaultValue) ? $defaultValue : ($defaultValue === null ? [] : [$defaultValue]);
     }
@@ -272,36 +272,36 @@ class Multiselect extends BaseElement
 
     public function getValues(): null|string|array
     {
-        return $this->getAttribute()->getValues();
+        return $this->getAttribute()->values;
     }
 
     public function getLocked(): ?array
     {
-        return $this->getAttribute()->getLocked();
+        return $this->getAttribute()->locked;
     }
 
     public function getOne(): bool
     {
-        return $this->getAttribute()->getOne();
+        return $this->getAttribute()->one;
     }
 
     public function getImages(): ?array
     {
-        return $this->getAttribute()->getImages();
+        return $this->getAttribute()->images;
     }
 
     public function getPath(): ?string
     {
-        return $this->getAttribute()->getPath();
+        return $this->getAttribute()->path;
     }
 
     public function getSearch(): ?bool
     {
-        return $this->getAttribute()->getSearch();
+        return $this->getAttribute()->search;
     }
 
     public function getCreator(): ?MultiselectCreator
     {
-        return $this->getAttribute()->getCreator();
+        return $this->getAttribute()->creator;
     }
 }

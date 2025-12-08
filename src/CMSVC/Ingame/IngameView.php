@@ -21,11 +21,11 @@ class IngameView extends BaseView
 
     public function applicationView(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $RESPONSE_DATA = '';
         $PAGETITLE = $LOCALE['title'];
 
-        $ingameService = $this->getService();
+        $ingameService = $this->service;
         $applicationData = $ingameService->getApplicationData();
         $projectData = $ingameService->getProjectData();
 
@@ -153,12 +153,12 @@ class IngameView extends BaseView
 
     public function chooseProjectsList(): Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $RESPONSE_DATA = '';
         $PAGETITLE = $LOCALE['title'];
 
-        $ingameService = $this->getService();
+        $ingameService = $this->service;
 
         $applicationsFullData = $ingameService->applicationsFullData;
 

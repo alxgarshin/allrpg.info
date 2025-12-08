@@ -16,7 +16,7 @@ class MarkController extends BaseController
     #[IsAccessible]
     public function markNeedResponse(): ?Response
     {
-        $markService = $this->getService();
+        $markService = $this->service;
 
         return $this->asArray(
             $markService->markNeedResponse(
@@ -28,7 +28,7 @@ class MarkController extends BaseController
     #[IsAccessible]
     public function markHasResponse(): ?Response
     {
-        $markService = $this->getService();
+        $markService = $this->service;
 
         return $this->asArray(
             $markService->markHasResponse(
@@ -40,7 +40,7 @@ class MarkController extends BaseController
     #[IsAccessible]
     public function markReadMessage(): ?Response
     {
-        $markService = $this->getService();
+        $markService = $this->service;
 
         return $this->asArray(
             $markService->markReadMessage(
@@ -51,7 +51,7 @@ class MarkController extends BaseController
 
     public function markRead(): ?Response
     {
-        $markService = $this->getService();
+        $markService = $this->service;
 
         return $this->asArray(
             $markService->markRead(
@@ -62,7 +62,7 @@ class MarkController extends BaseController
 
     public function markImportant(): ?Response
     {
-        $markService = $this->getService();
+        $markService = $this->service;
 
         return $this->asArray(
             $markService->markImportant(

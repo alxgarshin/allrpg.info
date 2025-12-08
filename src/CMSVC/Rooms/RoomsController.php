@@ -30,7 +30,7 @@ class RoomsController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->addNeighboor(
+                $this->service->addNeighboor(
                     (int) OBJ_ID,
                     (int) ($_REQUEST['application_id'] ?? false),
                 ),

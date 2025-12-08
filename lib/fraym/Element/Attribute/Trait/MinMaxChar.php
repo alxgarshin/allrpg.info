@@ -15,33 +15,7 @@ namespace Fraym\Element\Attribute\Trait;
 
 trait MinMaxChar
 {
-    /** Минимальное количество символов */
-    private ?int $minChar;
+    public ?int $minChar;
 
-    /** Максимальное количество символов */
-    private ?int $maxChar;
-
-    public function getMinChar(): ?int
-    {
-        return $this->minChar;
-    }
-
-    public function setMinChar(?int $minChar): static
-    {
-        $this->minChar = $minChar;
-
-        return $this;
-    }
-
-    public function getMaxChar(): ?int
-    {
-        return $this->maxChar;
-    }
-
-    public function setMaxchar(?int $maxChar): static
-    {
-        $this->maxChar = $maxChar;
-
-        return $this;
-    }
+    public ?int $maxChar;
 }

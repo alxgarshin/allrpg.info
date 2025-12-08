@@ -25,7 +25,7 @@ class UserController extends BaseController
     public function changeStatus(): ?Response
     {
         return $this->asArray(
-            $this->getService()->changeStatus(
+            $this->service->changeStatus(
                 $_REQUEST['value'] ?? null,
             ),
         );
@@ -35,7 +35,7 @@ class UserController extends BaseController
     public function webpushSubscribe(): ?Response
     {
         return $this->asArray(
-            $this->getService()->webpushSubscribe(
+            $this->service->webpushSubscribe(
                 $_REQUEST['deviceId'] ?? null,
                 $_REQUEST['endpoint'] ?? null,
                 $_REQUEST['p256dh'] ?? null,
@@ -49,7 +49,7 @@ class UserController extends BaseController
     public function webpushUnsubscribe(): ?Response
     {
         return $this->asArray(
-            $this->getService()->webpushUnsubscribe(
+            $this->service->webpushUnsubscribe(
                 $_REQUEST['deviceId'] ?? null,
             ),
         );
@@ -59,7 +59,7 @@ class UserController extends BaseController
     public function becomeFriends(): ?Response
     {
         return $this->asArray(
-            $this->getService()->becomeFriends(
+            $this->service->becomeFriends(
                 OBJ_ID,
             ),
         );
@@ -69,7 +69,7 @@ class UserController extends BaseController
     public function removeFriend(): ?Response
     {
         return $this->asArray(
-            $this->getService()->removeFriend(
+            $this->service->removeFriend(
                 OBJ_ID,
             ),
         );
@@ -80,11 +80,11 @@ class UserController extends BaseController
     {
         return $this->asArray(
             array_merge(
-                $this->getService()->getContactsOnlineExtended(
+                $this->service->getContactsOnlineExtended(
                     ($_REQUEST['show_list'] ?? '') === 'true',
                     ($_REQUEST['get_opened_dialogs'] ?? '') === 'true',
                 ),
-                $this->getService()->getNewEvents(
+                $this->service->getNewEvents(
                     OBJ_ID,
                     OBJ_TYPE,
                     ($_REQUEST['get_opened_dialogs'] ?? '') === 'true',
@@ -97,7 +97,7 @@ class UserController extends BaseController
     public function loadUsersList(): ?Response
     {
         return $this->asArray(
-            $this->getService()->loadUsersList(
+            $this->service->loadUsersList(
                 OBJ_ID,
                 OBJ_TYPE,
                 (int) ($_REQUEST['limit'] ?? 0),
@@ -110,14 +110,14 @@ class UserController extends BaseController
     public function getCaptcha(): ?Response
     {
         return $this->asArray(
-            $this->getService()->getCaptcha(),
+            $this->service->getCaptcha(),
         );
     }
 
     public function addRights(): ?Response
     {
         return $this->asArray(
-            $this->getService()->dynamicAddRights(
+            $this->service->dynamicAddRights(
                 OBJ_TYPE,
                 OBJ_ID,
                 $_REQUEST['user_id'] ?? null,
@@ -129,7 +129,7 @@ class UserController extends BaseController
     public function removeRights(): ?Response
     {
         return $this->asArray(
-            $this->getService()->dynamicRemoveRights(
+            $this->service->dynamicRemoveRights(
                 OBJ_TYPE,
                 OBJ_ID,
                 $_REQUEST['user_id'] ?? null,
@@ -142,7 +142,7 @@ class UserController extends BaseController
     public function subscribe(): ?Response
     {
         if (!empty(OBJ_TYPE) && OBJ_ID !== '') {
-            if ($this->getService()->addSubscribe(OBJ_TYPE, OBJ_ID)) {
+            if ($this->service->addSubscribe(OBJ_TYPE, OBJ_ID)) {
                 $LOCALE = LocaleHelper::getLocale(['global', 'subscription']);
 
                 return $this->asArray(
@@ -162,7 +162,7 @@ class UserController extends BaseController
     public function unsubscribe(): ?Response
     {
         if (!empty(OBJ_TYPE) && OBJ_ID !== '') {
-            if ($this->getService()->deleteSubscribe(OBJ_TYPE, OBJ_ID)) {
+            if ($this->service->deleteSubscribe(OBJ_TYPE, OBJ_ID)) {
                 $LOCALE = LocaleHelper::getLocale(['global', 'subscription']);
 
                 return $this->asArray(
@@ -182,7 +182,7 @@ class UserController extends BaseController
     public function reverifyEm(): ?Response
     {
         return $this->asArray(
-            $this->getService()->reverifyEm(),
+            $this->service->reverifyEm(),
         );
     }
 }

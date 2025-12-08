@@ -121,7 +121,7 @@ class File extends BaseElement
 
     public function getUploadNum(): ?int
     {
-        return $this->getAttribute()->getUploadNum();
+        return $this->getAttribute()->uploadNum;
     }
 
     public function getUploadData(?int $uploadNum = null): ?array

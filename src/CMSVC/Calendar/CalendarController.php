@@ -16,6 +16,6 @@ class CalendarController extends BaseController
 {
     public function changeCalendarstyle(): ArrayResponse
     {
-        return $this->asArray($this->getService()->changeCalendarstyle());
+        return $this->asArray($this->service->changeCalendarstyle());
     }
 }

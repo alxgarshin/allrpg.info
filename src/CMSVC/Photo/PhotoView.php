@@ -32,10 +32,10 @@ class PhotoView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_HELP = LocaleHelper::getLocale(['help', 'global']);
 
-        $photoService = $this->getService();
+        $photoService = $this->service;
         $hash = $photoService->getHash();
 
         $html = $response->getHtml();

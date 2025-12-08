@@ -19,12 +19,12 @@ class GamemasterView extends BaseView
     public function Response(): ?Response
     {
         /** @var GamemasterService $gamemasterService */
-        $gamemasterService = $this->getCMSVC()->getService();
+        $gamemasterService = $this->CMSVC->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
 

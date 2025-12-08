@@ -33,7 +33,7 @@ class Textarea extends BaseElement
     public function usualAsHTMLRenderer(bool $editableFormat, bool $removeHtmlFromValue = false): string
     {
         $name = $this->name . $this->getLineNumberWrapped();
-        $value = DataHelper::escapeOutput($this->get(), $this->getAttribute()->getSaveHtml() ? EscapeModeEnum::plainHTML : EscapeModeEnum::forHTML);
+        $value = DataHelper::escapeOutput($this->get(), $this->getAttribute()->saveHtml ? EscapeModeEnum::plainHTML : EscapeModeEnum::forHTML);
         $rows = $this->getRows();
 
         if ($editableFormat) {
@@ -80,7 +80,7 @@ class Textarea extends BaseElement
 
     public function getDefaultValue(): ?string
     {
-        return $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        return $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
     }
 
     public function get(): ?string
@@ -107,6 +107,6 @@ class Textarea extends BaseElement
 
     public function getRows(): ?int
     {
-        return $this->getAttribute()->getRows();
+        return $this->getAttribute()->rows;
     }
 }

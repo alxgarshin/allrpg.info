@@ -30,11 +30,11 @@ class SetupController extends BaseController
 {
     public function Response(): ?Response
     {
-        $this->getService()->setApplicationType();
+        $this->service->setApplicationType();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
-        if (DataHelper::getActDefault($this->getEntity()) === ActEnum::add && ACTION === null) {
+        if (DataHelper::getActDefault($this->entity) === ActEnum::add && ACTION === null) {
             ResponseHelper::info($LOCALE['messages']['do_not_add_player_fields']);
         }
 
@@ -43,7 +43,7 @@ class SetupController extends BaseController
 
     public function changeProjectFieldCode(): ?Response
     {
-        $setupService = $this->getService();
+        $setupService = $this->service;
 
         return $this->asArray(
             $setupService->changeProjectFieldCode(

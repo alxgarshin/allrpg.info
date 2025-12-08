@@ -22,7 +22,7 @@ class HelpService extends BaseService
 
     public function preCreate(): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
 
         if ($_REQUEST['hash'][0] !== '' && $_REQUEST['regstamp'][0] !== '') {
             $checkHashData = DB->select('regstamp', ['hash' => $_REQUEST['hash'][0]], true);
@@ -135,7 +135,7 @@ class HelpService extends BaseService
     {
         /** @var HelpModel $model */
         if (CURRENT_USER->isLogged()) {
-            $model->getElement('em')->getAttribute()->setObligatory(true);
+            $model->getElement('em')->getAttribute()->obligatory = true;
         }
 
         return $model;

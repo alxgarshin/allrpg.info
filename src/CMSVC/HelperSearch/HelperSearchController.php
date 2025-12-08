@@ -169,7 +169,7 @@ class HelperSearchController extends BaseHelper
             if ($object === 'user') {
                 /** @var UserService $userService */
                 $userService = CMSVCHelper::getService('user');
-                /** @var UserModel|null $entityItem */
+                /** @var UserModel $entityItem */
                 $content = $userService->showNameExtended($entityItem, false, false, '', false, true, true);
             } elseif (property_exists($entityItem, 'name')) {
                 $content = DataHelper::escapeOutput($entityItem->name->get());

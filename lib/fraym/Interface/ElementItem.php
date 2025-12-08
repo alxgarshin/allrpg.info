@@ -20,13 +20,26 @@ use Fraym\Enum\ActEnum;
 
 interface ElementItem
 {
-    public function usualAsHTMLRenderer(bool $editableFormat, bool $removeHtmlFromValue = false): string;
+    /** Название поля: совпадает с названием в БД */
+    public ?string $name { get; set; }
 
-    public function asHTML(bool $elementIsWritable, bool $removeHtmlFromValue = false): string;
+    /** Видимое для пользователей название поля */
+    public ?string $shownName { get; set; }
 
-    public function asArray(): array;
+    /** Текст подсказки к полю */
+    public ?string $helpText { get; set; }
 
-    public function asArrayBase(): array;
+    /** Родительская сущность */
+    public ?BaseEntity $entity { get; set; }
+
+    /** Родительская модель */
+    public ?BaseModel $model { get; set; }
+
+    /** Данные для замены значения элемента при create */
+    public ?Attribute\OnCreate $create { get; set; }
+
+    /** Данные для замены значения элемента при change */
+    public ?Attribute\OnChange $change { get; set; }
 
     public function getAttribute(): ElementAttribute;
 
@@ -34,21 +47,15 @@ interface ElementItem
 
     public function checkAttribute(ElementAttribute $attribute, string $elementClassName): void;
 
-    public function getOnCreate(): ?Attribute\OnCreate;
+    public function getDefaultValue(): mixed;
 
-    public function setOnCreate(?Attribute\OnCreate $create): static;
+    public function usualAsHTMLRenderer(bool $editableFormat, bool $removeHtmlFromValue = false): string;
 
-    public function getOnChange(): ?Attribute\OnChange;
+    public function asHTML(bool $elementIsWritable, bool $removeHtmlFromValue = false): string;
 
-    public function setOnChange(?Attribute\OnChange $change): static;
+    public function asArray(): array;
 
-    public function getEntity(): ?BaseEntity;
-
-    public function setEntity(?BaseEntity $entity): static;
-
-    public function getModel(): ?BaseModel;
-
-    public function setModel(?BaseModel $model): static;
+    public function asArrayBase(): array;
 
     public function checkDefaultValueInServiceFunctions(mixed $defaultValue): mixed;
 
@@ -66,21 +73,9 @@ interface ElementItem
 
     public function getHelpClass(): ?string;
 
-    public function getHelpText(): ?string;
-
-    public function setHelpText(?string $helpText): static;
-
     public function getLinkAt(): Item\LinkAt;
 
-    public function getName(): ?string;
-
-    public function setName(?string $name): static;
-
     public function getNoData(): ?bool;
-
-    public function getShownName(): ?string;
-
-    public function setShownName(?string $shownName): static;
 
     public function getVirtual(): ?bool;
 
@@ -95,8 +90,6 @@ interface ElementItem
     public function asHTMLWrapped(?int $lineNumber, bool $elementIsWritable, int $elementTabindexNum): string;
 
     public function validate(mixed $value, array $options): array;
-
-    public function getDefaultValue(): mixed;
 
     public function get(): mixed;
 

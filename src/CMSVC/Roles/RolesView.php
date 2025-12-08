@@ -16,11 +16,11 @@ class RolesView extends BaseView
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_PROJECT = LocaleHelper::getLocale(['project']);
         $LOCALE_GROUP = LocaleHelper::getLocale(['group', 'global']);
 
-        $rolesService = $this->getService();
+        $rolesService = $this->service;
 
         $projectData = $rolesService->getProjectData(DataHelper::getId());
 

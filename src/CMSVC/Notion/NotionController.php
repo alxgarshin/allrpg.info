@@ -17,7 +17,7 @@ class NotionController extends BaseController
     public function notionMessageSave(): ArrayResponse
     {
         return $this->asArray(
-            $this->getService()->notionMessageSave(
+            $this->service->notionMessageSave(
                 OBJ_ID,
                 $_REQUEST['text'] ?? '',
                 (int) ($_REQUEST['rating'] ?? 0),
@@ -27,11 +27,11 @@ class NotionController extends BaseController
 
     public function notionMessageDelete(): ArrayResponse
     {
-        return $this->asArray($this->getService()->notionMessageDelete(OBJ_ID));
+        return $this->asArray($this->service->notionMessageDelete(OBJ_ID));
     }
 
     public function showHideNotion(): ArrayResponse
     {
-        return $this->asArray($this->getService()->showHideNotion(OBJ_ID));
+        return $this->asArray($this->service->showHideNotion(OBJ_ID));
     }
 }

@@ -95,35 +95,34 @@ class RulingService extends BaseService
         foreach ($rulingQuestions as $key => $rulingQuestionData) {
             if ($rulingQuestionData instanceof Item\Select) {
                 $field = new Item\Multiselect();
-                $field
-                    ->setName($rulingQuestionData->getName())
-                    ->setShownName($rulingQuestionData->getShownName());
+                $field->name = $rulingQuestionData->name;
+                $field->shownName = $rulingQuestionData->shownName;
                 $fieldAttribute = new Attribute\Multiselect(
+                    defaultValue: $rulingQuestionData->getAttribute()->defaultValue,
                     one: true,
-                    values: $rulingQuestionData->getAttribute()->getValues(),
-                    defaultValue: $rulingQuestionData->getAttribute()->getDefaultValue(),
-                    additionalData: $rulingQuestionData->getAttribute()->getAdditionalData(),
+                    values: $rulingQuestionData->getAttribute()->values,
+                    additionalData: $rulingQuestionData->getAttribute()->additionalData,
                 );
                 $field->setAttribute($fieldAttribute);
                 $rulingQuestions[$key] = $rulingQuestionData = $field;
             } else {
-                $rulingQuestionData->getAttribute()->setOne(false);
+                $rulingQuestionData->getAttribute()->one = false;
             }
 
             if ($fillform) {
-                if ($rulingQuestionData->getAttribute()->getOne()) {
-                    if ($_REQUEST[$rulingQuestionData->getName()][0] ?? false) {
-                        $rulingQuestionData->getAttribute()->setDefaultValue($_REQUEST[$rulingQuestionData->getName()][0]);
+                if ($rulingQuestionData->getAttribute()->one) {
+                    if ($_REQUEST[$rulingQuestionData->name][0] ?? false) {
+                        $rulingQuestionData->getAttribute()->defaultValue = $_REQUEST[$rulingQuestionData->name][0];
                     }
                 } else {
                     $defArray = [];
 
-                    foreach ($_REQUEST[$rulingQuestionData->getName()][0] ?? [] as $defKey => $value) {
+                    foreach ($_REQUEST[$rulingQuestionData->name][0] ?? [] as $defKey => $value) {
                         if ($value === 'on') {
                             $defArray[] = $defKey;
                         }
                     }
-                    $rulingQuestionData->getAttribute()->setDefaultValue($defArray);
+                    $rulingQuestionData->getAttribute()->defaultValue = $defArray;
                 }
             }
         }
@@ -131,11 +130,11 @@ class RulingService extends BaseService
         $showHideFieldsScript = '<script>';
 
         foreach ($rulingQuestions as $rulingQuestionData) {
-            $allShowIfs = json_decode($rulingQuestionData->getAttribute()->getAdditionalData()['show_if'], true);
+            $allShowIfs = json_decode($rulingQuestionData->getAttribute()->additionalData['show_if'], true);
 
             if (!is_null($allShowIfs) && count($allShowIfs) > 0) {
                 $showHideItemData = [
-                    'name' => $rulingQuestionData->getName() . '[0]',
+                    'name' => $rulingQuestionData->name . '[0]',
                     'dependencies' => [],
                 ];
 

@@ -19,7 +19,7 @@ class KogdaigraController extends BaseController
 {
     public function Response(): ?Response
     {
-        $kogdaIgraService = $this->getService();
+        $kogdaIgraService = $this->service;
 
         $from = (int) ($_REQUEST['from'] ?? 1500);
         $to = (int) ($_REQUEST['to'] ?? $from + 100);

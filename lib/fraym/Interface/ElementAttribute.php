@@ -17,73 +17,71 @@ use Fraym\Element\Item\LinkAt;
 
 interface ElementAttribute
 {
-    public function getLineNumber(): ?int;
+    /** Обязательность элемента */
+    public ?bool $obligatory { get; set; }
 
-    public function getLineNumberWrapped(): string;
+    /** Класс в зависимости от обязательности элемента */
+    public string $obligatoryStr { get; }
 
-    public function setLineNumber(?int $lineNumber): static;
+    /** Css-класс подсказки по элементу */
+    public ?string $helpClass { get; set; }
 
-    public function getObligatory(): ?bool;
+    /** Номер последовательной группы элемента */
+    public ?int $group { get; set; }
 
-    public function getObligatoryStr(): string;
+    /** В какой части (по номеру) группы находится данный конкретный инстанс элемента? */
+    public ?int $groupNumber { get; set; }
 
-    public function setObligatory(?bool $obligatory): static;
+    /** Управление элементом нестандартными обработчиками */
+    public ?bool $noData { get; set; }
 
-    public function getGroup(): ?int;
+    /** Виртуальность (хранение JSON-блока в одной ячейке таблицы) элемента */
+    public ?bool $virtual { get; set; }
 
-    public function setGroup(?int $group): static;
+    /** Обертка для создания ссылок вокруг значения элемента */
+    public LinkAt $linkAt { get; set; }
 
-    public function getGroupNumber(): ?int;
+    /** Открывающая часть ссылки */
+    public ?string $linkAtBegin { get; set; }
 
-    public function setGroupNumber(?int $groupNumber): static;
+    /** Закрывающая часть ссылки */
+    public ?string $linkAtEnd { get; set; }
 
-    public function getHelpClass(): ?string;
+    /** Строка элемента в наборе данных */
+    public ?int $lineNumber { get; set; }
 
-    public function setHelpClass(?string $helpClass): static;
+    /** Обернутая строка элемента в наборе данных */
+    public string $lineNumberWrapped { get; }
 
-    public function getLinkAt(): LinkAt;
+    /** Использовать элемент в фильтрах */
+    public ?bool $useInFilters { get; set; }
 
-    public function setLinkAt(LinkAt $linkAt): static;
+    /** Контекст отображения элемента: при отображении полей проверяется совпадение контекста элемента с заданным сейчас контекстом модели. Массив в формате: [модель:list|view|viewIfNotNull|create|update|embedded], например: ['user:view', 'user:add'] */
+    public string|array $context { get; set; }
 
-    public function getNoData(): ?bool;
+    /** Основные валидаторы элемента */
+    public array $basicElementValidators { get; set; }
 
-    public function setNoData(?bool $noData): static;
+    /** Список дополнительных валидаторов конкретного элемента конкретной модели
+     * @var array<int, string> $additionalValidators
+     */
+    public array $additionalValidators { get; set; }
 
-    public function getVirtual(): ?bool;
+    /** Сохранять данные поля с вычисткой и сохранением html в нем */
+    public ?bool $saveHtml { get; set; }
 
-    public function setVirtual(?bool $virtual): static;
+    /** Использовать данные из данной колонки таблицы вместо колонки по названию элемента */
+    public ?string $alternativeDataColumnName { get; set; }
 
-    public function getUseInFilters(): ?bool;
+    /** Массив любых дополнительных данных */
+    public array $additionalData { get; set; }
 
-    public function setUseInFilters(?bool $useInFilters): static;
+    /** Использовать соответствующую функцию из сервиса вместо стандартного asHTML */
+    public ?string $customAsHTMLRenderer { get; set; }
 
-    public function getContext(): string|array;
-
-    public function setContext(string|array $context): static;
-
+    /** Проверка наличия контекста в списке контекстов */
     public function checkContext(string $context): bool;
 
-    public function getAdditionalValidators(): array;
-
-    public function setAdditionalValidators(array $additionalValidators): static;
-
-    public function getBasicElementValidators(): array;
-
+    /** Получение полного списка валидаторов, включая дополнительные */
     public function getValidators(array $additionalValidators): array;
-
-    public function getSaveHtml(): ?bool;
-
-    public function setSaveHtml(?bool $saveHtml): static;
-
-    public function getAlternativeDataColumnName(): ?string;
-
-    public function setAlternativeDataColumnName(?string $alternativeDataColumnName): static;
-
-    public function getAdditionalData(): array;
-
-    public function setAdditionalData(array $additionalValidators): static;
-
-    public function getCustomAsHTMLRenderer(): ?string;
-
-    public function setCustomAsHTMLRenderer(?string $customAsHTMLRenderer): static;
 }

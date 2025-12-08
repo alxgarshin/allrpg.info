@@ -48,7 +48,7 @@ class MyapplicationService extends BaseService
 
     public function createTransaction(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $applicationData = $this->getApplicationData((int) $_REQUEST['project_application_id_hidden'][0]);
         $projectData = $this->getProjectData($applicationData['project_id']);
@@ -103,15 +103,15 @@ class MyapplicationService extends BaseService
                 $projectPaymentTypeData = DB->findObjectById($projectPaymentTypeId, 'project_payment_type');
 
                 /** @var TransactionModel */
-                $transactionModel = $transactionService->getModel();
+                $transactionModel = $transactionService->model;
 
                 $message = "**" . $LOCALE['fee_payment'] . "**
                     
-                    " . "__" . $transactionModel->amount->getShownName() . "__: " . $paymentAmount . "
+                    " . "__" . $transactionModel->amount->shownName . "__: " . $paymentAmount . "
                     " .
-                    "__" . $transactionModel->project_payment_type_id->getShownName() . "__: " . DataHelper::escapeOutput($projectPaymentTypeData['name']) .
+                    "__" . $transactionModel->project_payment_type_id->shownName . "__: " . DataHelper::escapeOutput($projectPaymentTypeData['name']) .
                     ($projectData->show_datetime_in_transaction->get() ? "
-                    __" . $transactionModel->payment_datetime->getShownName() . "__: " . date('d.m.Y H:i', strtotime($paymentDatetime)) : "") .
+                    __" . $transactionModel->payment_datetime->shownName . "__: " . date('d.m.Y H:i', strtotime($paymentDatetime)) : "") .
                     ($paymentContent ? "
                     
                     " . $paymentContent : "");
@@ -374,7 +374,7 @@ class MyapplicationService extends BaseService
 
     public function acceptApplication(int $objId): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $applicationData = $this->getApplicationData($objId);
 
@@ -400,7 +400,7 @@ class MyapplicationService extends BaseService
 
     public function declineApplication(int $objId): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $applicationData = $this->getApplicationData($objId);
 
@@ -756,11 +756,11 @@ class MyapplicationService extends BaseService
         $gamemastersAllinfo = $allinfo;
 
         foreach ($this->getApplicationFields() as $elem) {
-            if (!in_array('myapplication:update', $elem->getAttribute()->getContext()) && !$elem instanceof Item\H1) {
-                $reencodeData = $gamemastersAllinfo[$elem->getName()] ?? '';
+            if (!in_array('myapplication:update', $elem->getAttribute()->context) && !$elem instanceof Item\H1) {
+                $reencodeData = $gamemastersAllinfo[$elem->name] ?? '';
                 $reencodeData = str_replace('[', '&open;', $reencodeData);
                 $reencodeData = str_replace(']', '&close;', $reencodeData);
-                $gamemastersAllinfoData .= '[' . $elem->getName() . '][' . $reencodeData . ']' . chr(13) . chr(10);
+                $gamemastersAllinfoData .= '[' . $elem->name . '][' . $reencodeData . ']' . chr(13) . chr(10);
             }
         }
 
@@ -771,7 +771,7 @@ class MyapplicationService extends BaseService
 
     public function preDelete(): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
 
         $applicationData = $this->getApplicationData(DataHelper::getId());
 
@@ -816,8 +816,8 @@ class MyapplicationService extends BaseService
         if (is_null($this->letToApply)) {
             $letToApply = true;
 
-            if (!DataHelper::getId() && $this->getAct() === ActEnum::add && $this->getActivatedProjectId()) {
-                $LOCALE = $this->getLOCALE();
+            if (!DataHelper::getId() && $this->act === ActEnum::add && $this->getActivatedProjectId()) {
+                $LOCALE = $this->LOCALE;
 
                 $projectData = $this->getProjectData();
 
@@ -873,7 +873,7 @@ class MyapplicationService extends BaseService
 
     public function checkRightsViewRestrict(): string
     {
-        return '(creator_id=' . CURRENT_USER->id() . ' OR (offer_to_user_id=' . CURRENT_USER->id() . ' AND offer_denied!="1"))' . ($this->getDeletedView() ? ' AND deleted_by_player="1"' : (((!DataHelper::getId() || ACTION === ActionEnum::delete) && $this->getAct() !== ActEnum::add) ? ' AND deleted_by_player="0"' : ''));
+        return '(creator_id=' . CURRENT_USER->id() . ' OR (offer_to_user_id=' . CURRENT_USER->id() . ' AND offer_denied!="1"))' . ($this->getDeletedView() ? ' AND deleted_by_player="1"' : (((!DataHelper::getId() || ACTION === ActionEnum::delete) && $this->act !== ActEnum::add) ? ' AND deleted_by_player="0"' : ''));
     }
 
     public function checkRightsRestrict(): string
@@ -966,8 +966,8 @@ class MyapplicationService extends BaseService
     public function postProcessTextsOfReadOnlyFields(string $RESPONSE_DATA): string
     {
         foreach ($this->getApplicationFields() as $applicationField) {
-            if ($applicationField->getAttribute()->getContext()[0] <= 10 && $applicationField->getAttribute()->getContext()[1] > 10) {
-                $name = $applicationField->getName();
+            if ($applicationField->getAttribute()->context[0] <= 10 && $applicationField->getAttribute()->context[1] > 10) {
+                $name = $applicationField->name;
 
                 unset($match);
                 preg_match('#id="div_' . $name . '\[(\d+)]">(.*?)</div>#ms', $RESPONSE_DATA, $match);
@@ -987,7 +987,7 @@ class MyapplicationService extends BaseService
             $usersDataTableView = [];
             $usersDataTableViewShort = [];
 
-            if (!DataHelper::getId() && $this->getAct() !== ActEnum::add) {
+            if (!DataHelper::getId() && $this->act !== ActEnum::add) {
                 $creatorsData = DB->query(
                     "SELECT DISTINCT u.* FROM user u WHERE u.id in (SELECT id FROM user WHERE id=:id) OR u.id in (SELECT last_update_user_id FROM project_application WHERE creator_id=:creator_id)",
                     [
@@ -1024,7 +1024,7 @@ class MyapplicationService extends BaseService
 
     private function updateApplication(string|int $successfulResultsId): void
     {
-        $LOCALE_MYAPPLICATION = $this->getLOCALE();
+        $LOCALE_MYAPPLICATION = $this->LOCALE;
         $LOCALE = $LOCALE_MYAPPLICATION['messages'];
         $LOCALE_CONVERSATION = LocaleHelper::getLocale(['conversation', 'global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym', 'basefunc']);
@@ -1145,21 +1145,21 @@ class MyapplicationService extends BaseService
 
         $fieldsData = '';
 
-        foreach ($this->getModel()->getElements() as $elem) {
-            if (!in_array($elem->getName(), $doNotIncludeFields)) {
-                $elem->set($newApplicationData[$elem->getName()] ?? null);
+        foreach ($this->model->elementsList as $elem) {
+            if (!in_array($elem->name, $doNotIncludeFields)) {
+                $elem->set($newApplicationData[$elem->name] ?? null);
 
                 if ($elem instanceof Item\H1) {
-                    $fieldsData .= mb_strtoupper($elem->getShownName()) . '<br><br>';
+                    $fieldsData .= mb_strtoupper($elem->shownName) . '<br><br>';
                 } elseif (!$elem instanceof Item\Hidden && $elem->get()) {
                     if (
-                        in_array('myapplication:update', $elem->getAttribute()->getContext()) &&
+                        in_array('myapplication:update', $elem->getAttribute()->context) &&
                         (
                             ACTION === ActionEnum::create ||
-                            ($oldApplicationData[$elem->getName()] ?? false) !== ($newApplicationData[$elem->getName()] ?? false)
+                            ($oldApplicationData[$elem->name] ?? false) !== ($newApplicationData[$elem->name] ?? false)
                         )
                     ) {
-                        $fieldsData .= $elem->getShownName();
+                        $fieldsData .= $elem->shownName;
 
                         if (ACTION === ActionEnum::change) {
                             $sendChangeToGamemaster = true;

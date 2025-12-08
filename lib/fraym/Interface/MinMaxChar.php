@@ -15,11 +15,9 @@ namespace Fraym\Interface;
 
 interface MinMaxChar
 {
-    public function getMinChar(): ?int;
+    /** Минимальное количество символов */
+    public ?int $minChar { get; set; }
 
-    public function setMinChar(?int $minChar): static;
-
-    public function getMaxChar(): ?int;
-
-    public function setMaxchar(?int $maxChar): static;
+    /** Максимальное количество символов */
+    public ?int $maxChar { get; set; }
 }

@@ -38,23 +38,21 @@ class QrpgKeyView extends BaseView
 {
     public function init(): static
     {
-        $qrpgKeyService = $this->getService();
+        $qrpgKeyService = $this->service;
 
         $viewtype = $qrpgKeyService->getViewType();
 
         if ($viewtype === 2) {
-            $entity = $this->getEntity();
-            $this->setEntity(
-                new MultiObjectsEntity(
-                    name: $entity->getName(),
-                    table: $entity->getTable(),
-                    sortingData: $entity->getSortingData(),
-                    elementsPerPage: $entity->getElementsPerPage(),
-                    subType: MultiObjectsEntitySubTypeEnum::Cards,
-                ),
+            $entity = $this->entity;
+            $this->entity = new MultiObjectsEntity(
+                name: $entity->name,
+                table: $entity->table,
+                sortingData: $entity->sortingData,
+                elementsPerPage: $entity->elementsPerPage,
+                subType: MultiObjectsEntitySubTypeEnum::Cards,
             );
 
-            $this->setPropertiesWithListContext([]);
+            $this->propertiesWithListContext = [];
         }
 
         return $this;
@@ -67,9 +65,9 @@ class QrpgKeyView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
-        $qrpgKeyService = $this->getService();
+        $qrpgKeyService = $this->service;
 
         $viewtype = $qrpgKeyService->getViewType();
 

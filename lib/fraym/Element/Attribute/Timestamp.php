@@ -20,14 +20,14 @@ use Fraym\Element\Validator\{ObligatoryValidator, TimestampValidator};
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Timestamp extends BaseElement
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
         TimestampValidator::class,
     ];
 
     public function __construct(
         /** Показывать ли данный таймстамп в соответствующей колонке при представлении данных сущности в виде много-объектной страницы? */
-        private ?bool $showInObjects = null,
+        public ?bool $showInObjects = null,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -61,17 +61,5 @@ class Timestamp extends BaseElement
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
-
-    public function getShowInObjects(): ?bool
-    {
-        return $this->showInObjects;
-    }
-
-    public function setShowInObjects(?bool $showInObjects): static
-    {
-        $this->showInObjects = $showInObjects;
-
-        return $this;
     }
 }

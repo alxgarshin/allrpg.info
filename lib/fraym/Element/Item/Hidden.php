@@ -61,7 +61,7 @@ class Hidden extends BaseElement
 
     public function getDefaultValue(): null|int|string
     {
-        return $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        return $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
     }
 
     public function get(): null|int|string

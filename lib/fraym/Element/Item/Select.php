@@ -141,7 +141,7 @@ class Select extends BaseElement
 
     public function getDefaultValue(): int|string|null
     {
-        return $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        return $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
     }
 
     public function get(): int|string|null
@@ -183,16 +183,16 @@ class Select extends BaseElement
 
     public function getValues(): null|string|array
     {
-        return $this->getAttribute()->getValues();
+        return $this->getAttribute()->values;
     }
 
     public function getLocked(): ?array
     {
-        return $this->getAttribute()->getLocked();
+        return $this->getAttribute()->locked;
     }
 
     public function getHelper(): ?BaseHelper
     {
-        return $this->getAttribute()->getHelper();
+        return $this->getAttribute()->helper;
     }
 }

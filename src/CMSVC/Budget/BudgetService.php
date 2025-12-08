@@ -71,7 +71,7 @@ class BudgetService extends BaseService
 
     public function getBoughtByValues(): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         return array_merge([['', $LOCALE['from_fee']]], $this->getResponsibleIdValues());
     }

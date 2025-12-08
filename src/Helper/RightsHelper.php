@@ -65,7 +65,7 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
             /** Если определен id объекта, находим объект и смотрим его project_id */
             if (!is_null(DataHelper::getId())) {
                 $possibleView = CMSVCHelper::getView(KIND);
-                $possibleTable = $possibleView->getEntity()->getTable();
+                $possibleTable = $possibleView->entity->table;
 
                 if ($possibleTable) {
                     $possibleObj = DB->findObjectById(DataHelper::getId(), $possibleTable);
@@ -102,7 +102,7 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
     /** Проверка прав проекта и установки переменной project_id. Чаще всего используется так: $projectRights = RightsHelper::checkProjectRights(); */
     public static function checkProjectRights(bool|array|string $type = false, ?int $projectId = null): bool|array
     {
-        $requestProjectId = ($_REQUEST['project_id'] ?? false) && !is_array($_REQUEST['project_id']) ? (int) ($_REQUEST['project_id'] ?? false) : 0;
+        $requestProjectId = ($_REQUEST['project_id'] ?? false) && !is_array($_REQUEST['project_id']) ? (int) $_REQUEST['project_id'] : 0;
 
         if (!defined('REQUEST_PROJECT_ID')) {
             define('REQUEST_PROJECT_ID', 'project_id=' . $requestProjectId);

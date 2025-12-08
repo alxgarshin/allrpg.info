@@ -97,7 +97,7 @@ class IngameService extends BaseService
             $this->applicationData = $this->myapplicationService->get($applicationId);
 
             if ($this->applicationData->creator_id->getAsInt() !== CURRENT_USER->id() || $this->applicationData->deleted_by_player->get()) {
-                $LOCALE = $this->getLOCALE()['messages'];
+                $LOCALE = $this->LOCALE['messages'];
 
                 $this->applicationData = null;
                 $this->applicationId = null;
@@ -118,7 +118,7 @@ class IngameService extends BaseService
     /** Добавление банковской транзакции */
     public function createBankTransaction(): ?Response
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
         $LOCALE_INGAME_BANK_TRANSACTION = LocaleHelper::getLocale(['ingame_bank_transaction']);
 
         $ingameBankTransactionService = $this->getIngameBankTransactionService();
@@ -211,7 +211,7 @@ class IngameService extends BaseService
 
     public function renderCommentContent(): string
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $applicationId = $this->getApplicationId();
         $applicationData = $this->getApplicationData();
@@ -267,21 +267,21 @@ class IngameService extends BaseService
 
     public function renderBankContent(): string
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $ingameBankTransactionService = $this->getIngameBankTransactionService();
         /** @var IngameBankTransactionModel */
-        $ingameBankTransactionModel = $ingameBankTransactionService->getModel();
+        $ingameBankTransactionModel = $ingameBankTransactionService->model;
 
         $RESPONSE_DATA = '
         <h2>' . $LOCALE['generate_qrpg_pay'] . '</h2>
         <div class="bank_header">
             <div class="bank_generate_qrpg">
                 <div class="amount">
-                    ' . ($ingameBankTransactionModel->bank_currency_id->getValues() ? '<span>' . $ingameBankTransactionModel->from_bank_currency_id->getShownName() . '</span>' . $ingameBankTransactionModel->bank_currency_id->asHTML(true) : '') . '
-                    <span>' . $ingameBankTransactionModel->amount_from->getShownName() . '</span>
+                    ' . ($ingameBankTransactionModel->bank_currency_id->getValues() ? '<span>' . $ingameBankTransactionModel->from_bank_currency_id->shownName . '</span>' . $ingameBankTransactionModel->bank_currency_id->asHTML(true) : '') . '
+                    <span>' . $ingameBankTransactionModel->amount_from->shownName . '</span>
                     <input type="text" name="bank_generate_qrpg_amount" autocomplete="off">
-                    <span>' . $ingameBankTransactionModel->name->getShownName() . '</span>
+                    <span>' . $ingameBankTransactionModel->name->shownName . '</span>
                     <input type="text" name="bank_generate_qrpg_name" autocomplete="off">
                     
                 </div>
@@ -312,7 +312,7 @@ class IngameService extends BaseService
     {
         $result = [];
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         if ($qhaId > 0) {
             $qhaData = DB->findObjectById($qhaId, 'qrpg_hacking');
@@ -400,7 +400,7 @@ class IngameService extends BaseService
     /** Оплата по QRpg-коду */
     public function qrpgBankPay(int $accountNumTo, int $bankCurrencyId, int $amount, string $name): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_TRANSACTION = LocaleHelper::getLocale(['bank_transaction', 'global']);
 
         $returnArr = [];
@@ -1880,11 +1880,7 @@ class IngameService extends BaseService
         }
 
         if (count($returnArr) === 0) {
-            if (
-                !preg_match('/^[a-zA-Z0-9]+$/', $qrpgData['h']) || (!is_numeric($qrpgCodeId) && (!is_numeric(
-                    $recipientId,
-                ) || !isset($qrpgData['a'])))
-            ) {
+            if (!preg_match('/^[a-zA-Z0-9]+$/', $qrpgData['h']) || (!is_numeric($qrpgCodeId) && !isset($qrpgData['a']))) {
                 $returnArr = [
                     'response' => 'success',
                     'response_data' => [
@@ -2024,35 +2020,36 @@ class IngameService extends BaseService
 
         $restrict = 'id=' . $this->getApplicationId();
 
-        $myapplicationService->getCMSVC()
-            ->setObjectName('ingame:' . $fieldType)
-            ->setContext([
-                'VIEW' => [
-                    'ingame:' . $fieldType . ':view',
-                ],
-            ]);
+        $myapplicationService->CMSVC->objectName = 'ingame:' . $fieldType;
 
-        $myapplicationService->getView()->setEntity(
-            (new MultiObjectsEntity(
-                name: 'project_application',
-                table: 'project_application',
-                sortingData: [],
-                subType: MultiObjectsEntitySubTypeEnum::Cards,
-            )),
-        )->getViewRights()
-            ->setViewRight(true)
-            ->setAddRight(false)
-            ->setChangeRight(false)
-            ->setDeleteRight(false)
-            ->setViewRestrict($restrict)
-            ->setChangeRestrict($restrict)
-            ->setDeleteRestrict($restrict);
+        $myapplicationService->CMSVC->context = [
+            'VIEW' => [
+                'ingame:' . $fieldType . ':view',
+            ],
+        ];
 
-        $modelData = $this->getApplicationData()->getModelData();
+        $myapplicationService->view->entity = new MultiObjectsEntity(
+            name: 'project_application',
+            table: 'project_application',
+            sortingData: [],
+            subType: MultiObjectsEntitySubTypeEnum::Cards,
+        );
+
+        $viewRights = $myapplicationService->view->viewRights;
+
+        $viewRights->viewRight = true;
+        $viewRights->addRight = false;
+        $viewRights->changeRight = false;
+        $viewRights->deleteRight = false;
+        $viewRights->viewRestrict = $restrict;
+        $viewRights->changeRestrict = $restrict;
+        $viewRights->deleteRestrict = $restrict;
+
+        $modelData = $this->getApplicationData()->modelData;
         $allinfo = DataHelper::unmakeVirtual($modelData['allinfo']);
         $allinfo['id'] = $modelData['id'];
 
-        $RESPONSE_DATA = $myapplicationService->getEntity()->viewActList([$allinfo]);
+        $RESPONSE_DATA = $myapplicationService->entity->viewActList([$allinfo]);
 
         $RESPONSE_DATA = preg_replace('#<div class="cardtable_card_num"(.*?)</div>#', '', $RESPONSE_DATA);
 
@@ -2078,16 +2075,17 @@ class IngameService extends BaseService
 
         $restrict = 'from_project_application_id=' . CookieHelper::getCookie('ingame_application_id') . ' OR to_project_application_id=' . CookieHelper::getCookie('ingame_application_id');
 
-        $ingameBankTransactionService->getView()->getViewRights()
-            ->setAddRight(true)
-            ->setChangeRight(false)
-            ->setDeleteRight(false)
-            ->setViewRestrict($restrict)
-            ->setChangeRestrict($restrict)
-            ->setDeleteRestrict($restrict);
+        $viewRights = $ingameBankTransactionService->view->viewRights;
+
+        $viewRights->addRight = true;
+        $viewRights->changeRight = false;
+        $viewRights->deleteRight = false;
+        $viewRights->viewRestrict = $restrict;
+        $viewRights->changeRestrict = $restrict;
+        $viewRights->deleteRestrict = $restrict;
 
         /** @var HtmlResponse */
-        $RESPONSE_DATA = $ingameBankTransactionService->getEntity()->view(ActEnum::list);
+        $RESPONSE_DATA = $ingameBankTransactionService->entity->view(ActEnum::list);
 
         $RESPONSE_DATA = $RESPONSE_DATA->getHtml();
 

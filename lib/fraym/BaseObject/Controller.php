@@ -20,16 +20,17 @@ use ReflectionClass;
 #[Attribute(Attribute::TARGET_CLASS)]
 final class Controller
 {
+    public CMSVC $CMSVC {
+        get {
+            $CMSVC = (new ReflectionClass($this->controllerClassName))->getAttributes(CMSVC::class)[0]->newInstance();
+            $CMSVC->init();
+
+            return $CMSVC;
+        }
+    }
+
     public function __construct(
         protected readonly string $controllerClassName,
     ) {
-    }
-
-    public function getCMSVC(): CMSVC
-    {
-        $CMSVC = (new ReflectionClass($this->controllerClassName))->getAttributes(CMSVC::class)[0]->newInstance();
-        $CMSVC->init();
-
-        return $CMSVC;
     }
 }

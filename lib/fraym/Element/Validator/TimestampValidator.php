@@ -24,7 +24,7 @@ final class TimestampValidator extends BaseValidator
                 ['id', $options['id']],
             ], true);
 
-            return $result && $result[$element->getName()] <= $value;
+            return $result && $result[$element->name] <= $value;
         }
 
         return true;

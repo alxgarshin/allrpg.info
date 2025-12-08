@@ -28,7 +28,7 @@ class NewsEditService extends BaseService
 
     public function preChangeCheck(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         if ($_REQUEST['quote'] ?? false) {
             if ($_REQUEST['quote'][0] !== '' && $_REQUEST['attachments'][0][0] === '') {

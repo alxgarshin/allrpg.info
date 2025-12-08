@@ -67,14 +67,14 @@ class Wysiwyg extends BaseElement
         }
         /** @var Attribute\Wysiwyg $attribute */
         $this->attribute = $attribute;
-        $this->attribute->setSaveHtml(true);
+        $this->attribute->saveHtml = true;
 
         return $this;
     }
 
     public function getDefaultValue(): ?string
     {
-        return $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        return $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
     }
 
     public function get(): ?string

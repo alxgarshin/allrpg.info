@@ -17,7 +17,7 @@ class FileController extends BaseController
     public function editFileOrFolderName(): ?Response
     {
         return $this->asArray(
-            $this->getService()->editFileOrFolderName(
+            $this->service->editFileOrFolderName(
                 OBJ_ID,
                 OBJ_TYPE,
                 $_REQUEST['name'] ?? '',
@@ -29,7 +29,7 @@ class FileController extends BaseController
     public function newLibraryFile(): ?Response
     {
         return $this->asArray(
-            $this->getService()->newLibraryFile(
+            $this->service->newLibraryFile(
                 OBJ_ID,
                 OBJ_TYPE,
                 $_REQUEST['name'] ?? '',
@@ -40,18 +40,18 @@ class FileController extends BaseController
 
     public function deleteLibraryFile(): ?Response
     {
-        return $this->asArray($this->getService()->deleteLibraryFile(OBJ_ID));
+        return $this->asArray($this->service->deleteLibraryFile(OBJ_ID));
     }
 
     public function deleteConversationFile(): ?Response
     {
-        return $this->asArray($this->getService()->deleteConversationFile(OBJ_ID));
+        return $this->asArray($this->service->deleteConversationFile(OBJ_ID));
     }
 
     public function createFolder(): ?Response
     {
         return $this->asArray(
-            $this->getService()->createFolder(
+            $this->service->createFolder(
                 OBJ_ID,
                 OBJ_TYPE,
                 $_REQUEST['name'] ?? '',
@@ -61,13 +61,13 @@ class FileController extends BaseController
 
     public function deleteFolder(): ?Response
     {
-        return $this->asArray($this->getService()->deleteFolder(OBJ_ID));
+        return $this->asArray($this->service->deleteFolder(OBJ_ID));
     }
 
     public function addLink(): ?Response
     {
         return $this->asArray(
-            $this->getService()->addLink(
+            $this->service->addLink(
                 OBJ_ID,
                 OBJ_TYPE,
                 $_REQUEST['name'] ?? '',
@@ -78,13 +78,13 @@ class FileController extends BaseController
 
     public function deleteLink(): ?Response
     {
-        return $this->asArray($this->getService()->deleteLink(OBJ_ID));
+        return $this->asArray($this->service->deleteLink(OBJ_ID));
     }
 
     public function loadDisk(): ?Response
     {
         return $this->asArray(
-            $this->getService()->loadDisk(
+            $this->service->loadDisk(
                 OBJ_ID,
                 OBJ_TYPE,
                 $_REQUEST['sub_obj_type'] ?? '',
@@ -95,7 +95,7 @@ class FileController extends BaseController
     public function loadLibrary(): ?Response
     {
         return $this->asArray(
-            $this->getService()->loadLibrary(
+            $this->service->loadLibrary(
                 (int) OBJ_ID,
                 OBJ_TYPE,
                 ($_REQUEST['external'] ?? '') === 'true',
@@ -106,7 +106,7 @@ class FileController extends BaseController
     public function moveFileToFolder(): ?Response
     {
         return $this->asArray(
-            $this->getService()->moveFileToFolder(
+            $this->service->moveFileToFolder(
                 (int) ($_REQUEST['file_id'] ?? 0),
                 (int) ($_REQUEST['folder_id'] ?? 0),
                 ($_REQUEST['parent_obj'] ?? '') === 'true',
@@ -117,7 +117,7 @@ class FileController extends BaseController
     public function changeFolderRights(): ?Response
     {
         return $this->asArray(
-            $this->getService()->changeFolderRights(
+            $this->service->changeFolderRights(
                 OBJ_ID,
                 $_REQUEST['users_list'] ?? [],
             ),

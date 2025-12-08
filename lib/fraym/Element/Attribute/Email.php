@@ -20,7 +20,7 @@ use Fraym\Element\Validator\{EmailValidator, ObligatoryValidator};
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Email extends Text
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
         EmailValidator::class,
     ];

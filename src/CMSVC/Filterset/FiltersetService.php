@@ -58,7 +58,7 @@ class FiltersetService extends BaseService
             return str_replace(
                 ABSOLUTE_PATH . '/application/object=application&action=setFilters&',
                 '',
-                $this->applicationService->getEntity()->getFilters()->getPreparedCurrentFiltersLink('application'),
+                $this->applicationService->entity->filters->getPreparedCurrentFiltersLink('application'),
             );
         }
 

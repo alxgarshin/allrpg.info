@@ -29,10 +29,25 @@ final class CatalogItemEntity extends BaseEntity implements CatalogInterface, Ta
     use Tabs;
 
     /** Модель сущности */
-    protected ?BaseModel $catalogItemModel = null;
+    public ?BaseModel $catalogItemModel = null;
 
     /** Родительская сущность */
-    protected CatalogEntity $catalogEntity;
+    public CatalogEntity $catalogEntity;
+
+    public ?BaseModel $model {
+        get {
+            $model = $this->catalogItemModel;
+
+            if (is_null($model)) {
+                $modelClass = $this->catalogItemModelClass;
+                $this->catalogItemModel = $model = new $modelClass();
+                $this->catalogItemModel->construct($this->view->CMSVC, $this)->init();
+                $this->view->service?->postModelInit($model);
+            }
+
+            return $model;
+        }
+    }
 
     private array $ITEMS = [];
 
@@ -41,13 +56,13 @@ final class CatalogItemEntity extends BaseEntity implements CatalogInterface, Ta
         string $table,
 
         /** Класс модели сущности */
-        protected string $catalogItemModelClass,
+        public string $catalogItemModelClass,
 
         /** В каком столбце хранится id родителя наследующего объекта? */
-        protected string $tableFieldWithParentId,
+        public string $tableFieldWithParentId,
 
         /** В каком столбце хранится содержимое объекта, позволяющее отличить родителя от наследника? Например: у страниц = текст, а у разделов = null. */
-        protected string $tableFieldToDetectType,
+        public string $tableFieldToDetectType,
 
         /** @var EntitySortingItem[] $entitySortingData */
         array $sortingData,
@@ -71,68 +86,6 @@ final class CatalogItemEntity extends BaseEntity implements CatalogInterface, Ta
         );
     }
 
-    public function getCatalogItemModelClass(): string
-    {
-        return $this->catalogItemModelClass;
-    }
-
-    public function setCatalogItemModelClass(string $catalogItemModelClass): self
-    {
-        $this->catalogItemModelClass = $catalogItemModelClass;
-
-        return $this;
-    }
-
-    public function getModel(): ?BaseModel
-    {
-        $model = $this->catalogItemModel;
-
-        if (is_null($model)) {
-            $modelClass = $this->getCatalogItemModelClass();
-            $this->catalogItemModel = $model = new $modelClass();
-            $this->catalogItemModel->construct($this->getView()->getCMSVC(), $this)->init();
-            $this->getView()->getService()?->postModelInit($model);
-        }
-
-        return $model;
-    }
-
-    public function getCatalogEntity(): CatalogEntity
-    {
-        return $this->catalogEntity;
-    }
-
-    public function setCatalogEntity(CatalogEntity $catalogEntity): self
-    {
-        $this->catalogEntity = $catalogEntity;
-
-        return $this;
-    }
-
-    public function getTableFieldWithParentId(): string
-    {
-        return $this->tableFieldWithParentId;
-    }
-
-    public function setTableFieldWithParentId(string $tableFieldWithParentId): self
-    {
-        $this->tableFieldWithParentId = $tableFieldWithParentId;
-
-        return $this;
-    }
-
-    public function getTableFieldToDetectType(): string
-    {
-        return $this->tableFieldToDetectType;
-    }
-
-    public function setTableFieldToDetectType(string $tableFieldToDetectType): self
-    {
-        $this->tableFieldToDetectType = $tableFieldToDetectType;
-
-        return $this;
-    }
-
     public function viewActList(array $DATA_FILTERED_BY_CONTEXT): string
     {
         throw new Exception('Cannot create list of objects for dependent CatalogItemEntity. Please, use it\'s parent CatalogEntity instead.');
@@ -140,21 +93,21 @@ final class CatalogItemEntity extends BaseEntity implements CatalogInterface, Ta
 
     public function drawCatalogItemLine(array $DATA_ITEM): string
     {
-        $catalogEntity = $this->getCatalogEntity();
-        $catalogEntityFoundIds = $catalogEntity->getCatalogEntityFoundIds();
+        $catalogEntity = $this->catalogEntity;
+        $catalogEntityFoundIds = $catalogEntity->catalogEntityFoundIds;
 
         $RESPONSE_DATA = '<li><span class="sbi sbi-file"></span>';
 
         if (in_array($DATA_ITEM['id'], $catalogEntityFoundIds)) {
-            $RESPONSE_DATA .= '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->getName()) . '/' . $DATA_ITEM['id'] . '/act=' .
-                $this->getDefaultItemActType()->value . '">';
+            $RESPONSE_DATA .= '<a href="/' . KIND . '/' . TextHelper::camelCaseToSnakeCase($this->name) . '/' . $DATA_ITEM['id'] . '/act=' .
+                $this->defaultItemActType->value . '">';
         }
 
-        foreach ($this->getSortingData() as $sortingItem) {
-            if (!($this->ITEMS[$sortingItem->getTableFieldName()] ?? false)) {
-                $this->ITEMS[$sortingItem->getTableFieldName()] = $this->getModel()->getElement($sortingItem->getTableFieldName());
+        foreach ($this->sortingData as $sortingItem) {
+            if (!($this->ITEMS[$sortingItem->tableFieldName] ?? false)) {
+                $this->ITEMS[$sortingItem->tableFieldName] = $this->model->getElement($sortingItem->tableFieldName);
             }
-            $ITEM = $this->ITEMS[$sortingItem->getTableFieldName()];
+            $ITEM = $this->ITEMS[$sortingItem->tableFieldName];
 
             if (!is_null($ITEM)) {
                 $RESPONSE_DATA .= $this->drawElementValue($ITEM, $DATA_ITEM, $sortingItem);
@@ -175,8 +128,8 @@ final class CatalogItemEntity extends BaseEntity implements CatalogInterface, Ta
 
     public function detectEntityType(array $data): CatalogEntity|CatalogItemEntity
     {
-        if ('{menu}' === ($data[$this->getTableFieldToDetectType()] ?? false)) {
-            return $this->getCatalogEntity();
+        if ('{menu}' === ($data[$this->tableFieldToDetectType] ?? false)) {
+            return $this->catalogEntity;
         }
 
         return $this;

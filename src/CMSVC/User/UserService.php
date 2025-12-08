@@ -928,7 +928,7 @@ class UserService extends BaseService
 
         $userData = $this->get($id);
 
-        if ($userData->id->getAsInt() !== '') {
+        if ($userData->id->getAsInt()) {
             if ($userData->em->get() !== null) {
                 $idToReverify = md5($userData->id->getAsInt() . $userData->created_at->getAsTimeStamp() . $userData->em->get() . $_ENV['PROJECT_HASH_WORD']);
                 $text = sprintf(
@@ -1564,7 +1564,7 @@ class UserService extends BaseService
                     $userInfo = $this->get($key);
                     $conversationDataName = false;
 
-                    if ($contactConversations[$key] ?? '' !== 'new') {
+                    if (($contactConversations[$key] ?? '') !== 'new') {
                         $conversationData = DB->findObjectById($contactConversations[$key], 'conversation');
                         $conversationDataName = DataHelper::escapeOutput($conversationData['name']);
                     }
@@ -2079,7 +2079,7 @@ class UserService extends BaseService
                             true,
                         );
                         $uploadNum = FileHelper::getUploadNumByType($parentObjectType);
-                        $groupName = $parentObjData->name->get();
+                        $groupName = $parentObjData->sorter->get();
                         $commentHtml .= MessageHelper::conversationTreeComment(
                             $commentData,
                             1,
@@ -2162,7 +2162,7 @@ class UserService extends BaseService
                             true,
                         );
                         $uploadNum = FileHelper::getUploadNumByType($parentObjectType);
-                        $groupName = $parentObjData->name->get();
+                        $groupName = $parentObjData->sorter->get();
                         $commentHtml .= MessageHelper::conversationTreeComment(
                             $commentData,
                             1,
@@ -2250,7 +2250,7 @@ class UserService extends BaseService
 
         $userData = $this->get(CURRENT_USER->id(), null, null, true);
 
-        if ($userData->id->getAsInt() !== '') {
+        if ($userData->id->getAsInt()) {
             $idToReverify = md5($userData->id->getAsInt() . $userData->created_at->getAsTimeStamp() . $userData->em->get() . $_ENV['PROJECT_HASH_WORD']);
             $text = sprintf(
                 $LOCALE_PROFILE['verify_em']['base_text'],

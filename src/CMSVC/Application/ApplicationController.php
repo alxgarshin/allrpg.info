@@ -29,7 +29,7 @@ class ApplicationController extends BaseController
     public function getApplicationsTable(): ?Response
     {
         return $this->asArray(
-            $this->getService()->getApplicationsTable(
+            $this->service->getApplicationsTable(
                 $_REQUEST['obj_name'] ?? '',
             ),
         );
@@ -38,7 +38,7 @@ class ApplicationController extends BaseController
     public function getApplicationsCommentsTable(): ?Response
     {
         return $this->asArray(
-            $this->getService()->getApplicationsCommentsTable(
+            $this->service->getApplicationsCommentsTable(
                 $_REQUEST['obj_name'] ?? '',
             ),
         );
@@ -48,7 +48,7 @@ class ApplicationController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->setSpecialGroup(
+                $this->service->setSpecialGroup(
                     OBJ_ID,
                     $_REQUEST['filter'] ?? null,
                 ),
@@ -62,7 +62,7 @@ class ApplicationController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->fixCharacterNameBySorter(
+                $this->service->fixCharacterNameBySorter(
                     OBJ_ID,
                     $_REQUEST['name'] ?? null,
                 ),
@@ -76,7 +76,7 @@ class ApplicationController extends BaseController
     {
         if (OBJ_ID > 0 && (int) ($_REQUEST['user_id'] ?? null) > 0) {
             return $this->asArray(
-                $this->getService()->transferApplication(
+                $this->service->transferApplication(
                     OBJ_ID,
                     (int) ($_REQUEST['user_id'] ?? null),
                 ),
@@ -90,7 +90,7 @@ class ApplicationController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->transferApplicationCancel(
+                $this->service->transferApplicationCancel(
                     OBJ_ID,
                 ),
             );
@@ -102,7 +102,7 @@ class ApplicationController extends BaseController
     public function getListOfRoomNeighboors(): ?Response
     {
         return $this->asArray(
-            $this->getService()->getListOfRoomNeighboors(
+            $this->service->getListOfRoomNeighboors(
                 OBJ_ID,
             ),
         );

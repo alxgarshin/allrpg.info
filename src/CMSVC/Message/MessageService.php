@@ -28,7 +28,7 @@ class MessageService extends BaseService
 
     public function init(): static
     {
-        $this->LOCALE = $this->setLOCALE(['conversation', 'global']);
+        $this->LOCALE = ['conversation', 'global'];
 
         return $this;
     }
@@ -51,7 +51,7 @@ class MessageService extends BaseService
     ): array {
         $userService = $this->getUserService();
 
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -758,7 +758,7 @@ class MessageService extends BaseService
         ?string $dateTo = null,
         ?int $responsible = null,
     ): array {
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
 
         $clearedObjType = DataHelper::clearBraces($objType);
 
@@ -972,7 +972,7 @@ class MessageService extends BaseService
 
                     $applicationService = CMSVCHelper::getService('application');
 
-                    $searchQuerySql = $applicationService->getEntity()->getFilters()->getPreparedSearchQuerySql();
+                    $searchQuerySql = $applicationService->entity->filters->getPreparedSearchQuerySql();
 
                     $applicationsData = DB->query(
                         'SELECT t1.* FROM project_application t1 WHERE t1.project_id=:project_id' .
@@ -989,7 +989,7 @@ class MessageService extends BaseService
                             ['needresponse_ids', count($needresponseIds) > 0 ? $needresponseIds : '0'],
                             ['nofilloblig_ids', count($nofillobligIds) > 0 ? $nofillobligIds : '0'],
                             ['nonsettled_ids', count($nonsettledIds) > 0 ? $nonsettledIds : '0'],
-                            ...$applicationService->getEntity()->getFilters()->getPreparedSearchQueryParams(),
+                            ...$applicationService->entity->filters->getPreparedSearchQueryParams(),
                         ],
                     );
 
@@ -1247,7 +1247,7 @@ class MessageService extends BaseService
     ): array {
         $userService = $this->getUserService();
 
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
 
         $content = TextHelper::makeATsInactive($content);
         $objType = DataHelper::addBraces($objType);
@@ -1490,7 +1490,7 @@ class MessageService extends BaseService
     ): int|bool {
         $userService = $this->getUserService();
 
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
         $LOCALE_SUBSCRIPTION = LocaleHelper::getLocale(['global', 'subscription']);
 
         $newConversation = false;
@@ -1577,7 +1577,7 @@ class MessageService extends BaseService
             $userIdsChange = $userIds;
             $userIds = [];
 
-            if (is_array($userIdsChange) && count($userIdsChange) > 0) {
+            if (count($userIdsChange) > 0) {
                 foreach ($userIdsChange as $key => $value) {
                     $userIds[] = $key;
                 }
@@ -1645,11 +1645,11 @@ class MessageService extends BaseService
                 $obj = [];
                 preg_match('#{([^:]+):([^,]+)}#', $messageActionData, $actionData);
 
-                if ($actionData[1] !== '') {
+                if ($actionData[1]) {
                     $objType = preg_replace('#_id#', '', $actionData[1]);
                 }
 
-                if ($actionData[2] !== '') {
+                if ($actionData[2]) {
                     $objId = (int) $actionData[2];
 
                     if ($objType !== '') {
@@ -1860,7 +1860,6 @@ class MessageService extends BaseService
                 $usersInvitedDirectly = false;
 
                 if ($type !== '') {
-                    /** @var array{0: array, 1: array, 2: array} $matches */
                     preg_match_all('#@([^\[]+)\[(\d+)]#', DataHelper::escapeOutput($content), $matches);
 
                     foreach ($matches[2] as $match) {

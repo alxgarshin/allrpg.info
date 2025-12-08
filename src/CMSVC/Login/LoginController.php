@@ -23,7 +23,7 @@ class LoginController extends BaseController
         }
 
         if (!is_null(CookieHelper::getCookie('redirectToKind'))) {
-            $LOCALE = $this->getLOCALE()['messages'];
+            $LOCALE = $this->LOCALE['messages'];
             ResponseHelper::error($LOCALE['need_to_login_or_register_for_that']);
         }
 
@@ -34,7 +34,7 @@ class LoginController extends BaseController
     public function remind(): void
     {
         /** @var LoginService $loginService */
-        $loginService = $this->getCMSVC()->getService();
+        $loginService = $this->CMSVC->service;
         $loginService->remindPassword();
     }
 

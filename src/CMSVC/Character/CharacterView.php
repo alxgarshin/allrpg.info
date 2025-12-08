@@ -12,6 +12,7 @@ use Fraym\Helper\{DataHelper, LocaleHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\HtmlResponse;
 
+/** @extends BaseView<CharacterService> */
 #[TableEntity(
     'character',
     'project_character',
@@ -58,10 +59,9 @@ class CharacterView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        /** @var CharacterService */
-        $characterService = $this->getService();
+        $characterService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $title = $LOCALE_GLOBAL['project_control_items'][KIND][0];

@@ -166,7 +166,7 @@ class CharacterService extends BaseService
             if (!is_null($takenData)) {
                 $taken = explode(',', trim($takenData));
 
-                if (($taken[0] ?? '') !== '') {
+                if ($taken[0] !== '') {
                     $takenCount += count($taken);
                 }
             }
@@ -423,7 +423,7 @@ class CharacterService extends BaseService
         $projectCharacterData = $this->get($id, null, null, true, false);
         $characterGroups = $projectCharacterData->project_group_ids->get();
 
-        if (is_array($characterGroups) && count($characterGroups) > 0) {
+        if (count($characterGroups) > 0) {
             /** Удаляем связи со всеми группами, которых более нет у нас */
             RightsHelper::deleteRights(
                 '{member}',
@@ -568,7 +568,7 @@ class CharacterService extends BaseService
 
                 /** Если изменился набор групп из-за setParentGroups обновляем страницу */
                 if (count($newProjectCharacterDataGroups) !== count($_REQUEST['project_group_ids'][$idKey])) {
-                    ResponseHelper::response([['success', $this->getEntity()->getObjectMessages($this->getEntity())[1]]], '/' . KIND . '/' . $successfulResultsId . '/');
+                    ResponseHelper::response([['success', $this->entity->getObjectMessages($this->entity)[1]]], '/' . KIND . '/' . $successfulResultsId . '/');
                 }
             }
         }
@@ -586,8 +586,8 @@ class CharacterService extends BaseService
 
     public function getLinkToRolesDefault(): string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
-            $LOCALE = $this->getLOCALE();
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
+            $LOCALE = $this->LOCALE;
 
             return '<a href="/roles/' . $this->getActivatedProjectId() . '/character/' . DataHelper::getId() . '/" target="_blank"><span class="sbi sbi-list"></span> ' . $LOCALE['link_to_roles_default'] . '</a>';
         }
@@ -597,7 +597,7 @@ class CharacterService extends BaseService
 
     public function getProjectGroupIdsDefault(): ?array
     {
-        if ($this->getAct() === ActEnum::add) {
+        if ($this->act === ActEnum::add) {
             return ($_REQUEST['project_group_ids'] ?? false) ? DataHelper::multiselectToArray($_REQUEST['project_group_ids']) : null;
         }
 

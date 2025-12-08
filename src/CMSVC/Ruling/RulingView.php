@@ -30,7 +30,7 @@ class RulingView extends BaseView
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_PUBLICATION = LocaleHelper::getLocale(['publication', 'global']);
@@ -301,7 +301,7 @@ class RulingView extends BaseView
         /** @var RulingService $rulingService */
         $rulingService = CMSVCHelper::getService('ruling');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
         $RESPONSE_DATA = '';

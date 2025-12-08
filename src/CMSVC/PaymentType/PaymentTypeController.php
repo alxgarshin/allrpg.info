@@ -27,21 +27,21 @@ class PaymentTypeController extends BaseController
 {
     public function pmAdd(): ?Response
     {
-        return $this->getService()->paymentTypeAdd('paymaster');
+        return $this->service->paymentTypeAdd('paymaster');
     }
 
     public function pkAdd(): ?Response
     {
-        return $this->getService()->paymentTypeAdd('paykeeper');
+        return $this->service->paymentTypeAdd('paykeeper');
     }
 
     public function ykAdd(): ?Response
     {
-        return $this->getService()->paymentTypeAdd('yandex');
+        return $this->service->paymentTypeAdd('yandex');
     }
 
     public function pawAdd(): ?Response
     {
-        return $this->getService()->paymentTypeAdd('payanyway');
+        return $this->service->paymentTypeAdd('payanyway');
     }
 }

@@ -40,7 +40,7 @@ class QrpgKeyService extends BaseService
 
     public function preChangeCheck(): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
 
         foreach ($_REQUEST['name'] as $key => $value) {
             if ($key > 0 || $value !== '') {
@@ -100,7 +100,7 @@ class QrpgKeyService extends BaseService
 
     public function getUsedInCodesValues(): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $usedInCodes = [];
         $usedInCodesQuery = DB->query(

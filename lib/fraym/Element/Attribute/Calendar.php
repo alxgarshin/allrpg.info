@@ -17,21 +17,35 @@ use Attribute;
 use DateTimeImmutable;
 use Fraym\Element\Validator\ObligatoryValidator;
 use Fraym\Interface\HasDefaultValue;
+use InvalidArgumentException;
 
 /** Календарь в формате "дата" или "дата+время" */
+/** @implements HasDefaultValue<null|string|DateTimeImmutable> */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Calendar extends BaseElement implements HasDefaultValue
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
     ];
 
-    public function __construct(
-        /** Значение по умолчанию */
-        private null|string|DateTimeImmutable $defaultValue = null,
+    /** Значение по умолчанию */
+    public mixed $defaultValue {
+        get => $this->_val;
+        set {
+            if (!is_null($value) && !is_string($value) && !$value instanceof DateTimeImmutable) {
+                throw new InvalidArgumentException('Wrong defaultValue type');
+            }
 
+            $this->_val = $value;
+        }
+    }
+
+    private null|string|DateTimeImmutable $_val = null;
+
+    public function __construct(
+        mixed $defaultValue = null,
         /** Показывать простой календарь или дата+время? */
-        private ?bool $showDatetime = null,
+        public ?bool $showDatetime = null,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -65,29 +79,7 @@ class Calendar extends BaseElement implements HasDefaultValue
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
 
-    public function getDefaultValue(): null|string|DateTimeImmutable
-    {
-        return $this->defaultValue;
-    }
-
-    public function setDefaultValue(null|string|DateTimeImmutable $defaultValue = null): static
-    {
         $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    public function getShowDatetime(): ?bool
-    {
-        return $this->showDatetime;
-    }
-
-    public function setShowDatetime(?bool $showDatetime): static
-    {
-        $this->showDatetime = $showDatetime;
-
-        return $this;
     }
 }

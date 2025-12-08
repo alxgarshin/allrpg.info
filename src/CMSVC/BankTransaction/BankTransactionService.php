@@ -59,7 +59,7 @@ class BankTransactionService extends BaseService
 
     public function preCreate(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         if (round((int) $_REQUEST['amount'][0]) <= 0) {
             ResponseHelper::responseOneBlock('error', $LOCALE['messages']['too_small_amount'], [0]);

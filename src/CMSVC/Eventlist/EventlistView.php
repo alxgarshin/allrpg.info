@@ -16,9 +16,9 @@ class EventlistView extends BaseView
 {
     public function Response(): ?Response
     {
-        $eventListService = $this->getService();
+        $eventListService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_PROJECT = LocaleHelper::getLocale(['project', 'global']);
 

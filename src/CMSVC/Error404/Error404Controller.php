@@ -19,7 +19,7 @@ class Error404Controller extends BaseController
         header('Cache-Control: no-cache, must-revalidate');
         header('Pragma: no-cache');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $content = '<html>
 <title>' . $LOCALE['title'] . '</title>

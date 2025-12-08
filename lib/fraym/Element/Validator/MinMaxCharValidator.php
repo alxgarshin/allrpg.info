@@ -25,7 +25,7 @@ final class MinMaxCharValidator extends BaseValidator
         if ($attribute instanceof MinMaxChar) {
             $length = mb_strlen($value ?? '');
 
-            return !($length < ($attribute->getMinChar() ?? 0) || (!is_null($attribute->getMaxchar()) && $length > $attribute->getMaxchar())) || (($element instanceof Password || !$element->getObligatory()) && $length === 0);
+            return !($length < ($attribute->minChar ?? 0) || (!is_null($attribute->maxChar) && $length > $attribute->maxChar)) || (($element instanceof Password || !$element->getObligatory()) && $length === 0);
         }
 
         return true;

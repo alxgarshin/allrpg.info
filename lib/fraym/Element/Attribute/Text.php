@@ -17,21 +17,36 @@ use Attribute;
 use Fraym\Element\Attribute\Trait\{MinMaxChar};
 use Fraym\Element\Validator\{MinMaxCharValidator, ObligatoryValidator};
 use Fraym\Interface\{HasDefaultValue, MinMaxChar as InterfaceMinMaxChar};
+use InvalidArgumentException;
 
 /** Текстовая строка */
+/** @implements HasDefaultValue<null|string> */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Text extends BaseElement implements InterfaceMinMaxChar, HasDefaultValue
 {
     use MinMaxChar;
 
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
         MinMaxCharValidator::class,
     ];
 
+    /** Значение по умолчанию */
+    public mixed $defaultValue {
+        get => $this->_val;
+        set {
+            if (!is_null($value) && !is_string($value)) {
+                throw new InvalidArgumentException('Wrong defaultValue type');
+            }
+
+            $this->_val = $value;
+        }
+    }
+
+    private ?string $_val = null;
+
     public function __construct(
-        /** Значение по умолчанию */
-        private ?string $defaultValue = null,
+        mixed $defaultValue = null,
         ?int $minChar = null,
         ?int $maxChar = null,
         ?bool $obligatory = null,
@@ -69,19 +84,9 @@ class Text extends BaseElement implements InterfaceMinMaxChar, HasDefaultValue
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
+
         $this->minChar = $minChar;
         $this->maxChar = $maxChar;
-    }
-
-    public function getDefaultValue(): ?string
-    {
-        return $this->defaultValue;
-    }
-
-    public function setDefaultValue(?string $defaultValue = null): static
-    {
         $this->defaultValue = $defaultValue;
-
-        return $this;
     }
 }

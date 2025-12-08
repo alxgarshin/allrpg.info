@@ -18,11 +18,11 @@ class StatsController extends BaseController
 {
     public function exportToExcel(): void
     {
-        if ($this->getService()->getStatsModel()) {
+        if ($this->service->getStatsModel()) {
             $additionalIds = DataHelper::multiselectToArray($_REQUEST['additional_ids'] ?? '');
 
             /** @var StatsView */
-            $statsView = $this->getCMSVC()->getView();
+            $statsView = $this->CMSVC->view;
 
             $statsView->exportToExcel($additionalIds);
         }
@@ -35,7 +35,7 @@ class StatsController extends BaseController
     public function setStatus(): ?Response
     {
         return $this->asArray(
-            $this->getService()->setStatus(
+            $this->service->setStatus(
                 OBJ_ID,
             ),
         );
@@ -48,7 +48,7 @@ class StatsController extends BaseController
     public function setAdditionalGroups(): ?Response
     {
         return $this->asArray(
-            $this->getService()->setAdditionalGroups(
+            $this->service->setAdditionalGroups(
                 OBJ_ID,
             ),
         );

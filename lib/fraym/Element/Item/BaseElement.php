@@ -23,28 +23,23 @@ use RuntimeException;
 
 abstract class BaseElement implements ElementItem
 {
-    /** Данные для замены значения элемента при create */
-    protected ?Attribute\OnCreate $create = null;
+    public ?string $name = null;
 
-    /** Данные для замены значения элемента при change */
-    protected ?Attribute\OnChange $change = null;
+    public ?string $shownName = null {
+        get => $this->shownName === '' ? null : $this->shownName;
+    }
 
-    /** Все нижеидущие переменные присваиваются в процессе обработки объекта */
+    public ?string $helpText = null {
+        get => $this->helpText === '' ? null : $this->helpText;
+    }
 
-    /** Родительская сущность */
-    protected ?BaseEntity $entity = null;
+    public ?BaseEntity $entity = null;
 
-    /** Родительская модель */
-    protected ?BaseModel $model = null;
+    public ?BaseModel $model = null;
 
-    /** Название поля: совпадает с названием в БД */
-    protected ?string $name = null;
+    public ?Attribute\OnCreate $create = null;
 
-    /** Видимое пользователям название поля */
-    protected ?string $shownName = null;
-
-    /** Текст подсказки к полю */
-    protected ?string $helpText = null;
+    public ?Attribute\OnChange $change = null;
 
     /** Проверенные и отфильтрованные контексты для различных объектов */
     /** @var array<string, array> */
@@ -76,58 +71,10 @@ abstract class BaseElement implements ElementItem
         }
     }
 
-    public function getOnCreate(): ?Attribute\OnCreate
-    {
-        return $this->create;
-    }
-
-    public function setOnCreate(?Attribute\OnCreate $create): static
-    {
-        $this->create = $create;
-
-        return $this;
-    }
-
-    public function getOnChange(): ?Attribute\OnChange
-    {
-        return $this->change;
-    }
-
-    public function setOnChange(?Attribute\OnChange $change): static
-    {
-        $this->change = $change;
-
-        return $this;
-    }
-
-    public function getEntity(): ?BaseEntity
-    {
-        return $this->entity;
-    }
-
-    public function setEntity(?BaseEntity $entity): static
-    {
-        $this->entity = $entity;
-
-        return $this;
-    }
-
-    public function getModel(): ?BaseModel
-    {
-        return $this->model;
-    }
-
-    public function setModel(?BaseModel $model): static
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
     public function checkDefaultValueInServiceFunctions(mixed $defaultValue): mixed
     {
         if (!is_null($this->entity) && is_string($defaultValue)) {
-            $service = $this->entity->getView()->getCMSVC()->getService();
+            $service = $this->entity->view->CMSVC->service;
 
             if (method_exists($service, $defaultValue)) {
                 return $service->{$defaultValue}();
@@ -139,88 +86,52 @@ abstract class BaseElement implements ElementItem
 
     public function getLineNumber(): ?int
     {
-        return $this->getAttribute()->getLineNumber();
+        return $this->getAttribute()->lineNumber;
     }
 
     public function getLineNumberWrapped(): string
     {
-        return $this->getAttribute()->getLineNumberWrapped();
+        return $this->getAttribute()->lineNumberWrapped;
     }
 
     public function getObligatory(): bool
     {
-        return $this->getAttribute()->getObligatory() ?? false;
+        return $this->getAttribute()->obligatory ?? false;
     }
 
     public function getObligatoryStr(): string
     {
-        return $this->getAttribute()->getObligatoryStr();
+        return $this->getAttribute()->obligatoryStr;
     }
 
     public function getGroup(): ?int
     {
-        return $this->getAttribute()->getGroup();
+        return $this->getAttribute()->group;
     }
 
     public function getGroupNumber(): ?int
     {
-        return $this->getAttribute()->getGroupNumber();
+        return $this->getAttribute()->groupNumber;
     }
 
     public function getHelpClass(): ?string
     {
-        return $this->getAttribute()->getHelpClass();
-    }
-
-    public function getHelpText(): ?string
-    {
-        return $this->helpText === '' ? null : $this->helpText;
-    }
-
-    public function setHelpText(?string $helpText): static
-    {
-        $this->helpText = $helpText;
-
-        return $this;
+        return $this->getAttribute()->helpClass;
     }
 
     public function getLinkAt(): LinkAt
     {
-        return $this->getAttribute()->getLinkAt();
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
+        return $this->getAttribute()->linkAt;
     }
 
     public function getNoData(): ?bool
     {
-        return $this->getAttribute()->getNoData();
-    }
-
-    public function getShownName(): ?string
-    {
-        return $this->shownName === '' ? null : $this->shownName;
-    }
-
-    public function setShownName(?string $shownName): static
-    {
-        $this->shownName = $shownName;
-
-        return $this;
+        return $this->getAttribute()->noData;
     }
 
     public function getVirtual(): ?bool
     {
-        return $this->getAttribute()->getVirtual();
+        return $this->getAttribute()->virtual;
     }
 
     public function checkContext(array $context): bool
@@ -292,10 +203,10 @@ abstract class BaseElement implements ElementItem
     {
         $FIELD_RESPONSE_DATA = '';
 
-        $customAsHTMLRenderer = $this->getAttribute()->getCustomAsHTMLRenderer();
+        $customAsHTMLRenderer = $this->getAttribute()->customAsHTMLRenderer;
 
         if (!is_null($customAsHTMLRenderer)) {
-            $service = $this->getModel()?->getCMSVC()?->getService();
+            $service = $this->model?->CMSVC?->service;
 
             if ($service && method_exists($service, $customAsHTMLRenderer)) {
                 $FIELD_RESPONSE_DATA = $service->{$customAsHTMLRenderer}($this, $elementIsWritable, $removeHtmlFromValue);
@@ -309,21 +220,21 @@ abstract class BaseElement implements ElementItem
 
     public function asHTMLWrapped(?int $lineNumber, bool $elementIsWritable, int $elementTabindexNum): string
     {
-        $this->getAttribute()->setLineNumber($lineNumber);
+        $this->getAttribute()->lineNumber = $lineNumber;
 
         $FIELD_RESPONSE_DATA = $this->asHTML($elementIsWritable);
 
         if ($this->checkDOMVisibility()) {
             $RESPONSE_DATA = '';
 
-            if ($FIELD_RESPONSE_DATA !== '' && !is_null($this->getShownName())) {
+            if ($FIELD_RESPONSE_DATA !== '' && !is_null($this->shownName)) {
                 $thisName = $this->name . $this->getLineNumberWrapped();
 
                 $RESPONSE_DATA .= '<div class="field ' . ObjectsHelper::getClassShortName($this::class) .
                     ($this instanceof Select && $this->getHelper() ? ' full_width' : '') .
                     ($this instanceof Multiselect && $this->getOne() ? ' multiselect_one' : '') .
                     '" id="field_' . $thisName . '"><div class="fieldname" id="name_' . $thisName .
-                    '" tabindex="' . $elementTabindexNum . '">' . $this->getShownName() . '</div>';
+                    '" tabindex="' . $elementTabindexNum . '">' . $this->shownName . '</div>';
 
                 if (!is_null($this->helpText)) {
                     $RESPONSE_DATA .= '<div class="' . ($this->getHelpClass() ?: 'help') . '" id="help_' . $thisName . '">' .
@@ -350,7 +261,7 @@ abstract class BaseElement implements ElementItem
     {
         $failedValidations = [];
 
-        foreach ($this->getAttribute()->getAdditionalValidators() as $validator) {
+        foreach ($this->getAttribute()->additionalValidators as $validator) {
             $validatorObject = new $validator();
 
             if ($validatorObject instanceof Validator) {
@@ -365,14 +276,14 @@ abstract class BaseElement implements ElementItem
 
     private function getContext(?string $objectName = null): array
     {
-        $view = $this->entity?->getView();
+        $view = $this->entity?->view;
 
-        $context = $view?->getCMSVC()?->getContext();
+        $context = $view?->CMSVC?->context;
 
         if (is_null($objectName) && $view !== null) {
-            $objectName = $view->getCMSVC()?->getObjectName() ?? ObjectsHelper::getClassShortNameFromCMSVCObject($view);
+            $objectName = $view->CMSVC->objectName ?? ObjectsHelper::getClassShortNameFromCMSVCObject($view);
         } elseif ($context === null) {
-            throw new RuntimeException(sprintf('Was not able to find any suitable context for an element %s in object %s', $this->getName(), $objectName));
+            throw new RuntimeException(sprintf('Was not able to find any suitable context for an element %s in object %s', $this->name, $objectName));
         }
 
         if ($this->filteredContexts[$objectName] ?? false) {

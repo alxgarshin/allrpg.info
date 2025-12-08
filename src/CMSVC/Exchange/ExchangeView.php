@@ -21,7 +21,7 @@ class ExchangeView extends BaseView
     public function Response(): ?Response
     {
         /** @var ExchangeService $exchangeService */
-        $exchangeService = $this->getCMSVC()->getService();
+        $exchangeService = $this->CMSVC->service;
 
         /** @var ExchangeItemEditService $exchangeItemEditService */
         $exchangeItemEditService = CMSVCHelper::getService('exchange_item_edit');
@@ -29,7 +29,7 @@ class ExchangeView extends BaseView
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_PEOPLE = LocaleHelper::getLocale(['people', 'global']);
@@ -69,14 +69,14 @@ class ExchangeView extends BaseView
             <div class="object_info_2">
                 <h1>' . DataHelper::escapeOutput($objData->name->get()) . '</h1>
                 <div class="object_info_2_additional">
-                    <span class="gray">' . $objData->region->getShownName() . ':</span>' . $cityName . '</span><br>
+                    <span class="gray">' . $objData->region->shownName . ':</span>' . $cityName . '</span><br>
                     <span class="gray">' . $LOCALE_GLOBAL['published_by'] . LocaleHelper::declineVerb($creatorData) . ':</span>' . $userService->showName($creatorData, true);
 
                 $additional = $objData->additional->get();
 
                 if (count($additional) > 0) {
                     $RESPONSE_DATA .= '<br>
-                    <span class="gray">' . $objData->additional->getShownName() . ':</span>' . str_replace('<br />', ', ', $objData->additional->asHTML(false)) . '</span>';
+                    <span class="gray">' . $objData->additional->shownName . ':</span>' . str_replace('<br />', ', ', $objData->additional->asHTML(false)) . '</span>';
                 }
 
                 if ($objData->price_lease->get() > 0 || $objData->price_buy->get() > 0) {

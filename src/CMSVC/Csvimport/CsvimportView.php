@@ -14,9 +14,9 @@ class CsvimportView extends BaseView
 {
     public function Response(): ?Response
     {
-        $csvImportService = $this->getService();
+        $csvImportService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $PAGETITLE = $LOCALE['title'];
         $RESPONSE_DATA = '';

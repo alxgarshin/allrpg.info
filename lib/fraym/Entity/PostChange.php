@@ -21,19 +21,7 @@ class PostChange
 {
     public function __construct(
         /** Имя функции  */
-        private string $callback = 'postChange',
+        public string $callback = 'postChange',
     ) {
-    }
-
-    public function getCallback(): ?string
-    {
-        return $this->callback;
-    }
-
-    public function setCallback(?string $callback): static
-    {
-        $this->callback = $callback;
-
-        return $this;
     }
 }

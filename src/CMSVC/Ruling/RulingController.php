@@ -22,7 +22,7 @@ class RulingController extends BaseController
         $this->requestCheckSearch();
 
         /** @var RulingView $view */
-        $view = $this->getCMSVC()->getView();
+        $view = $this->CMSVC->view;
 
         return $view->Response(
             ($_REQUEST['view_all'] ?? false) === '1' || ($_REQUEST['ruling_tag'] ?? 0) > 0,
@@ -34,7 +34,7 @@ class RulingController extends BaseController
     public function Fillform(): ?Response
     {
         /** @var RulingView $view */
-        $view = $this->getCMSVC()->getView();
+        $view = $this->CMSVC->view;
 
         return $view->Response(
             false,
@@ -47,7 +47,7 @@ class RulingController extends BaseController
     public function Generate(): ?Response
     {
         /** @var RulingView $view */
-        $view = $this->getCMSVC()->getView();
+        $view = $this->CMSVC->view;
 
         return $view->Generate(($_REQUEST['print_mode'] ?? false) === '1');
     }

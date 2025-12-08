@@ -39,7 +39,7 @@ class EventService extends BaseService
 
             if (!is_null($objId) && !is_null($objType)) {
                 RightsHelper::addRights('{child}', '{' . $objType . '}', $objId, '{event}', $successfulResultsId);
-                $this->getEntity()->setFraymActionRedirectPath(ABSOLUTE_PATH . '/' . $objType . '/' . $objId . '/');
+                $this->entity->fraymActionRedirectPath = ABSOLUTE_PATH . '/' . $objType . '/' . $objId . '/';
             }
 
             if (isset($_REQUEST['user_id'][0])) {
@@ -72,7 +72,7 @@ class EventService extends BaseService
 
     public function postChange(array $successfulResultsIds): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         foreach ($successfulResultsIds as $id) {
@@ -131,7 +131,7 @@ class EventService extends BaseService
 
     public function postDelete(array $successfulResultsIds): void
     {
-        $this->getEntity()->setFraymActionRedirectPath(ABSOLUTE_PATH . '/' . $this->getObjType() . '/' . $this->getObjId() . '/');
+        $this->entity->fraymActionRedirectPath = ABSOLUTE_PATH . '/' . $this->getObjType() . '/' . $this->getObjId() . '/';
 
         foreach ($successfulResultsIds as $id) {
             $id = DataHelper::getId();
@@ -228,7 +228,7 @@ class EventService extends BaseService
                 $objId = (int) $objId;
             }
 
-            if (DataHelper::getId() > 0 && ($this->getAct() === ActEnum::edit || $this->getAct() === ActEnum::view)) {
+            if (DataHelper::getId() > 0 && ($this->act === ActEnum::edit || $this->act === ActEnum::view)) {
                 $objId = RightsHelper::findOneByRights('{child}', '{project}', null, '{event}', DataHelper::getId());
 
                 if (!is_null($objId)) {
@@ -378,7 +378,7 @@ class EventService extends BaseService
     public function getMessageData(): ?array
     {
         if (is_null($this->messageData)) {
-            if (($_REQUEST['message_id'] ?? false) && $this->getAct() === ActEnum::add) {
+            if (($_REQUEST['message_id'] ?? false) && $this->act === ActEnum::add) {
                 $messageData = DB->findObjectById($_REQUEST['message_id'][0] ?? $_REQUEST['message_id'], 'conversation_message');
 
                 if ($messageData) {
@@ -444,8 +444,11 @@ class EventService extends BaseService
     public function postModelInit(BaseModel $model): BaseModel
     {
         if (($this->postModelInitVars['objType'] ?? false) === 'project') {
-            $LOCALE = $this->getLOCALE();
-            $model->getElement('obj_id')?->setShownName($LOCALE['project']);
+            $LOCALE = $this->LOCALE;
+
+            if ($model->getElement('obj_id')) {
+                $model->getElement('obj_id')->shownName = $LOCALE['project'];
+            }
         }
 
         return $model;

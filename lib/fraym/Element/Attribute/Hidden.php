@@ -16,18 +16,33 @@ namespace Fraym\Element\Attribute;
 use Attribute;
 use Fraym\Element\Validator\ObligatoryValidator;
 use Fraym\Interface\HasDefaultValue;
+use InvalidArgumentException;
 
 /** Скрытое поле */
+/** @implements HasDefaultValue<null|string> */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Hidden extends BaseElement implements HasDefaultValue
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
     ];
 
+    /** Значение по умолчанию */
+    public mixed $defaultValue {
+        get => $this->_val;
+        set {
+            if (!is_null($value) && !is_string($value)) {
+                throw new InvalidArgumentException('Wrong defaultValue type');
+            }
+
+            $this->_val = $value;
+        }
+    }
+
+    private ?string $_val = null;
+
     public function __construct(
-        /** Значение по умолчанию */
-        private ?string $defaultValue = null,
+        mixed $defaultValue = null,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -59,17 +74,7 @@ class Hidden extends BaseElement implements HasDefaultValue
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
 
-    public function getDefaultValue(): ?string
-    {
-        return $this->defaultValue;
-    }
-
-    public function setDefaultValue(?string $defaultValue = null): static
-    {
         $this->defaultValue = $defaultValue;
-
-        return $this;
     }
 }

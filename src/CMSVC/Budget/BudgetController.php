@@ -29,7 +29,7 @@ class BudgetController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->changeBudgetCode(
+                $this->service->changeBudgetCode(
                     OBJ_ID,
                     (int) ($_REQUEST['after_obj_id'] ?? false),
                 ),

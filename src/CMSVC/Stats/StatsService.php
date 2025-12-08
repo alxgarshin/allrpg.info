@@ -18,7 +18,7 @@ class StatsService extends BaseService
 
     public function getTypesList(): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $types = [];
 
@@ -39,8 +39,8 @@ class StatsService extends BaseService
             $model = $this->getModelForStatsModel($statsModel);
             $view = $this->getViewForStatsModel($statsModel);
 
-            $this->getEntity()->setTable($view->getEntity()->getTable());
-            $this->getCMSVC()->setModel($model);
+            $this->entity->table = $view->entity->table;
+            $this->CMSVC->model = $model;
         }
     }
 
@@ -67,7 +67,7 @@ class StatsService extends BaseService
     {
         $view = CMSVCHelper::getView($model);
 
-        $this->getEntity()->setName(mb_lcfirst($model));
+        $this->entity->name = mb_lcfirst($model);
 
         return $view;
     }
@@ -75,11 +75,11 @@ class StatsService extends BaseService
     public function getModelForStatsModel(string $model): BaseModel
     {
         if ($model === 'User') {
-            $this->getEntity()->setSortingData([
+            $this->entity->sortingData = [
                 new EntitySortingItem(
                     tableFieldName: 'fio',
                 ),
-            ]);
+            ];
         }
 
         $obj = CMSVCHelper::getModel($model);
@@ -89,19 +89,19 @@ class StatsService extends BaseService
         $obj->removeElement('through_social_network');
         $obj->removeElement('or_by_inputting_data');
 
-        foreach ($obj->getElements() as $element) {
-            $element->getAttribute()->setContext([
+        foreach ($obj->elementsList as $element) {
+            $element->getAttribute()->context = [
                 ':list',
                 ':view',
-            ]);
+            ];
 
             if (
                 !($element->getNoData() && $element instanceof Item\Calendar) &&
                 !($element->getNoData() && !$element->getGroup()) &&
                 !$element instanceof Item\File &&
-                $element->getShownName()
+                $element->shownName
             ) {
-                $element->getAttribute()->setUseInFilters(true);
+                $element->getAttribute()->useInFilters = true;
             }
         }
 
@@ -122,9 +122,12 @@ class StatsService extends BaseService
     {
         $LOCALE = LocaleHelper::getLocale(['stats', 'global']);
 
+        $entity = $this->entity;
+        $entity->name = 'profile';
+
         $usersData = DB->query(
-            'SELECT t1.* FROM user t1' . $this->getEntity()->setName('profile')->getFilters()->getPreparedSearchQuerySql(),
-            $this->getEntity()->setName('profile')->getFilters()->getPreparedSearchQueryParams(),
+            'SELECT t1.* FROM user t1' . $entity->filters->getPreparedSearchQuerySql(),
+            $entity->filters->getPreparedSearchQueryParams(),
         );
 
         foreach ($usersData as $userData) {
@@ -135,7 +138,7 @@ class StatsService extends BaseService
                 $curGroups[] = $objId;
             }
             DB->update(
-                $this->getTable(),
+                $this->table,
                 [
                     ['rights', DataHelper::arrayToMultiselect($curGroups)],
                     ['updated_at', 'time'],
@@ -169,9 +172,12 @@ class StatsService extends BaseService
 
         $listOfIds = [];
 
+        $entity = $this->entity;
+        $entity->name = 'profile';
+
         $usersData = DB->query(
-            'SELECT t1.* FROM user t1' . $this->getEntity()->setName('profile')->getFilters()->getPreparedSearchQuerySql(),
-            $this->getEntity()->setName('profile')->getFilters()->getPreparedSearchQueryParams(),
+            'SELECT t1.* FROM user t1' . $entity->filters->getPreparedSearchQuerySql(),
+            $entity->filters->getPreparedSearchQueryParams(),
         );
 
         foreach ($usersData as $userData) {

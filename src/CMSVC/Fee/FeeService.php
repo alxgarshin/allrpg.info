@@ -29,7 +29,7 @@ class FeeService extends BaseService
     public function postCreate(array $successfulResultsIds): void
     {
         foreach ($successfulResultsIds as $successfulResultsId) {
-            if ($this->getEntity()->getName() === CMSVC) {
+            if ($this->entity->name === CMSVC) {
                 DB->insert(
                     tableName: 'project_fee',
                     data: [
@@ -57,7 +57,7 @@ class FeeService extends BaseService
 
     public function preChange(): void
     {
-        if ($this->getEntity()->getName() !== CMSVC) {
+        if ($this->entity->name !== CMSVC) {
             $this->oldFeeData = [];
 
             foreach ($_REQUEST['id'] as $id) {
@@ -69,7 +69,7 @@ class FeeService extends BaseService
     public function postChange(array $successfulResultsIds): void
     {
         foreach ($successfulResultsIds as $successfulResultsId) {
-            if ($this->getEntity()->getName() === CMSVC) {
+            if ($this->entity->name === CMSVC) {
                 if ($_REQUEST['add_to_unpaid_applications'][0] === 'on') {
                     $feeData = DB->query(
                         'SELECT * FROM project_fee WHERE parent=:parent AND date_from <= CURDATE() ORDER BY date_from DESC LIMIT 1',
@@ -181,7 +181,7 @@ class FeeService extends BaseService
 
     private function updateFee($updateId, $addInAnyCase = false): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $feeData = DB->findObjectById($updateId, 'project_fee', true);
 

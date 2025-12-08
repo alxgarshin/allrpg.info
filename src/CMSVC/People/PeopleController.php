@@ -39,11 +39,11 @@ class PeopleController extends BaseController
         if (is_null($userData)) {
             ResponseHelper::redirect(ABSOLUTE_PATH . '/start/');
         } else {
-            $this->getService()->setUserData($userData);
+            $this->service->setUserData($userData);
         }
 
         /** @var PeopleView */
-        $peopleView = $this->getCMSVC()->getView();
+        $peopleView = $this->CMSVC->view;
 
         return $peopleView->Response();
     }

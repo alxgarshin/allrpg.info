@@ -19,9 +19,9 @@ class NewsView extends BaseView
     public function Response(): ?Response
     {
         /** @var NewsService $newsService */
-        $newsService = $this->getService();
+        $newsService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
         $RESPONSE_DATA = '';
@@ -59,7 +59,7 @@ class NewsView extends BaseView
                 }
                 $tags = mb_substr($tags, 0, mb_strlen($tags) - 2);
 
-                $newsDate = DateHelper::dateFromTo($newsData->getModelData());
+                $newsDate = DateHelper::dateFromTo($newsData->modelData);
 
                 $RESPONSE_DATA .= '<h2>' . DataHelper::escapeOutput($newsData->name->get()) . '</h2>
 	' . ($tags !== '' ? '<div class="news_date">' . $LOCALE['tags'] . ': ' . $tags . '</div>' : '') . '
@@ -83,7 +83,7 @@ class NewsView extends BaseView
 
                     preg_match('#video:([^:]+):(\d+):(\d+):([^:]+):#', $RESPONSE_DATA, $match);
 
-                    if ($match[4] !== '') {
+                    if ($match[4]) {
                         preg_match('#\.(.+)$#', $match[1], $extension);
                         $extension = $extension[1];
                         $width = $match[2];
@@ -107,7 +107,7 @@ class NewsView extends BaseView
 
                 /** @var NewsEditModel[] $newsData */
                 foreach ($newsData as $newsDataItem) {
-                    $RESPONSE_DATA .= $newsService->showNews($newsDataItem->getModelData());
+                    $RESPONSE_DATA .= $newsService->showNews($newsDataItem->modelData);
                 }
 
                 if ($newsDataCount > 25) {

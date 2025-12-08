@@ -173,7 +173,7 @@ final class SQLDatabaseService implements Database
     }
 
     /** Получение id последней добавленной записи. UUID генерятся на стороне бэкенда, а не в БД, поэтому эта команда вам не потребуется: у вас будет ваш новый uuid еще до insert'а */
-    public function lastInsertId(?string $name = null): int|string|false
+    public function lastInsertId(?string $name = null): string|false
     {
         return $this->DB->lastInsertId($name);
     }
@@ -681,7 +681,9 @@ final class SQLDatabaseService implements Database
             foreach ($fullDataArray as $key => $fullData) {
                 if ($fullData[$where] === $whereequal) {
                     if (
+                        /** @phpstan-ignore-next-line */
                         ($limitFrom === false && $limitCount === false) ||
+                        /** @phpstan-ignore-next-line */
                         ($limitFrom !== false && $limitCount !== false && $mainDataFound >= $limitFrom && $mainDataFound < $limitFrom + $limitCount)
                     ) {
                         $objectsTree[] = [

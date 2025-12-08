@@ -73,7 +73,7 @@ if (class_exists($controllerName)) {
 
     if ($controller instanceof BaseHelper || ($controller->checkIfIsAccessible() && $controller->checkIfHasToBeAndIsAdmin())) {
         if ($controller instanceof BaseController) {
-            $controller->getCMSVC()->init();
+            $controller->CMSVC->init();
         }
 
         if (is_null(ACTION) || in_array(ACTION, ActionEnum::cases())) {

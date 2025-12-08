@@ -44,7 +44,7 @@ class TransactionView extends BaseView
 
     public function preViewHandler(): void
     {
-        $transactionService = $this->getService();
+        $transactionService = $this->service;
         $projectData = $transactionService->getProjectData();
 
         if ($projectData->show_datetime_in_transaction->get()) {
@@ -54,16 +54,16 @@ class TransactionView extends BaseView
                 showFieldDataInEntityTable: false,
                 showFieldShownNameInCatalogItemString: false,
             );
-            $this->getEntity()->insertEntitySortingData($entitySortingItem, 1);
+            $this->entity->insertEntitySortingData($entitySortingItem, 1);
         }
     }
 
     public function additionalPostViewHandler(string $RESPONSE_DATA): string
     {
         /** @var TransactionModel */
-        $model = $this->getModel();
+        $model = $this->model;
 
-        if (count($model->getElement('payment_datetime')->getAttribute()->getContext()) === 0) {
+        if (count($model->getElement('payment_datetime')->getAttribute()->context) === 0) {
             $RESPONSE_DATA = preg_replace('#multi_objects_table excel#', 'multi_objects_table excel without_payment_datetime', $RESPONSE_DATA);
         } else {
             $RESPONSE_DATA = preg_replace('#multi_objects_table excel#', 'multi_objects_table excel with_payment_datetime', $RESPONSE_DATA);

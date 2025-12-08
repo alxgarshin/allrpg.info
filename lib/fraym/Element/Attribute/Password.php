@@ -24,7 +24,7 @@ class Password extends BaseElement implements InterfaceMinMaxChar
 {
     use MinMaxChar;
 
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         MinMaxCharValidator::class,
         ObligatoryValidator::class,
         RepeatPasswordValidator::class,
@@ -32,7 +32,7 @@ class Password extends BaseElement implements InterfaceMinMaxChar
 
     public function __construct(
         /** Имя еще одного элемента класса Password для функции: "Введите пароль повторно" */
-        private ?string $repeatPasswordFieldName = null,
+        public ?string $repeatPasswordFieldName = null,
         ?int $minChar = null,
         ?int $maxChar = null,
         ?bool $obligatory = null,
@@ -68,17 +68,5 @@ class Password extends BaseElement implements InterfaceMinMaxChar
         );
         $this->minChar = $minChar;
         $this->maxChar = $maxChar;
-    }
-
-    public function getRepeatPasswordFieldName(): ?string
-    {
-        return $this->repeatPasswordFieldName;
-    }
-
-    public function setRepeatPasswordFieldName(?string $repeatPasswordFieldName): static
-    {
-        $this->repeatPasswordFieldName = $repeatPasswordFieldName;
-
-        return $this;
     }
 }

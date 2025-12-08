@@ -168,7 +168,7 @@ class FileService extends BaseService
     /** Изменение имени файла или папки */
     public function editFileOrFolderName(int|string $objId, string $objType, string $name, string $description = ''): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_FOLDERS = $LOCALE['folders'];
         $LOCALE_LINKS = $LOCALE['links'];
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
@@ -413,7 +413,7 @@ class FileService extends BaseService
     /** Добавление папки */
     public function createFolder(int $objId, string $objType, string $name): array
     {
-        $LOCALE_FOLDERS = $this->getLOCALE()['folders'];
+        $LOCALE_FOLDERS = $this->LOCALE['folders'];
 
         $returnArr = [];
 
@@ -446,7 +446,7 @@ class FileService extends BaseService
     /** Удаление папки из диска */
     public function deleteFolder(int $objId): array
     {
-        $LOCALE_FOLDERS = $this->getLOCALE()['folders'];
+        $LOCALE_FOLDERS = $this->LOCALE['folders'];
 
         $returnArr = [];
 
@@ -518,7 +518,7 @@ class FileService extends BaseService
     /** Добавление ссылки */
     public function addLink(int $objId, string $objType, string $name, string $link): array
     {
-        $LOCALE_LINKS = $this->getLOCALE()['links'];
+        $LOCALE_LINKS = $this->LOCALE['links'];
 
         $returnArr = [];
 
@@ -553,7 +553,7 @@ class FileService extends BaseService
     /** Удаление ссылки из диска */
     public function deleteLink(int $objId): array
     {
-        $LOCALE_LINKS = $this->getLOCALE()['links'];
+        $LOCALE_LINKS = $this->LOCALE['links'];
 
         $returnArr = [];
 
@@ -793,11 +793,12 @@ class FileService extends BaseService
             }
 
             if ($communities) {
-                $communitiesData = DB->findObjectsByIds($communities, 'community');
+                $communitiesData = iterator_to_array(DB->findObjectsByIds($communities, 'community'));
 
                 foreach ($communitiesData as $key => $objectData) {
                     $communitiesData[$key]['type'] = 'community';
                 }
+
                 $foldersData = array_merge($foldersData, $communitiesData);
             }
 

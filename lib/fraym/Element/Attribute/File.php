@@ -20,13 +20,13 @@ use Fraym\Element\Validator\FilesValidator;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class File extends BaseElement
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         FilesValidator::class,
     ];
 
     public function __construct(
         /** Номер конфига в CFG['uploads'] */
-        private ?int $uploadNum = null,
+        public ?int $uploadNum = null,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -60,17 +60,5 @@ class File extends BaseElement
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
-
-    public function getUploadNum(): ?int
-    {
-        return $this->uploadNum;
-    }
-
-    public function setUploadNum(?int $uploadNum): static
-    {
-        $this->uploadNum = $uploadNum;
-
-        return $this;
     }
 }

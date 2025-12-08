@@ -44,20 +44,20 @@ class PaymentTypeView extends BaseView
     {
         $RESPONSE_DATA = $response->getHtml();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         /** Если в проекте еще нет выставленных свойств оплаты картой, то даем диалог */
         if (count($_ENV['USE_PAYMENT_SYSTEMS']) > 0) {
             $checkLocale = CookieHelper::getCookie('locale') === 'RU';
 
-            $checkPkProjectFieldsFilled = $this->getService()->checkProjectFieldsFilled('paykeeper');
-            $checkPmProjectFieldsFilled = $this->getService()->checkProjectFieldsFilled('paymaster');
-            $checkYkProjectFieldsFilled = $this->getService()->checkProjectFieldsFilled('yandex');
+            $checkPkProjectFieldsFilled = $this->service->checkProjectFieldsFilled('paykeeper');
+            $checkPmProjectFieldsFilled = $this->service->checkProjectFieldsFilled('paymaster');
+            $checkYkProjectFieldsFilled = $this->service->checkProjectFieldsFilled('yandex');
 
             if (in_array('paykeeper', $_ENV['USE_PAYMENT_SYSTEMS']) && $checkLocale) {
                 $RESPONSE_DATA = preg_replace('#<form action="/' . KIND . '/"#', '<div class="payment_type_online_add"><button class="main show_hidden">' . $LOCALE['add_card_type_pk'] . '</button>
 <div class="hidden">
-<div class="add_card_type_text publication_content">' . preg_replace('#check_pk_payment_type_id#', !$this->getService()->checkPaymentTypeId('paykeeper') ? '' : ' class="checked"', preg_replace('#check_pk_project_fields_filled#', $checkPkProjectFieldsFilled ? ' class="checked"' : '', $LOCALE['add_card_type_text_pk'])) . '
+<div class="add_card_type_text publication_content">' . preg_replace('#check_pk_payment_type_id#', !$this->service->checkPaymentTypeId('paykeeper') ? '' : ' class="checked"', preg_replace('#check_pk_project_fields_filled#', $checkPkProjectFieldsFilled ? ' class="checked"' : '', $LOCALE['add_card_type_text_pk'])) . '
 <form action="/' . KIND . '/" method="POST" no_dynamic_content><input type="hidden" name="action" value="pk_add"><button class="main">' . $LOCALE['pk_add_btn'] . '</button></form></div>
 </div></div><form action="/' . KIND . '/"', $RESPONSE_DATA);
             }
@@ -65,7 +65,7 @@ class PaymentTypeView extends BaseView
             if (in_array('paymaster', $_ENV['USE_PAYMENT_SYSTEMS']) && $checkLocale) {
                 $RESPONSE_DATA = preg_replace('#<form action="/' . KIND . '/"#', '<div class="payment_type_online_add"><button class="main show_hidden">' . $LOCALE['add_card_type_pm'] . '</button>
 <div class="hidden">
-<div class="add_card_type_text publication_content">' . preg_replace('#check_pm_payment_type_id#', !$this->getService()->checkPaymentTypeId('paymaster') ? '' : ' class="checked"', preg_replace('#check_pm_project_fields_filled#', $checkPmProjectFieldsFilled ? ' class="checked"' : '', $LOCALE['add_card_type_text_pm'])) . '
+<div class="add_card_type_text publication_content">' . preg_replace('#check_pm_payment_type_id#', !$this->service->checkPaymentTypeId('paymaster') ? '' : ' class="checked"', preg_replace('#check_pm_project_fields_filled#', $checkPmProjectFieldsFilled ? ' class="checked"' : '', $LOCALE['add_card_type_text_pm'])) . '
 <form action="/' . KIND . '/" method="POST" no_dynamic_content><input type="hidden" name="action" value="pm_add"><button class="main">' . $LOCALE['pm_add_btn'] . '</button></form></div>
 </div></div><form action="/' . KIND . '/"', $RESPONSE_DATA);
             }
@@ -73,7 +73,7 @@ class PaymentTypeView extends BaseView
             if (in_array('yandex', $_ENV['USE_PAYMENT_SYSTEMS']) && $checkLocale) {
                 $RESPONSE_DATA = preg_replace('#<form action="/' . KIND . '/"#', '<div class="payment_type_online_add"><button class="main show_hidden">' . $LOCALE['add_card_type_yk'] . '</button>
 <div class="hidden">
-<div class="add_card_type_text publication_content">' . preg_replace('#check_yk_payment_type_id#', !$this->getService()->checkPaymentTypeId('yandex') ? '' : ' class="checked"', preg_replace('#check_yk_project_fields_filled#', $checkYkProjectFieldsFilled ? ' class="checked"' : '', $LOCALE['add_card_type_text_yk'])) . '
+<div class="add_card_type_text publication_content">' . preg_replace('#check_yk_payment_type_id#', !$this->service->checkPaymentTypeId('yandex') ? '' : ' class="checked"', preg_replace('#check_yk_project_fields_filled#', $checkYkProjectFieldsFilled ? ' class="checked"' : '', $LOCALE['add_card_type_text_yk'])) . '
 <form action="/' . KIND . '/" method="POST" no_dynamic_content><input type="hidden" name="action" value="yk_add"><button class="main">' . $LOCALE['yk_add_btn'] . '</button></form></div>
 </div></div><form action="/' . KIND . '/"', $RESPONSE_DATA);
             }

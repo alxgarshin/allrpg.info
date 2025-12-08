@@ -24,7 +24,7 @@ class RegisterController extends BaseController
 
     protected function Default(): ?Response
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
 
         if (CURRENT_USER->isLogged()) {
             ResponseHelper::redirect('/start/');
@@ -35,10 +35,10 @@ class RegisterController extends BaseController
             ResponseHelper::redirect('/login/');
         }
 
-        $responseData = $this->getEntity()->view(ActEnum::add);
+        $responseData = $this->entity->view(ActEnum::add);
 
         if ($responseData instanceof HtmlResponse) {
-            $this->getEntity()->getView()->postViewHandler($responseData);
+            $this->entity->view->postViewHandler($responseData);
 
             ResponseHelper::info($LOCALE['you_will_be_able_to_update_your_info_after_registration']);
         }

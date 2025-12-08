@@ -31,14 +31,14 @@ class CsvimportController extends BaseController
             if ($_REQUEST['attachments'] ?? false) {
                 return ResponseHelper::response([], 'submit');
             } else {
-                $LOCALE = $this->getLOCALE();
+                $LOCALE = $this->LOCALE;
                 ResponseHelper::responseOneBlock('error', $LOCALE['messages']['no_file_selected'], ['attachments']);
             }
         }
 
-        $this->getService()->importCharacters();
+        $this->service->importCharacters();
 
-        return $this->getCMSVC()->getView()->Response();
+        return $this->CMSVC->view->Response();
     }
 
     public function importApplications(): ?Response
@@ -47,13 +47,13 @@ class CsvimportController extends BaseController
             if ($_REQUEST['attachments'] ?? false) {
                 return ResponseHelper::response([], 'submit');
             } else {
-                $LOCALE = $this->getLOCALE();
+                $LOCALE = $this->LOCALE;
                 ResponseHelper::responseOneBlock('error', $LOCALE['messages']['no_file_selected'], ['attachments']);
             }
         }
 
-        $this->getService()->importApplications();
+        $this->service->importApplications();
 
-        return $this->getCMSVC()->getView()->Response();
+        return $this->CMSVC->view->Response();
     }
 }

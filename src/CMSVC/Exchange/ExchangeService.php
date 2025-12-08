@@ -206,7 +206,7 @@ class ExchangeService extends BaseService
     /** Вывод краткого представления предмета в Складе */
     public function showExchangeItemShort(ExchangeItemEditModel $exchangeItem, bool $controlButtons = false): string
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $exchangeCategoryArray = $exchangeItem->exchange_category_ids->get();
 

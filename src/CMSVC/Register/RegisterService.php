@@ -25,7 +25,7 @@ class RegisterService extends BaseService
 
     public function preCreate(): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
 
         $hash = $_REQUEST['hash'][0] ?? null;
         $regstamp = $_REQUEST['regstamp'][0] ?? null;
@@ -126,10 +126,10 @@ class RegisterService extends BaseService
             ->changeElementsOrder('city', 'photo')
             ->changeElementsOrder('gender', 'photo');
 
-        $model->getElement('password_hashed')->getAttribute()->setObligatory(true);
-        $model->getElement('pass2')->getAttribute()->setObligatory(true);
-        $model->getElement('birth')->getAttribute()->setObligatory(false);
-        $model->getElement('city')->getAttribute()->setObligatory(false);
+        $model->getElement('password_hashed')->getAttribute()->obligatory = true;
+        $model->getElement('pass2')->getAttribute()->obligatory = true;
+        $model->getElement('birth')->getAttribute()->obligatory = false;
+        $model->getElement('city')->getAttribute()->obligatory = false;
 
         return $model;
     }

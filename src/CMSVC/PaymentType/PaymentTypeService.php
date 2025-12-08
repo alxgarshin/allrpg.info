@@ -115,7 +115,7 @@ class PaymentTypeService extends BaseService
     /** Если нет типа платежа, создаем */
     public function paymentTypeAdd(string $paymentTypeName): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $checkPaymentTypeId = $this->checkPaymentTypeId($paymentTypeName);
 
@@ -145,14 +145,14 @@ class PaymentTypeService extends BaseService
             } else {
                 ResponseHelper::response(
                     [
-                        ['success', $this->getEntity()->getObjectMessages($this->getEntity())[0]],
+                        ['success', $this->entity->getObjectMessages($this->entity)[0]],
                     ],
                     'stayhere',
                 );
             }
         }
 
-        return $this->getCMSVC()->getController()->Response();
+        return $this->CMSVC->controller->Response();
     }
 
     public function checkRights(): bool

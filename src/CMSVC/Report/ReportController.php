@@ -19,7 +19,7 @@ class ReportController extends BaseController
 {
     public function Response(): ?Response
     {
-        if (!CURRENT_USER->isLogged() && DataHelper::getActDefault($this->getEntity()) === ActEnum::add) {
+        if (!CURRENT_USER->isLogged() && DataHelper::getActDefault($this->entity) === ActEnum::add) {
             ResponseHelper::redirect(
                 '/login/',
                 [

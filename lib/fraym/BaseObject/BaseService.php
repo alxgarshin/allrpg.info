@@ -29,33 +29,52 @@ abstract class BaseService
 {
     use InitDependencyInjectionsTrait;
 
-    protected ?array $LOCALE = null;
+    public ?array $LOCALE = null {
+        get => $this->LOCALE;
+        set => $this->LOCALE = LocaleHelper::getLocale($value);
+    }
 
-    protected ?CMSVC $CMSVC = null;
+    public ?CMSVC $CMSVC = null;
 
     /** Callback-функция перед create */
-    protected ?string $preCreate = null;
+    public ?string $preCreate = null;
 
     /** Callback-функция после create */
-    protected ?string $postCreate = null;
+    public ?string $postCreate = null;
 
     /** Callback-функция перед change */
-    protected ?string $preChange = null;
+    public ?string $preChange = null;
 
     /** Callback-функция после change */
-    protected ?string $postChange = null;
+    public ?string $postChange = null;
 
     /** Callback-функция перед delete */
-    protected ?string $preDelete = null;
+    public ?string $preDelete = null;
 
     /** Callback-функция после delete */
-    protected ?string $postDelete = null;
+    public ?string $postDelete = null;
 
     /** Уточненный ACT (часто нужен в сервисах для проверки прав) */
-    protected ActEnum $act;
+    public ActEnum $act;
 
     /** Массив переменных, которые можно добавлять во время обработки сервиса. Помогает в postModelInit понять, нужно ли совершить какие-либо действия после того, как модель была собрана с участием сервиса (и избежать зацикливания таким образом). */
-    protected array $postModelInitVars = [];
+    public array $postModelInitVars = [];
+
+    public ?BaseModel $model {
+        get => $this->CMSVC?->model;
+    }
+
+    public ?BaseView $view {
+        get => $this->CMSVC?->view;
+    }
+
+    public ?BaseEntity $entity {
+        get => $this->CMSVC?->view?->entity;
+    }
+
+    public ?string $table {
+        get => $this->entity?->table;
+    }
 
     public function construct(?CMSVC $CMSVC = null): static
     {
@@ -67,13 +86,13 @@ abstract class BaseService
             if ($controllerRef[0] ?? false) {
                 /** @var Controller $controller */
                 $controller = $controllerRef[0]->newInstance();
-                $this->CMSVC = $controller->getCMSVC();
+                $this->CMSVC = $controller->CMSVC;
             } else {
                 $CMSVC = $reflection->getAttributes(CMSVC::class);
 
                 if ($CMSVC[0] ?? false) {
                     $this->CMSVC = $CMSVC[0]->newInstance();
-                    $this->CMSVC->setService($this);
+                    $this->CMSVC->service = $this;
                     $this->CMSVC->init();
                 }
             }
@@ -81,9 +100,9 @@ abstract class BaseService
             $this->CMSVC = $CMSVC;
         }
 
-        $this->CMSVC->setService($this);
+        $this->CMSVC->service = $this;
 
-        $this->LOCALE = $this->setLOCALE([ObjectsHelper::getClassShortNameFromCMSVCObject($this), 'global']);
+        $this->LOCALE = $this->LOCALE = [ObjectsHelper::getClassShortNameFromCMSVCObject($this), 'global'];
 
         $entityService = new ReflectionObject($this);
 
@@ -92,7 +111,7 @@ abstract class BaseService
         if ($preCreateRef[0] ?? false) {
             /** @var PreCreate $preCreate */
             $preCreate = $preCreateRef[0]->newInstance();
-            $this->preCreate = $preCreate->getCallback();
+            $this->preCreate = $preCreate->callback;
         }
 
         $postCreateRef = $entityService->getAttributes(PostCreate::class, ReflectionAttribute::IS_INSTANCEOF);
@@ -100,7 +119,7 @@ abstract class BaseService
         if ($postCreateRef[0] ?? false) {
             /** @var PostCreate $postCreate */
             $postCreate = $postCreateRef[0]->newInstance();
-            $this->postCreate = $postCreate->getCallback();
+            $this->postCreate = $postCreate->callback;
         }
 
         $preChangeRef = $entityService->getAttributes(PreChange::class, ReflectionAttribute::IS_INSTANCEOF);
@@ -108,7 +127,7 @@ abstract class BaseService
         if ($preChangeRef[0] ?? false) {
             /** @var PreChange $preChange */
             $preChange = $preChangeRef[0]->newInstance();
-            $this->preChange = $preChange->getCallback();
+            $this->preChange = $preChange->callback;
         }
 
         $postChangeRef = $entityService->getAttributes(PostChange::class, ReflectionAttribute::IS_INSTANCEOF);
@@ -116,7 +135,7 @@ abstract class BaseService
         if ($postChangeRef[0] ?? false) {
             /** @var PostChange $postChange */
             $postChange = $postChangeRef[0]->newInstance();
-            $this->postChange = $postChange->getCallback();
+            $this->postChange = $postChange->callback;
         }
 
         $preDeleteRef = $entityService->getAttributes(PreDelete::class, ReflectionAttribute::IS_INSTANCEOF);
@@ -124,7 +143,7 @@ abstract class BaseService
         if ($preDeleteRef[0] ?? false) {
             /** @var PreDelete $preDelete */
             $preDelete = $preDeleteRef[0]->newInstance();
-            $this->preDelete = $preDelete->getCallback();
+            $this->preDelete = $preDelete->callback;
         }
 
         $postDeleteRef = $entityService->getAttributes(PostDelete::class, ReflectionAttribute::IS_INSTANCEOF);
@@ -132,10 +151,10 @@ abstract class BaseService
         if ($postDeleteRef[0] ?? false) {
             /** @var PostDelete $postDelete */
             $postDelete = $postDeleteRef[0]->newInstance();
-            $this->postDelete = $postDelete->getCallback();
+            $this->postDelete = $postDelete->callback;
         }
 
-        $this->act = DataHelper::getActDefault($this->getEntity());
+        $this->act = DataHelper::getActDefault($this->entity);
 
         $this->initDependencyInjections();
 
@@ -147,123 +166,9 @@ abstract class BaseService
         return $this;
     }
 
-    public function getLOCALE(): ?array
-    {
-        return $this->LOCALE;
-    }
-
-    public function setLOCALE(array $entityPathInLocale): ?array
-    {
-        $this->LOCALE = LocaleHelper::getLocale($entityPathInLocale);
-
-        return $this->LOCALE;
-    }
-
-    public function getMessages(): array
-    {
-        return $this->LOCALE['messages'];
-    }
-
-    public function getCMSVC(): ?CMSVC
-    {
-        return $this->CMSVC;
-    }
-
     /** Опциональная функция, позволяющая подменить модель в entity еще до исполнения действий в контроллере. */
     public function preLoadModel(): void
     {
-    }
-
-    public function getModel(): ?BaseModel
-    {
-        return $this->getCMSVC()?->getModel();
-    }
-
-    public function getView(): ?BaseView
-    {
-        return $this->getCMSVC()->getView();
-    }
-
-    public function getEntity(): ?BaseEntity
-    {
-        return $this->getView()?->getEntity();
-    }
-
-    public function getTable(): ?string
-    {
-        return $this->getEntity()?->getTable();
-    }
-
-    public function getPreCreate(): ?string
-    {
-        return $this->preCreate;
-    }
-
-    public function setPreCreate(?string $preCreate): static
-    {
-        $this->preCreate = $preCreate;
-
-        return $this;
-    }
-
-    public function getPostCreate(): ?string
-    {
-        return $this->postCreate;
-    }
-
-    public function setPostCreate(?string $postCreate): static
-    {
-        $this->postCreate = $postCreate;
-
-        return $this;
-    }
-
-    public function getPreChange(): ?string
-    {
-        return $this->preChange;
-    }
-
-    public function setPreChange(?string $preChange): static
-    {
-        $this->preChange = $preChange;
-
-        return $this;
-    }
-
-    public function getPostChange(): ?string
-    {
-        return $this->postChange;
-    }
-
-    public function setPostChange(?string $postChange): static
-    {
-        $this->postChange = $postChange;
-
-        return $this;
-    }
-
-    public function getPreDelete(): ?string
-    {
-        return $this->preDelete;
-    }
-
-    public function setPreDelete(?string $preDelete): static
-    {
-        $this->preDelete = $preDelete;
-
-        return $this;
-    }
-
-    public function getPostDelete(): ?string
-    {
-        return $this->postDelete;
-    }
-
-    public function setPostDelete(?string $postDelete): static
-    {
-        $this->postDelete = $postDelete;
-
-        return $this;
     }
 
     public function preCreate(): void
@@ -290,11 +195,6 @@ abstract class BaseService
     {
     }
 
-    public function getAct(): ActEnum
-    {
-        return $this->act;
-    }
-
     /** @return T|null */
     public function get(
         int|string|null $id = null,
@@ -305,7 +205,7 @@ abstract class BaseService
     ): ?BaseModel {
         if ($id !== null || $criteria !== null) {
             if (!$refresh && $id !== null) {
-                $checkData = $this->CMSVC->getModelInstance($this->CMSVC->getModel(), $id, false);
+                $checkData = $this->CMSVC->getModelInstance($this->CMSVC->model, $id, false);
 
                 if ($checkData instanceof BaseModel) {
                     return $checkData;
@@ -336,7 +236,7 @@ abstract class BaseService
         ?int $limit = null,
         ?int $offset = null,
     ): Generator {
-        $table = $this->getTable();
+        $table = $this->table;
 
         $objData = DB->select(
             $table,
@@ -352,12 +252,12 @@ abstract class BaseService
 
     public function detectModelTemplateBasedOnData(?array $data): BaseModel
     {
-        $entity = $this->getEntity();
+        $entity = $this->entity;
 
         if ($entity instanceof CatalogEntity || $entity instanceof CatalogItemEntity) {
-            return $entity->detectEntityType($data)->getModel();
+            return $entity->detectEntityType($data)->model;
         } else {
-            return $entity->getModel();
+            return $entity->model;
         }
     }
 
@@ -396,7 +296,7 @@ abstract class BaseService
         ?array $data = null,
         bool $refresh = false,
     ): ?BaseModel {
-        return $this->getCMSVC()?->getModelInstance($model, $id, $createIfNotExists, $data, $refresh);
+        return $this->CMSVC?->getModelInstance($model, $id, $createIfNotExists, $data, $refresh);
     }
 
     /** Осуществление дополнительных операций с моделью после ее полной инициализации (позволяет избежать зацикливания) */

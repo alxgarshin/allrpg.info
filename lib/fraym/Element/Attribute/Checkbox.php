@@ -16,18 +16,33 @@ namespace Fraym\Element\Attribute;
 use Attribute;
 use Fraym\Element\Validator\ObligatoryValidator;
 use Fraym\Interface\HasDefaultValue;
+use InvalidArgumentException;
 
 /** Галочка */
+/** @implements HasDefaultValue<null|string|bool> */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Checkbox extends BaseElement implements HasDefaultValue
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
     ];
 
+    /** Значение по умолчанию */
+    public mixed $defaultValue {
+        get => $this->_val;
+        set {
+            if (!is_null($value) && !is_string($value) && !is_bool($value)) {
+                throw new InvalidArgumentException('Wrong defaultValue type');
+            }
+
+            $this->_val = $value;
+        }
+    }
+
+    private null|string|bool $_val = null;
+
     public function __construct(
-        /** Значение по умолчанию */
-        private null|string|bool $defaultValue = null,
+        mixed $defaultValue = null,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -61,17 +76,7 @@ class Checkbox extends BaseElement implements HasDefaultValue
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
 
-    public function getDefaultValue(): null|string|bool
-    {
-        return $this->defaultValue;
-    }
-
-    public function setDefaultValue(null|string|bool $defaultValue = null): static
-    {
         $this->defaultValue = $defaultValue;
-
-        return $this;
     }
 }

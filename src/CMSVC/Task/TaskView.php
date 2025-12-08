@@ -68,12 +68,12 @@ class TaskView extends BaseView
     public function Response(): ?Response
     {
         /** @var TaskService $taskService */
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $objData = $taskService->get(DataHelper::getId());

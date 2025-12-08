@@ -47,12 +47,12 @@ class EventView extends BaseView
     public function Response(): ?Response
     {
         /** @var EventService $eventService */
-        $eventService = $this->getService();
+        $eventService = $this->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $objData = $eventService->get(DataHelper::getId());

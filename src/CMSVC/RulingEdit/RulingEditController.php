@@ -22,7 +22,7 @@ class RulingEditController extends BaseController
         $userService = CMSVCHelper::getService('user');
 
         if ($userService->isRulingAdmin()) {
-            return $this->getCMSVC()->getView()->Response();
+            return $this->CMSVC->view->Response();
         }
         ResponseHelper::redirect('/start/');
 

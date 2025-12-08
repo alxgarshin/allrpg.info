@@ -18,20 +18,7 @@ use Fraym\Element\Item\Tab;
 trait Tabs
 {
     /** @var Tab[] Список закладок из элементов Tab, прикрепленных к объекту */
-    protected ?array $tabs = null;
-
-    /** @return null|Tab[] */
-    public function getTabs(): ?array
-    {
-        return $this->tabs;
-    }
-
-    public function setTabs(?array $tabs): static
-    {
-        $this->tabs = $tabs;
-
-        return $this;
-    }
+    public ?array $tabs = null;
 
     public function addTab(Tab $baseTab): static
     {
@@ -39,7 +26,7 @@ trait Tabs
 
         if (!is_null($tabs)) {
             foreach ($tabs as $tab) {
-                if ($baseTab->getName() === $tab->getName()) {
+                if ($baseTab->name === $tab->name) {
                     return $this;
                 }
             }

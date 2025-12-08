@@ -18,7 +18,7 @@ class NewsEditController extends BaseController
 {
     public function Response(): ?Response
     {
-        if ($this->getService()->checkRights()) {
+        if ($this->service->checkRights()) {
             return parent::Response();
         }
 

@@ -38,9 +38,9 @@ class TableEntity extends BaseEntity implements TabbedEntity
 
         $RESPONSE_DATA = '';
 
-        $entityNameSnakeCase = TextHelper::camelCaseToSnakeCase($this->getName());
+        $entityNameSnakeCase = TextHelper::camelCaseToSnakeCase($this->name);
 
-        if ($this->getView()->getViewRights()->getAddRight()) {
+        if ($this->view->viewRights->addRight) {
             $RESPONSE_DATA .= '<a href="/' . KIND . '/' . $entityNameSnakeCase . '/act=add" class="ctrlink"><span class="sbi sbi-plus"></span>' .
                 $GLOBAL_LOCALE['add'] . ' ' . $this->getObjectName() . '</a>';
         }
@@ -48,17 +48,17 @@ class TableEntity extends BaseEntity implements TabbedEntity
 
         $RESPONSE_DATA .= '<table class="menutable ' . $entityNameSnakeCase . '"><thead><tr class="menu">';
 
-        foreach ($this->getSortingData() as $sortingItemNum => $sortingItem) {
-            if ($sortingItem->getShowFieldDataInEntityTable()) {
-                $ITEM = $this->getModel()->getElement($sortingItem->getTableFieldName());
+        foreach ($this->sortingData as $sortingItemNum => $sortingItem) {
+            if ($sortingItem->showFieldDataInEntityTable) {
+                $ITEM = $this->model->getElement($sortingItem->tableFieldName);
 
                 if (!is_null($ITEM)) {
-                    $RESPONSE_DATA .= '<th id="th_header_' . $ITEM->getName() . '">';
+                    $RESPONSE_DATA .= '<th id="th_header_' . $ITEM->name . '">';
 
-                    if (!$sortingItem->getDoNotUseInSorting()) {
+                    if (!$sortingItem->doNotUseInSorting) {
                         $RESPONSE_DATA .= '<a href="/' . KIND . '/' . $entityNameSnakeCase . '/page=' . PAGE . '&sorting=';
 
-                        $preparedItemShowName = $ITEM->getShownName();
+                        $preparedItemShowName = $ITEM->shownName;
                         $preparedItemShowName = strip_tags(mb_strtolower((!is_null($preparedItemShowName) ? $preparedItemShowName : '')));
                         $preparedItemShowName = ($preparedItemShowName !== '' ? ' : ' . $preparedItemShowName : '');
 
@@ -77,7 +77,7 @@ class TableEntity extends BaseEntity implements TabbedEntity
                             case 1:
                                 $classes[] = 'tooltipBottomLeft';
                                 break;
-                            case count($this->getSortingData()) - 1:
+                            case count($this->sortingData) - 1:
                                 $classes[] = 'tooltipBottomRight';
                                 break;
                             default:
@@ -92,9 +92,9 @@ class TableEntity extends BaseEntity implements TabbedEntity
                             $RESPONSE_DATA .= $downSorting . '" title="[' . $GLOBAL_LOCALE['sort'] . $preparedItemShowName . ' : ' . $GLOBAL_LOCALE['descending'] . ']"' . $classHtml . '>';
                         }
                     }
-                    $RESPONSE_DATA .= $ITEM->getShownName();
+                    $RESPONSE_DATA .= $ITEM->shownName;
 
-                    if (!$sortingItem->getDoNotUseInSorting()) {
+                    if (!$sortingItem->doNotUseInSorting) {
                         $RESPONSE_DATA .= '</a>';
                     }
                     $RESPONSE_DATA .= '</th>';
@@ -108,14 +108,14 @@ class TableEntity extends BaseEntity implements TabbedEntity
         foreach ($DATA_FILTERED_BY_CONTEXT as $DATA_ITEM) {
             $RESPONSE_DATA .= '<tr class="string' . ($stringNum % 2 === 1 ? '1' : '2') . '">';
 
-            foreach ($this->getSortingData() as $sortingItem) {
-                if ($sortingItem->getShowFieldDataInEntityTable()) {
-                    $RESPONSE_DATA .= '<td><a href="/' . KIND . '/' . $entityNameSnakeCase . '/' . $DATA_ITEM['id'] . '/act=' . $this->getDefaultItemActType()->value . '">';
+            foreach ($this->sortingData as $sortingItem) {
+                if ($sortingItem->showFieldDataInEntityTable) {
+                    $RESPONSE_DATA .= '<td><a href="/' . KIND . '/' . $entityNameSnakeCase . '/' . $DATA_ITEM['id'] . '/act=' . $this->defaultItemActType->value . '">';
 
-                    if (!($this->ITEMS[$sortingItem->getTableFieldName()] ?? false)) {
-                        $this->ITEMS[$sortingItem->getTableFieldName()] = $this->getModel()->getElement($sortingItem->getTableFieldName());
+                    if (!($this->ITEMS[$sortingItem->tableFieldName] ?? false)) {
+                        $this->ITEMS[$sortingItem->tableFieldName] = $this->model->getElement($sortingItem->tableFieldName);
                     }
-                    $ITEM = $this->ITEMS[$sortingItem->getTableFieldName()];
+                    $ITEM = $this->ITEMS[$sortingItem->tableFieldName];
 
                     if (!is_null($ITEM)) {
                         $RESPONSE_DATA .= $this->drawElementValue($ITEM, $DATA_ITEM, $sortingItem);

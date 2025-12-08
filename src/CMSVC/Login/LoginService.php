@@ -12,7 +12,7 @@ class LoginService extends BaseService
 {
     public function remindPassword(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $em = $_REQUEST['em'];
         $userData = DB->select('user', ['em' => $em], true, ['id'], 1);

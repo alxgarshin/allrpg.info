@@ -17,7 +17,7 @@ class StartView extends BaseView
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
@@ -494,7 +494,7 @@ class StartView extends BaseView
                 }
             }
 
-            $userModel = $userService->getModelInstance($userService->getModel());
+            $userModel = $userService->getModelInstance($userService->model);
             $userModel->photo->set($ruling_item_data['photo']);
 
             $RESPONSE_DATA .= '
@@ -538,7 +538,7 @@ class StartView extends BaseView
         $i = 0;
 
         foreach ($interesting_publications as $interesting_publication_data) {
-            $userModel = $userService->getModelInstance($userService->getModel());
+            $userModel = $userService->getModelInstance($userService->model);
             $userModel->photo->set($interesting_publication_data['photo']);
 
             $RESPONSE_DATA .= '

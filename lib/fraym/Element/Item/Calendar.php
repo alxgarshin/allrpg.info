@@ -82,7 +82,7 @@ class Calendar extends BaseElement
 
     public function getDefaultValue(): ?DateTimeImmutable
     {
-        $defaultValue = $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        $defaultValue = $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
 
         if (!is_a($defaultValue, 'DateTimeImmutable') && !is_null($defaultValue)) {
             $defaultValue = new DateTimeImmutable($defaultValue);
@@ -131,6 +131,6 @@ class Calendar extends BaseElement
 
     public function getShowDatetime(): ?bool
     {
-        return $this->getAttribute()->getShowDatetime();
+        return $this->getAttribute()->showDatetime;
     }
 }

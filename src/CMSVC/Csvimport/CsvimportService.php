@@ -70,7 +70,7 @@ class CsvimportService extends BaseService
     /** Импорт персонажей и групп */
     public function importCharacters(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         set_time_limit(600);
         ini_set("memory_limit", "500M");
@@ -220,7 +220,7 @@ class CsvimportService extends BaseService
 
                         $importCharactersDebugText .= '<div class="csv_data_success"><a href="/character/' . $characterId . '/" target="_blank">' . $characterData[$localeDependentFields['character_main_field']] . '</a>' . ($groupsNames !== '' ? ' (' . $groupsNames . ')' : '') . '</div>';
                     }
-                } elseif (is_array($characterData) && count($characterData) > 0) {
+                } elseif (count($characterData) > 0) {
                     $importCharactersDebugText .= '<div class="csv_data_error">' . sprintf(
                         $LOCALE['messages']['character_no_name'],
                         $rowNum + 2,
@@ -241,7 +241,7 @@ class CsvimportService extends BaseService
     /** Импорт заявок */
     public function importApplications(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         set_time_limit(600);
         ini_set("memory_limit", "500M");
@@ -341,7 +341,7 @@ class CsvimportService extends BaseService
                         $allinfo = '';
 
                         foreach ($applicationFields as $applicationField) {
-                            $sname = $applicationField->getShownName();
+                            $sname = $applicationField->shownName;
                             $csvValue = trim($applicationData[$sname]);
 
                             if ($csvValue !== '') {
@@ -360,7 +360,7 @@ class CsvimportService extends BaseService
                                 } elseif ($applicationField instanceof Select) {
                                     $selectValue = '';
 
-                                    foreach ($applicationField->getAttribute()->getValues() as $fieldValue) {
+                                    foreach ($applicationField->getAttribute()->values as $fieldValue) {
                                         if (mb_strtolower($fieldValue[1]) === mb_strtolower($csvValue)) {
                                             $selectValue = $fieldValue[0];
                                             break;
@@ -375,7 +375,7 @@ class CsvimportService extends BaseService
                                         $csvValueArray[$csvValueArrayKey] = trim($csvValueArrayValue);
                                     }
 
-                                    foreach ($applicationField->getAttribute()->getValues() as $fieldValue) {
+                                    foreach ($applicationField->getAttribute()->values as $fieldValue) {
                                         foreach ($csvValueArray as $csvValueArrayValue) {
                                             if (mb_strtolower($fieldValue[1]) === mb_strtolower($csvValueArrayValue)) {
                                                 $multiselectIds[] = $fieldValue[0];
@@ -392,7 +392,7 @@ class CsvimportService extends BaseService
                                 }
 
                                 if ($allinfoAddData !== '') {
-                                    $allinfo .= '[' . $applicationField->getName() . '][' . $allinfoAddData . ']' . chr(13) . chr(10);
+                                    $allinfo .= '[' . $applicationField->name . '][' . $allinfoAddData . ']' . chr(13) . chr(10);
                                 }
                             }
                         }
@@ -503,7 +503,7 @@ class CsvimportService extends BaseService
 
                         $importApplicationsDebugText .= '<div class="csv_data_success"><a href="/application/' . $applicationId . '/" target="_blank">' . $applicationData[$localeDependentFields['application_name']] . '</a>' . ($groupsNames !== '' ? ' (' . $groupsNames . ')' : '') . '</div>';
                     }
-                } elseif (is_array($applicationData) && count($applicationData) > 0) {
+                } elseif (count($applicationData) > 0) {
                     $importApplicationsDebugText .= '<div class="csv_data_error">' . sprintf(
                         $LOCALE['messages']['application_no_name'],
                         $rowNum + 2,

@@ -60,8 +60,8 @@ abstract class LocaleHelper implements Helper
     /** Получение названия поля объекта из локали */
     public static function getElementText(BaseEntity $entity, ElementItem $baseElement, LocalableFieldsEnum $propertyName): array|string|null
     {
-        $entityName = TextHelper::camelCaseToSnakeCase($entity->getName());
-        $LOCALE = self::getLocale([$entityName, 'fraymModel', 'elements', TextHelper::camelCaseToSnakeCase($baseElement->getName())]);
+        $entityName = TextHelper::camelCaseToSnakeCase($entity->name);
+        $LOCALE = self::getLocale([$entityName, 'fraymModel', 'elements', TextHelper::camelCaseToSnakeCase($baseElement->name)]);
 
         return $LOCALE[$propertyName->value] ?? null;
     }

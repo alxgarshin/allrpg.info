@@ -85,7 +85,7 @@ class OrgService extends BaseService
     {
         $this->clearLockedRadioButtons();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         foreach ($_REQUEST['obj_id_from'] as $key => $objIdFrom) {
             if ($objIdFrom === CURRENT_USER->id()) {
@@ -195,7 +195,7 @@ class OrgService extends BaseService
 
     private function confirmationCheck(int|string $id): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         /** Если пользователь не состоит в проекте, отправляем ему приглашение, а право переводим в режим ожидания подтверждения */
         $relationData = DB->findObjectById($id, 'relation');

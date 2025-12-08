@@ -24,7 +24,7 @@ class ExchangeItemEditService extends BaseService
     /** Проверяем доступность всех указанных изображений предмета */
     public function checkImages(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE = $LOCALE['messages'];
 
         $images = $_REQUEST['images'][0] ?? [];

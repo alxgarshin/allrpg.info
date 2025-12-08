@@ -93,7 +93,7 @@ trait PageCounter
         $result .= '></a>';
         $result .= '<a class="last';
 
-        if ($page !== ceil($totalObjectsCount / $objectsPerPage) - 1 && $totalObjectsCount > 0) {
+        if ($page !== (int) ceil($totalObjectsCount / $objectsPerPage) - 1 && $totalObjectsCount > 0) {
             $result .= '" href="/' . KIND . '/' . ($objectName !== '' ? $objectName . '/' : '') .
                 'page=' . (ceil($totalObjectsCount / $objectsPerPage) - 1) .
                 '&sorting=' . SORTING . $moreParams . '"';

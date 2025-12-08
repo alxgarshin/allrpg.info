@@ -17,7 +17,7 @@ class CalendarEventGalleryService extends BaseService
     /** Добавление объекта галереи события */
     public function addCalendarEventGallery(int $objId, string $link, string $name, string $thumb, string $author): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -50,7 +50,7 @@ class CalendarEventGalleryService extends BaseService
     /** Изменение объекта галереи события */
     public function changeCalendarEventGallery(int $objId, string $link, string $name, string $thumb, string $author): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -91,7 +91,7 @@ class CalendarEventGalleryService extends BaseService
     /** Удаление объекта галереи события */
     public function deleteCalendarEventGallery(int $objId): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 

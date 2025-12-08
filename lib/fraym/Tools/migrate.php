@@ -99,6 +99,7 @@ if (!defined('TEST')) {
     define('TEST', false);
 }
 
+/** @phpstan-ignore-next-line */
 if (TEST && file_exists(INNER_PATH . '.env.test')) {
     (new EnvService(INNER_PATH . '.env.test'))->load();
 }

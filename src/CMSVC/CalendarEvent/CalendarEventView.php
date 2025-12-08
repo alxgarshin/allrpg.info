@@ -48,7 +48,7 @@ class CalendarEventView extends BaseView
     public function Response(): ?Response
     {
         /** @var CalendarEventService $calendarEventService */
-        $calendarEventService = $this->getService();
+        $calendarEventService = $this->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
@@ -59,8 +59,8 @@ class CalendarEventView extends BaseView
         /** @var NotionService $notionService */
         $notionService = CMSVCHelper::getService('notion');
 
-        $LOCALE = $this->getLOCALE();
-        $LOCALE_MESSAGES = $this->getMessages();
+        $LOCALE = $this->LOCALE;
+        $LOCALE_MESSAGES = $this->controller->LOCALE['messages'];
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_PUBLICATION = LocaleHelper::getLocale(['publication', 'global']);
@@ -175,43 +175,43 @@ class CalendarEventView extends BaseView
 	        </div>
             <h1><a href="' . ABSOLUTE_PATH . '/' . KIND . '/' . DataHelper::getId() . '/">' . (DataHelper::escapeOutput($objData->name->get()) ?? $LOCALE['no_name']) . '</a></h1>
             <div class="object_info_2_additional">
-                ' . ($mgData !== '' ? '<span class="gray">' . $objData->mg->getShownName() . ':</span>' . $mgData . '<br>' : '') . '
-                ' . ($objData->site->get() !== null ? '<span class="gray">' . $objData->site->getShownName() . ':</span><a href="' .
+                ' . ($mgData !== '' ? '<span class="gray">' . $objData->mg->shownName . ':</span>' . $mgData . '<br>' : '') . '
+                ' . ($objData->site->get() !== null ? '<span class="gray">' . $objData->site->shownName . ':</span><a href="' .
             DataHelper::fixURL(DataHelper::escapeOutput($objData->site->get())) . '" target="_blank">' . DataHelper::escapeOutput($objData->site->get()) . '</a><br>' : '') . '
                 ' . ($objData->orderpage->get() !== '' ? '<span class="gray">' . TextHelper::mb_ucfirst($LOCALE['apply']) . ':</span><a href="' .
             DataHelper::escapeOutput($objData->orderpage->get()) . '" target="_blank">' . DataHelper::escapeOutput($objData->orderpage->get()) . '</a><br>' : '') . '
                 ' . ($allrpgProjectId > 0 ? '<span class="gray">' . $LOCALE['allrpg_project'] . ':</span><a href="' . ABSOLUTE_PATH . '/project/' . $allrpgProjectId . '/">'
             . $LOCALE['allrpg_project2'] . '</a><br>' : '') . '
-                ' . ($regionData ? '<span class="gray">' . $objData->region->getShownName() .
+                ' . ($regionData ? '<span class="gray">' . $objData->region->shownName .
             ':</span><a href="' . ABSOLUTE_PATH . '/calendar_event/search_region=' . $regionData['id'] . '&action=setFilters">' .
             DataHelper::escapeOutput($regionData['name']) . ($regionParentData ? ' (' . DataHelper::escapeOutput($regionParentData['name']) . ')</a>' : '') : '<br>') . '
-                ' . ($objData->playernum->get() > 0 ? '<span class="gray">' . $objData->playernum->getShownName() . ':</span><span>' .
+                ' . ($objData->playernum->get() > 0 ? '<span class="gray">' . $objData->playernum->shownName . ':</span><span>' .
             DataHelper::escapeOutput($objData->playernum->get()) . '</span><br>' : '') . '
                 <a class="show_hidden">' . $LOCALE_GLOBAL['show_next'] . '</a>
 	            <div class="hidden">
-                    ' . ($areaData ? '<span class="gray">' . $objData->area->getShownName() . ':</span><a href="' . ABSOLUTE_PATH . '/area/' . $areaData->id->getAsInt() . '/">' .
+                    ' . ($areaData ? '<span class="gray">' . $objData->area->shownName . ':</span><a href="' . ABSOLUTE_PATH . '/area/' . $areaData->id->getAsInt() . '/">' .
             DataHelper::escapeOutput($areaData->name->get()) . '</a><br>' : '');
 
         $field = $objData->gametype;
         $RESPONSE_DATA .= count($field->get()) > 0 ? '
-                    <span class="gray">' . $field->getShownName() . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
+                    <span class="gray">' . $field->shownName . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
 
         $field = $objData->gametype2;
         $RESPONSE_DATA .= count($field->get()) > 0 ? '
-                    <span class="gray">' . $field->getShownName() . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
+                    <span class="gray">' . $field->shownName . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
 
         $field = $objData->gametype3;
         $RESPONSE_DATA .= !is_null($field->get()) ? '
-                    <span class="gray">' . $field->getShownName() . ':</span><a href="' . ABSOLUTE_PATH . '/calendar_event/search_gametype3[' .
+                    <span class="gray">' . $field->shownName . ':</span><a href="' . ABSOLUTE_PATH . '/calendar_event/search_gametype3[' .
             $field->get() . ']=on&action=setFilters">' . $field->asHTML(false) . '</a><br>' : '';
 
         $field = $objData->gametype4;
         $RESPONSE_DATA .= count($field->get()) > 0 ? '
-                    <span class="gray">' . $field->getShownName() . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
+                    <span class="gray">' . $field->shownName . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
 
         $field = $objData->date_arrival;
         $RESPONSE_DATA .= !is_null($field->get()) ? '
-                    <span class="gray">' . $field->getShownName() . ':</span><span>' . $field->get()->format('d.m.Y') . '</span><br>' : '';
+                    <span class="gray">' . $field->shownName . ':</span><span>' . $field->get()->format('d.m.Y') . '</span><br>' : '';
 
         $RESPONSE_DATA .= '
                 </div>

@@ -25,11 +25,11 @@ trait MinMaxChar
 
     public function getMinChar(): ?int
     {
-        return $this->getAttribute()->getMinChar();
+        return $this->getAttribute()->minChar;
     }
 
     public function getMaxChar(): ?int
     {
-        return $this->getAttribute()->getMaxChar();
+        return $this->getAttribute()->maxChar;
     }
 }

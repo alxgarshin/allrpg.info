@@ -15,7 +15,7 @@ namespace Fraym\Entity\Trait;
 
 use Fraym\BaseObject\{BaseModel, BaseView};
 use Fraym\Element\{Attribute as Attribute, Item as Item};
-use Fraym\Entity\CatalogItemEntity;
+use Fraym\Entity\{CatalogItemEntity};
 use Fraym\Enum\ActEnum;
 use Fraym\Helper\{DataHelper, LocaleHelper, ObjectsHelper, TextHelper};
 use Fraym\Interface\TabbedEntity;
@@ -28,14 +28,14 @@ trait BaseEntityItem
 
         $RESPONSE_DATA = '';
 
-        $objectName = TextHelper::camelCaseToSnakeCase($this->getName());
-        $modelRights = $this->getView()->getViewRights();
+        $objectName = TextHelper::camelCaseToSnakeCase($this->name);
+        $modelRights = $this->view->viewRights;
 
         if (is_null($act)) {
             $act = DataHelper::getActDefault($this);
         }
 
-        if ($act === ActEnum::add && $modelRights->getAddRight()) {
+        if ($act === ActEnum::add && $modelRights->addRight) {
             $RESPONSE_DATA .= '
 <form action="/' . KIND . '/" method="POST" enctype="multipart/form-data" id="form_' . $objectName . '">
 <input type="hidden" name="kind" value="' . KIND . '" />
@@ -43,33 +43,33 @@ trait BaseEntityItem
 ';
         } elseif ($act === ActEnum::edit) {
             $RESPONSE_DATA .= '
-<form' . ($modelRights->getChangeRight() ? ' action="/' . KIND . '/" method="PUT" enctype="multipart/form-data"' : '') . ' id="form_' . $objectName . '">
-' . ($modelRights->getChangeRight() ? '<input type="hidden" name="kind" value="' . KIND . '" />
+<form' . ($modelRights->changeRight ? ' action="/' . KIND . '/" method="PUT" enctype="multipart/form-data"' : '') . ' id="form_' . $objectName . '">
+' . ($modelRights->changeRight ? '<input type="hidden" name="kind" value="' . KIND . '" />
 <input type="hidden" name="cmsvc" value="' . $objectName . '" />
 <input type="hidden" name="act" value="edit" />' : '') . '
 ';
         }
 
         if (
-            ($act === ActEnum::view && $modelRights->getViewRight()) ||
-            ($act === ActEnum::add && $modelRights->getAddRight()) ||
-            ($act === ActEnum::edit && $modelRights->getChangeRight())
+            ($act === ActEnum::view && $modelRights->viewRight) ||
+            ($act === ActEnum::add && $modelRights->addRight) ||
+            ($act === ActEnum::edit && $modelRights->changeRight)
         ) {
             /** @var BaseModel */
-            $model = $this->getModel();
+            $model = $this->model;
 
             if ($contextName === null) {
                 $view = null;
 
                 if (!$this instanceof CatalogItemEntity) {
                     /** @var BaseView */
-                    $view = $this->getView();
+                    $view = $this->view;
                 }
 
                 $contextName = ObjectsHelper::getClassShortNameFromCMSVCObject($view ?? $model);
             }
 
-            if (!REQUEST_TYPE->isApiRequest() && (($act === ActEnum::edit && $modelRights->getChangeRight()) || ($act === ActEnum::add && $modelRights->getAddRight()))) {
+            if (!REQUEST_TYPE->isApiRequest() && (($act === ActEnum::edit && $modelRights->changeRight) || ($act === ActEnum::add && $modelRights->addRight))) {
                 $referer = $_SERVER["HTTP_REFERER"] ?? '';
 
                 /** Защита от перехода из ServiceWorker */
@@ -103,10 +103,12 @@ trait BaseEntityItem
                             $contextName . ':update',
                         ],
                     ),
-                )->setShownName($GLOBAL_LOCALE['go_back_after_save']);
+                );
+
+                $model->getElement('go_back_after_save')->shownName = $GLOBAL_LOCALE['go_back_after_save'];
             }
 
-            $modelElements = $model->getElements();
+            $modelElements = $model->elementsList;
 
             /** Обработка групповых полей */
             $groupFieldsPresent = false;
@@ -118,20 +120,18 @@ trait BaseEntityItem
                 foreach ($modelElements as $element) {
                     if ($element->getGroup()) {
                         $groupFieldsPresent = true;
-                        $element->getAttribute()->setGroupNumber(0);
+                        $element->getAttribute()->groupNumber = 0;
                         $elementsByGroups[$element->getGroup()][] = $element;
 
                         /** Замена табуляции */
-                        $DATA_ITEM[$element->getName()] = preg_replace('/\t/', '\\t', $DATA_ITEM[$element->getName()] ?? '');
+                        $DATA_ITEM[$element->name] = preg_replace('/\t/', '\\t', $DATA_ITEM[$element->name] ?? '');
 
-                        $jsonData = DataHelper::jsonFixedDecode($DATA_ITEM[$element->getName()]);
+                        $jsonData = DataHelper::jsonFixedDecode($DATA_ITEM[$element->name]);
 
                         if (!$jsonData || count($jsonData) === 0 || $jsonData[0] === 'JSON_ERROR_SYNTAX') {
-                            if (method_exists($element, 'getDefaultValue')) {
-                                $jsonData = $element->getDefaultValue();
-                            }
+                            $jsonData = $element->getDefaultValue();
                         }
-                        $groupJsonRowData[$element->getName()] = $jsonData;
+                        $groupJsonRowData[$element->name] = $jsonData;
 
                         if (!isset($groupCount[$element->getGroup()])) {
                             $groupCount[$element->getGroup()] = 1;
@@ -171,7 +171,7 @@ trait BaseEntityItem
                             for ($i = 2; $i <= $groupValue; $i++) {
                                 foreach ($elementsByGroups[$groupKey] as $field) {
                                     $clonedField = clone $field;
-                                    $clonedField->getAttribute()->setGroupNumber($i - 1);
+                                    $clonedField->getAttribute()->groupNumber = $i - 1;
                                     $insertedElements[] = $clonedField;
                                 }
                             }
@@ -186,7 +186,7 @@ trait BaseEntityItem
             $groupJsonRowDataUsed = [];
 
             foreach ($modelElements as $modelElement) {
-                $modelElementName = $modelElement->getName();
+                $modelElementName = $modelElement->name;
 
                 if ($modelElement->getGroup()) {
                     if (!isset($groupJsonRowDataUsed[$modelElementName])) {
@@ -212,24 +212,24 @@ trait BaseEntityItem
                         }
                     }
                 }
-            }
 
-            $tabsKeyToName = [];
+                $tabsKeyToName = [];
 
-            if (is_array($this->getTabs()) && count($this->getTabs()) > 0) {
-                $RESPONSE_DATA .= '<div class="fraymtabs">
+                if (is_array($this->tabs) && count($this->tabs) > 0) {
+                    $RESPONSE_DATA .= '<div class="fraymtabs">
 	<ul>
 		';
 
-                foreach ($this->getTabs() as $tabkey => $tab) {
-                    $RESPONSE_DATA .= '<li><a id="' . $tab->getName() . '">' . $tab->getShownName() . '</a></li>
+                    foreach ($this->tabs as $tabkey => $tab) {
+                        $RESPONSE_DATA .= '<li><a id="' . $tab->name . '">' . $tab->shownName . '</a></li>
 		';
-                    $tabsKeyToName[$tabkey] = $tab->getName();
-                }
+                        $tabsKeyToName[$tabkey] = $tab->name;
+                    }
 
-                $RESPONSE_DATA .= '
+                    $RESPONSE_DATA .= '
 	</ul>
 ';
+                }
             }
 
             /** Отрисовка полей */
@@ -271,7 +271,7 @@ trait BaseEntityItem
                         $RESPONSE_DATA .= '</div>';
                     }
                     $tabOpen = true;
-                    $RESPONSE_DATA .= '<div id="fraymtabs-' . $modelElement->getName() . '">';
+                    $RESPONSE_DATA .= '<div id="fraymtabs-' . $modelElement->name . '">';
                 }
             }
 
@@ -279,36 +279,38 @@ trait BaseEntityItem
                 $RESPONSE_DATA .= '</div>';
             }
 
-            if (is_array($this->getTabs()) && count($this->getTabs()) > 0) {
-                $RESPONSE_DATA .= '</div>';
+            if ($this instanceof TabbedEntity) {
+                if (is_array($this->tabs) && count($this->tabs) > 0) {
+                    $RESPONSE_DATA .= '</div>';
+                }
             }
         }
 
         $objectLocaleName = $this->getObjectName();
 
         if ($act === ActEnum::add) {
-            if ($modelRights->getAddRight()) {
+            if ($modelRights->addRight) {
                 $RESPONSE_DATA .= '<div class="control_buttons"><button class="main">' . $GLOBAL_LOCALE['addCapitalized'] . ' ' . $objectLocaleName . '</button></div>
 </form>';
             }
         } elseif ($act === ActEnum::edit) {
-            if (($modelRights->getChangeRight() || $modelRights->getDeleteRight()) && $modelRights->getViewRight()) {
+            if (($modelRights->changeRight || $modelRights->deleteRight) && $modelRights->viewRight) {
                 $RESPONSE_DATA .= '<div class="control_buttons">';
             }
 
-            if ($modelRights->getChangeRight()) {
+            if ($modelRights->changeRight) {
                 $RESPONSE_DATA .= '<button class="main">' . $GLOBAL_LOCALE['saveCapitalized'] . ' ' . $objectLocaleName . '</button>';
             }
 
-            if ($modelRights->getDeleteRight()) {
+            if ($modelRights->deleteRight) {
                 $RESPONSE_DATA .= '<button class="careful" method="DELETE" href="/' . KIND . '/' . CMSVC . '/' . $DATA_ITEM['id'] . '/">' . $GLOBAL_LOCALE['deleteCapitalized'] . ' ' . $objectLocaleName . '</button>';
             }
 
-            if (($modelRights->getChangeRight() || $modelRights->getDeleteRight()) && $modelRights->getViewRight()) {
+            if (($modelRights->changeRight || $modelRights->deleteRight) && $modelRights->viewRight) {
                 $RESPONSE_DATA .= '</div>';
             }
 
-            if (($modelRights->getChangeRight() || $modelRights->getDeleteRight()) && $modelRights->getViewRight()) {
+            if (($modelRights->changeRight || $modelRights->deleteRight) && $modelRights->viewRight) {
                 $RESPONSE_DATA .= '</form>';
             }
         }

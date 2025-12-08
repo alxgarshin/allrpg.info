@@ -11,7 +11,7 @@ use App\CMSVC\User\UserService;
 use App\Helper\{DateHelper, DesignHelper, MessageHelper, RightsHelper, TextHelper};
 use Fraym\BaseObject\{BaseView, Controller, DependencyInjection};
 use Fraym\Helper\{DataHelper, LocaleHelper};
-use Fraym\Interface\Response;
+use Fraym\Interface\{ElementItem, Response};
 
 /** @extends BaseView<PeopleService> */
 #[Controller(PeopleController::class)]
@@ -28,12 +28,12 @@ class PeopleView extends BaseView
 
     public function Response(): ?Response
     {
-        $peopleService = $this->getService();
+        $peopleService = $this->service;
         $userService = $this->userService;
         $notionService = $this->notionService;
         $publicationService = $this->publicationService;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_ACHIEVEMENT = $LOCALE_GLOBAL['achievement'];
@@ -67,7 +67,7 @@ class PeopleView extends BaseView
         }
 
         $portfolioModel = new PortfolioModel();
-        $portfolioModel->construct()->init();
+        $portfolioModel = $portfolioModel->construct()->init();
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($userService->showName($objData));
         $RESPONSE_DATA = '';
@@ -102,7 +102,7 @@ class PeopleView extends BaseView
             $contactContent = '';
 
             if ((!in_array('2', $objData->hidesome->get()) || $checkGamemaster) && $objData->em->get()) {
-                $contactContent .= '<span class="gray">' . $objData->em->getShownName() . ':</span><span><a href="mailto:' . $objData->em->asHTML(false) . '">' . $objData->em->asHTML(false) . '</a></span><br>';
+                $contactContent .= '<span class="gray">' . $objData->em->shownName . ':</span><span><a href="mailto:' . $objData->em->asHTML(false) . '">' . $objData->em->asHTML(false) . '</a></span><br>';
             }
 
             $showFields = [
@@ -133,11 +133,12 @@ class PeopleView extends BaseView
             ];
 
             foreach ($showFields as $fieldData) {
+                /** @var ElementItem */
                 $elem = $objData->{$fieldData['sname']};
 
                 if ((!in_array($fieldData['hidesome'], $objData->hidesome->get()) || $checkGamemaster) && ((is_array($elem->get()) && count($elem->get()) > 0) || $elem->get() !== null)) {
                     $contactContent .= '
-                    <span class="gray">' . $elem->getShownName() . ':</span><span>' . ($elem->getName() === 'phone' ? '<a href="tel:' . $elem->asHTML(false) . '">' . $elem->asHTML(false) . '</a>' : $userService->socialShow($elem->get(), str_replace('_visible', '', $elem->getName()))) . '</span><br>';
+                    <span class="gray">' . $elem->shownName . ':</span><span>' . ($elem->name === 'phone' ? '<a href="tel:' . $elem->asHTML(false) . '">' . $elem->asHTML(false) . '</a>' : $userService->socialShow($elem->get(), str_replace('_visible', '', $elem->name))) . '</span><br>';
                 }
             }
 
@@ -178,7 +179,7 @@ class PeopleView extends BaseView
 
                     if ((is_array($elem->get()) && count($elem->get()) > 0) || $elem->get() !== null) {
                         $RESPONSE_DATA .= '
-                        <span class="gray bigger">' . $elem->getShownName() . ':</span><span>' . $elem->asHTML(false) . '</span><br>';
+                        <span class="gray bigger">' . $elem->shownName . ':</span><span>' . $elem->asHTML(false) . '</span><br>';
                     }
                 }
 

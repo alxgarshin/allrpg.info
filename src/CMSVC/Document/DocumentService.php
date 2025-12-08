@@ -38,7 +38,7 @@ class DocumentService extends BaseService
 
     public function init(): static
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         /** Собираем список всех допустимых полей для подсказки */
         $fields = [];
@@ -60,19 +60,19 @@ class DocumentService extends BaseService
             false,
         );
 
-        $userModel = $this->userService->getModel();
+        $userModel = $this->userService->model;
         $fields[] = $userModel->getElement('fio');
         $fields[] = $userModel->getElement('nick');
         $fields[] = $userModel->getElement('sid');
         $fields[] = $userModel->getElement('photo');
         $fields[] = $userModel->getElement('sickness');
 
-        $applicationModel = $this->applicationService->getModel();
+        $applicationModel = $this->applicationService->model;
         $fields[] = $applicationModel->getElement('money_paid');
 
         /** @var Item\Multiselect */
         $projectGroupIds = $applicationModel->getElement('project_group_ids');
-        $projectGroupIds->getAttribute()->setValues($projectGroupsData);
+        $projectGroupIds->getAttribute()->values = $projectGroupsData;
         $fields[] = $projectGroupIds;
 
         $fields[] = $applicationModel->getElement('plots_data');
@@ -95,16 +95,16 @@ class DocumentService extends BaseService
             );
 
             foreach ($applicationFields as $applicationField) {
-                if ($applicationField->getShownName()) {
+                if ($applicationField->shownName) {
                     $fields[] = $applicationField;
 
-                    if (str_replace('-', '', $applicationField->getAttribute()->getAdditionalData()['show_if'] ?? '') !== '') {
-                        $fieldsShowIf[$applicationField->getName()] = $applicationField->getAttribute()->getAdditionalData()['show_if'];
+                    if (str_replace('-', '', $applicationField->getAttribute()->additionalData['show_if'] ?? '') !== '') {
+                        $fieldsShowIf[$applicationField->name] = $applicationField->getAttribute()->additionalData['show_if'];
                     }
                 }
             }
 
-            $searchQuerySql = $this->applicationService->getEntity()->getFilters()->getPreparedSearchQuerySql();
+            $searchQuerySql = $this->applicationService->entity->filters->getPreparedSearchQuerySql();
 
             $result = DB->query(
                 "SELECT
@@ -142,8 +142,8 @@ class DocumentService extends BaseService
         $fieldsNames = [];
 
         foreach ($fields as $elem) {
-            if ($elem->getShownName()) {
-                $fieldsNames[] = $elem->getShownName();
+            if ($elem->shownName) {
+                $fieldsNames[] = $elem->shownName;
             }
         }
 
@@ -201,9 +201,9 @@ class DocumentService extends BaseService
             search: true,
             lineNumber: 0,
         );
-        $listOfRoles->setAttribute($attribute)
-            ->setName('application_id')
-            ->setShownName('');
+        $listOfRoles->setAttribute($attribute);
+        $listOfRoles->name = 'application_id';
+        $listOfRoles->shownName = '';
 
         return $listOfRoles;
     }

@@ -21,33 +21,10 @@ class OnCreate
 {
     public function __construct(
         /** Четкие данные элемента */
-        private mixed $data = null,
+        public mixed $data = null,
+
         /** Имя функции, предоставляющей данные элемента */
-        private ?string $callback = null,
+        public ?string $callback = null,
     ) {
-    }
-
-    public function getData(): mixed
-    {
-        return $this->data;
-    }
-
-    public function setData(mixed $data): static
-    {
-        $this->data = $data;
-
-        return $this;
-    }
-
-    public function getCallback(): ?string
-    {
-        return $this->callback;
-    }
-
-    public function setCallback(?string $callback): static
-    {
-        $this->callback = $callback;
-
-        return $this;
     }
 }

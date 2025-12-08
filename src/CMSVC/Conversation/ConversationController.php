@@ -27,17 +27,17 @@ class ConversationController extends BaseController
     public function Response(): ?Response
     {
         if (ACTION === ActionEnum::create) {
-            return $this->getEntity()->fraymAction();
-        } elseif (DataHelper::getActDefault($this->getEntity()) === ActEnum::add) {
-            return $this->getEntity()->view();
+            return $this->entity->fraymAction();
+        } elseif (DataHelper::getActDefault($this->entity) === ActEnum::add) {
+            return $this->entity->view();
         }
 
-        return $this->getCMSVC()->getView()->Response();
+        return $this->CMSVC->view->Response();
     }
 
     public function getDialog(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->getDialog(
@@ -51,7 +51,7 @@ class ConversationController extends BaseController
 
     public function getDialogAvatar(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->getDialogAvatar(
@@ -63,7 +63,7 @@ class ConversationController extends BaseController
 
     public function setDialogPosition(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->setDialogPosition(
@@ -79,7 +79,7 @@ class ConversationController extends BaseController
 
     public function deleteDialogPosition(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->deleteDialogPosition(
@@ -90,7 +90,7 @@ class ConversationController extends BaseController
 
     public function loadConversation(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->loadConversation(
@@ -105,7 +105,7 @@ class ConversationController extends BaseController
 
     public function dialogNewMessage(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->dialogNewMessage(
@@ -118,7 +118,7 @@ class ConversationController extends BaseController
 
     public function messageSave(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->messageSave(
@@ -130,7 +130,7 @@ class ConversationController extends BaseController
 
     public function wallMessageDelete(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->messageDelete(
@@ -141,7 +141,7 @@ class ConversationController extends BaseController
 
     public function conversationMessageDelete(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->conversationMessageDelete(
@@ -152,14 +152,14 @@ class ConversationController extends BaseController
 
     public function contact(): null
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $conversationService->contact((int) ($_REQUEST['user'] ?? 0));
     }
 
     public function grantAccess(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->resolveAction(
@@ -171,7 +171,7 @@ class ConversationController extends BaseController
 
     public function denyAccess(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->resolveAction(
@@ -183,7 +183,7 @@ class ConversationController extends BaseController
 
     public function acceptInvitation(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->resolveAction(
@@ -195,7 +195,7 @@ class ConversationController extends BaseController
 
     public function declineInvitation(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->resolveAction(
@@ -207,7 +207,7 @@ class ConversationController extends BaseController
 
     public function acceptFriend(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->resolveAction(
@@ -219,7 +219,7 @@ class ConversationController extends BaseController
 
     public function declineFriend(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->resolveAction(
@@ -231,7 +231,7 @@ class ConversationController extends BaseController
 
     public function leaveDialog(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->leaveDialog(
@@ -242,7 +242,7 @@ class ConversationController extends BaseController
 
     public function sendInvitation(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->sendInvitation(
@@ -255,7 +255,7 @@ class ConversationController extends BaseController
 
     public function addUserToDialog(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->addUserToDialog(
@@ -267,7 +267,7 @@ class ConversationController extends BaseController
 
     public function conversationRename(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->conversationRename(
@@ -279,7 +279,7 @@ class ConversationController extends BaseController
 
     public function switchUseNamesType(): ?Response
     {
-        $conversationService = $this->getService();
+        $conversationService = $this->service;
 
         return $this->asArray(
             $conversationService->switchUseNamesType(

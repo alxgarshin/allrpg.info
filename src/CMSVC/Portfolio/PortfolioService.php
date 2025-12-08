@@ -36,7 +36,7 @@ class PortfolioService extends BaseService
 
     public function getSortId(): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $playedDates = [];
         $myPlayed = DB->query(
@@ -72,7 +72,7 @@ class PortfolioService extends BaseService
 
     public function getToGameDefault(): string
     {
-        if ($this->getAct() === ActEnum::edit && DataHelper::getId() > 0) {
+        if ($this->act === ActEnum::edit && DataHelper::getId() > 0) {
             $LOCALE = LocaleHelper::getLocale(['fraym']);
             $portfolioItem = DB->findObjectById(DataHelper::getId(), 'played');
 

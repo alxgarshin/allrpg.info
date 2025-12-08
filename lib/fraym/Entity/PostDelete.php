@@ -21,19 +21,7 @@ class PostDelete
 {
     public function __construct(
         /** Имя функции  */
-        private string $callback = 'postDelete',
+        public string $callback = 'postDelete',
     ) {
-    }
-
-    public function getCallback(): ?string
-    {
-        return $this->callback;
-    }
-
-    public function setCallback(?string $callback): static
-    {
-        $this->callback = $callback;
-
-        return $this;
     }
 }

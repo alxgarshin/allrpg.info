@@ -27,7 +27,7 @@ class RegistrationController extends BaseController
     public function getRegistrationPlayer(): ?Response
     {
         return $this->asArray(
-            $this->getService()->getRegistrationPlayer(
+            $this->service->getRegistrationPlayer(
                 $_REQUEST['obj_name'] ?? '',
             ),
         );
@@ -37,7 +37,7 @@ class RegistrationController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->setRegistrationPlayer(
+                $this->service->setRegistrationPlayer(
                     OBJ_ID,
                 ),
             );
@@ -50,7 +50,7 @@ class RegistrationController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->setRegistrationPlayerMoney(
+                $this->service->setRegistrationPlayerMoney(
                     OBJ_ID,
                 ),
             );
@@ -63,7 +63,7 @@ class RegistrationController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->setRegistrationEcoMoney(
+                $this->service->setRegistrationEcoMoney(
                     OBJ_ID,
                 ),
             );
@@ -76,7 +76,7 @@ class RegistrationController extends BaseController
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
-                $this->getService()->setRegistrationComments(
+                $this->service->setRegistrationComments(
                     OBJ_ID,
                     $_REQUEST['value'] ?? '',
                 ),

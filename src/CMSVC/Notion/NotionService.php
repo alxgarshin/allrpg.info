@@ -21,7 +21,7 @@ class NotionService extends BaseService
     {
         $userService = $this->getUserService();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $commentCreator = $userService->get($commentData['creator_id']);
 
@@ -58,7 +58,7 @@ class NotionService extends BaseService
     /** Сохранение отзыва */
     public function notionMessageSave(int $objId, string $content, int $rating): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -79,7 +79,7 @@ class NotionService extends BaseService
     /** Удаление отзыва */
     public function notionMessageDelete(int $objId): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -105,7 +105,7 @@ class NotionService extends BaseService
         /** @var CalendarEventService $calendarEventService */
         $calendarEventService = CMSVCHelper::getService('calendar_event');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $notion = DB->findObjectById($objId, 'notion');
 

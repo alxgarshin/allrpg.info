@@ -20,7 +20,7 @@ use Fraym\Element\Validator\{LoginValidator, MinMaxCharValidator, ObligatoryVali
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Login extends Text
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
         MinMaxCharValidator::class,
         LoginValidator::class,

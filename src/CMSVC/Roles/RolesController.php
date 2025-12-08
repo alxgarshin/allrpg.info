@@ -31,7 +31,7 @@ class RolesController extends BaseController
     {
         if (RightsHelper::checkAllowProjectActions(PROJECT_RIGHTS, null)) {
             return $this->asArray(
-                $this->getService()->switchShowRoleslist(),
+                $this->service->switchShowRoleslist(),
             );
         }
 
@@ -45,7 +45,7 @@ class RolesController extends BaseController
     public function switchViewRoleslistMode(): ?Response
     {
         return $this->asArray(
-            $this->getService()->switchViewRoleslistMode(),
+            $this->service->switchViewRoleslistMode(),
         );
     }
 
@@ -53,7 +53,7 @@ class RolesController extends BaseController
     {
         if (($_REQUEST['command'] ?? '') !== '' && (int) ($_REQUEST['project_id'] ?? false) > 0 && OBJ_TYPE && OBJ_ID) {
             return $this->asArray(
-                $this->getService()->getRolesList(
+                $this->service->getRolesList(
                     OBJ_TYPE,
                     OBJ_ID,
                     $_REQUEST['command'] ?? '',

@@ -144,7 +144,7 @@ class ApplicationService extends BaseService
                 && !CookieHelper::getCookie('gamemasterFiltersSearchQuerySql_' . $filterSet)
                 && !is_null($redirectGamemaster)
             ) {
-                $filtersData = $this->getEntity()->getFilters()->prepareSearchSqlAndFiltersLink();
+                $filtersData = $this->entity->filters->prepareSearchSqlAndFiltersLink();
                 CookieHelper::batchSetCookie([
                     'gamemasterFiltersSearchQuerySql_' . $filterSet => $filtersData[0],
                     'gamemasterFiltersSearchQueryParams_' . $filterSet => $filtersData[1],
@@ -196,14 +196,13 @@ class ApplicationService extends BaseService
             }
 
             if ($blockedByFiltersets) {
-                $this->getView()->getViewRights()
-                    ->setChangeRight(false)
-                    ->setDeleteRight(false);
+                $this->view->viewRights->changeRight = false;
+                $this->view->viewRights->deleteRight = false;
             }
 
             if ($filterSet > 0) {
                 if (!$filtersData) {
-                    $filtersData = $this->getEntity()->getFilters()->prepareSearchSqlAndFiltersLink();
+                    $filtersData = $this->entity->filters->prepareSearchSqlAndFiltersLink();
                 }
 
                 CookieHelper::batchSetCookie([
@@ -490,7 +489,7 @@ class ApplicationService extends BaseService
     /** Массовое выставление группы отфильтрованным заявкам */
     public function setSpecialGroup(int $objId, ?string $filter = null): array
     {
-        $LOCALE_APPLICATION = $this->getLocale();
+        $LOCALE_APPLICATION = $this->LOCALE;
 
         $returnArr = [];
 
@@ -514,7 +513,7 @@ class ApplicationService extends BaseService
                     ($needResponseView ? ' AND id IN (' . (count($this->getNeedResponseIds()) > 0 ? ':needresponse_ids' : '0') . ')' : '') .
                     ($noFillObligView ? ' AND t1.id IN (' . (count($this->getNoFillObligIds()) > 0 ? ':nofilloblig_ids' : '0') . ')' : '') .
                     ($nonSettledView ? ' AND t1.id IN (' . (count($this->getNonSettledIds()) > 0 ? ':nonsettled_ids' : '0') . ')' : '') .
-                    $this->getEntity()->getFilters()->getPreparedSearchQuerySql(),
+                    $this->entity->filters->getPreparedSearchQuerySql(),
                 [
                     ['project_id', $this->getActivatedProjectId()],
                     ['project_group_ids', '%-' . $objId . '-%'],
@@ -522,7 +521,7 @@ class ApplicationService extends BaseService
                     ['needresponse_ids', $this->getNeedResponseIds()],
                     ['nofilloblig_ids', $this->getNoFillObligIds()],
                     ['nonsettled_ids', $this->getNonSettledIds()],
-                    ...$this->getEntity()->getFilters()->getPreparedSearchQueryParams(),
+                    ...$this->entity->filters->getPreparedSearchQueryParams(),
                 ],
             );
 
@@ -600,7 +599,7 @@ class ApplicationService extends BaseService
     /**  Получение информации по заявкам поиском по комментариям */
     public function getApplicationsCommentsTable(string $objName): array
     {
-        $LOCALE_APPLICATION = $this->getLocale();
+        $LOCALE_APPLICATION = $this->LOCALE;
         $LOCALE_REGISTRATION = LocaleHelper::getLocale(['registration', 'global']);
         $LOCALE_USER = LocaleHelper::getLocale(['user', 'fraym_model']);
 
@@ -670,7 +669,7 @@ class ApplicationService extends BaseService
     /** Получение информации по заявкам поиском */
     public function getApplicationsTable(string $objName): array
     {
-        $LOCALE_APPLICATION = $this->getLocale();
+        $LOCALE_APPLICATION = $this->LOCALE;
         $LOCALE_REGISTRATION = LocaleHelper::getLocale(['registration', 'global']);
         $LOCALE_USER = LocaleHelper::getLocale(['user', 'fraym_model']);
 
@@ -747,7 +746,7 @@ class ApplicationService extends BaseService
     /** Приглашение игрока (передачи ему) в заявку */
     public function transferApplication(int $objId, int $offerToUserId): array
     {
-        $LOCALE_APPLICATION = $this->getLocale();
+        $LOCALE_APPLICATION = $this->LOCALE;
 
         DB->update(
             tableName: 'project_application',
@@ -773,7 +772,7 @@ class ApplicationService extends BaseService
     /** Отмена приглашения игрока (передачи ему) в заявку */
     public function transferApplicationCancel(int $objId): array
     {
-        $LOCALE_APPLICATION = $this->getLocale();
+        $LOCALE_APPLICATION = $this->LOCALE;
 
         $returnArr = [];
 
@@ -843,7 +842,7 @@ class ApplicationService extends BaseService
 
             $characterGroups = $characterData->project_group_ids->get();
 
-            if (is_array($characterGroups) && $characterGroups) {
+            if ($characterGroups) {
                 /** Добавляем связи с нужным code */
                 foreach ($characterGroups as $characterGroup) {
                     $code = 1;
@@ -893,13 +892,13 @@ class ApplicationService extends BaseService
 
             $characterData = $this->getCharacterData($newCharacterId);
 
-            ResponseHelper::success($this->getLOCALE()['messages']['application_autonewrole_success']);
+            ResponseHelper::success($this->LOCALE['messages']['application_autonewrole_success']);
         }
     }
 
     public function preDelete(): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
         $LOCALE_CONVERSATION = LocaleHelper::getLocale(['conversation', 'global']);
 
         $applicationData = $this->getApplicationData(DataHelper::getId());
@@ -1005,7 +1004,7 @@ class ApplicationService extends BaseService
     {
         return
             'project_id=' . $this->getActivatedProjectId() .
-            ($this->getDeletedView() ? ' AND (deleted_by_player="1")' : (in_array($this->getAct(), [ActEnum::view, ActEnum::edit]) ? '' : ' AND deleted_by_gamemaster="0" AND deleted_by_player="0"')) .
+            ($this->getDeletedView() ? ' AND (deleted_by_player="1")' : (in_array($this->act, [ActEnum::view, ActEnum::edit]) ? '' : ' AND deleted_by_gamemaster="0" AND deleted_by_player="0"')) .
             ($this->getPaymentApproveView() ? ' AND money_need_approve="1"' : '') .
             ($this->getNoReplyView() ? ' AND id IN (' . (count($this->getNoReplyIds()) > 0 ? implode(',', $this->getNoReplyIds()) : '0') . ')' : '') .
             ($this->getNeedResponseView() ? ' AND id IN (' . (count($this->getNeedResponseIds()) > 0 ? implode(',', $this->getNeedResponseIds()) : '0') . ')' : '') .
@@ -1090,7 +1089,7 @@ class ApplicationService extends BaseService
 
     private function updateApplication(int $successfulResultsId): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_CONVERSATION = LocaleHelper::getLocale(['conversation', 'global']);
 
@@ -1204,23 +1203,23 @@ class ApplicationService extends BaseService
             $creatorUserData = $updatingUserData;
         }
 
-        foreach ($this->getModel()->getElements() as $elem) {
-            if (($oldAllinfo[$elem->getName()] ?? null) !== ($newAllinfo[$elem->getName()] ?? null) && !$elem instanceof Item\H1 && !$elem instanceof Item\Timestamp && !$elem instanceof Item\Hidden && $elem->getName() !== 'last_update_user_id') {
+        foreach ($this->model->elementsList as $elem) {
+            if (($oldAllinfo[$elem->name] ?? null) !== ($newAllinfo[$elem->name] ?? null) && !$elem instanceof Item\H1 && !$elem instanceof Item\Timestamp && !$elem instanceof Item\Hidden && $elem->name !== 'last_update_user_id') {
                 $sendChange = true;
 
-                $elem->set($newAllinfo[$elem->getName()]);
+                $elem->set($newAllinfo[$elem->name]);
                 $elemData = $elem->asHTML(false);
                 $elemData = str_replace('<span class="sbi sbi-times"></span>', '-', $elemData);
                 $elemData = str_replace('<span class="sbi sbi-check"></span>', '+', $elemData);
 
-                $fieldsDataToGamemasters .= $elem->getShownName() . ':<br>' . $elemData . '<br><br>';
+                $fieldsDataToGamemasters .= $elem->shownName . ':<br>' . $elemData . '<br><br>';
 
                 /** Если это изменения скрытых мастерских групп */
-                if ($elem->getName() === 'project_group_ids') {
+                if ($elem->name === 'project_group_ids') {
                     /** @var Item\Multiselect $elem */
                     $visibleGroupChanged = false;
-                    $newGroups = DataHelper::multiselectToArray($newAllinfo[$elem->getName()]);
-                    $oldGroups = DataHelper::multiselectToArray($oldAllinfo[$elem->getName()]);
+                    $newGroups = DataHelper::multiselectToArray($newAllinfo[$elem->name]);
+                    $oldGroups = DataHelper::multiselectToArray($oldAllinfo[$elem->name]);
                     $groupsDiff = array_diff($newGroups, $oldGroups);
 
                     foreach ($groupsDiff as $groupsDiffId) {
@@ -1239,22 +1238,22 @@ class ApplicationService extends BaseService
                                 $newValues[] = $oldValue;
                             }
                         }
-                        $elem->getAttribute()->setValues($newValues);
+                        $elem->getAttribute()->values = $newValues;
 
                         $elemData = $elem->asHTML(false);
                         $elemData = str_replace('<span class="sbi sbi-times"></span>', '-', $elemData);
                         $elemData = str_replace('<span class="sbi sbi-check"></span>', '+', $elemData);
 
                         $sendChangeToPlayer = true;
-                        $fieldsDataToPlayer .= $elem->getShownName() . ':<br>' . $elemData . '<br><br>';
+                        $fieldsDataToPlayer .= $elem->shownName . ':<br>' . $elemData . '<br><br>';
 
-                        $elem->getAttribute()->setValues($oldValues);
+                        $elem->getAttribute()->values = $oldValues;
                         unset($oldValues);
                         unset($newValues);
                     }
-                } elseif (in_array(ApplicationModel::MYAPPLICATION_VIEW_CONTEXT, $elem->getAttribute()->getContext())) {
+                } elseif (in_array(ApplicationModel::MYAPPLICATION_VIEW_CONTEXT, $elem->getAttribute()->context)) {
                     $sendChangeToPlayer = true;
-                    $fieldsDataToPlayer .= $elem->getShownName() . ':<br>' . $elemData . '<br><br>';
+                    $fieldsDataToPlayer .= $elem->shownName . ':<br>' . $elemData . '<br><br>';
                 }
             }
         }
@@ -1428,7 +1427,7 @@ class ApplicationService extends BaseService
             $usersDataApplicationView = [];
 
             if (!$this->getExcelView()) {
-                $LOCALE = $this->getLOCALE();
+                $LOCALE = $this->LOCALE;
                 $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
                 $LOCALE_PEOPLE = LocaleHelper::getLocale(['people', 'global']);
 

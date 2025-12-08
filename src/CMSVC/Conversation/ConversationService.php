@@ -29,7 +29,7 @@ class ConversationService extends BaseService
     /** Эта функция полностью заменяет собой стандартную методику добавления объектов для данной модели */
     public function PreCreate(): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $objId = OBJ_ID;
         $objType = OBJ_TYPE;
@@ -120,7 +120,7 @@ class ConversationService extends BaseService
         }
 
         if (count($selectedUserIds) === 0 && ($_REQUEST['user'] ?? false)) {
-            $selectedUserIds[] = [$_REQUEST['user'] ?? false];
+            $selectedUserIds[] = [$_REQUEST['user']];
         }
 
         if (($key = array_search(CURRENT_USER->getId(), $selectedUserIds)) !== false) {
@@ -211,9 +211,12 @@ class ConversationService extends BaseService
     public function postModelInit(BaseModel $model): BaseModel
     {
         if ($this->postModelInitVars['changeUserIdShownName'] ?? false) {
-            $LOCALE = $this->getLOCALE();
-            $model->getElement('user_id')?->setShownName($LOCALE[OBJ_TYPE]['members']);
-            $model->getElement('user_id')?->setHelpText(null);
+            $LOCALE = $this->LOCALE;
+
+            if ($model->getElement('user_id')) {
+                $model->getElement('user_id')->shownName = $LOCALE[OBJ_TYPE]['members'];
+                $model->getElement('user_id')->helpText = null;
+            }
         }
 
         return $model;
@@ -235,7 +238,7 @@ class ConversationService extends BaseService
     public function getDialog(int|string|null $objId, int|string|null $userId, int $limit, int|string|null $time): ?array
     {
         if ((is_int($objId) && $objId > 0) || ($objId === 'new' && $userId !== '' && $userId !== null)) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
             $userService = $this->getUserService();
 
             $keepTime = $time === 'keep';
@@ -498,7 +501,7 @@ class ConversationService extends BaseService
     ): array {
         $userService = $this->getUserService();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -688,7 +691,7 @@ class ConversationService extends BaseService
     public function messageSave(?int $objId, string $text): ?array
     {
         if ($objId > 0) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             $returnArr = [];
 
@@ -714,7 +717,7 @@ class ConversationService extends BaseService
     public function messageDelete(?int $objId): ?array
     {
         if ($objId > 0) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
             $userService = $this->getUserService();
 
             $returnArr = [];
@@ -888,7 +891,7 @@ class ConversationService extends BaseService
     public function conversationMessageDelete(?int $objId): ?array
     {
         if ($objId > 0) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             $conversationMessage = DB->findObjectById($objId, 'conversation_message');
 
@@ -914,7 +917,7 @@ class ConversationService extends BaseService
         if ($action !== '' && $objId > 0) {
             $userService = $this->getUserService();
 
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             $returnArr = [];
 
@@ -1362,7 +1365,7 @@ class ConversationService extends BaseService
     /** Выход из диалога */
     public function leaveDialog(?int $objId): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
 
@@ -1480,7 +1483,7 @@ class ConversationService extends BaseService
     public function addUserToDialog(?int $objId, ?int $userId): ?array
     {
         if ($objId > 0 && $userId > 0) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             $returnArr = [];
 
@@ -1586,7 +1589,7 @@ class ConversationService extends BaseService
     public function conversationRename(?int $objId, string $value): ?array
     {
         if ($objId > 0 && $value !== '') {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             $returnArr = [];
 

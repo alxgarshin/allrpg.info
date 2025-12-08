@@ -23,29 +23,105 @@ use Fraym\Helper\{ObjectsHelper, TextHelper};
 final class CMSVC
 {
     /** Название объекта / сущности */
-    private ?string $objectName = null;
+    public ?string $objectName = null {
+        get => $this->objectName;
+        set => $this->objectName = TextHelper::mb_lcfirst($value);
+    }
+
+    /** Контроллер объекта */
+    public BaseController|string|null $controller = null {
+        get {
+            $controller = $this->controller;
+
+            if (is_string($controller)) {
+                $this->controller = new $controller();
+                $this->controller
+                    ->construct($this)
+                    ->init();
+            }
+
+            return $this->controller;
+        }
+        set => $this->controller = $value;
+    }
+
+    /** Шаблон модели объекта */
+    public BaseModel|string|null $model = null {
+        get {
+            $model = $this->model;
+
+            if (!$model instanceof BaseModel && is_string($model)) {
+                $this->model = new $model();
+                $this->model
+                    ->construct($this)
+                    ->init();
+                $this->service?->postModelInit($this->model);
+            }
+
+            return $this->model;
+        }
+        set {
+            if (!isset($this->model) || !$this->model instanceof BaseModel) {
+                $this->model = $value;
+            } else {
+                $this->model = $this->model;
+            }
+        }
+    }
+
+    /** Сервис объекта */
+    public BaseService|string|null $service = null {
+        get {
+            $service = $this->service;
+
+            if (is_string($service)) {
+                $this->service = new $service();
+                $this->service
+                    ->construct($this)
+                    ->init();
+            }
+
+            return $this->service;
+        }
+        set => $this->service = $value;
+    }
+
+    /** Вьюшка объекта */
+    public BaseView|string|null $view = null {
+        get {
+            $view = $this->view;
+
+            if (is_string($view)) {
+                $this->view = new $view();
+                $this->view
+                    ->construct($this)
+                    ->init();
+            }
+
+            return $this->view;
+        }
+        set => $this->view = $value;
+    }
 
     public function __construct(
-        /** Контроллер объекта */
-        private BaseController|string|null $controller = null,
-
-        /** Шаблон модели объекта */
-        private BaseModel|string|null $model = null,
-
-        /** Сервис объекта */
-        private BaseService|string|null $service = null,
-
-        /** Вьюшка объекта */
-        private BaseView|string|null $view = null,
+        BaseController|string|null $controller = null,
+        BaseModel|string|null $model = null,
+        BaseService|string|null $service = null,
+        BaseView|string|null $view = null,
 
         /** Контекст объекта */
-        private array $context = [],
+        public array $context = [],
     ) {
+        $this->controller = $controller;
+        $this->model = $model;
+        $this->service = $service;
+        $this->view = $view;
+
         $className = match (true) {
-            is_string($this->controller) => $this->controller,
-            is_string($this->service) => $this->service,
-            is_string($this->view) => $this->view,
-            is_string($this->model) => $this->model,
+            is_string($controller) => $controller,
+            is_string($service) => $service,
+            is_string($view) => $view,
+            is_string($model) => $model,
             default => null,
         };
 
@@ -54,32 +130,33 @@ final class CMSVC
         }
 
         $removeText = match (true) {
-            is_string($this->controller) => 'Controller',
-            is_string($this->service) => 'Service',
-            is_string($this->view) => 'View',
-            is_string($this->model) => 'Model',
+            is_string($controller) => 'Controller',
+            is_string($service) => 'Service',
+            is_string($view) => 'View',
+            is_string($model) => 'Model',
             default => null,
         };
 
-        $this->setObjectName(ObjectsHelper::getClassShortName($className, $removeText));
+        $this->objectName = ObjectsHelper::getClassShortName($className, $removeText);
 
         CACHE->setToCache(
             '_CMSVC',
             0,
             $this,
-            $this->getObjectName(),
+            $this->objectName,
         );
     }
 
     public function init(): void
     {
-        $this->getController();
-        $this->getService();
-        $this->getView();
-        $this->getModel();
+        $t = $this->controller;
+        $t = $this->service;
+        $t = $this->view;
+        $t = $this->model;
 
         if (!$this->context) {
-            $objectName = $this->getObjectName();
+            $objectName = $this->objectName;
+
             $this->context = [
                 'LIST' => [
                     ':list',
@@ -111,10 +188,10 @@ final class CMSVC
                 ],
             ];
 
-            $entity = $this->getView()?->getEntity();
+            $entity = $this->view?->entity;
 
-            if ($entity && $entity instanceof CatalogEntity && TextHelper::camelCaseToSnakeCase($entity->getCatalogItemEntity()->getName()) === CMSVC) {
-                $objectName = $entity->getCatalogItemEntity()->getName();
+            if ($entity && $entity instanceof CatalogEntity && TextHelper::camelCaseToSnakeCase($entity->catalogItemEntity->name) === CMSVC) {
+                $objectName = $entity->catalogItemEntity->name;
 
                 $this->context['LIST'][] = $objectName . ':list';
                 $this->context['VIEW'][] = $objectName . ':view';
@@ -124,63 +201,6 @@ final class CMSVC
                 $this->context['EMBEDDED'][] = $objectName . ':embedded';
             }
         }
-    }
-
-    public function getObjectName(): ?string
-    {
-        return $this->objectName;
-    }
-
-    public function setObjectName(string $objectName): self
-    {
-        $this->objectName = TextHelper::mb_lcfirst($objectName);
-
-        return $this;
-    }
-
-    public function getController(): ?BaseController
-    {
-        $controller = $this->controller;
-
-        if (is_string($controller)) {
-            $this->controller = new $controller();
-            $this->controller
-                ->construct($this)
-                ->init();
-        }
-
-        return $this->controller;
-    }
-
-    public function setController(BaseController|string|null $controller): self
-    {
-        $this->controller = $controller;
-
-        return $this;
-    }
-
-    public function getModel(): ?BaseModel
-    {
-        $model = $this->model;
-
-        if (!$model instanceof BaseModel && is_string($model)) {
-            $this->model = new $model();
-            $this->model
-                ->construct($this)
-                ->init();
-            $this->getService()?->postModelInit($this->model);
-        }
-
-        return $this->model;
-    }
-
-    public function setModel(BaseModel|string|null $model): self
-    {
-        if (!$this->model instanceof BaseModel) {
-            $this->model = $model;
-        }
-
-        return $this;
     }
 
     public function getModelInstance(
@@ -199,7 +219,8 @@ final class CMSVC
         }
 
         if ($refresh || is_null($id) || (is_null($modelInstance) && $createIfNotExists)) {
-            $modelInstance = (clone $model)->setModelData($data);
+            $modelInstance = clone $model;
+            $modelInstance->modelData = $data;
 
             if (is_null($id)) {
                 /** Находим самый большой ключ с частью "mockModel_" */
@@ -222,59 +243,5 @@ final class CMSVC
         }
 
         return $modelInstance;
-    }
-
-    public function getService(): ?BaseService
-    {
-        $service = $this->service;
-
-        if (is_string($service)) {
-            $this->service = new $service();
-            $this->service
-                ->construct($this)
-                ->init();
-        }
-
-        return $this->service;
-    }
-
-    public function setService(BaseService|string|null $service): self
-    {
-        $this->service = $service;
-
-        return $this;
-    }
-
-    public function getView(): ?BaseView
-    {
-        $view = $this->view;
-
-        if (is_string($view)) {
-            $this->view = new $view();
-            $this->view
-                ->construct($this)
-                ->init();
-        }
-
-        return $this->view;
-    }
-
-    public function setView(BaseView|string|null $view): self
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    public function getContext(): array
-    {
-        return $this->context;
-    }
-
-    public function setContext(array $context): self
-    {
-        $this->context = $context;
-
-        return $this;
     }
 }

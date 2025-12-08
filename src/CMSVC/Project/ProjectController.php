@@ -26,11 +26,11 @@ class ProjectController extends BaseController
     {
         $id = DataHelper::getId();
 
-        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->getEntity()) === ActEnum::list) {
+        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->entity) === ActEnum::list) {
             $this->requestCheckSearch();
         }
 
-        if (!CURRENT_USER->isLogged() && DataHelper::getActDefault($this->getEntity()) === ActEnum::add) {
+        if (!CURRENT_USER->isLogged() && DataHelper::getActDefault($this->entity) === ActEnum::add) {
             ResponseHelper::redirect('/login/', ['redirectToKind' => KIND, 'redirectToId' => $id, 'redirectParams' => 'act=add']);
         }
 
@@ -41,17 +41,17 @@ class ProjectController extends BaseController
         }
 
         /** @var ProjectView */
-        $projectView = $this->getCMSVC()->getView();
+        $projectView = $this->CMSVC->view;
 
-        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->getEntity()) === ActEnum::list) {
+        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->entity) === ActEnum::list) {
             return $projectView->List();
         }
 
-        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'wall' && BID > 0 && $this->getService()->hasProjectAccess()) {
+        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'wall' && BID > 0 && $this->service->hasProjectAccess()) {
             return $projectView->Wall();
         }
 
-        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'conversation' && BID > 0 && $this->getService()->hasProjectAccess()) {
+        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'conversation' && BID > 0 && $this->service->hasProjectAccess()) {
             return $projectView->Conversation();
         }
 
@@ -87,7 +87,7 @@ class ProjectController extends BaseController
     public function loadProjectsCommunitiesList(): ?Response
     {
         if (OBJ_TYPE) {
-            $projectService = $this->getService();
+            $projectService = $this->service;
 
             return $this->asArray(
                 $projectService->loadProjectsCommunitiesList(
@@ -104,7 +104,7 @@ class ProjectController extends BaseController
     public function getCommunityOrProjectMembersList(): ?Response
     {
         if (CURRENT_USER->isLogged()) {
-            $projectService = $this->getService();
+            $projectService = $this->service;
 
             return $this->asArray(
                 $projectService->getCommunityOrProjectMembersList(
@@ -120,7 +120,7 @@ class ProjectController extends BaseController
     public function getCommunityOrProjectTasksList(): ?Response
     {
         if (CURRENT_USER->isLogged()) {
-            $projectService = $this->getService();
+            $projectService = $this->service;
 
             return $this->asArray(
                 $projectService->getCommunityOrProjectTasksList(
@@ -138,7 +138,7 @@ class ProjectController extends BaseController
     public function switchProjectStatus(): ?Response
     {
         if (ALLOW_PROJECT_ACTIONS) {
-            $projectService = $this->getService();
+            $projectService = $this->service;
 
             return $this->asArray(
                 $projectService->switchProjectStatus(

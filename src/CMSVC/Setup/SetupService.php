@@ -109,14 +109,14 @@ class SetupService extends BaseService
 
     public function getSortFieldType(): array
     {
-        $LOCALE = $this->getEntity()->getLOCALE();
+        $LOCALE = $this->entity->LOCALE;
 
         return $LOCALE['elements']['field_type']['values'];
     }
 
     public function getSortFieldRights(): array
     {
-        $LOCALE = $this->getEntity()->getLOCALE();
+        $LOCALE = $this->entity->LOCALE;
 
         return $LOCALE['elements']['field_rights']['values'];
     }
@@ -142,7 +142,7 @@ class SetupService extends BaseService
 
     public function getShowIfValues(): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         /** @var GroupService $groupService */
         $groupService = CMSVCHelper::getService('group');
@@ -201,7 +201,7 @@ class SetupService extends BaseService
     {
         $nextFieldCode = 1;
 
-        if ($this->getAct() === ActEnum::add) {
+        if ($this->act === ActEnum::add) {
             $topFieldCodeData = DB->select(
                 'project_application_field',
                 [
@@ -257,9 +257,9 @@ class SetupService extends BaseService
         if ($removeWysiwyg) {
             /** @var Multiselect $fieldType */
             $fieldType = $model->getElement('field_type')->getAttribute();
-            $fieldTypeValues = $fieldType->getValues();
+            $fieldTypeValues = $fieldType->values;
             unset($fieldTypeValues[6]);
-            $fieldType->setValues($fieldTypeValues);
+            $fieldType->values = $fieldTypeValues;
         }
 
         return $model;

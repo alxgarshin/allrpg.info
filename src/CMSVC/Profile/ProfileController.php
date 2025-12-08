@@ -27,7 +27,7 @@ class ProfileController extends BaseController
         $verifyId = $_REQUEST['verify_id'] ?? false;
 
         if ($verifyId) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
             /** @var UserService $userService */
             $userService = CMSVCHelper::getService('user');
@@ -48,10 +48,10 @@ class ProfileController extends BaseController
     }
     protected function Default(): ?Response
     {
-        $responseData = $this->getEntity()->view(ActEnum::edit, CURRENT_USER->id());
+        $responseData = $this->entity->view(ActEnum::edit, CURRENT_USER->id());
 
         if ($responseData instanceof HtmlResponse) {
-            $this->getEntity()->getView()->postViewHandler($responseData);
+            $this->entity->view->postViewHandler($responseData);
         }
 
         return $responseData;

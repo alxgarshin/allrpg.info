@@ -39,10 +39,10 @@ class TaskController extends BaseController
 
         if (in_array(ACTION, ActionEnum::getBaseValues())) {
             if (ACTION === ActionEnum::create || (DataHelper::getId() && RightsHelper::checkRights(['{admin}', '{responsible}'], '{task}', DataHelper::getId()))) {
-                if ($this->getService()->getObjId() === 0 || RightsHelper::checkAnyRights($this->getService()->getObjType(), $this->getService()->getObjId())) {
+                if ($this->service->getObjId() === 0 || RightsHelper::checkAnyRights($this->service->getObjType(), $this->service->getObjId())) {
                     if ((int) $_REQUEST['following_task'][0] !== (int) $_REQUEST['parent_task'][0] || (int) $_REQUEST['parent_task'][0] === 0) {
                     } else {
-                        $LOCALE = $this->getLOCALE();
+                        $LOCALE = $this->LOCALE;
                         ResponseHelper::responseOneBlock(
                             'error',
                             $LOCALE['cant_follow_parent'],
@@ -50,14 +50,14 @@ class TaskController extends BaseController
                         );
                     }
                 } else {
-                    $LOCALE = $this->getLOCALE();
+                    $LOCALE = $this->LOCALE;
                     ResponseHelper::responseOneBlock(
                         'error',
-                        $LOCALE['have_no_rights'] . ' ' . ($this->getService()->getObjType() === 'project' ? $LOCALE['have_no_rights_project'] : $LOCALE['have_no_rights_community']) . '.',
+                        $LOCALE['have_no_rights'] . ' ' . ($this->service->getObjType() === 'project' ? $LOCALE['have_no_rights_project'] : $LOCALE['have_no_rights_community']) . '.',
                     );
                 }
             } else {
-                $LOCALE = $this->getLOCALE();
+                $LOCALE = $this->LOCALE;
                 ResponseHelper::responseOneBlock(
                     'error',
                     $LOCALE['have_no_rights_in_this_task'],
@@ -71,7 +71,7 @@ class TaskController extends BaseController
     #[IsAccessible]
     public function loadTasksList(): ?Response
     {
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         return $this->asArray(
             $taskService->loadTasks(
@@ -85,7 +85,7 @@ class TaskController extends BaseController
     #[IsAccessible]
     public function loadTasks(): ?Response
     {
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         return $this->asArray(
             $taskService->loadTasks(
@@ -99,7 +99,7 @@ class TaskController extends BaseController
     #[IsAccessible]
     public function checkDatesAvailability(): ?Response
     {
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         return $this->asArray(
             $taskService->checkDatesAvailability(
@@ -116,7 +116,7 @@ class TaskController extends BaseController
     #[IsAccessible]
     public function addTask(): ?Response
     {
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         return $this->asArray(
             $taskService->addTask(
@@ -128,7 +128,7 @@ class TaskController extends BaseController
     #[IsAccessible]
     public function changeTaskDates(): ?Response
     {
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         return $this->asArray(
             $taskService->changeTaskDates(
@@ -141,7 +141,7 @@ class TaskController extends BaseController
     #[IsAccessible]
     public function outdentTask(): ?Response
     {
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         return $this->asArray(
             $taskService->outdentTask(
@@ -153,7 +153,7 @@ class TaskController extends BaseController
     #[IsAccessible]
     public function indentTask(): ?Response
     {
-        $taskService = $this->getService();
+        $taskService = $this->service;
 
         return $this->asArray(
             $taskService->indentTask(

@@ -48,7 +48,7 @@ class PlotService extends BaseService
 
         $userService = $this->getUserService();
 
-        $LOCALE = $this->getLocale();
+        $LOCALE = $this->LOCALE;
 
         $applicationsList = [];
         $storyData = $this->get($storyId);
@@ -249,7 +249,7 @@ class PlotService extends BaseService
         $characterService = $this->characterService;
         $groupService = $this->groupService;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $objType = DataHelper::clearBraces($objType);
 
@@ -371,15 +371,13 @@ class PlotService extends BaseService
                     ['applications_ids_2', '%-all' . $objId . '-%'],
                 ], $applicationsParams, $groupParams),
             );
-        } elseif ($objType === 'story') {
+        } else {
             $plotsData = DB->query(
                 'SELECT pp.*, pp2.todo AS plot_todo FROM project_plot AS pp LEFT JOIN project_plot AS pp2 ON pp2.id=pp.parent WHERE pp.parent=:parent ORDER BY pp.code DESC',
                 [
                     ['parent', $objId],
                 ],
             );
-        } else {
-            return '';
         }
 
         $plotsAboutCount = 0;
@@ -795,7 +793,7 @@ class PlotService extends BaseService
 
     public function preCreate(): void
     {
-        if ($this->getEntity()->getName() === CMSVC) {
+        if ($this->entity->name === CMSVC) {
             $_REQUEST['go_back_after_save'][0] = '';
         }
     }
@@ -804,8 +802,8 @@ class PlotService extends BaseService
     {
         foreach ($successfulResultsIds as $successfulResultsId) {
             /** Если это сюжет, сразу перебрасываем в создание завязки к сюжету */
-            if ($this->getEntity()->getName() === CMSVC) {
-                $this->getEntity()->setFraymActionRedirectPath(ABSOLUTE_PATH . '/plot/plot_plot/act=add&parent=' . $successfulResultsId);
+            if ($this->entity->name === CMSVC) {
+                $this->entity->fraymActionRedirectPath = ABSOLUTE_PATH . '/plot/plot_plot/act=add&parent=' . $successfulResultsId;
                 break;
             }
         }
@@ -813,7 +811,7 @@ class PlotService extends BaseService
 
     public function getSortId(): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         if (is_null($this->plotFromTo)) {
             $plotFromTo = [];
@@ -1049,7 +1047,7 @@ class PlotService extends BaseService
     {
         $groupService = $this->groupService;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_PLOT = LocaleHelper::getLocale(['plot', 'global']);
 
         $listOfGroupsCharacters = [];

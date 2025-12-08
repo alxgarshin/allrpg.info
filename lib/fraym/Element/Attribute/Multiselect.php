@@ -18,40 +18,79 @@ use Fraym\Element\Item\MultiselectCreator;
 use Fraym\Element\Validator\ObligatoryValidator;
 use Fraym\Interface\HasDefaultValue;
 use Generator;
+use InvalidArgumentException;
 use RuntimeException;
 
 /** Множественный выбор */
+/** @implements HasDefaultValue<null|string|array|Generator> */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Multiselect extends BaseElement implements HasDefaultValue
 {
-    protected array $basicElementValidators = [
+    public array $basicElementValidators = [
         ObligatoryValidator::class,
     ];
 
+    /** Значение по умолчанию */
+    public mixed $defaultValue {
+        get => $this->_val;
+        set {
+            if (!is_null($value) && !is_string($value) && !is_array($value) && !$value instanceof Generator) {
+                throw new InvalidArgumentException('Wrong defaultValue type');
+            }
+
+            $this->_val = $value;
+        }
+    }
+
+    private null|string|array|Generator $_val = null;
+
     public function __construct(
-        /** Значение по умолчанию */
-        private null|string|array|Generator $defaultValue = null,
+        mixed $defaultValue = null,
 
         /** Массив возможных значений: массив или строка с callback функции */
-        private null|string|array $values = null,
+        public null|string|array $values = null {
+            set(null|string|array|Generator $values) {
+                if ($values instanceof Generator) {
+                    $values = iterator_to_array($values);
+                }
+
+                $this->values = $values;
+            }
+        },
 
         /** Заблокированные к изменению значения: массив или строка с callback функции */
-        private null|string|array $locked = null,
+        public null|string|array $locked = null {
+            set(null|string|array|Generator $locked) {
+                if ($locked instanceof Generator) {
+                    $locked = iterator_to_array($locked);
+                }
+
+                $this->locked = $locked;
+            }
+        },
 
         /** Одновыборность (radio) из всего массива */
-        private bool $one = false,
+        public bool $one = false,
 
         /** Массив данных, из которых создаются картинки для соответствующих значений: массив или строка с callback функции */
-        private null|string|array $images = null,
+        public null|string|array $images = null {
+            set(null|string|array|Generator $images) {
+                if ($images instanceof Generator) {
+                    $images = iterator_to_array($images);
+                }
+
+                $this->images = $images;
+            }
+        },
 
         /** Путь до папки картинок $images */
-        private ?string $path = null,
+        public ?string $path = null,
 
         /** Добавить строку внутреннего фильтра выборов */
-        private ?bool $search = null,
+        public ?bool $search = null,
 
         /** Механизм пополнения списка путем вписания нового объекта в имеющуюся связанную таблицу */
-        private ?MultiselectCreator $creator = null,
+        public ?MultiselectCreator $creator = null,
         ?bool $obligatory = null,
         ?string $helpClass = null,
         ?int $group = null,
@@ -91,110 +130,7 @@ class Multiselect extends BaseElement implements HasDefaultValue
             additionalData: $additionalData,
             customAsHTMLRenderer: $customAsHTMLRenderer,
         );
-    }
 
-    public function getDefaultValue(): null|string|array|Generator
-    {
-        return $this->defaultValue;
-    }
-
-    public function setDefaultValue(null|string|array|Generator $defaultValue = null): static
-    {
         $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    public function getValues(): null|string|array
-    {
-        return $this->values;
-    }
-
-    public function setValues(null|string|array|Generator $values): static
-    {
-        if ($values instanceof Generator) {
-            $values = iterator_to_array($values);
-        }
-        $this->values = $values;
-
-        return $this;
-    }
-
-    public function getLocked(): null|string|array
-    {
-        return $this->locked;
-    }
-
-    public function setLocked(null|string|array|Generator $locked): static
-    {
-        if ($locked instanceof Generator) {
-            $locked = iterator_to_array($locked);
-        }
-        $this->locked = $locked;
-
-        return $this;
-    }
-
-    public function getOne(): bool
-    {
-        return $this->one;
-    }
-
-    public function setOne(bool $one): static
-    {
-        $this->one = $one;
-
-        return $this;
-    }
-
-    public function getImages(): null|string|array
-    {
-        return $this->images;
-    }
-
-    public function setImages(null|string|array|Generator $images): static
-    {
-        if ($images instanceof Generator) {
-            $images = iterator_to_array($images);
-        }
-        $this->images = $images;
-
-        return $this;
-    }
-
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(?string $path): static
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    public function getSearch(): ?bool
-    {
-        return $this->search;
-    }
-
-    public function setSearch(?bool $search): static
-    {
-        $this->search = $search;
-
-        return $this;
-    }
-
-    public function getCreator(): ?MultiselectCreator
-    {
-        return $this->creator;
-    }
-
-    public function setCreator(?MultiselectCreator $creator): static
-    {
-        $this->creator = $creator;
-
-        return $this;
     }
 }

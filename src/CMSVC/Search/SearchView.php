@@ -16,9 +16,9 @@ class SearchView extends BaseView
     public function Response(): ?Response
     {
         /** @var SearchService $searchService */
-        $searchService = $this->getService();
+        $searchService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
 
@@ -26,18 +26,18 @@ class SearchView extends BaseView
 
         $searchInput = new Item\Text();
         $attribute = new Attribute\Text();
-        $searchInput->setAttribute($attribute)
-            ->setName('qwerty')
-            ->setShownName($elementsLocale['qwerty']['shownName'] ?? null)
-            ->set($_REQUEST['qwerty'] ?? '');
+        $searchInput->setAttribute($attribute);
+        $searchInput->name = 'qwerty';
+        $searchInput->shownName = $elementsLocale['qwerty']['shownName'] ?? null;
+        $searchInput->set($_REQUEST['qwerty'] ?? '');
 
         $regionsList = new Item\Multiselect();
         $attribute = new Attribute\Multiselect(
             values: $searchService->getRegionsList(),
         );
-        $regionsList->setAttribute($attribute)
-            ->setName('region')
-            ->setShownName($elementsLocale['region']['shownName'] ?? null);
+        $regionsList->setAttribute($attribute);
+        $regionsList->name = 'region';
+        $regionsList->shownName = $elementsLocale['region']['shownName'] ?? null;
 
         $RESPONSE_DATA = '<div class="maincontent_data kind_' . KIND . '">
 <h1 class="page_header">' . $LOCALE['title'] . '</h1>
@@ -56,7 +56,7 @@ class SearchView extends BaseView
 
             $RESPONSE_DATA .= '<br><hr><br>';
 
-            if (is_array($searchResults) && count($searchResults) > 0) {
+            if (count($searchResults) > 0) {
                 $RESPONSE_DATA .= '<ol class="searchresult">';
 
                 for ($i = 0; $i < count($searchResults); ++$i) {

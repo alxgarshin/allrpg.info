@@ -95,10 +95,10 @@ abstract class CMSVCHelper implements Helper
         if ($CMSVC !== null) {
             /** @var CMSVC $CMSVC */
             $object = match ($objectType) {
-                'Controller' => $CMSVC->getController(),
-                'Model' => $CMSVC->getModel(),
-                'Service' => $CMSVC->getService(),
-                'View' => $CMSVC->getView(),
+                'Controller' => $CMSVC->controller,
+                'Model' => $CMSVC->model,
+                'Service' => $CMSVC->service,
+                'View' => $CMSVC->view,
                 default => null,
             };
         }
@@ -115,8 +115,8 @@ abstract class CMSVCHelper implements Helper
                     $object->construct();
                 }
 
-                if (method_exists($object, 'getCMSVC') && method_exists($object->getCMSVC(), 'initDependencyInjections')) {
-                    $object->getCMSVC()->initDependencyInjections($object);
+                if (method_exists($object, 'getCMSVC') && method_exists($object->CMSVC, 'initDependencyInjections')) {
+                    $object->CMSVC->initDependencyInjections($object);
                 }
 
                 if (method_exists($object, 'init')) {
@@ -124,7 +124,7 @@ abstract class CMSVCHelper implements Helper
                 }
 
                 if (method_exists($object, 'getCMSVC')) {
-                    CACHE->setToCache('_CMSVC', 0, $object->getCMSVC(), $cmsvcName);
+                    CACHE->setToCache('_CMSVC', 0, $object->CMSVC, $cmsvcName);
                 } else {
                     CACHE->setToCache('_DependencyInjectedClasses', 0, $object, $cmsvcName);
                 }

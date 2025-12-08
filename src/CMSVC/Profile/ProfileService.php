@@ -27,7 +27,7 @@ class ProfileService extends BaseService
         $_REQUEST['vkontakte_visible'][0] = $this->getUserService()->social($_REQUEST['vkontakte_visible'][0]);
         $_REQUEST['telegram'][0] = $this->getUserService()->social($_REQUEST['telegram'][0]);
 
-        $LOCALE = $this->getMessages();
+        $LOCALE = $this->LOCALE['messages'];
         $LOCALE_PROFILE = LocaleHelper::getLocale(['profile', 'global']);
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
@@ -76,7 +76,7 @@ class ProfileService extends BaseService
         $this->getUserService()->checkForAchievements(CURRENT_USER->id(), [14]);
 
         if (CookieHelper::getCookie('admUser')) {
-            $this->getEntity()->setFraymActionRedirectPath(ABSOLUTE_PATH . '/profile/adm_user=' . CURRENT_USER->getAdminData()['id']);
+            $this->entity->fraymActionRedirectPath = ABSOLUTE_PATH . '/profile/adm_user=' . CURRENT_USER->getAdminData()['id'];
         }
     }
 
@@ -120,7 +120,7 @@ class ProfileService extends BaseService
 
         $agreementContext = $userData->agreement->get() ? [] : [UserModel::CONTEXT, UserModel::REGISTER_CONTEXT];
 
-        $model->getElement('agreement')?->getAttribute()->setContext($agreementContext);
+        $model->getElement('agreement')->getAttribute()->context = $agreementContext;
 
         return $model;
     }

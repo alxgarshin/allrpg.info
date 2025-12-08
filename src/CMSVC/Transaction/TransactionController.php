@@ -59,7 +59,7 @@ class TransactionController extends BaseController
     )]
     public function changeComission(): ?Response
     {
-        $transactionService = $this->getService();
+        $transactionService = $this->service;
 
         return $this->asArray(
             $transactionService->changeComission(
@@ -76,7 +76,7 @@ class TransactionController extends BaseController
     )]
     public function nullifyFees(): ?Response
     {
-        $transactionService = $this->getService();
+        $transactionService = $this->service;
 
         return $this->asArray(
             $transactionService->nullifyFees(),
@@ -89,7 +89,7 @@ class TransactionController extends BaseController
     )]
     public function confirmPayment(): ?Response
     {
-        $transactionService = $this->getService();
+        $transactionService = $this->service;
 
         return $this->asArray(
             $transactionService->confirmPayment(
@@ -104,7 +104,7 @@ class TransactionController extends BaseController
     )]
     public function declinePayment(): ?Response
     {
-        $transactionService = $this->getService();
+        $transactionService = $this->service;
 
         return $this->asArray(
             $transactionService->declinePayment(
@@ -119,7 +119,7 @@ class TransactionController extends BaseController
     )]
     public function verifyTransaction(): ?Response
     {
-        $transactionService = $this->getService();
+        $transactionService = $this->service;
 
         return $this->asArray(
             $transactionService->verifyTransaction(
@@ -134,7 +134,7 @@ class TransactionController extends BaseController
     )]
     public function unVerifyTransaction(): ?Response
     {
-        $transactionService = $this->getService();
+        $transactionService = $this->service;
 
         return $this->asArray(
             $transactionService->unVerifyTransaction(

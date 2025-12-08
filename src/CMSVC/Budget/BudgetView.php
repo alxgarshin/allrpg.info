@@ -41,8 +41,8 @@ class BudgetView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $LOCALE = $this->getLOCALE();
-        $budgetService = $this->getService();
+        $LOCALE = $this->LOCALE;
+        $budgetService = $this->service;
 
         $budgetService->updateDistributedItems();
 
@@ -76,13 +76,13 @@ class BudgetView extends BaseView
         $RESPONSE_DATA = str_replace('<div class="multi_objects_table excel"', $budgetDataHtml . '<div class="multi_objects_table excel"', $RESPONSE_DATA);
 
         /** @var Multiselect */
-        $responsiblesIds = $this->getModel()->getElement('responsible_id');
-        $boughtBy = $this->getModel()->getElement('bought_by');
+        $responsiblesIds = $this->model->getElement('responsible_id');
+        $boughtBy = $this->model->getElement('bought_by');
 
         $additionalOptions = '<div class="bought_by_data">
-<h2>' . $boughtBy->getShownName() . '</h2>';
+<h2>' . $boughtBy->shownName . '</h2>';
 
-        foreach ($responsiblesIds->getAttribute()->getValues() as $gamemaster) {
+        foreach ($responsiblesIds->getAttribute()->values as $gamemaster) {
             $additionalOptions .= '<div class="bought_by_gamemaster" obj_id="' . $gamemaster[0] . '"><span class="bought_by_gamemaster_name">' . $gamemaster[1] . '</span><span class="bought_by_gamemaster_amount"></span></div>';
         }
         $additionalOptions .= '</div>';

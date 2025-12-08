@@ -18,8 +18,8 @@ class VkauthController extends BaseController
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE()['messages'];
-        $vkAuthService = $this->getService();
+        $LOCALE = $this->LOCALE['messages'];
+        $vkAuthService = $this->service;
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
@@ -42,7 +42,7 @@ class VkauthController extends BaseController
                 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $html = curl_exec($ch);
                 curl_close($ch);
 
@@ -64,7 +64,7 @@ class VkauthController extends BaseController
                     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                     curl_setopt($ch, CURLOPT_POST, true);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     $html = curl_exec($ch);
                     curl_close($ch);
 

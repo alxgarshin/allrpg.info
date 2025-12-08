@@ -52,12 +52,12 @@ class RoomsView extends BaseView
 
     public function additionalPostViewHandler(string $RESPONSE_DATA): string
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
-        $roomsService = $this->getService();
+        $roomsService = $this->service;
         $userService = $roomsService->getUserService();
 
-        if (DataHelper::getActDefault($this->getEntity()) === ActEnum::list) {
+        if (DataHelper::getActDefault($this->entity) === ActEnum::list) {
             $RESPONSE_DATA = preg_replace('#<div class="indexer_toggle(.*?)<\/div>#', '<div class="indexer_toggle$1</div><div class="filter">' . (!$roomsService->getListView() ? '<a href="/' . KIND . '/list=1" class="fixed_select">' . $LOCALE['switch_to_list'] . '</a>' : '<a href="/' . KIND . '/" class="fixed_select">' . $LOCALE['switch_to_all'] . '</a>') . '</div>', $RESPONSE_DATA);
         }
 

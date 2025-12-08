@@ -17,7 +17,7 @@ class CalendarEventGalleryController extends BaseController
     public function addCalendarEventGallery(): ArrayResponse
     {
         return $this->asArray(
-            $this->getService()->addCalendarEventGallery(
+            $this->service->addCalendarEventGallery(
                 OBJ_ID,
                 $_REQUEST['link'] ?? '',
                 $_REQUEST['name'] ?? '',
@@ -30,7 +30,7 @@ class CalendarEventGalleryController extends BaseController
     public function changeCalendarEventGallery(): ArrayResponse
     {
         return $this->asArray(
-            $this->getService()->changeCalendarEventGallery(
+            $this->service->changeCalendarEventGallery(
                 OBJ_ID,
                 $_REQUEST['link'] ?? '',
                 $_REQUEST['name'] ?? '',
@@ -42,6 +42,6 @@ class CalendarEventGalleryController extends BaseController
 
     public function deleteCalendarEventGallery(): ArrayResponse
     {
-        return $this->asArray($this->getService()->deleteCalendarEventGallery(OBJ_ID));
+        return $this->asArray($this->service->deleteCalendarEventGallery(OBJ_ID));
     }
 }

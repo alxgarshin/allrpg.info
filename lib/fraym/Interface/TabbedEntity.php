@@ -17,9 +17,7 @@ use Fraym\Element\Item\Tab;
 
 interface TabbedEntity
 {
-    public function getTabs(): ?array;
-
-    public function setTabs(?array $tabs): static;
+    public ?array $tabs { get; set; }
 
     public function addTab(Tab $baseTab): static;
 }

@@ -38,7 +38,7 @@ class SearchService extends BaseService
 
     public function getSearchResults(): array
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
         $qwerty = $_REQUEST['qwerty'] ?? '';
 
         /** @var UserService $userService */

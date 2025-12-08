@@ -81,9 +81,9 @@ class GroupView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
 
@@ -105,7 +105,7 @@ class GroupView extends BaseView
 
         $RESPONSE_DATA = preg_replace('#<a [^>]+><span class="sbi sbi-plus"><\/span>' . $LOCALE_FRAYM['dynamiccreate']['add'] . ' <\/a>#', '', $RESPONSE_DATA);
 
-        if ((!DataHelper::getId() || ACTION === ActionEnum::delete) && DataHelper::getActDefault($this->getEntity()) !== ActEnum::add) {
+        if ((!DataHelper::getId() || ACTION === ActionEnum::delete) && DataHelper::getActDefault($this->entity) !== ActEnum::add) {
             $mine_view = Filters::getFiltersCookieParameterByName('search_responsible_gamemaster_id', 'group', KIND) === '-' . CURRENT_USER->id() . '-';
 
             $RESPONSE_DATA = preg_replace('#<div class="indexer_toggle(.*?)<\/div>#', '<div class="indexer_toggle$1</div><div class="filter">' . (!$mine_view ? '<a href="/group/action=setFilters&object=group&search_responsible_gamemaster_id[' . CURRENT_USER->id() . ']=on" class="fixed_select">' . $LOCALE['switch_to_mine'] . '</a>' : '<a href="/group/object=group&action=clearFilters&sorting=0" class="fixed_select">' . $LOCALE['switch_to_all'] . '</a>') . '</div>', $RESPONSE_DATA);

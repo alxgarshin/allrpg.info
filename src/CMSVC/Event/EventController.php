@@ -48,18 +48,18 @@ class EventController extends BaseController
                         ACTION === ActionEnum::create
                         && (
                             (
-                                is_null($this->getService()->getObjType())
-                                && is_null($this->getService()->getObjId())
+                                is_null($this->service->getObjType())
+                                && is_null($this->service->getObjId())
                             )
-                            || RightsHelper::checkAnyRights($this->getService()->getObjType(), $this->getService()->getObjId())
+                            || RightsHelper::checkAnyRights($this->service->getObjType(), $this->service->getObjId())
                         )
                     )
                 )
             ) {
-                $LOCALE = $this->getLOCALE();
+                $LOCALE = $this->LOCALE;
                 ResponseHelper::responseOneBlock(
                     'error',
-                    $LOCALE['have_no_rights'] . ' ' . ($this->getService()->getObjType() === 'project' ? $LOCALE['have_no_rights_project'] : $LOCALE['have_no_rights_community']) . '.',
+                    $LOCALE['have_no_rights'] . ' ' . ($this->service->getObjType() === 'project' ? $LOCALE['have_no_rights_project'] : $LOCALE['have_no_rights_community']) . '.',
                 );
             }
         }

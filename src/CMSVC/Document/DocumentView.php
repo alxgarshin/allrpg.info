@@ -37,9 +37,9 @@ class DocumentView extends BaseView
     public function additionalPostViewHandler(string $RESPONSE_DATA): string
     {
         if (DataHelper::getId() > 0) {
-            $LOCALE = $this->getLOCALE();
+            $LOCALE = $this->LOCALE;
 
-            $listOfRoles = $this->getService()->getListOfRolesElem();
+            $listOfRoles = $this->service->getListOfRolesElem();
 
             $content = '<br>
 <form action="/document/" method="POST" enctype="multipart/form-data" id="form_generate_documents" no_dynamic_content target="_blank">
@@ -71,10 +71,10 @@ class DocumentView extends BaseView
          */
 
         /** Генерируем документы на основе шаблона */
-        $templateData = $this->getService()->get(
+        $templateData = $this->service->get(
             id: (int) $_REQUEST['template_id'],
             criteria: [
-                'project_id' => $this->getService()->getActivatedProjectId(),
+                'project_id' => $this->service->getActivatedProjectId(),
             ],
         );
 
@@ -109,10 +109,10 @@ class DocumentView extends BaseView
 <body>';
 
         if ($templateData->content->get()) {
-            $fullApplicationsData = $this->getService()->fullApplicationsData;
-            $fields = $this->getService()->fields;
-            $fieldsShowIf = $this->getService()->fieldsShowIf;
-            $plotService = $this->getService()->plotService;
+            $fullApplicationsData = $this->service->fullApplicationsData;
+            $fields = $this->service->fields;
+            $fieldsShowIf = $this->service->fieldsShowIf;
+            $plotService = $this->service->plotService;
 
             $templateContent = $templateData->content->get();
 
@@ -121,11 +121,11 @@ class DocumentView extends BaseView
                 $document = $templateContent;
 
                 foreach ($fields as $field) {
-                    if (preg_match('#\[' . $field->getShownName() . '\]#', $document)) {
-                        if ($field->getName() === 'plots_data') {
-                            $field->set($plotService->generateAllPlots($this->getService()->getActivatedProjectId(), '{application}', $applicationRequestedId, true));
+                    if (preg_match('#\[' . $field->shownName . '\]#', $document)) {
+                        if ($field->name === 'plots_data') {
+                            $field->set($plotService->generateAllPlots($this->service->getActivatedProjectId(), '{application}', $applicationRequestedId, true));
                         } else {
-                            $fieldData = $fullApplicationsData[$applicationRequestedId][$field->getName()] ?? null;
+                            $fieldData = $fullApplicationsData[$applicationRequestedId][$field->name] ?? null;
 
                             if ($fieldData) {
                                 /** @phpstan-ignore-next-line */
@@ -136,10 +136,10 @@ class DocumentView extends BaseView
                         /** Проверка наличия условий по полям */
                         $changeToValue = true;
 
-                        if (isset($fieldsShowIf[$field->getName()])) {
+                        if (isset($fieldsShowIf[$field->name])) {
                             $changeToValue = false;
 
-                            $showConditions = $fieldsShowIf[$field->getName()];
+                            $showConditions = $fieldsShowIf[$field->name];
 
                             unset($matches);
                             preg_match_all('#-(\d+):(\d+)#', $showConditions, $matches);
@@ -164,8 +164,8 @@ class DocumentView extends BaseView
                         }
 
                         $document = preg_replace(
-                            '#\[' . $field->getShownName() . '\]#',
-                            ($changeToValue ? '<span id="' . $field->getName() . '">' . $field->asHTML(false) . '</span>' : ''),
+                            '#\[' . $field->shownName . '\]#',
+                            ($changeToValue ? '<span id="' . $field->name . '">' . $field->asHTML(false) . '</span>' : ''),
                             $document,
                         );
                     }

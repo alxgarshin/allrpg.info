@@ -51,12 +51,12 @@ class ProjectView extends BaseView
 {
     public function Response(): ?Response
     {
-        $projectService = $this->getService();
+        $projectService = $this->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_MYAPPLICATION = LocaleHelper::getLocale(['myapplication', 'global']);
 
@@ -569,11 +569,11 @@ class ProjectView extends BaseView
 
     public function List(): ?Response
     {
-        $projectService = $this->getService();
+        $projectService = $this->service;
 
         [$allProjectsData, $allProjectsCount] = $projectService->getProjects();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_START = LocaleHelper::getLocale(['start', 'global']);
 
@@ -598,7 +598,7 @@ class ProjectView extends BaseView
             $projectsNewCount = [];
 
             if ($projects) {
-                $projectsData = $this->getService()->getAll(['id' => $projects]);
+                $projectsData = $this->service->getAll(['id' => $projects]);
                 $projectsNewCount = [];
                 $projectsDataSort = [];
                 $projectsDataSort2 = [];
@@ -607,7 +607,7 @@ class ProjectView extends BaseView
                 $projectsData = iterator_to_array($projectsData);
 
                 foreach ($projectsData as $key => $objData) {
-                    if ($objData->date_to->getModel()->getModelDataFieldValue('date_to') !== '' && $objData->date_to->get() >= new DateTimeImmutable('today')) {
+                    if ($objData->date_to->model->getModelDataFieldValue('date_to') !== '' && $objData->date_to->get() >= new DateTimeImmutable('today')) {
                         $projectEvents = UniversalHelper::checkForUpdates('{project}', (int) $objData->id->getAsInt());
                         $projectsDataSort[$key] = $projectsNewCount[$objData->id->getAsInt()]['new_count'] = $projectEvents;
                         $projectsDataSort2[$key] = DataHelper::escapeOutput($objData->name->get());
@@ -646,7 +646,7 @@ class ProjectView extends BaseView
             $projectsNewCount = [];
 
             if ($projects) {
-                $projectsData = $this->getService()->getAll(['id' => $projects]);
+                $projectsData = $this->service->getAll(['id' => $projects]);
                 $projectsNewCount = [];
                 $projectsDataSort = [];
                 $projectsDataSort2 = [];
@@ -726,9 +726,9 @@ class ProjectView extends BaseView
 
     public function Wall(): ?Response
     {
-        $projectService = $this->getService();
+        $projectService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $objData = $projectService->get(DataHelper::getId());
@@ -767,9 +767,9 @@ class ProjectView extends BaseView
 
     public function Conversation(): ?Response
     {
-        $projectService = $this->getService();
+        $projectService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $objData = $projectService->get(DataHelper::getId());

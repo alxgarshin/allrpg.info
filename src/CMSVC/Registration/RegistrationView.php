@@ -15,9 +15,9 @@ class RegistrationView extends BaseView
 {
     public function Response(): ?Response
     {
-        $registrationService = $this->getService();
+        $registrationService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_PROJECT = LocaleHelper::getLocale(['project', 'global']);
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);

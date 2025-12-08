@@ -14,7 +14,7 @@ class MobileView extends BaseView
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_PWA = LocaleHelper::getLocale(['global', 'pwa']);
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);

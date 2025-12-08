@@ -30,17 +30,27 @@ abstract class BaseModel
 {
     use InitDependencyInjectionsTrait;
 
-    protected ?CMSVC $CMSVC = null;
+    public ?CMSVC $CMSVC = null;
 
-    protected array $modelData = [];
+    public array $modelData = [] {
+        get => $this->modelData;
+        set(?array $value) {
+            $this->modelData = $value ?? [];
+        }
+    }
 
-    protected array $elementsList = [];
+    /** @var array<int, ElementItem> */
+    public array $elementsList = [];
+
+    public ?BaseEntity $entity {
+        get => $this->CMSVC->view?->entity;
+    }
 
     public function __clone()
     {
         foreach ($this->elementsList as $element) {
-            $this->{$element->getName()} = clone $element;
-            $this->{$element->getName()}->setModel($this);
+            $this->{$element->name} = clone $element;
+            $this->{$element->name}->model = $this;
         }
     }
 
@@ -54,13 +64,13 @@ abstract class BaseModel
             if ($controllerRef[0] ?? false) {
                 /** @var Controller $controller */
                 $controller = $controllerRef[0]->newInstance();
-                $this->CMSVC = $controller->getCMSVC();
+                $this->CMSVC = $controller->CMSVC;
             } else {
                 $CMSVC = $reflection->getAttributes(CMSVC::class);
 
                 if ($CMSVC[0] ?? false) {
                     $this->CMSVC = $CMSVC[0]->newInstance();
-                    $this->CMSVC->setModel($this::class);
+                    $this->CMSVC->model = $this::class;
                     $this->CMSVC->init();
                 }
             }
@@ -69,7 +79,7 @@ abstract class BaseModel
         }
 
         if (is_null($alternativeEntity)) {
-            $this->CMSVC->setModel($this::class);
+            $this->CMSVC->model = $this::class;
         }
 
         $properties = $reflection->getProperties();
@@ -78,7 +88,7 @@ abstract class BaseModel
             $item = $propertyData->getAttributes(Attribute\BaseElement::class, ReflectionAttribute::IS_INSTANCEOF);
 
             if ($item[0] ?? false) {
-                $className = str_replace('\Attribute\\', '\Item\\', $item[0]->getName());
+                $className = str_replace('\Attribute\\', '\Item\\', $item[0]->name);
                 $attribute = $propertyData->getAttributes(Attribute\BaseElement::class, ReflectionAttribute::IS_INSTANCEOF)[0]->newInstance();
 
                 $create = null;
@@ -96,15 +106,15 @@ abstract class BaseModel
                 }
 
                 $this->initElement(
-                    $propertyData->getName(),
+                    $propertyData->name,
                     $className,
                     $attribute,
                     $create,
                     $change,
                     $alternativeEntity,
                 );
-            } elseif (!in_array($propertyData->getName(), ['elementsList', 'modelData', 'CMSVC'])) {
-                throw new RuntimeException('Property ' . $propertyData->getName() . ' in model ' . $this::class . ' does not have a BaseElement attribute set.');
+            } elseif (!in_array($propertyData->name, ['entity', 'elementsList', 'modelData', 'CMSVC'])) {
+                throw new RuntimeException('Property ' . $propertyData->name . ' in model ' . $this::class . ' does not have a BaseElement attribute set.');
             }
         }
 
@@ -118,31 +128,9 @@ abstract class BaseModel
         return $this;
     }
 
-    public function getModelData(): ?array
-    {
-        return $this->modelData;
-    }
-
     public function getModelDataFieldValue(string $elementName): mixed
     {
         return $this->modelData[$elementName] ?? null;
-    }
-
-    public function setModelData(?array $modelData): static
-    {
-        $this->modelData = $modelData ?? [];
-
-        return $this;
-    }
-
-    public function getCMSVC(): ?CMSVC
-    {
-        return $this->CMSVC;
-    }
-
-    public function getEntity(): ?BaseEntity
-    {
-        return $this->CMSVC->getView()?->getEntity();
     }
 
     public function initElement(
@@ -153,10 +141,10 @@ abstract class BaseModel
         ?Attribute\OnChange $change = null,
         ?BaseEntity $alternativeEntity = null,
     ): ?ElementItem {
-        $service = $this->CMSVC->getService();
+        $service = $this->CMSVC->service;
 
         if ($elementOrElementName instanceof ElementItem) {
-            $elementName = $elementOrElementName->getName();
+            $elementName = $elementOrElementName->name;
             $attribute = $elementOrElementName->getAttribute();
         } else {
             if (is_null($className)) {
@@ -173,54 +161,51 @@ abstract class BaseModel
         $property = $this->{$elementName} = $elementOrElementName;
 
         if ($property instanceof ElementItem) {
-            $property->setModel($this);
+            $property->model = $this;
 
             $this->elementsList[] = $property;
 
-            $property->setName($elementName);
+            $property->name = $elementName;
 
             $property->setAttribute($attribute);
 
-            $entity = $this->getEntity();
+            $entity = $this->entity;
 
             if (!is_null($alternativeEntity)) {
                 $entity = $alternativeEntity;
             }
 
-            $property->setEntity($entity);
+            $property->entity = $entity;
 
             $elementsLocale = $entity->getElementsLocale();
 
             $modelElementsLocale = null;
-            $entityNameFromModel = TextHelper::camelCaseToSnakeCase(ObjectsHelper::getClassShortNameFromCMSVCObject($entity->getModel()));
+            $entityNameFromModel = TextHelper::camelCaseToSnakeCase(ObjectsHelper::getClassShortNameFromCMSVCObject($entity->model));
 
             if ($entity->getNameUsedInLocale() !== $entityNameFromModel) {
                 $entityNameUsedInLocale = $entity->getNameUsedInLocale();
-                $entity->setName($entityNameFromModel);
+                $entity->name = $entityNameFromModel;
                 $modelElementsLocale = $entity->getElementsLocale();
-                $entity->setName($entityNameUsedInLocale);
+                $entity->name = $entityNameUsedInLocale;
                 unset($entityNameUsedInLocale);
             }
 
-            $elementLocale = $elementsLocale[$property->getName()] ?? [];
-            $modelElementLocale = $modelElementsLocale[$property->getName()] ?? [];
+            $elementLocale = $elementsLocale[$property->name] ?? [];
+            $modelElementLocale = $modelElementsLocale[$property->name] ?? [];
 
             if ($modelElementLocale || $elementLocale) {
-                $property->setShownName(
-                    array_key_exists('shownName', $elementLocale) ?
-                        $elementLocale['shownName'] :
-                        $modelElementLocale['shownName'] ?? $property->getShownName(),
-                )
-                    ->setHelpText(
-                        array_key_exists('helpText', $elementLocale) ?
-                            $elementLocale['helpText'] :
-                            $modelElementLocale['helpText'] ?? $property->getHelpText(),
-                    );
+                $property->shownName = array_key_exists('shownName', $elementLocale) ?
+                    $elementLocale['shownName'] :
+                    $modelElementLocale['shownName'] ?? $property->shownName;
+
+                $property->helpText = array_key_exists('helpText', $elementLocale) ?
+                    $elementLocale['helpText'] :
+                    $modelElementLocale['helpText'] ?? $property->helpText;
 
                 $attr = $property->getAttribute();
 
-                if ($attr instanceof HasDefaultValue && is_null($attr->getDefaultValue())) {
-                    $attr->setDefaultValue(array_key_exists('defaultValue', $elementLocale) ? $elementLocale['defaultValue'] : $modelElementLocale['defaultValue'] ?? null);
+                if ($attr instanceof HasDefaultValue && is_null($attr->defaultValue)) {
+                    $attr->defaultValue = array_key_exists('defaultValue', $elementLocale) ? $elementLocale['defaultValue'] : $modelElementLocale['defaultValue'] ?? null;
                 }
             }
 
@@ -240,17 +225,15 @@ abstract class BaseModel
                     }
                 }
 
-                $property->getAttribute()->setValues($values);
+                $property->getAttribute()->values = $values;
 
-                if (method_exists($property, 'getLocked')) {
-                    $locked = $property->getAttribute()->getLocked();
+                $locked = $property->getAttribute()->locked;
 
-                    if (is_string($locked) && method_exists($service, $locked)) {
-                        $locked =  $service->{$locked}();
-                    }
-
-                    $property->getAttribute()->setLocked($locked);
+                if (is_string($locked) && method_exists($service, $locked)) {
+                    $locked =  $service->{$locked}();
                 }
+
+                $property->getAttribute()->locked = $locked;
             }
 
             if (method_exists($property, 'getCreator')) {
@@ -267,26 +250,25 @@ abstract class BaseModel
                 }
             }
 
-            if (method_exists($property, 'getImages')) {
-                /** @var Item\Multiselect $property */
-                $images = $property->getAttribute()->getImages();
+            if ($property instanceof Item\Multiselect) {
+                $images = $property->getAttribute()->images;
 
                 if (is_string($images) && method_exists($service, $images)) {
-                    $property->getAttribute()->setImages($service->{$images}());
+                    $property->getAttribute()->images = $service->{$images}();
                 }
             }
 
-            $context = $property->getAttribute()->getContext();
+            $context = $property->getAttribute()->context;
 
             if (is_string($context) && method_exists($service, $context)) {
                 $context = $service->{$context}();
             } elseif (!is_array($context) || count($context) === 0) {
                 $objectName = ObjectsHelper::getClassShortNameFromCMSVCObject($this);
-                $propertiesWithListContext = $this->CMSVC->getView()->getPropertiesWithListContext();
+                $propertiesWithListContext = $this->CMSVC->view->propertiesWithListContext;
 
                 $context = [];
 
-                if (in_array($property->getName(), $propertiesWithListContext) || count($propertiesWithListContext) === 0) {
+                if (in_array($property->name, $propertiesWithListContext) || count($propertiesWithListContext) === 0) {
                     $context[] = $objectName . ':list';
                 }
 
@@ -297,11 +279,11 @@ abstract class BaseModel
                     $objectName . ':embedded',
                 ]);
             }
-            $property->getAttribute()->setContext($context);
+            $property->getAttribute()->context = $context;
 
-            $property->setOnCreate($create);
+            $property->create = $create;
 
-            $property->setOnChange($change);
+            $property->change = $change;
 
             return $property;
         }
@@ -322,29 +304,16 @@ abstract class BaseModel
         return null;
     }
 
-    /** @return array<int, ElementItem> */
-    public function getElements(): array
-    {
-        return $this->elementsList;
-    }
-
-    public function setElements(array $elementsList): static
-    {
-        $this->elementsList = $elementsList;
-
-        return $this;
-    }
-
     public function removeElement(string $elementName): static
     {
         if (property_exists($this, $elementName)) {
             $property = $this->{$elementName};
 
             if ($property instanceof ElementItem) {
-                $elementsList = $this->getElements();
+                $elementsList = $this->elementsList;
                 $key = array_search($property, $elementsList);
                 unset($elementsList[$key]);
-                $this->setElements($elementsList);
+                $this->elementsList = $elementsList;
                 unset($this->{$elementName});
             }
         }
@@ -354,15 +323,15 @@ abstract class BaseModel
 
     public function changeElementsOrder(string $elementName, ?string $setBeforeElementName = null): static
     {
-        $modelElements = $this->getElements();
+        $modelElements = $this->elementsList;
 
         $setBeforeElementIndex = is_null($setBeforeElementName) ? 0 : null;
         $elementIndex = null;
 
         foreach ($modelElements as $key => $modelElement) {
-            if (!is_null($setBeforeElementName) && $modelElement->getName() === $setBeforeElementName) {
+            if (!is_null($setBeforeElementName) && $modelElement->name === $setBeforeElementName) {
                 $setBeforeElementIndex = $key;
-            } elseif ($modelElement->getName() === $elementName) {
+            } elseif ($modelElement->name === $elementName) {
                 $elementIndex = $key;
             }
 
@@ -371,7 +340,7 @@ abstract class BaseModel
                 break;
             }
         }
-        $this->setElements($modelElements);
+        $this->elementsList = $modelElements;
 
         return $this;
     }

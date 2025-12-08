@@ -1185,7 +1185,7 @@ abstract class MessageHelper implements Helper
                 'conversation_message',
                 $commentData['id'],
                 ($commentData['marked_important'] ?? 0) > 0,
-                $commentData['marked_important_count'] ?? 0,
+                $commentData['marked_important_count'] ?? null,
             ) .
             (
                 $commentData['use_group_name'] === '1' ? $userService->showNameExtended($commentCreator, true, true, 'use_group_name') : ''
@@ -1442,12 +1442,12 @@ abstract class MessageHelper implements Helper
                 $LOCALE_TASK = LocaleHelper::getLocale(['task', 'fraym_model', 'elements']);
 
                 $TASK_MODEL = new TaskModel();
-                $TASK_MODEL->construct()->init();
+                $TASK_MODEL->construct();
 
                 /** @var Item\Select $responsible */
                 $responsible = $TASK_MODEL->getElement('responsible');
-                $responsible->getAttribute()->setDefaultValue($responsibleId);
-                $responsible->getAttribute()->setValues($taskMembersData);
+                $responsible->getAttribute()->defaultValue = $responsibleId;
+                $responsible->getAttribute()->values = $taskMembersData;
                 $commentContent .= str_replace(
                     '<select',
                     '<select title="' . $LOCALE_TASK['responsible']['shownName'] . '"',

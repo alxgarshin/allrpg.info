@@ -18,7 +18,7 @@ class MarkService extends BaseService
     /** Отметка сообщения требующим решения */
     public function markNeedResponse(int $objId): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [
             'response' => 'error',
@@ -55,7 +55,7 @@ class MarkService extends BaseService
     /** Отметка сообщения получившим решение */
     public function markHasResponse(int $objId): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [
             'response' => 'error',
@@ -92,7 +92,7 @@ class MarkService extends BaseService
     /** Отметка сообщения прочитанным */
     public function markReadMessage(int $objId): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [
             'response' => 'error',
@@ -144,7 +144,7 @@ class MarkService extends BaseService
 
         $returnArr = [];
 
-        if ($objType !== '' && $objId !== '' && CURRENT_USER->isLogged()) {
+        if ($objType !== '' && $objId > 0 && CURRENT_USER->isLogged()) {
             if (RightsHelper::checkRights('{important}', DataHelper::addBraces($objType), $objId)) {
                 RightsHelper::deleteRights('{important}', DataHelper::addBraces($objType), $objId);
                 $returnArr = [
@@ -172,7 +172,7 @@ class MarkService extends BaseService
     /**  Отметка сообщения спамом */
     /*public function reportSpam(string $objType, int $objId): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $returnArr = [];
         $deleteType = '';

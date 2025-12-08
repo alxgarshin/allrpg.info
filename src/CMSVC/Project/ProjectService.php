@@ -457,7 +457,7 @@ class ProjectService extends BaseService
 
     public function postCreate(array $successfulResultsIds): void
     {
-        $LOCALE_MESSAGES = $this->getLOCALE()['messages'];
+        $LOCALE_MESSAGES = $this->LOCALE['messages'];
         $LOCALE_FEE = LocaleHelper::getLocale(['fee', 'global']);
         $LOCALE_PAYMENT_TYPE = LocaleHelper::getLocale(['payment_type', 'global']);
 
@@ -771,7 +771,7 @@ class ProjectService extends BaseService
             }
 
             if (DataHelper::getId() > 0) {
-                if ($this->getAct() === ActEnum::edit || $this->getAct() === ActEnum::view) {
+                if ($this->act === ActEnum::edit || $this->act === ActEnum::view) {
                     $objId = RightsHelper::findOneByRights('{child}', '{project}', null, '{task}', DataHelper::getId());
 
                     if (!is_null($objId)) {
@@ -811,7 +811,7 @@ class ProjectService extends BaseService
             foreach ($result as $communityData) {
                 $communitiesDefault[] = $communityData['id'];
             }
-        } elseif ($this->getAct() === ActEnum::add && $_ENV['PROJECTS_NEED_COMMUNITY'] && OBJ_ID && OBJ_TYPE === 'community') {
+        } elseif ($this->act === ActEnum::add && $_ENV['PROJECTS_NEED_COMMUNITY'] && OBJ_ID && OBJ_TYPE === 'community') {
             $communitiesDefault[] = OBJ_ID;
         }
 
@@ -877,7 +877,7 @@ class ProjectService extends BaseService
     {
         $parentMembersData = [];
 
-        if ($_ENV['PROJECTS_NEED_COMMUNITY'] && $this->getAct() === ActEnum::add) {
+        if ($_ENV['PROJECTS_NEED_COMMUNITY'] && $this->act === ActEnum::add) {
             $objId = $this->getObjId();
             $objType = $this->getObjType();
 
@@ -1105,19 +1105,19 @@ class ProjectService extends BaseService
                     ($projectData['paykeeper_server'] ?? '') === '' ||
                     ($projectData['paykeeper_secret'] ?? '') === ''
                 ) {
-                    $model->helper_1_pk->getAttribute()->setContext(['project:view']);
+                    $model->helper_1_pk->getAttribute()->context = ['project:view'];
                 }
             } elseif (in_array('paymaster', $_ENV['USE_PAYMENT_SYSTEMS'])) {
                 if (($projectData['paymaster_merchant_id'] ?? '') === '' || ($projectData['paymaster_code'] ?? '') === '') {
-                    $model->helper_1_pm->getAttribute()->setContext(['project:view']);
+                    $model->helper_1_pm->getAttribute()->context = ['project:view'];
                 }
             } elseif (in_array('yandex', $_ENV['USE_PAYMENT_SYSTEMS'])) {
                 if (($projectData['yk_acc_id'] ?? '') === '' || ($projectData['yk_code'] ?? '') === '') {
-                    $model->helper_1_yk->getAttribute()->setContext(['project:view']);
+                    $model->helper_1_yk->getAttribute()->context = ['project:view'];
                 }
             } elseif (in_array('payanyway', $_ENV['USE_PAYMENT_SYSTEMS'])) {
                 if (!((int) $projectData['paw_mnt_id'] > 0) || ($projectData['paw_code'] ?? '') === '') {
-                    $model->helper_1_paw->getAttribute()->setContext(['project:view']);
+                    $model->helper_1_paw->getAttribute()->context = ['project:view'];
                 }
             }
         }

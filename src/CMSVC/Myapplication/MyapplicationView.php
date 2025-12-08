@@ -72,7 +72,7 @@ class MyapplicationView extends BaseView
 
     public function addApplicationProjectsList(): Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $RESPONSE_DATA = '';
         $PAGETITLE = TextHelper::mb_ucfirst($LOCALE['add_application']);
@@ -84,7 +84,7 @@ class MyapplicationView extends BaseView
 	
 	<div class="myapplication_project_selection">';
 
-        foreach ($this->getService()->getAddApplicationProjectsListData() as $projectInfo) {
+        foreach ($this->service->getAddApplicationProjectsListData() as $projectInfo) {
             $individualFieldsPresent = $projectInfo['individual_field_id'] > 0;
             $teamFieldsPresent = $projectInfo['team_field_id'] > 0;
             $visibleGroupsPresent = $projectInfo['group_id'] > 0;
@@ -121,7 +121,7 @@ class MyapplicationView extends BaseView
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $RESPONSE_DATA = '';
-        $PAGETITLE = $this->getService()->getProjectData()->name->get();
+        $PAGETITLE = $this->service->getProjectData()->name->get();
 
         $RESPONSE_DATA = '<div class="maincontent_data kind_' . KIND . '">
 	<div class="page_blocks">
@@ -141,17 +141,16 @@ class MyapplicationView extends BaseView
 
     public function preViewHandler(): void
     {
-        $myapplicationService = $this->getService();
+        $myapplicationService = $this->service;
 
         if (DataHelper::getId()) {
             $applicationData = $myapplicationService->getApplicationData();
 
             if ($applicationData['offer_to_user_id'] === CURRENT_USER->id() && $applicationData['offer_denied'] !== '1') {
-                $rights = $this->getViewRights();
-                $rights->setDeleteRight(false);
+                $this->viewRights->deleteRight = false;
 
-                foreach ($this->getModel()->getElements() as $element) {
-                    $contextElements = $element->getAttribute()->getContext();
+                foreach ($this->model->elementsList as $element) {
+                    $contextElements = $element->getAttribute()->context;
 
                     foreach ($contextElements as $key => $contextElement) {
                         if ($contextElement) {
@@ -163,7 +162,7 @@ class MyapplicationView extends BaseView
 
                     $contextElements = array_values($contextElements);
 
-                    $element->getAttribute()->setContext($contextElements);
+                    $element->getAttribute()->context = $contextElements;
                 }
             }
         }
@@ -171,10 +170,10 @@ class MyapplicationView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $myapplicationService = $this->getService();
+        $myapplicationService = $this->service;
         $userService = $myapplicationService->getUserService();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
 
         $RESPONSE_DATA = $response->getHtml();
@@ -233,23 +232,25 @@ class MyapplicationView extends BaseView
                         /** @var TransactionService */
                         $transactionService = CMSVCHelper::getService('transaction');
 
-                        $transactionService->getView()->setEntity(
-                            (new TableEntity(
+                        $transactionService->view->entity =
+                            new TableEntity(
                                 name: 'transaction',
                                 table: 'project_transaction',
                                 sortingData: [],
-                            )),
-                        )->getViewRights()
-                            ->setAddRight(true)
-                            ->setChangeRight(false)
-                            ->setDeleteRight(false)
-                            ->setViewRestrict('')
-                            ->setChangeRestrict('')
-                            ->setDeleteRestrict('');
+                            );
 
-                        $transactionContent = $transactionService->getEntity()->viewActItem([], ActEnum::add, KIND);
+                        $viewRights = $transactionService->view->viewRights;
 
-                        $transactionContent = str_replace('<button class="main">' . $GLOBAL_LOCALE['addCapitalized'] . ' ' . $transactionService->getEntity()->getObjectName() . '</button>', '<button class="main">' . $GLOBAL_LOCALE['addCapitalized'] . ' ' . $LOCALE['payment'] . '</button>', $transactionContent);
+                        $viewRights->addRight = true;
+                        $viewRights->changeRight = false;
+                        $viewRights->deleteRight = false;
+                        $viewRights->viewRestrict = '';
+                        $viewRights->changeRestrict = '';
+                        $viewRights->deleteRestrict = '';
+
+                        $transactionContent = $transactionService->entity->viewActItem([], ActEnum::add, KIND);
+
+                        $transactionContent = str_replace('<button class="main">' . $GLOBAL_LOCALE['addCapitalized'] . ' ' . $transactionService->entity->getObjectName() . '</button>', '<button class="main">' . $GLOBAL_LOCALE['addCapitalized'] . ' ' . $LOCALE['payment'] . '</button>', $transactionContent);
 
                         $transactionContent = '<div class="provide_payment_form">' . str_replace('<form', '<form no_dynamic_content', $transactionContent) . '</div>';
 
@@ -355,18 +356,19 @@ class MyapplicationView extends BaseView
 
                     $commentContentHistory = '<div class="filter"><a class="fixed_select right">' . DateHelper::showDateTimeUsual((string) $historyViewNowData->updated_at->getAsTimeStamp()) . ' ' . $userService->showNameWithId($userService->get($historyViewNowData->creator_id->getAsInt())) . '</a></div><form>';
 
-                    $this->getEntity()
-                        ->setTable('project_application_history');
-                    $this->getViewRights()
-                        ->setAddRight(false)
-                        ->setChangeRight(false)
-                        ->setDeleteRight(false)
-                        ->setViewRestrict('')
-                        ->setChangeRestrict('')
-                        ->setDeleteRestrict('');
+                    $this->entity->table = 'project_application_history';
+
+                    $viewRights = $this->viewRights;
+
+                    $viewRights->addRight = false;
+                    $viewRights->changeRight = false;
+                    $viewRights->deleteRight = false;
+                    $viewRights->viewRestrict = '';
+                    $viewRights->changeRestrict = '';
+                    $viewRights->deleteRestrict = '';
 
                     /** @var HtmlResponse */
-                    $historyHtml = $this->getEntity()->view(ActEnum::view, $historyViewIds['now']);
+                    $historyHtml = $this->entity->view(ActEnum::view, $historyViewIds['now']);
                     $historyHtml = DesignHelper::insertHeader($historyHtml->getHtml(), '&nbsp;');
 
                     $historyHtml = preg_replace('#maincontent_data autocreated#', 'maincontent_data autocreated table_cell history_view_old', $historyHtml);
@@ -374,7 +376,7 @@ class MyapplicationView extends BaseView
                     $RESPONSE_DATA = preg_replace('#</h1>#', '</h1>' . $commentContent, $RESPONSE_DATA, 1) . '</form>' . preg_replace('#</h1>#', '</h1>' . $commentContentHistory, $historyHtml, 1) . '</form>';
                 }
             }
-        } elseif (DataHelper::getActDefault($this->getEntity()) === ActEnum::add) {
+        } elseif (DataHelper::getActDefault($this->entity) === ActEnum::add) {
             $projectData = $myapplicationService->getProjectData();
 
             $RESPONSE_DATA = DesignHelper::insertScripts($RESPONSE_DATA, $myapplicationService->getViewScripts());
@@ -383,7 +385,7 @@ class MyapplicationView extends BaseView
         } else {
             $RESPONSE_DATA = preg_replace('#<div class="indexer_toggle">#', '<div class="filter">' . (!$myapplicationService->getDeletedView() ? '<a href="/myapplication/deleted=1" class="fixed_select">' . $LOCALE['switch_to_deleted'] . '</a>' : '<a href="/myapplication/" class="fixed_select">' . $LOCALE['switch_to_all'] . '</a>') . '</div><div class="indexer_toggle">', $RESPONSE_DATA);
 
-            $RESPONSE_DATA = preg_replace('#' . $LOCALE_FRAYM['dynamiccreate']['add'] . ' ' . $this->getEntity()->getObjectName() . '#', $LOCALE['add_application'], $RESPONSE_DATA);
+            $RESPONSE_DATA = preg_replace('#' . $LOCALE_FRAYM['dynamiccreate']['add'] . ' ' . $this->entity->getObjectName() . '#', $LOCALE['add_application'], $RESPONSE_DATA);
         }
 
         return $response->setHtml($RESPONSE_DATA)->setPagetitle($PAGETITLE);

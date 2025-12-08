@@ -15,7 +15,7 @@ class Wall2View extends BaseView
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_PROJECT = LocaleHelper::getLocale(['project', 'global']);
         $LOCALE_COMMUNITY = LocaleHelper::getLocale(['community', 'global']);
@@ -23,7 +23,7 @@ class Wall2View extends BaseView
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
         $RESPONSE_DATA = '';
 
-        $myGroups = $this->getService()->getMyGroups();
+        $myGroups = $this->service->getMyGroups();
 
         $RESPONSE_DATA .= '<div class="maincontent_data kind_' . KIND . '">
 <h1 class="page_header"><a href="/' . KIND . '/">' . $LOCALE['conversations'] . '</a></h1>

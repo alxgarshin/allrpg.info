@@ -26,26 +26,26 @@ class CommunityController extends BaseController
     {
         $id = DataHelper::getId();
 
-        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->getEntity()) === ActEnum::list) {
+        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->entity) === ActEnum::list) {
             $this->requestCheckSearch();
         }
 
-        if (!CURRENT_USER->isLogged() && DataHelper::getActDefault($this->getEntity()) === ActEnum::add) {
+        if (!CURRENT_USER->isLogged() && DataHelper::getActDefault($this->entity) === ActEnum::add) {
             ResponseHelper::redirect('/login/', ['redirectToKind' => KIND, 'redirectToId' => $id, 'redirectParams' => 'act=add']);
         }
 
         /** @var CommunityView */
-        $communityView = $this->getCMSVC()->getView();
+        $communityView = $this->CMSVC->view;
 
-        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->getEntity()) === ActEnum::list) {
+        if (is_null($id) && (ActionEnum::init() !== ActionEnum::create || ($_REQUEST['search'] ?? false)) && DataHelper::getActDefault($this->entity) === ActEnum::list) {
             return $communityView->List();
         }
 
-        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'wall' && BID > 0 && $this->getService()->hasCommunityAccess($id)) {
+        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'wall' && BID > 0 && $this->service->hasCommunityAccess($id)) {
             return $communityView->Wall();
         }
 
-        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'conversation' && BID > 0 && $this->getService()->hasCommunityAccess($id)) {
+        if ($id > 0 && ($_REQUEST['show'] ?? false) === 'conversation' && BID > 0 && $this->service->hasCommunityAccess($id)) {
             return $communityView->Conversation();
         }
 

@@ -26,15 +26,37 @@ abstract class BaseView
 {
     use InitDependencyInjectionsTrait;
 
-    protected ?array $LOCALE = null;
+    public ?array $LOCALE = null {
+        get => $this->LOCALE;
+        set => $this->LOCALE = LocaleHelper::getLocale($value);
+    }
 
-    protected ?BaseEntity $entity = null;
+    public ?BaseEntity $entity = null {
+        get => $this->entity;
+        set {
+            $this->entity = $value;
+            $value->view = $this;
+        }
+    }
 
-    protected ?Rights $viewRights = null;
+    public ?Rights $viewRights = null;
 
-    protected array $propertiesWithListContext = [];
+    public array $propertiesWithListContext = [];
 
-    protected ?CMSVC $CMSVC = null;
+    public ?CMSVC $CMSVC = null;
+
+    public ?BaseModel $model {
+        get => $this->CMSVC?->model;
+    }
+
+    public ?BaseController $controller {
+        get => $this->CMSVC?->controller;
+    }
+
+    /** @var T|null */
+    public ?BaseService $service {
+        get => $this->CMSVC?->service;
+    }
 
     abstract public function Response(): ?Response;
 
@@ -48,13 +70,13 @@ abstract class BaseView
             if ($controllerRef[0] ?? false) {
                 /** @var Controller $controller */
                 $controller = $controllerRef[0]->newInstance();
-                $this->CMSVC = $controller->getCMSVC();
+                $this->CMSVC = $controller->CMSVC;
             } else {
                 $CMSVC = $reflection->getAttributes(CMSVC::class);
 
                 if ($CMSVC[0] ?? false) {
                     $this->CMSVC = $CMSVC[0]->newInstance();
-                    $this->CMSVC->setView($this);
+                    $this->CMSVC->view = $this;
                     $this->CMSVC->init();
                 }
             }
@@ -62,7 +84,7 @@ abstract class BaseView
             $this->CMSVC = $CMSVC;
         }
 
-        $this->CMSVC->setView($this);
+        $this->CMSVC->view = $this;
 
         $entity = $reflection->getAttributes(BaseEntity::class, ReflectionAttribute::IS_INSTANCEOF);
 
@@ -70,16 +92,16 @@ abstract class BaseView
             $this->entity = $entity[0]->newInstance();
             $entity = $this->entity;
 
-            $this->LOCALE = $this->setLOCALE([$entity->getName(), 'global']);
+            $this->LOCALE = [$entity->name, 'global'];
 
-            $entity->setView($this);
-            $entity->setLOCALE([$entity->getName(), 'fraymModel']);
+            $entity->view = $this;
+            $entity->LOCALE = [$entity->name, 'fraymModel'];
 
             $viewRights = $reflection->getAttributes(Rights::class);
 
             if ($viewRights[0] ?? false) {
                 $this->viewRights = $viewRights[0]->newInstance();
-                $this->viewRights->setEntity($entity);
+                $this->viewRights->entity = $entity;
             }
 
             if ($entity instanceof CatalogEntity) {
@@ -88,11 +110,11 @@ abstract class BaseView
                 if ($catalogItemEntityRef[0] ?? false) {
                     /** @var CatalogItemEntity $catalogItemEntity */
                     $catalogItemEntity = $catalogItemEntityRef[0]->newInstance();
-                    $catalogItemEntity->setView($this);
-                    $catalogItemEntity->setCatalogEntity($entity);
-                    $catalogItemEntity->setLOCALE([$entity->getName() . '/' . $catalogItemEntity->getName(), 'fraymModel']);
+                    $catalogItemEntity->view = $this;
+                    $catalogItemEntity->catalogEntity = $entity;
+                    $catalogItemEntity->LOCALE = [$entity->name . '/' . $catalogItemEntity->name, 'fraymModel'];
 
-                    $entity->setCatalogItemEntity($catalogItemEntity);
+                    $entity->catalogItemEntity = $catalogItemEntity;
                 }
             }
 
@@ -100,29 +122,29 @@ abstract class BaseView
 
             /** В мультиобъектных сущностях в контекст :list выводятся все поля, потому что кроме list у них и нет других определяющих контекстов */
             if (!($entity instanceof MultiObjectsEntity)) {
-                $entitySortingItems = $entity->getSortingData();
+                $entitySortingItems = $entity->sortingData;
 
                 foreach ($entitySortingItems as $entitySortingItem) {
-                    $propertiesWithListContext[] = $entitySortingItem->getTableFieldName();
+                    $propertiesWithListContext[] = $entitySortingItem->tableFieldName;
                 }
 
                 /** В каталогах и наследующих объектах нам также нужны технические поля, определяющие родителя и является поле каталогом или наследником */
                 if ($entity instanceof CatalogEntity) {
                     /** @var CatalogItemEntity $itemEntity */
-                    $itemEntity = $entity->getCatalogItemEntity();
-                    $propertiesWithListContext[] = $itemEntity->getTableFieldWithParentId();
-                    $propertiesWithListContext[] = $itemEntity->getTableFieldToDetectType();
+                    $itemEntity = $entity->catalogItemEntity;
+                    $propertiesWithListContext[] = $itemEntity->tableFieldWithParentId;
+                    $propertiesWithListContext[] = $itemEntity->tableFieldToDetectType;
 
-                    $itemEntitySortingItems = $itemEntity->getSortingData();
+                    $itemEntitySortingItems = $itemEntity->sortingData;
 
                     foreach ($itemEntitySortingItems as $itemEntitySortingItem) {
-                        $propertiesWithListContext[] = $itemEntitySortingItem->getTableFieldName();
+                        $propertiesWithListContext[] = $itemEntitySortingItem->tableFieldName;
                     }
                 }
             }
             $this->propertiesWithListContext = $propertiesWithListContext;
         } else {
-            $this->LOCALE = $this->setLOCALE([TextHelper::camelCaseToSnakeCase(KIND), 'global']);
+            $this->LOCALE = [TextHelper::camelCaseToSnakeCase(KIND), 'global'];
         }
 
         $this->initDependencyInjections();
@@ -132,74 +154,6 @@ abstract class BaseView
 
     public function init(): static
     {
-        return $this;
-    }
-
-    public function getLOCALE(): ?array
-    {
-        return $this->LOCALE;
-    }
-
-    public function setLOCALE(array $entityPathInLocale): ?array
-    {
-        $this->LOCALE = LocaleHelper::getLocale($entityPathInLocale);
-
-        return $this->LOCALE;
-    }
-
-    public function getCMSVC(): ?CMSVC
-    {
-        return $this->CMSVC;
-    }
-
-    public function getEntity(): ?BaseEntity
-    {
-        return $this->entity;
-    }
-
-    public function setEntity(?BaseEntity $entity): static
-    {
-        $this->entity = $entity;
-        $entity->setView($this);
-
-        return $this;
-    }
-
-    public function getModel(): ?BaseModel
-    {
-        return $this->getCMSVC()?->getModel();
-    }
-
-    public function getController(): ?BaseController
-    {
-        return $this->getCMSVC()?->getController();
-    }
-
-    /** @return T|null */
-    public function getService(): ?BaseService
-    {
-        return $this->getCMSVC()?->getService();
-    }
-
-    public function getMessages(): array
-    {
-        return $this->getController()->getMessages();
-    }
-
-    public function getViewRights(): ?Rights
-    {
-        return $this->viewRights;
-    }
-
-    public function getPropertiesWithListContext(): array
-    {
-        return $this->propertiesWithListContext;
-    }
-
-    public function setPropertiesWithListContext(array $propertiesWithListContext): static
-    {
-        $this->propertiesWithListContext = $propertiesWithListContext;
-
         return $this;
     }
 

@@ -51,7 +51,7 @@ final class IsAccessible
         $this->additionalCheckAccessMethod = $method;
     }
 
-    public function getRedirectPath(): ?string
+    public function getRedirectPath(): string
     {
         return $this->redirectPath;
     }

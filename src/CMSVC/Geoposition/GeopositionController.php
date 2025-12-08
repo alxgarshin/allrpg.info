@@ -27,7 +27,7 @@ class GeopositionController extends BaseController
     public function getPlayersGeoposition(): ?Response
     {
         return $this->asArray(
-            $this->getService()->getPlayersGeoposition(),
+            $this->service->getPlayersGeoposition(),
         );
     }
 }

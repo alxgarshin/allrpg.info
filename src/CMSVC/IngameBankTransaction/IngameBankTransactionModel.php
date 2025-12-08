@@ -82,7 +82,7 @@ class IngameBankTransactionModel extends BaseModel
     public function getProjectId(): ?int
     {
         /** @var IngameBankTransactionService */
-        $ingameBankTransactionService = $this->getCMSVC()->getService();
+        $ingameBankTransactionService = $this->CMSVC->service;
 
         return $ingameBankTransactionService->getActivatedProjectId();
     }

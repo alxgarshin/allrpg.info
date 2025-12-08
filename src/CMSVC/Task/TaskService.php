@@ -992,7 +992,7 @@ class TaskService extends BaseService
     /** @return array{string, string} */
     public function getStateNameAndCss(TaskModel $task): array
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $stateName = '';
         $stateCssClass = '';
@@ -1086,14 +1086,14 @@ class TaskService extends BaseService
                     $_REQUEST['date_from'][0] = $value['date_from'];
                     $_REQUEST['date_to'][0] = $value['date_to'];
 
-                    $this->getEntity()->fraymAction(true, true);
+                    $this->entity->fraymAction(true, true);
                     $fullListOfIds[] = (int) DB->lastInsertId();
                 }
 
                 $this->skipPostCreate = false;
             }
 
-            $LOCALE = $this->getLocale();
+            $LOCALE = $this->LOCALE;
 
             foreach ($fullListOfIds as $idKey => $idValue) {
                 RightsHelper::addRights('{admin}', '{task}', $idValue);
@@ -1195,7 +1195,7 @@ class TaskService extends BaseService
             }
         }
 
-        $this->getEntity()->setFraymActionRedirectPath('/task/' . $fullListOfIds[0] . '/');
+        $this->entity->fraymActionRedirectPath = '/task/' . $fullListOfIds[0] . '/';
     }
 
     public function preChange(): void
@@ -1205,7 +1205,7 @@ class TaskService extends BaseService
 
     public function postChange(array $successfulResultsIds): void
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_TASK_ELEMENTS = LocaleHelper::getLocale(['task', 'fraym_model', 'elements']);
         $LOCALE_CONVERSATION = LocaleHelper::getLocale(['conversation', 'global']);
@@ -1261,7 +1261,7 @@ class TaskService extends BaseService
                         $_REQUEST['updated_at'][0] = time();
                         $_REQUEST['id'][0] = $taskId;
 
-                        $this->getEntity()->fraymAction(true, true);
+                        $this->entity->fraymAction(true, true);
 
                         $fullListOfIds[] = $taskId;
                     }
@@ -1480,7 +1480,7 @@ class TaskService extends BaseService
 
                         if ($taskId !== $deletedTaskId && isset($taskData['id'])) {
                             $_REQUEST['id'][0] = $taskId;
-                            $this->getEntity()->fraymAction(true, true);
+                            $this->entity->fraymAction(true, true);
                         } elseif (!isset($taskData['id'])) {
                             RightsHelper::deleteRights('{same}', '{task}', $mainTaskId, '{task}', $taskId);
                         }
@@ -1501,9 +1501,9 @@ class TaskService extends BaseService
             }
 
             if ($objType !== '' && !in_array($objId, ['', 'all'])) {
-                $this->getEntity()->setFraymActionRedirectPath(ABSOLUTE_PATH . '/' . $objType . '/' . $objId . '/');
+                $this->entity->fraymActionRedirectPath = ABSOLUTE_PATH . '/' . $objType . '/' . $objId . '/';
             } else {
-                $this->getEntity()->setFraymActionRedirectPath(ABSOLUTE_PATH . '/tasklist/');
+                $this->entity->fraymActionRedirectPath = ABSOLUTE_PATH . '/tasklist/';
             }
         }
     }
@@ -1590,7 +1590,7 @@ class TaskService extends BaseService
             }
 
             if (DataHelper::getId() > 0) {
-                if ($this->getAct() === ActEnum::edit || $this->getAct() === ActEnum::view) {
+                if ($this->act === ActEnum::edit || $this->act === ActEnum::view) {
                     $objId = RightsHelper::findOneByRights('{child}', '{project}', null, '{task}', DataHelper::getId());
 
                     if (!is_null($objId)) {
@@ -1806,7 +1806,7 @@ class TaskService extends BaseService
     public function getMessageData(): ?array
     {
         if (is_null($this->messageData)) {
-            if (($_REQUEST['message_id'] ?? false) && $this->getAct() === ActEnum::add) {
+            if (($_REQUEST['message_id'] ?? false) && $this->act === ActEnum::add) {
                 $messageData = DB->findObjectById($_REQUEST['message_id'][0] ?? $_REQUEST['message_id'], 'conversation_message');
 
                 if ($messageData) {
@@ -1995,7 +1995,7 @@ class TaskService extends BaseService
     public function getSortStatus(): array
     {
         /** @var TaskModel */
-        $taskModel = $this->getModel();
+        $taskModel = $this->model;
 
         return $taskModel->status->getValues();
     }
@@ -2020,12 +2020,18 @@ class TaskService extends BaseService
     public function postModelInit(BaseModel $model): BaseModel
     {
         if (($this->postModelInitVars['objType'] ?? false) === 'project') {
-            $LOCALE = $this->getLOCALE();
-            $model->getElement('obj_id')?->setShownName($LOCALE['project']);
+            $LOCALE = $this->LOCALE;
+
+            if ($model->getElement('obj_id')) {
+                $model->getElement('obj_id')->shownName = $LOCALE['project'];
+            }
 
             /** @var Multiselect|null */
             $objType = $model->getElement('obj_type');
-            $objType?->getAttribute()->setDefaultValue('project');
+
+            if ($objType) {
+                $objType->getAttribute()->defaultValue = 'project';
+            }
         }
 
         return $model;

@@ -43,8 +43,8 @@ class NewsService extends BaseService
             [],
         );
 
-        /** @var ?NewsEditModel[] */
-        $newsItems = $this->newsEditService->arraysToModels($newsData);
+        /** @var NewsEditModel[] */
+        $newsItems = iterator_to_array($this->newsEditService->arraysToModels($newsData));
 
         $totalCount = DB->selectCount();
 

@@ -14,7 +14,7 @@ class LoginView extends BaseView
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_REGISTER = LocaleHelper::getLocale(['register', 'global']);
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
 

@@ -18,8 +18,8 @@ class FbauthController extends BaseController
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE()['messages'];
-        $fbAuthService = $this->getService();
+        $LOCALE = $this->LOCALE['messages'];
+        $fbAuthService = $this->service;
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
@@ -41,7 +41,7 @@ class FbauthController extends BaseController
                 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $html = curl_exec($ch);
                 curl_close($ch);
 
@@ -60,7 +60,7 @@ class FbauthController extends BaseController
                 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $html = curl_exec($ch);
                 curl_close($ch);
 
@@ -76,7 +76,7 @@ class FbauthController extends BaseController
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_POST, false);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $html = curl_exec($ch);
                 curl_close($ch);
 
@@ -96,7 +96,7 @@ class FbauthController extends BaseController
                     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                     curl_setopt($ch, CURLOPT_POST, false);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     $html = curl_exec($ch);
                     curl_close($ch);
 

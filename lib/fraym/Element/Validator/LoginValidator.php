@@ -22,7 +22,7 @@ final class LoginValidator extends BaseValidator
     {
         if (($options['table'] ?? false) && ($options['id'] ?? false)) {
             $result = DB->select($options['table'], [
-                [$element->getName(), $value],
+                [$element->name, $value],
                 ['id', $options['id'], [OperandEnum::NOT_EQUAL]],
             ], true);
 

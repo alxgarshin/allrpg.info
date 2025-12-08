@@ -16,7 +16,7 @@ class MessageController extends BaseController
     public function loadWall(): ?Response
     {
         return $this->asArray(
-            $this->getService()->loadWall(
+            $this->service->loadWall(
                 OBJ_TYPE,
                 OBJ_ID,
                 (int) ($_REQUEST['last_shown_conversation_id'] ?? 0),
@@ -32,7 +32,7 @@ class MessageController extends BaseController
     public function addComment(): ?Response
     {
         return $this->asArray(
-            $this->getService()->addComment(
+            $this->service->addComment(
                 OBJ_TYPE,
                 $_REQUEST['sub_obj_type'] ?? '',
                 OBJ_ID,
@@ -59,7 +59,7 @@ class MessageController extends BaseController
     public function vote(): ?Response
     {
         return $this->asArray(
-            $this->getService()->vote(
+            $this->service->vote(
                 ($_REQUEST['m_id'] ?? false) ? (int) $_REQUEST['m_id'] : null,
                 ($_REQUEST['value'] ?? false) ? (int) $_REQUEST['value'] : null,
                 $_REQUEST['type'] ?? '',

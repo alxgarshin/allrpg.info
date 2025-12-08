@@ -26,7 +26,7 @@ class Timestamp extends BaseElement
     use CloneTrait;
 
     /** Значение */
-    private ?DateTimeImmutable $fieldValue;
+    private DateTimeImmutable $fieldValue;
 
     private Attribute\Timestamp $attribute;
 
@@ -126,6 +126,6 @@ class Timestamp extends BaseElement
 
     public function getShowInObjects(): ?bool
     {
-        return $this->getAttribute()->getShowInObjects();
+        return $this->getAttribute()->showInObjects;
     }
 }

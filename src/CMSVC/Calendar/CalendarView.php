@@ -16,12 +16,12 @@ class CalendarView extends BaseView
     public function Response(): ?Response
     {
         /** @var CalendarService $calendarService */
-        $calendarService = $this->getCMSVC()->getService();
+        $calendarService = $this->CMSVC->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_CALENDAR_EVENT = LocaleHelper::getLocale(['calendar_event', 'global']);
 

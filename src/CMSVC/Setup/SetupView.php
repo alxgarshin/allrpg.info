@@ -66,13 +66,13 @@ class SetupView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE_GLOBAL['project_control_items'][KIND][0]);
         $RESPONSE_DATA = $response->getHtml();
 
-        if ((!DataHelper::getId() || ACTION === ActionEnum::delete) && DataHelper::getActDefault($this->getEntity()) !== ActEnum::add) {
+        if ((!DataHelper::getId() || ACTION === ActionEnum::delete) && DataHelper::getActDefault($this->entity) !== ActEnum::add) {
             $RESPONSE_DATA = preg_replace(
                 '#<div class="maincontent_data([^"]*)">#',
                 '<div class="maincontent_data$1"><div class="filter"><a href="/setup/application_type=0" class="fixed_select">' . $LOCALE['switch_to_individual'] . '</a><a href="/setup/application_type=1" class="fixed_select">' . $LOCALE['switch_to_group'] . '</a></div>',

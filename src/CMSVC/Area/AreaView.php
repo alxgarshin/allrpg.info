@@ -51,12 +51,12 @@ class AreaView extends BaseView
 {
     public function Response(): ?Response
     {
-        $areaService = $this->getService();
+        $areaService = $this->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_PEOPLE = LocaleHelper::getLocale(['people', 'global']);
@@ -91,7 +91,7 @@ class AreaView extends BaseView
             <div class="object_info_2_additional">';
 
         $field = $objData->tipe;
-        $RESPONSE_DATA .= !is_null($field->get()) ? '<span class="gray">' . $field->getShownName() . ':</span>' . $field->asHTML(false) . '<br>' : '';
+        $RESPONSE_DATA .= !is_null($field->get()) ? '<span class="gray">' . $field->shownName . ':</span>' . $field->asHTML(false) . '<br>' : '';
 
         if (!is_null($objData->city->get())) {
             $regionData = DB->select('geography', ['id' => $objData->city->get()], true);
@@ -100,7 +100,7 @@ class AreaView extends BaseView
                 $regionParentData = DB->select('geography', ['id' => $regionData['parent']], true);
 
                 $field = $objData->city;
-                $RESPONSE_DATA .= '<span class="gray">' . $field->getShownName() . ':</span><a href="' . ABSOLUTE_PATH . '/area/search_city=' . $regionData['id'] . '&action=setFilters">' . $regionData['name'] . ($regionParentData ? ' (' . $regionParentData['name'] . ')' : '') . '</a><br>';
+                $RESPONSE_DATA .= '<span class="gray">' . $field->shownName . ':</span><a href="' . ABSOLUTE_PATH . '/area/search_city=' . $regionData['id'] . '&action=setFilters">' . $regionData['name'] . ($regionParentData ? ' (' . $regionParentData['name'] . ')' : '') . '</a><br>';
             }
         }
 
@@ -109,10 +109,10 @@ class AreaView extends BaseView
 	            <div class="hidden">';
 
         $field = $objData->havegood;
-        $RESPONSE_DATA .= count($field->get()) > 0 ? '<span class="gray">' . $field->getShownName() . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
+        $RESPONSE_DATA .= count($field->get()) > 0 ? '<span class="gray">' . $field->shownName . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
 
         $field = $objData->havebad;
-        $RESPONSE_DATA .= count($field->get()) > 0 ? '<span class="gray">' . $field->getShownName() . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
+        $RESPONSE_DATA .= count($field->get()) > 0 ? '<span class="gray">' . $field->shownName . ':</span><span>' . $field->asHTML(false) . '</span><br>' : '';
 
         $RESPONSE_DATA .= '
                 </div>
@@ -152,14 +152,14 @@ class AreaView extends BaseView
     </div>
 </div>
 <div class="page_block margin_top">
-	<h2>' . $objData->content->getShownName() . '</h2>
+	<h2>' . $objData->content->shownName . '</h2>
 	<div class="publication_content">' . DataHelper::escapeOutput($objData->content->get(), EscapeModeEnum::plainHTML) . '</div>';
 
         $field = $objData->external_map_link;
         $external_map_link = DataHelper::escapeOutput($field->get(), EscapeModeEnum::plainHTML);
 
         if ($external_map_link !== null) {
-            $RESPONSE_DATA .= '<h2>' . $field->getShownName() . '</h2>';
+            $RESPONSE_DATA .= '<h2>' . $field->shownName . '</h2>';
 
             if (preg_match('#yandex.ru#', $external_map_link)) {
                 $external_map_link = str_replace('/maps/', '/map-widget/v1/', $external_map_link);
@@ -172,7 +172,7 @@ class AreaView extends BaseView
         }
 
         $field = $objData->way;
-        $RESPONSE_DATA .= !is_null($field->get()) && $field->get() !== '' ? '<h2>' . $field->getShownName() . '</h2><div class="publication_content">' .
+        $RESPONSE_DATA .= !is_null($field->get()) && $field->get() !== '' ? '<h2>' . $field->shownName . '</h2><div class="publication_content">' .
             $field->asHTML(false) . '</div>' : '';
 
         $RESPONSE_DATA .= '

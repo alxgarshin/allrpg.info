@@ -28,9 +28,21 @@ abstract class BaseController
 {
     use InitDependencyInjectionsTrait;
 
-    protected ?array $LOCALE = null;
+    public ?array $LOCALE = null {
+        get => $this->LOCALE;
+        set => $this->LOCALE = LocaleHelper::getLocale($value);
+    }
 
-    protected CMSVC $CMSVC;
+    public CMSVC $CMSVC;
+
+    public ?BaseEntity $entity {
+        get => $this->CMSVC->view?->entity;
+    }
+
+    /** @var T|null */
+    public ?BaseService $service {
+        get => $this->CMSVC->service;
+    }
 
     public function construct(?CMSVC $CMSVC = null, bool $CMSVCinit = true): static
     {
@@ -39,7 +51,7 @@ abstract class BaseController
 
             if ($reflection->getAttributes(CMSVC::class)[0] ?? false) {
                 $this->CMSVC = $reflection->getAttributes(CMSVC::class)[0]->newInstance();
-                $this->CMSVC->setController($this);
+                $this->CMSVC->controller = $this;
 
                 if ($CMSVCinit) {
                     $this->CMSVC->init();
@@ -47,10 +59,10 @@ abstract class BaseController
             }
         } else {
             $this->CMSVC = $CMSVC;
-            $this->CMSVC->setController($this);
+            $this->CMSVC->controller = $this;
         }
 
-        $this->LOCALE = $this->setLOCALE([ObjectsHelper::getClassShortNameFromCMSVCObject($this), 'global']);
+        $this->LOCALE = [ObjectsHelper::getClassShortNameFromCMSVCObject($this), 'global'];
 
         $this->initDependencyInjections();
 
@@ -64,33 +76,33 @@ abstract class BaseController
 
     public function Response(): ?Response
     {
-        if ($this->getEntity()) {
-            if ($this->getService() && $this->getService() instanceof BaseService) {
-                $this->getService()->preLoadModel();
+        if ($this->entity) {
+            if ($this->service) {
+                $this->service->preLoadModel();
             }
 
             if (in_array(ACTION, ActionEnum::getBaseValues())) {
-                return $this->getEntity()->fraymAction();
+                return $this->entity->fraymAction();
             } elseif (ACTION === ActionEnum::setFilters) {
-                $filtersData = $this->getEntity()->getFilters()->prepareSearchSqlAndFiltersLink();
+                $filtersData = $this->entity->filters->prepareSearchSqlAndFiltersLink();
 
                 if ($filtersData[0] !== '') {
                     if (PRE_REQUEST_CHECK) {
                         return ResponseHelper::response([], ResponseHelper::redirectConstruct());
                     }
                 } else {
-                    $this->getEntity()->getFilters()->clearEntityFiltersData();
+                    $this->entity->filters->clearEntityFiltersData();
 
                     if (PRE_REQUEST_CHECK) {
-                        $LOC = $this->getEntity()->getFilters()->getLocale();
+                        $LOC = LocaleHelper::getLocale(['fraym', 'filters']);
                         ResponseHelper::responseOneBlock('error', $LOC['filters_not_set']);
                     } else {
                         ResponseHelper::redirect(ABSOLUTE_PATH . '/');
                     }
                 }
             } elseif (ACTION === ActionEnum::clearFilters) {
-                $this->getEntity()->getFilters()->clearEntityFiltersData();
-                $this->getService()->postClearFilters();
+                $this->entity->filters->clearEntityFiltersData();
+                $this->service->postClearFilters();
                 ResponseHelper::redirect(ResponseHelper::redirectConstruct());
             } elseif (!is_null(ACTION) && method_exists($this, ACTION)) {
                 $action = ACTION;
@@ -100,39 +112,6 @@ abstract class BaseController
         }
 
         return $this->Default();
-    }
-
-    public function getLOCALE(): ?array
-    {
-        return $this->LOCALE;
-    }
-
-    public function setLOCALE(array $entityPathInLocale): ?array
-    {
-        $this->LOCALE = LocaleHelper::getLocale($entityPathInLocale);
-
-        return $this->LOCALE;
-    }
-
-    public function getMessages(): array
-    {
-        return $this->LOCALE['messages'];
-    }
-
-    public function getCMSVC(): CMSVC
-    {
-        return $this->CMSVC;
-    }
-
-    public function getEntity(): ?BaseEntity
-    {
-        return $this->CMSVC->getView()?->getEntity();
-    }
-
-    /** @return T|null */
-    public function getService(): ?BaseService
-    {
-        return $this->CMSVC->getService();
     }
 
     public function asHtml(?string $html, ?string $pagetitle): ?HtmlResponse
@@ -167,7 +146,7 @@ abstract class BaseController
             }
 
             if (!CURRENT_USER->isLogged()) {
-                if (!is_null($isAccessibleAttribute->getRedirectPath())) {
+                if ($isAccessibleAttribute->getRedirectPath() !== '') {
                     ResponseHelper::redirect($isAccessibleAttribute->getRedirectPath(), $isAccessibleAttribute->getRedirectData());
                 } else {
                     $canProceed = false;
@@ -226,27 +205,27 @@ abstract class BaseController
 
     protected function Default(): ?Response
     {
-        $entity = $this->getEntity();
+        $entity = $this->entity;
 
         if (!is_null($entity)) {
-            $entity->getView()->preViewHandler();
+            $entity->view->preViewHandler();
         }
 
         if (
-            !is_null($this->CMSVC->getView()) &&
+            !is_null($this->CMSVC->view) &&
             (
                 is_null($entity) ||
-                (DataHelper::getActDefault($entity) === ActEnum::view && $entity->getUseCustomView()) ||
-                (DataHelper::getActDefault($entity) === ActEnum::list && $entity->getUseCustomList())
+                (DataHelper::getActDefault($entity) === ActEnum::view && $entity->useCustomView) ||
+                (DataHelper::getActDefault($entity) === ActEnum::list && $entity->useCustomList)
             )
         ) {
-            return $this->CMSVC->getView()->Response();
+            return $this->CMSVC->view->Response();
         }
 
         $responseData = $entity->view();
 
         if ($responseData instanceof HtmlResponse) {
-            $entity->getView()->postViewHandler($responseData);
+            $entity->view->postViewHandler($responseData);
         }
 
         return $responseData;

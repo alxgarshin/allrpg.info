@@ -42,7 +42,7 @@ class StatsView extends BaseView
 {
     public function exportToExcel(array $additionalIds): void
     {
-        $statsService = $this->getService();
+        $statsService = $this->service;
 
         $statsModel = $statsService->getStatsModel();
         $obj = $statsService->getModelForStatsModel($statsModel);
@@ -51,7 +51,7 @@ class StatsView extends BaseView
         set_time_limit(600);
         ini_set("memory_limit", "500M");
 
-        $elems = $obj->getElements();
+        $elems = $obj->elementsList;
         $ids = array_merge($additionalIds, [DataHelper::getId()]);
 
         //формируем заголовок таблицы
@@ -77,12 +77,12 @@ class StatsView extends BaseView
                 //пароли и вкладки не выводим даже
             } elseif ($element instanceof Item\H1) {
                 if (isset($elems[$key + 1]) && $elems[$key + 1]->getGroup()) {
-                    $RESPONSE_DATA .= '<td><b>' . $element->getShownName() . '</b></td>';
+                    $RESPONSE_DATA .= '<td><b>' . $element->shownName . '</b></td>';
                 }
             } elseif ($element->getGroup()) {
                 //
             } else {
-                $RESPONSE_DATA .= '<td id="col_' . $element->getName() . '"><b>' . $element->getShownName() . '</b></td>';
+                $RESPONSE_DATA .= '<td id="col_' . $element->name . '"><b>' . $element->shownName . '</b></td>';
             }
         }
         $RESPONSE_DATA .= '</tr>';
@@ -98,7 +98,7 @@ class StatsView extends BaseView
                 unset($groupCount);
 
                 $data = DB->select(
-                    tableName: $view->getEntity()->getTable(),
+                    tableName: $view->entity->table,
                     criteria: [
                         'id' => $id,
                     ],
@@ -109,11 +109,11 @@ class StatsView extends BaseView
 
                 foreach ($elems as $element) {
                     if ($element->getGroup()) {
-                        $data[$element->getName()] = preg_replace('/(u[01-9a-fA-F]{4})/', '\\\$1', $data[$element->getName()]);
+                        $data[$element->name] = preg_replace('/(u[01-9a-fA-F]{4})/', '\\\$1', $data[$element->name]);
                         //замена табуляции
-                        $data[$element->getName()] = preg_replace('/[\t]/', '\\t', $data[$element->getName()]);
-                        $jsonData = json_decode($data[$element->getName()], true);
-                        $rowData[$element->getGroup()][$element->getName()] = $jsonData;
+                        $data[$element->name] = preg_replace('/[\t]/', '\\t', $data[$element->name]);
+                        $jsonData = json_decode($data[$element->name], true);
+                        $rowData[$element->getGroup()][$element->name] = $jsonData;
                         $elemsCount = count($jsonData);
 
                         if ($elemsCount > $groupCount[$element->getGroup()]) {
@@ -136,16 +136,16 @@ class StatsView extends BaseView
                             $RESPONSE_DATA .= '<td>';
                         }
                     } elseif ($element->getGroup()) {
-                        $element->set($data[$element->getName()] ?? null);
+                        $element->set($data[$element->name] ?? null);
 
                         if ($element->get()) {
-                            if (isset($checkGroupCount[$element->getGroup()]) && $checkGroupCount[$element->getGroup()] === $element->getName()) {
+                            if (isset($checkGroupCount[$element->getGroup()]) && $checkGroupCount[$element->getGroup()] === $element->name) {
                                 $RESPONSE_DATA .= '<br>';
                             }
-                            $RESPONSE_DATA .= '<i>' . $element->getShownName() . '</i>:<br>';
+                            $RESPONSE_DATA .= '<i>' . $element->shownName . '</i>:<br>';
 
-                            if (isset($rowData[$element->getGroup()][$element->getName()])) {
-                                foreach ($rowData[$element->getGroup()][$element->getName()] as $value) {
+                            if (isset($rowData[$element->getGroup()][$element->name])) {
+                                foreach ($rowData[$element->getGroup()][$element->name] as $value) {
                                     $RESPONSE_DATA .= $statsService->prepareForExcel($value) . '<br>';
                                 }
                             }
@@ -153,14 +153,14 @@ class StatsView extends BaseView
                         }
 
                         if (!isset($checkGroupCount[$element->getGroup()])) {
-                            $checkGroupCount[$element->getGroup()] = $element->getName();
+                            $checkGroupCount[$element->getGroup()] = $element->name;
                         }
                     } else {
                         if (isset($elems[$key - 1]) && $elems[$key - 1]->getGroup()) {
                             $RESPONSE_DATA .= '</td>';
                         }
 
-                        $element->set($data[$element->getName()] ?? null);
+                        $element->set($data[$element->name] ?? null);
 
                         if ($element instanceof Item\Timestamp) {
                             $RESPONSE_DATA .= '<td>' . $element->getAsUsualDateTime() . '</td>';
@@ -168,14 +168,14 @@ class StatsView extends BaseView
                             unset($sizes);
 
                             preg_match_all('#{([^:]+):([^}]+)}#', $element->get(), $matches);
-                            $upload = $_ENV['UPLOADS'][$element->getAttribute()->getUploadNum()];
+                            $upload = $_ENV['UPLOADS'][$element->getAttribute()->uploadNum];
 
                             foreach ($matches[0] as $matchKey => $value) {
                                 if (file_exists($_ENV['UPLOADS_PATH'] . $upload['path'] . $matches[2][$matchKey]) && ($upload['isimage'] ?? false)) {
                                     $sizes = getimagesize($_ENV['UPLOADS_PATH'] . $upload['path'] . $matches[2][$matchKey]);
 
-                                    if ($sizes[0] > $biggestPhotoWidth[$element->getName()]) {
-                                        $biggestPhotoWidth[$element->getName()] = $sizes[0];
+                                    if ($sizes[0] > $biggestPhotoWidth[$element->name]) {
+                                        $biggestPhotoWidth[$element->name] = $sizes[0];
                                     }
                                 }
                             }
@@ -213,9 +213,9 @@ class StatsView extends BaseView
 
     public function Response(): ?Response
     {
-        $types = $this->getService()->getTypesList();
-        $LOCALE = $this->getLocale();
-        $statsService = $this->getService();
+        $types = $this->service->getTypesList();
+        $LOCALE = $this->LOCALE;
+        $statsService = $this->service;
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
 
@@ -225,11 +225,11 @@ class StatsView extends BaseView
             $model = $statsService->getModelForStatsModel($statsModel);
             $view = $statsService->getViewForStatsModel($statsModel);
 
-            $this->getEntity()->setTable($view->getEntity()->getTable());
-            $this->getCMSVC()->setModel($model);
+            $this->entity->table = $view->entity->table;
+            $this->CMSVC->model = $model;
 
             /** @var HtmlResponse $RESPONSE */
-            $RESPONSE = $this->getEntity()->view();
+            $RESPONSE = $this->entity->view();
             $RESPONSE_DATA = $RESPONSE->getHtml();
 
             if (DataHelper::getId()) {
@@ -241,7 +241,7 @@ class StatsView extends BaseView
                     $RESPONSE_DATA = preg_replace('#<div class="maincontent_data autocreated kind_' . KIND . ' table_entity view">#', '<div class="maincontent_data autocreated kind_' . KIND . ' table_entity view"><a class="edit_button" href="' . ABSOLUTE_PATH . '/profile/adm_user=' . DataHelper::getId() . '">' . $LOCALE_PEOPLE['edit_profile'] . '</a>', $RESPONSE_DATA);
                 }
             } else {
-                $LIST_OF_FOUND_IDS = $this->getEntity()->getListOfFoundIds();
+                $LIST_OF_FOUND_IDS = $this->entity->listOfFoundIds;
 
                 $RESPONSE_DATA = preg_replace('#<div class="indexer_toggle#', '<a href="/' . KIND . '/model=reset" class="ctrlink"><span class="sbi sbi-plus"></span>' . $LOCALE['go_back_to_object_choice'] . '</a><div class="indexer_toggle', $RESPONSE_DATA);
 

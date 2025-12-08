@@ -21,10 +21,12 @@ use Fraym\Helper\{LocaleHelper, TextHelper};
 #[Attribute(Attribute::TARGET_CLASS)]
 class MultiObjectsEntity extends BaseEntity
 {
+    /**
+     * @param EntitySortingItem[] $sortingData
+     */
     public function __construct(
         string $name,
         string $table,
-        /** @var EntitySortingItem[] $sortingData */
         array $sortingData,
         ?string $virtualField = null,
         ?int $elementsPerPage = 50,
@@ -32,7 +34,7 @@ class MultiObjectsEntity extends BaseEntity
         bool $useCustomList = false,
 
         /** Формат вывода объектов: excel-подобный или карточный */
-        private MultiObjectsEntitySubTypeEnum $subType = MultiObjectsEntitySubTypeEnum::Excel,
+        public MultiObjectsEntitySubTypeEnum $subType = MultiObjectsEntitySubTypeEnum::Excel,
     ) {
         parent::__construct(
             name: $name,
@@ -45,27 +47,15 @@ class MultiObjectsEntity extends BaseEntity
         );
     }
 
-    public function getSubType(): MultiObjectsEntitySubTypeEnum
-    {
-        return $this->subType;
-    }
-
-    public function setSubType(MultiObjectsEntitySubTypeEnum $subType): static
-    {
-        $this->subType = $subType;
-
-        return $this;
-    }
-
     public function viewActList(array $DATA_FILTERED_BY_CONTEXT): string
     {
         $GLOBAL_LOCALE = LocaleHelper::getLocale(['fraym', 'dynamiccreate']);
 
         $RESPONSE_DATA = '';
 
-        $entityNameSnakeCase = TextHelper::camelCaseToSnakeCase($this->getName());
-        $modelRights = $this->getView()->getViewRights();
-        $modelElements = $this->getModel()->getElements();
+        $entityNameSnakeCase = TextHelper::camelCaseToSnakeCase($this->name);
+        $modelRights = $this->view->viewRights;
+        $modelElements = $this->model->elementsList;
 
         $visibleColumnsCount = 0;
 
@@ -77,16 +67,16 @@ class MultiObjectsEntity extends BaseEntity
             }
         }
 
-        $isExcel = $this->getSubType() === MultiObjectsEntitySubTypeEnum::Excel;
-        $isCards = $this->getSubType() === MultiObjectsEntitySubTypeEnum::Cards;
+        $isExcel = $this->subType === MultiObjectsEntitySubTypeEnum::Excel;
+        $isCards = $this->subType === MultiObjectsEntitySubTypeEnum::Cards;
 
         $RESPONSE_DATA .= '<div class="multi_objects_table' . ($isExcel ? ' excel' : '') . ($isCards ? ' cards' : '') .
-            ($isExcel ? (!$modelRights->getDeleteRight() ? ' without_delete_column' : '') . '" style="--mot_columns_count: ' . $visibleColumnsCount : '') . '">';
+            ($isExcel ? (!$modelRights->deleteRight ? ' without_delete_column' : '') . '" style="--mot_columns_count: ' . $visibleColumnsCount : '') . '">';
 
         if ($isExcel) {
             $RESPONSE_DATA .= '<div class="tr menu">';
 
-            if ($modelRights->getDeleteRight()) {
+            if ($modelRights->deleteRight) {
                 $RESPONSE_DATA .= '<div class="th"></div>';
             }
             $RESPONSE_DATA .= '<div class="th">№</div>';
@@ -106,11 +96,11 @@ class MultiObjectsEntity extends BaseEntity
 
                 if (!is_null($elementIsWritable) && $modelElement->checkDOMVisibility()) {
                     $isSortable = false;
-                    $RESPONSE_DATA .= '<div class="th' . ($lastVisibleElement === $modelElement ? ' tooltipBottomRight' : '') . '" id="th_' . $modelElement->getName() . '" ' .
-                        (!is_null($modelElement->getHelpText()) ? ' title="' . $modelElement->getHelpText() . '"' : '') . '>';
+                    $RESPONSE_DATA .= '<div class="th' . ($lastVisibleElement === $modelElement ? ' tooltipBottomRight' : '') . '" id="th_' . $modelElement->name . '" ' .
+                        (!is_null($modelElement->helpText) ? ' title="' . $modelElement->helpText . '"' : '') . '>';
 
-                    foreach ($this->getSortingData() as $sortingItemNum => $sortingItem) {
-                        if ($sortingItem->getTableFieldName() === $modelElement->getName()) {
+                    foreach ($this->sortingData as $sortingItemNum => $sortingItem) {
+                        if ($sortingItem->tableFieldName === $modelElement->name) {
                             $upSorting = ($sortingItemNum * 2 + 1);
                             $downSorting = ($sortingItemNum * 2 + 2);
                             $reversedSorting = $downSorting === SORTING;
@@ -131,10 +121,10 @@ class MultiObjectsEntity extends BaseEntity
 
                             $RESPONSE_DATA .= '<a href="/' . KIND . '/' . $entityNameSnakeCase . '/page=' . PAGE . '&sorting=' .
                                 ($sortingItemNum * 2 + ($reversedSorting ? 1 : 2)) . '" title="[' .
-                                $GLOBAL_LOCALE['sort'] . ' : ' . strip_tags(mb_strtolower($modelElement->getShownName())) . ' : ' .
+                                $GLOBAL_LOCALE['sort'] . ' : ' . strip_tags(mb_strtolower($modelElement->shownName)) . ' : ' .
                                 $GLOBAL_LOCALE[($reversedSorting ? 'ascending' : 'descending')] . ']"' .
                                 $classHtml .
-                                '>' . $modelElement->getShownName() . '</a>';
+                                '>' . $modelElement->shownName . '</a>';
 
                             $isSortable = true;
                             break;
@@ -142,10 +132,10 @@ class MultiObjectsEntity extends BaseEntity
                     }
 
                     if (!$isSortable) {
-                        $RESPONSE_DATA .= $modelElement->getShownName();
+                        $RESPONSE_DATA .= $modelElement->shownName;
                     }
 
-                    if (!is_null($modelElement->getHelpText())) {
+                    if (!is_null($modelElement->helpText)) {
                         $RESPONSE_DATA .= '<span class="sup">?</span>';
                     }
                     $RESPONSE_DATA .= '</div>';
@@ -158,11 +148,11 @@ class MultiObjectsEntity extends BaseEntity
         $lineNumber = 0;
         $elementTabindexNum = 1;
 
-        if ($modelRights->getAddRight()) {
+        if ($modelRights->addRight) {
             $RESPONSE_DATA .= '<div class="tr" id="line' . $lineNumber . '">';
 
             if ($isExcel) {
-                if ($modelRights->getDeleteRight()) {
+                if ($modelRights->deleteRight) {
                     $RESPONSE_DATA .= '<div class="td"></div>';
                 }
                 $RESPONSE_DATA .= '<div class="td"></div>';
@@ -173,14 +163,14 @@ class MultiObjectsEntity extends BaseEntity
 
                 if (!is_null($elementIsWritable)) {
                     if ($modelElement->checkDOMVisibility()) {
-                        $RESPONSE_DATA .= '<div class="td"' . ($isExcel ? ' tabIndex="' . $elementTabindexNum . '"' : '') . ($isExcel ? '' : ' id="cardtable_card_' . $modelElement->getName() . '[' . $lineNumber . ']"') . '>';
+                        $RESPONSE_DATA .= '<div class="td"' . ($isExcel ? ' tabIndex="' . $elementTabindexNum . '"' : '') . ($isExcel ? '' : ' id="cardtable_card_' . $modelElement->name . '[' . $lineNumber . ']"') . '>';
                         ++$elementTabindexNum;
                     }
 
                     $modelElement->set(null);
 
                     if ($modelElement->checkVisibility()) {
-                        $modelElement->getAttribute()->setLineNumber($lineNumber);
+                        $modelElement->getAttribute()->lineNumber = $lineNumber;
                         $RESPONSE_DATA .= $isExcel ?
                             $modelElement->asHTML($elementIsWritable) : $modelElement->asHTMLWrapped($lineNumber, $elementIsWritable, $elementTabindexNum);
                     }
@@ -199,8 +189,8 @@ class MultiObjectsEntity extends BaseEntity
 
         $changeRestrictIds = [];
 
-        if (!is_null($modelRights->getChangeRestrict())) {
-            $changeRestrictIdsData = DB->query('SELECT id FROM ' . $this->getTable() . ' WHERE ' . $modelRights->getChangeRestrict(), []);
+        if (!is_null($modelRights->changeRestrict)) {
+            $changeRestrictIdsData = DB->query('SELECT id FROM ' . $this->table . ' WHERE ' . $modelRights->changeRestrict, []);
 
             foreach ($changeRestrictIdsData as $changeRestrictIdsItem) {
                 $changeRestrictIds[] = $changeRestrictIdsItem['id'];
@@ -209,8 +199,8 @@ class MultiObjectsEntity extends BaseEntity
 
         $deleteRestrictIds = [];
 
-        if (!is_null($modelRights->getDeleteRestrict())) {
-            $deleteRestrictIdsData = DB->query('SELECT id FROM ' . $this->getTable() . ' WHERE ' . $modelRights->getDeleteRestrict(), []);
+        if (!is_null($modelRights->deleteRestrict)) {
+            $deleteRestrictIdsData = DB->query('SELECT id FROM ' . $this->table . ' WHERE ' . $modelRights->deleteRestrict, []);
 
             foreach ($deleteRestrictIdsData as $deleteRestrictIdsItem) {
                 $deleteRestrictIds[] = $deleteRestrictIdsItem['id'];
@@ -219,11 +209,11 @@ class MultiObjectsEntity extends BaseEntity
 
         foreach ($DATA_FILTERED_BY_CONTEXT as $DATA_ITEM) {
             $RESPONSE_DATA .= '<div class="tr string' . ($lineNumber % 2 === 0 ? 2 : 1) .
-                ($modelRights->getChangeRight() && (is_null($modelRights->getChangeRestrict()) || in_array($DATA_ITEM['id'], $changeRestrictIds)) ? '' : ' readonly') .
+                ($modelRights->changeRight && (is_null($modelRights->changeRestrict) || in_array($DATA_ITEM['id'], $changeRestrictIds)) ? '' : ' readonly') .
                 '" id="line' . $lineNumber . '" obj_id="' . $DATA_ITEM['id'] . '">';
 
             /** Права на изменения есть, но нет права на изменение данной конкретной строки */
-            if ($modelRights->getChangeRight() && !(is_null($modelRights->getChangeRestrict()) || in_array($DATA_ITEM['id'], $changeRestrictIds))) {
+            if ($modelRights->changeRight && !(is_null($modelRights->changeRestrict) || in_array($DATA_ITEM['id'], $changeRestrictIds))) {
                 $RESPONSE_DATA .= '<input type="hidden" name="readonly[' . $lineNumber . ']" value="' . $DATA_ITEM['id'] . '" />';
             }
 
@@ -231,12 +221,12 @@ class MultiObjectsEntity extends BaseEntity
                 $RESPONSE_DATA .= '<div class="cardtable_card_num">№' . $lineNumber . '<span class="cardtable_card_num_name">' . ($DATA_ITEM['name'] ?? '') . '</span></div>';
             }
 
-            if ($modelRights->getDeleteRight() && (is_null($modelRights->getDeleteRestrict()) || in_array($DATA_ITEM['id'], $deleteRestrictIds))) {
+            if ($modelRights->deleteRight && (is_null($modelRights->deleteRestrict) || in_array($DATA_ITEM['id'], $deleteRestrictIds))) {
                 $RESPONSE_DATA .= '<div class="td multi_objects_delete"><a class="trash careful" title="' .
                     $GLOBAL_LOCALE['delete'] . ' ' . $this->getObjectName() . '" method="DELETE" href="/' . KIND . '/' . CMSVC . '/' . $DATA_ITEM['id'] .
                     '/page=' . PAGE . '&sorting=' . SORTING . '">' .
                     ($isExcel ? '' : '<span>' . $GLOBAL_LOCALE['delete'] . '</span>') . '</a></div>';
-            } elseif ($isExcel && !is_null($modelRights->getDeleteRestrict()) && !in_array($DATA_ITEM['id'], $deleteRestrictIds)) {
+            } elseif ($isExcel && !is_null($modelRights->deleteRestrict) && !in_array($DATA_ITEM['id'], $deleteRestrictIds)) {
                 $RESPONSE_DATA .= '<div class="td multi_objects_delete"></div>';
             }
 
@@ -245,7 +235,7 @@ class MultiObjectsEntity extends BaseEntity
             }
 
             foreach ($modelElements as $modelElement) {
-                $modelElement->set($DATA_ITEM[$modelElement->getName()] ?? null);
+                $modelElement->set($DATA_ITEM[$modelElement->name] ?? null);
             }
 
             foreach ($modelElements as $modelElement) {
@@ -253,18 +243,18 @@ class MultiObjectsEntity extends BaseEntity
 
                 if (!is_null($elementIsWritable)) {
                     $elementIsWritable = $elementIsWritable &&
-                        $modelRights->getChangeRight() &&
-                        (is_null($modelRights->getChangeRestrict()) || in_array($DATA_ITEM['id'], $changeRestrictIds));
+                        $modelRights->changeRight &&
+                        (is_null($modelRights->changeRestrict) || in_array($DATA_ITEM['id'], $changeRestrictIds));
                 }
 
                 if (!is_null($elementIsWritable)) {
                     if ($modelElement->checkDOMVisibility()) {
-                        $RESPONSE_DATA .= '<div class="td"' . ($isExcel ? ' tabIndex="' . $elementTabindexNum . '"' : '') . ($isExcel ? '' : ' id="cardtable_card_' . $modelElement->getName() . '[' . $lineNumber . ']"') . '>';
+                        $RESPONSE_DATA .= '<div class="td"' . ($isExcel ? ' tabIndex="' . $elementTabindexNum . '"' : '') . ($isExcel ? '' : ' id="cardtable_card_' . $modelElement->name . '[' . $lineNumber . ']"') . '>';
                         ++$elementTabindexNum;
                     }
 
                     if ($modelElement->checkVisibility()) {
-                        $modelElement->getAttribute()->setLineNumber($lineNumber);
+                        $modelElement->getAttribute()->lineNumber = $lineNumber;
                         $RESPONSE_DATA .= $isExcel ?
                             $modelElement->asHTML($elementIsWritable) : $modelElement->asHTMLWrapped($lineNumber, $elementIsWritable, $elementTabindexNum);
                     }
@@ -279,27 +269,25 @@ class MultiObjectsEntity extends BaseEntity
             ++$lineNumber;
         }
 
-        if ($modelRights->getChangeRight() && $DATA_FILTERED_BY_CONTEXT) {
+        if ($modelRights->changeRight && $DATA_FILTERED_BY_CONTEXT) {
             $RESPONSE_DATA .= '<div class="tr menu full_width"><div class="td"><button class="main" method="PUT">' . $GLOBAL_LOCALE['save_changes'] . '</button></div></div>';
         }
         $RESPONSE_DATA .= '</div>';
 
-        if ($RESPONSE_DATA !== '') {
-            if ($modelRights->getAddRight() || ($modelRights->getChangeRight() && $DATA_FILTERED_BY_CONTEXT)) {
-                $RESPONSE_DATA = '
+        if ($modelRights->addRight || ($modelRights->changeRight && $DATA_FILTERED_BY_CONTEXT)) {
+            $RESPONSE_DATA = '
 <form action="/' . KIND . '/" enctype="multipart/form-data" id="form_' . $entityNameSnakeCase . '_add">
 <input type="hidden" name="kind" value="' . KIND . '" />
 <input type="hidden" name="cmsvc" value="' . $entityNameSnakeCase . '" />
 <input type="hidden" name="page" value="' . PAGE . '" />
 <input type="hidden" name="sorting" value="' . SORTING . '" />
 ' . $RESPONSE_DATA;
-            } else {
-                $RESPONSE_DATA = '
+        } else {
+            $RESPONSE_DATA = '
 <form>' . $RESPONSE_DATA;
-            }
-
-            $RESPONSE_DATA .= '</form>';
         }
+
+        $RESPONSE_DATA .= '</form>';
 
         return $RESPONSE_DATA;
     }

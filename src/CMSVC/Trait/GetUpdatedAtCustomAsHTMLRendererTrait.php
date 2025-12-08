@@ -16,11 +16,11 @@ trait GetUpdatedAtCustomAsHTMLRendererTrait
         $userService = $this->getUserService();
 
         $value = $item->get()->getTimestamp();
-        $name = $item->getName() . $item->getLineNumberWrapped();
+        $name = $item->name . $item->getLineNumberWrapped();
         $html = '';
 
         if ($item->getShowInObjects()) {
-            $userModelId = $item->getModel()->getElement('last_update_user_id')->get();
+            $userModelId = $item->model->getElement('last_update_user_id')->get();
 
             $html .=
                 $item->getAsUsualDateTime() .

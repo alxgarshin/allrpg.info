@@ -34,7 +34,7 @@ class ConversationView extends BaseView
     public function Response(): ?Response
     {
         /** @var ConversationService $conversationService */
-        $conversationService = $this->getCMSVC()->getService();
+        $conversationService = $this->CMSVC->service;
 
         if (ACTION === 'contact') {
             $conversationService->contact((int) ($_REQUEST['user'] ?? 0));
@@ -43,7 +43,7 @@ class ConversationView extends BaseView
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_USER = LocaleHelper::getLocale(['user', 'global']);
 

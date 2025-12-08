@@ -13,7 +13,7 @@ class GeopositionView extends BaseView
 {
     public function Response(): ?Response
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
 

@@ -64,7 +64,7 @@ class ReportView extends BaseView
     public function Response(): ?Response
     {
         /** @var ReportService $reportService */
-        $reportService = $this->getCMSVC()->getService();
+        $reportService = $this->CMSVC->service;
 
         /** @var CalendarEventService $calendarEventService */
         $calendarEventService = CMSVCHelper::getService('calendar_event');
@@ -72,7 +72,7 @@ class ReportView extends BaseView
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_FRAYM = LocaleHelper::getLocale(['fraym']);
         $LOCALE_PUBLICATION = LocaleHelper::getLocale(['publication', 'global']);

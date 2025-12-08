@@ -90,7 +90,7 @@ class PlotView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $title = $LOCALE_GLOBAL['project_control_items'][KIND][0];

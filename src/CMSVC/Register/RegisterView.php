@@ -36,9 +36,9 @@ class RegisterView extends BaseView
 
     public function postViewHandler(HtmlResponse $response): HtmlResponse
     {
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
 
-        $registerService = $this->getService();
+        $registerService = $this->service;
         $hash = $registerService->getHash();
 
         $html = $response->getHtml();

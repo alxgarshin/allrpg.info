@@ -155,7 +155,7 @@ trait ApplicationServiceTrait
     public function getHistoryView(): bool
     {
         if (is_null($this->historyView)) {
-            $this->historyView = ($_REQUEST['history_view'] ?? false) === '1' && $this->getAct() === ActEnum::view;
+            $this->historyView = ($_REQUEST['history_view'] ?? false) === '1' && $this->act === ActEnum::view;
         }
 
         return $this->historyView;
@@ -203,7 +203,7 @@ trait ApplicationServiceTrait
         if (is_null($this->applicationFields)) {
             $this->applicationFields = iterator_to_array(
                 DataHelper::virtualStructure(
-                    'SELECT * FROM project_application_field WHERE project_id=:project_id AND application_type=:application_type' . ($this->getAct() === ActEnum::add ? ' AND (hide_field_on_application_create IS NULL OR hide_field_on_application_create="0")' : '') . ' ORDER BY field_code',
+                    'SELECT * FROM project_application_field WHERE project_id=:project_id AND application_type=:application_type' . ($this->act === ActEnum::add ? ' AND (hide_field_on_application_create IS NULL OR hide_field_on_application_create="0")' : '') . ' ORDER BY field_code',
                     [
                         ['project_id', $this->getActivatedProjectId()],
                         ['application_type', $this->getExcelType() > 0 ? $this->getExcelType() : $this->applicationType],
@@ -226,11 +226,11 @@ trait ApplicationServiceTrait
     public function getDependentFields(): ?array
     {
         if (is_null($this->dependentFields)) {
-            $model = $this->getModel();
+            $model = $this->model;
 
             foreach ($this->getApplicationFields() as $applicationField) {
-                if (in_array($this->getAct(), [ActEnum::edit, ActEnum::add])) {
-                    $showIf = $applicationField->getAttribute()->getAdditionalData()['show_if'];
+                if (in_array($this->act, [ActEnum::edit, ActEnum::add])) {
+                    $showIf = $applicationField->getAttribute()->additionalData['show_if'];
 
                     if (!is_null($showIf) && str_replace('-', '', $showIf) !== '') {
                         $dependentFields = [];
@@ -251,7 +251,7 @@ trait ApplicationServiceTrait
                                     ($dependingOnField instanceof Item\Select && $virtualFieldData === $matches[2][$key])
                                 )
                             ) {
-                                $this->dependentFieldsToEnsureMustbe[$applicationField->getName()] = true;
+                                $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
                             }
 
                             if ($dependingOnField instanceof Item\Multiselect) {
@@ -277,7 +277,7 @@ trait ApplicationServiceTrait
                                 in_array(ACTION, [ActionEnum::create, ActionEnum::change]) &&
                                 ($_REQUEST['project_group_ids'][0][$value] ?? false) === 'on'
                             ) {
-                                $this->dependentFieldsToEnsureMustbe[$applicationField->getName()] = true;
+                                $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
                             }
 
                             $dependentFields[] = [
@@ -287,7 +287,7 @@ trait ApplicationServiceTrait
                             ];
                         }
 
-                        $this->dependentFields[$applicationField->getName()] = [
+                        $this->dependentFields[$applicationField->name] = [
                             'dependentFields' => $dependentFields,
                         ];
                     }
@@ -344,11 +344,11 @@ trait ApplicationServiceTrait
                         $this->getServiceEntityName() !== 'myapplication' ||
                         (
                             (
-                                ($this->getAct() === ActEnum::add || ACTION === ActionEnum::create) &&
+                                ($this->act === ActEnum::add || ACTION === ActionEnum::create) &&
                                 $data[3]['rights'] < 2 &&
                                 (int) $data[3]['disallow_applications'] === 0
                             ) || (
-                                $this->getAct() !== ActEnum::add &&
+                                $this->act !== ActEnum::add &&
                                 ACTION !== ActionEnum::create &&
                                 $data[3]['rights'] < 3
                             )
@@ -482,7 +482,7 @@ trait ApplicationServiceTrait
                 if ($this->getServiceEntityName() === 'myapplication') {
                     $params['disallow_applications'] = 0;
 
-                    if ($this->getAct() === ActEnum::add) {
+                    if ($this->act === ActEnum::add) {
                         $charactersApplicationTakenCountQuery = DB->query(
                             "SELECT pc.id, COUNT(pa.id) AS taken_count FROM project_character AS pc LEFT JOIN project_application AS pa ON pa.project_character_id = pc.id AND pa.project_id = pc.project_id AND pa.status = 3 AND pa.deleted_by_player = '0' AND pa.deleted_by_gamemaster = '0' WHERE pc.project_id = :project_id GROUP BY pc.id",
                             [
@@ -514,7 +514,7 @@ trait ApplicationServiceTrait
                             (
                                 $projectGroupId > 0 &&
                                 (
-                                    $this->getAct() !== ActEnum::add ||
+                                    $this->act !== ActEnum::add ||
                                     (
                                         ($fullProjectGroupsDataById[$projectGroupId][2]['disallow_applications'] ?? null) !== '1' &&
                                         $projectCharacterData->applications_needed_count->get() > ($charactersApplicationTakenCount[$characterId] ?? 0) &&
@@ -612,7 +612,7 @@ trait ApplicationServiceTrait
             (
                 $this->getServiceEntityName() === 'myapplication' ?
                 (
-                    $this->getAct() !== ActEnum::add ?
+                    $this->act !== ActEnum::add ?
                     [ApplicationModel::MYAPPLICATION_VIEW_CONTEXT] :
                     []
                 ) : (
@@ -628,7 +628,7 @@ trait ApplicationServiceTrait
     {
         return $this->verifyFeesAvailable() ? [
             ApplicationModel::APPLICATION_VIEW_CONTEXT,
-            $this->getAct() !== ActEnum::add ? ['myapplication:view'] : [],
+            $this->act !== ActEnum::add ? ['myapplication:view'] : [],
         ] : [];
     }
 
@@ -800,8 +800,8 @@ trait ApplicationServiceTrait
     //динамические поля
 		';
 
-        foreach ($this->getModel()->getElements() as $applicationField) {
-            $applicationFieldName = $applicationField->getName();
+        foreach ($this->model->elementsList as $applicationField) {
+            $applicationFieldName = $applicationField->name;
 
             if ($dependentFields[$applicationFieldName] ?? false) {
                 $fieldDependentFields = $dependentFields[$applicationFieldName]['dependentFields'];
@@ -834,20 +834,20 @@ trait ApplicationServiceTrait
     {
         /** @var ApplicationModel $model */
 
-        $LOCALE = $this->getLocale();
-        $LOCALE_ELEMENTS = $this->getEntity()->getElementsLocale();
+        $LOCALE = $this->LOCALE;
+        $LOCALE_ELEMENTS = $this->entity->getElementsLocale();
 
         $applicationData = $this->getApplicationData();
 
-        if ($this->getEntity()->getName() === 'application') {
+        if ($this->entity->name === 'application') {
             /** @var Attribute\Timestamp */
             $updatedAt = $model->getElement('updated_at')->getAttribute();
-            $updatedAt->setShowInObjects(true);
-            $updatedAt->setCustomAsHTMLRenderer('getUpdatedAtCustomAsHTMLRenderer');
+            $updatedAt->showInObjects = true;
+            $updatedAt->customAsHTMLRenderer = 'getUpdatedAtCustomAsHTMLRenderer';
 
             $model = $model->changeElementsOrder('updated_at', 'player_registered');
 
-            $model->getElement('h1_3')->setShownName($LOCALE_ELEMENTS['h1_3'][$this->getRoomsData() ? 'with_rooms' : 'no_rooms']);
+            $model->getElement('h1_3')->shownName = $LOCALE_ELEMENTS['h1_3'][$this->getRoomsData() ? 'with_rooms' : 'no_rooms'];
 
             if (!$this->getExcelView()) {
                 $projectData = $this->getProjectData();
@@ -871,23 +871,22 @@ trait ApplicationServiceTrait
                         $sorterFieldName = $LOCALE_FRAYM['basefunc']['not_set'];
                     }
 
-                    $model->getElement('sorter')->setShownName($sorterFieldName);
+                    $model->getElement('sorter')->shownName = $sorterFieldName;
                 }
             }
 
-            $model->getElement('created_at')->getAttribute()->setUseInFilters(true);
-        } elseif ($this->getEntity()->getName() === 'myapplication') {
+            $model->getElement('created_at')->getAttribute()->useInFilters = true;
+        } elseif ($this->entity->name === 'myapplication') {
             $LOCALE_APPLICATION_ELEMENTS = LocaleHelper::getLocale(['application', 'fraym_model', 'elements']);
 
             /** @var Item\Multiselect */
             $projectGroupIdsElement = $model->getElement('project_group_ids');
-            $projectGroupIdsElement->getAttribute()->setCreator(null);
+            $projectGroupIdsElement->getAttribute()->creator = null;
 
-            if ($this->getAct() === ActEnum::add || ACTION === ActionEnum::create) {
+            if ($this->act === ActEnum::add || ACTION === ActionEnum::create) {
                 /** Убираем лишние поля из модели */
                 if (!$this->getProjectGroupsData() && !$this->getProjectCharacterIds()) {
-                    $model
-                        ->removeElement('h1_2');
+                    $model->removeElement('h1_2');
                 }
 
                 /** Добавляем часть полей профиля пользователя при подаче заявки */
@@ -903,28 +902,29 @@ trait ApplicationServiceTrait
                                 ':create',
                             ],
                         ),
-                    )->setShownName($LOCALE['check_contacts']);
+                    );
+                    $model->getElement('h1_contacts')->shownName = $LOCALE['check_contacts'];
 
                     foreach ($this->profileFieldsList as $profileField) {
-                        foreach ($userData->getElements() as $element) {
-                            if ($element->getName() === $profileField) {
+                        foreach ($userData->elementsList as $element) {
+                            if ($element->name === $profileField) {
                                 $attribute = $element->getAttribute();
 
                                 if ($attribute instanceof HasDefaultValue) {
-                                    $attribute
-                                        ->setNoData(true)
-                                        ->setContext([
-                                            ':view',
-                                            ':create',
-                                        ])
-                                        ->setDefaultValue($userData->getElement($element->getName())->get());
+                                    $attribute->noData = true;
+                                    $attribute->context = [
+                                        ':view',
+                                        ':create',
+                                    ];
+
+                                    $attribute->defaultValue = $userData->getElement($element->name)->get();
 
                                     $model->initElement(
-                                        $element->getName(),
+                                        $element->name,
                                         $element::class,
                                         $attribute,
-                                    )
-                                        ->setShownName($element->getShownName());
+                                    );
+                                    $model->getElement($element->name)->shownName = $element->shownName;
                                 }
 
                                 break;
@@ -934,18 +934,18 @@ trait ApplicationServiceTrait
                 }
             } else {
                 if (DataHelper::getId() && $applicationData && $applicationData['money_paid'] !== '1') {
-                    $model->getElement('money_provided')->getAttribute()->setLinkAt(new Item\LinkAt(null, ' <a id="provide_payment">' . $LOCALE['provide_payment'] . '</a>'));
+                    $model->getElement('money_provided')->getAttribute()->linkAt = new Item\LinkAt(null, ' <a id="provide_payment">' . $LOCALE['provide_payment'] . '</a>');
                 }
             }
 
-            $model->getElement('h1_3')->setShownName($LOCALE_APPLICATION_ELEMENTS['h1_3'][$this->getRoomsData() ? 'with_rooms' : 'no_rooms']);
+            $model->getElement('h1_3')->shownName = $LOCALE_APPLICATION_ELEMENTS['h1_3'][$this->getRoomsData() ? 'with_rooms' : 'no_rooms'];
 
             $model = $model
                 ->changeElementsOrder('h1_2', 'project_id_myapplication')
                 ->changeElementsOrder('team_application_myapplication', 'status');
 
-            $model->getElement('responsible_gamemaster_id')->getAttribute()->setUseInFilters(false);
-            $model->getElement('sorter')->getAttribute()->setUseInFilters(true);
+            $model->getElement('responsible_gamemaster_id')->getAttribute()->useInFilters = false;
+            $model->getElement('sorter')->getAttribute()->useInFilters = true;
         }
 
         if ($this->getHistoryView()) {
@@ -960,20 +960,20 @@ trait ApplicationServiceTrait
                 ->removeElement('plots')
                 ->removeElement('plots_data');
 
-            if ($this->getEntity()->getName() === 'application' && $this->getHasTeamApplications()) {
+            if ($this->entity->name === 'application' && $this->getHasTeamApplications()) {
                 $model->removeElement('team_application');
             }
 
-            $model->getElement('updated_at')->getAttribute()->setContext([]);
+            $model->getElement('updated_at')->getAttribute()->context = [];
 
-            foreach ($model->getElements() as $element) {
-                $element->setHelpText(null);
+            foreach ($model->elementsList as $element) {
+                $element->helpText = null;
             }
         }
 
         foreach ($this->getApplicationFields() as $applicationField) {
-            $context = $applicationField->getAttribute()->getContext();
-            $ingameSettings = DataHelper::multiselectToArray($applicationField->getAttribute()->getAdditionalData()['ingame_settings']);
+            $context = $applicationField->getAttribute()->context;
+            $ingameSettings = DataHelper::multiselectToArray($applicationField->getAttribute()->additionalData['ingame_settings']);
             $readRight = $context[0];
             $writeRight = $context[1];
             $context = [];
@@ -1002,19 +1002,19 @@ trait ApplicationServiceTrait
                 $context[] = ['ingame:out_of_game:view'];
             }
 
-            $applicationField->getAttribute()->setContext($context);
+            $applicationField->getAttribute()->context = $context;
 
             if ($applicationField instanceof Item\Textarea) {
-                $height = $applicationField->getAttribute()->getAdditionalData()['field_height'];
+                $height = $applicationField->getAttribute()->additionalData['field_height'];
 
                 if ($height) {
-                    $applicationField->getAttribute()->setRows((int) ($height / 20));
+                    $applicationField->getAttribute()->rows = (int) ($height / 20);
                 }
             }
 
-            if ($this->getEntity()->getName() === 'application') {
+            if ($this->entity->name === 'application') {
                 /** Добавляем к полю сортировки возможность изменить имя персонажа при несовпадении */
-                if ($this->getAct() === ActEnum::edit && $this->applicationType === 0 && $applicationField->getName() === 'virtual' . $this->projectData->sorter->get() && (int) ($applicationData['project_character_id'] ?? 0) > 0) {
+                if ($this->act === ActEnum::edit && $this->applicationType === 0 && $applicationField->name === 'virtual' . $this->projectData->sorter->get() && (int) ($applicationData['project_character_id'] ?? 0) > 0) {
                     $fixCharacterNameBySorterData = DB->select(
                         'project_character',
                         [
@@ -1025,25 +1025,23 @@ trait ApplicationServiceTrait
                     );
 
                     if ($fixCharacterNameBySorterData && (int) $fixCharacterNameBySorterData['applications_needed_count'] === 1 && $fixCharacterNameBySorterData['name'] !== $applicationData['sorter']) {
-                        $applicationField->setHelpText(
-                            sprintf(
-                                $LOCALE_ELEMENTS['sorter']['fix_character_name_by_sorter'],
-                                $fixCharacterNameBySorterData['id'],
-                            ),
+                        $applicationField->helpText = sprintf(
+                            $LOCALE_ELEMENTS['sorter']['fix_character_name_by_sorter'],
+                            $fixCharacterNameBySorterData['id'],
                         );
-                        $applicationField->getAttribute()->setHelpClass('fixed_help');
+                        $applicationField->getAttribute()->helpClass = 'fixed_help';
                     }
                 }
             }
 
             if ($this->getHistoryView()) {
-                $applicationField->setHelpText('');
+                $applicationField->helpText = '';
             }
 
             $model->initElement(
                 $applicationField,
             );
-            $model = $model->changeElementsOrder($applicationField->getName(), 'plots');
+            $model = $model->changeElementsOrder($applicationField->name, 'plots');
         }
 
         /** Если это действие сохранения и у нас есть поля, зависящие от других, нам надо снять с них обязательность перед сохранением, если вдруг они не видны из-за выборов, а после сохранения данных вернуть на место */
@@ -1051,14 +1049,14 @@ trait ApplicationServiceTrait
             $dependentFieldsToEnsureMustbe = $this->getDependentFieldsToEnsureMustbe();
 
             foreach ($this->getApplicationFields() as $applicationField) {
-                $showIf = $applicationField->getAttribute()->getAdditionalData()['show_if'];
+                $showIf = $applicationField->getAttribute()->additionalData['show_if'];
 
                 if (
                     !is_null($showIf) && str_replace('-', '', $showIf) !== ''
-                    && $applicationField->getAttribute()->getObligatory()
-                    && !($dependentFieldsToEnsureMustbe[$applicationField->getName()] ?? null)
+                    && $applicationField->getAttribute()->obligatory
+                    && !($dependentFieldsToEnsureMustbe[$applicationField->name] ?? null)
                 ) {
-                    $model->getElement($applicationField->getName())->getAttribute()->setObligatory(false);
+                    $model->getElement($applicationField->name)->getAttribute()->obligatory = false;
                 }
             }
         }
@@ -1185,7 +1183,7 @@ trait ApplicationServiceTrait
 
     public function verifyFeesAvailable(): bool
     {
-        return $this->getFeeOptions() && (count($this->getFeeOptions()) > 1 || $this->getAct() !== ActEnum::add);
+        return $this->getFeeOptions() && (count($this->getFeeOptions()) > 1 || $this->act !== ActEnum::add);
     }
 
     public function getFeeLockedRoom(): array
@@ -1260,7 +1258,7 @@ trait ApplicationServiceTrait
 
     public function verifyRoomsAvailable(): bool
     {
-        return $this->getRoomsData() && (count($this->getLockedRooms()) < count($this->getRoomsData()) || $this->getAct() !== ActEnum::add);
+        return $this->getRoomsData() && (count($this->getLockedRooms()) < count($this->getRoomsData()) || $this->act !== ActEnum::add);
     }
 
     public function getRoomSelected(): ?int
@@ -1371,21 +1369,21 @@ trait ApplicationServiceTrait
         $dependentFieldsToEnsureMustbe = $this->getDependentFieldsToEnsureMustbe();
 
         foreach ($this->getApplicationFields() as $applicationField) {
-            $showIf = $applicationField->getAttribute()->getAdditionalData()['show_if'];
+            $showIf = $applicationField->getAttribute()->additionalData['show_if'];
 
             if (
                 !is_null($showIf) && str_replace('-', '', $showIf) !== ''
-                && $applicationField->getAttribute()->getObligatory()
-                && !$dependentFieldsToEnsureMustbe[$applicationField->getName()]
+                && $applicationField->getAttribute()->obligatory
+                && !$dependentFieldsToEnsureMustbe[$applicationField->name]
             ) {
-                $this->getModel()->getElement($applicationField->getName())->getAttribute()->setObligatory(true);
+                $this->model->getElement($applicationField->name)->getAttribute()->obligatory = true;
             }
         }
     }
 
     public function postDelete(array $successfulResultsIds): void
     {
-        $LOCALE = $this->getLOCALE()['messages'];
+        $LOCALE = $this->LOCALE['messages'];
         $LOCALE_CONVERSATION = LocaleHelper::getLocale(['conversation', 'global']);
 
         $updatingUserData = $this->getUserService()->get(CURRENT_USER->id());
@@ -1639,7 +1637,7 @@ trait ApplicationServiceTrait
 
     private function getServiceEntityName(): string
     {
-        return $this->getView()->getEntity()->getName();
+        return $this->view->entity->name;
     }
 
     private function updateGroupsInRelation(string|int $successfulResultsId): void
@@ -1648,7 +1646,7 @@ trait ApplicationServiceTrait
         $application = $this->get($successfulResultsId, refresh: true);
         $applicationGroups = $application->project_group_ids->get();
 
-        if (is_array($applicationGroups) && $applicationGroups) {
+        if ($applicationGroups) {
             /** Удаляем связи со всеми группами, которых более нет у нас */
             RightsHelper::deleteRights(
                 '{member}',

@@ -14,6 +14,6 @@ class OfertaController extends BaseController
 {
     public function Response(): ?Response
     {
-        return $this->getCMSVC()->getView()->Response();
+        return $this->CMSVC->view->Response();
     }
 }

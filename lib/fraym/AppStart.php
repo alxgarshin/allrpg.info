@@ -46,7 +46,7 @@ define('PRE_REQUEST_CHECK', ($_REQUEST['preRequestCheck'] ?? '') === 'true');
 
 define('ABSOLUTE_PATH', $_ENV['ABSOLUTE_PATH']);
 define('ACTION', ActionEnum::init());
-define('ACT', !is_null($_REQUEST['act'] ?? null) ? ActEnum::tryFrom($_REQUEST['act'] ?? false) : null);
+define('ACT', !is_null($_REQUEST['act'] ?? null) ? ActEnum::tryFrom($_REQUEST['act']) : null);
 define('KIND', $_REQUEST['kind'] ?? $_ENV['STARTING_KIND']);
 define('CMSVC', $_REQUEST['cmsvc'] ?? KIND);
 define('ID', ($_REQUEST['id'] ?? false) ? (is_array($_REQUEST['id']) ? $_REQUEST['id'] : [(int) $_REQUEST['id']]) : []);

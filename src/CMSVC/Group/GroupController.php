@@ -28,7 +28,7 @@ class GroupController extends BaseController
 {
     public function confirmGroupRequest(): ?Response
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
         return $this->asArray(
             $groupService->confirmGroupRequest(OBJ_ID),
@@ -37,7 +37,7 @@ class GroupController extends BaseController
 
     public function declineGroupRequest(): ?Response
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
         return $this->asArray(
             $groupService->declineGroupRequest(OBJ_ID),
@@ -46,7 +46,7 @@ class GroupController extends BaseController
 
     public function getListOfGroupsByCharacterOrApplication(): ?Response
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
         return $this->asArray(
             $groupService->getListOfGroupsByCharacterOrApplication(OBJ_ID, OBJ_TYPE),
@@ -55,7 +55,7 @@ class GroupController extends BaseController
 
     public function getChildGroups(): ?Response
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
         return $this->asArray(
             $groupService->getChildGroups(
@@ -67,7 +67,7 @@ class GroupController extends BaseController
 
     public function getResponsibleGamemaster(): ?Response
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
         return $this->asArray(
             $groupService->getResponsibleGamemaster((int) OBJ_ID),
@@ -76,7 +76,7 @@ class GroupController extends BaseController
 
     public function changeCharacterCode(): ?Response
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
         return $this->asArray(
             $groupService->changeCharacterCode(
@@ -89,7 +89,7 @@ class GroupController extends BaseController
 
     public function changeGroupCode(): ?Response
     {
-        $groupService = $this->getService();
+        $groupService = $this->service;
 
         return $this->asArray(
             $groupService->changeGroupCode(

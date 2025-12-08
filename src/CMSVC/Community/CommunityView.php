@@ -44,12 +44,12 @@ class CommunityView extends BaseView
 {
     public function Response(): ?Response
     {
-        $communityService = $this->getService();
+        $communityService = $this->service;
 
         /** @var UserService $userService */
         $userService = CMSVCHelper::getService('user');
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $objData = $communityService->get(DataHelper::getId());
@@ -489,11 +489,11 @@ class CommunityView extends BaseView
 
     public function List(): ?Response
     {
-        $communityService = $this->getService();
+        $communityService = $this->service;
 
         [$allCommunitiesData, $allCommunitiesCount] = $communityService->getCommunities();
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
         $LOCALE_START = LocaleHelper::getLocale(['start', 'global']);
 
@@ -528,7 +528,7 @@ class CommunityView extends BaseView
 
                 if (count($communitiesData) > 0) {
                     foreach ($communitiesData as $key => $objData) {
-                        if ($objData->id->getAsInt() !== '') {
+                        if ($objData->id->getAsInt()) {
                             $communityEvents = UniversalHelper::checkForUpdates($objType, (int) $objData->id->getAsInt());
                             $communitiesDataSort[$key] = $communitiesNewCount[$objData->id->getAsInt()]['new_count'] = $communityEvents;
                             $communitiesDataSort2[$key] = DataHelper::escapeOutput($objData->name->get());
@@ -587,9 +587,9 @@ class CommunityView extends BaseView
 
     public function Wall(): ?Response
     {
-        $communityService = $this->getService();
+        $communityService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $objData = $communityService->get(DataHelper::getId());
@@ -628,9 +628,9 @@ class CommunityView extends BaseView
 
     public function Conversation(): ?Response
     {
-        $communityService = $this->getService();
+        $communityService = $this->service;
 
-        $LOCALE = $this->getLOCALE();
+        $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
 
         $objData = $communityService->get(DataHelper::getId());

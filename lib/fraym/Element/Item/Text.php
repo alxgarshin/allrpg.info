@@ -47,7 +47,7 @@ class Text extends BaseElement
             $html .= ' />';
         } else {
             $html = $this->getLinkAt()->getLinkAtBegin() .
-                DataHelper::escapeOutput($value, $this->getAttribute()->getSaveHtml() ? EscapeModeEnum::plainHTML : EscapeModeEnum::forHTML) .
+                DataHelper::escapeOutput($value, $this->getAttribute()->saveHtml ? EscapeModeEnum::plainHTML : EscapeModeEnum::forHTML) .
                 $this->getLinkAt()->getLinkAtEnd();
         }
 
@@ -84,7 +84,7 @@ class Text extends BaseElement
 
     public function getDefaultValue(): ?string
     {
-        return $this->checkDefaultValueInServiceFunctions($this->attribute->getDefaultValue());
+        return $this->checkDefaultValueInServiceFunctions($this->attribute->defaultValue);
     }
 
     public function get(): ?string

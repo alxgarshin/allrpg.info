@@ -29,20 +29,20 @@ class DocumentController extends BaseController
     public function generateDocuments(): ?Response
     {
         if (PRE_REQUEST_CHECK) {
-            if (($this->getService()->getApplicationsByFilter() || count($this->getService()->getAapplicationsByIds()) > 0)  && (int) ($_REQUEST['template_id'] ?? false) > 0) {
+            if (($this->service->getApplicationsByFilter() || count($this->service->getAapplicationsByIds()) > 0)  && (int) ($_REQUEST['template_id'] ?? false) > 0) {
                 return ResponseHelper::response([], 'submit');
             } else {
-                $LOCALE = $this->getLOCALE();
+                $LOCALE = $this->LOCALE;
                 ResponseHelper::responseOneBlock('error', $LOCALE['messages']['no_application_selected'], ['application_id[0]']);
             }
         }
 
-        if ((!$this->getService()->getApplicationsByFilter() && count($this->getService()->getAapplicationsByIds()) === 0)) {
+        if ((!$this->service->getApplicationsByFilter() && count($this->service->getAapplicationsByIds()) === 0)) {
             ResponseHelper::redirect(ABSOLUTE_PATH . '/' . KIND . '/');
         }
 
         /** @var DocumentView */
-        $documentView = $this->getCMSVC()->getView();
+        $documentView = $this->CMSVC->view;
 
         $documentView->generateDocuments();
 

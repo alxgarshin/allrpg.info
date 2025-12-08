@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Fraym\Interface;
 
+/** @template T */
 interface HasDefaultValue
 {
-    public function getDefaultValue(): mixed;
-
-    public function setDefaultValue(null $defaultValue = null): static;
+    /** @var T */
+    public mixed $defaultValue { get; set; }
 }

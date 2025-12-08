@@ -20,13 +20,13 @@ class HelpController extends BaseController
     public function Response(): ?Response
     {
         if (ACTION === ActionEnum::create) {
-            return $this->getEntity()->fraymAction();
+            return $this->entity->fraymAction();
         }
 
-        $responseData = $this->getEntity()->view(ActEnum::add);
+        $responseData = $this->entity->view(ActEnum::add);
 
         if ($responseData instanceof HtmlResponse) {
-            $this->getEntity()->getView()->postViewHandler($responseData);
+            $this->entity->view->postViewHandler($responseData);
         }
 
         return $responseData;
