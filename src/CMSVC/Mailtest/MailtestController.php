@@ -9,7 +9,9 @@ use Fraym\Helper\{EmailHelper, LocaleHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\HtmlResponse;
 
-#[CMSVC]
+#[CMSVC(
+    controller: MailtestController::class,
+)]
 class MailtestController extends BaseController
 {
     public function Response(): ?Response
