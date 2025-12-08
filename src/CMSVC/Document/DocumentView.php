@@ -125,7 +125,7 @@ class DocumentView extends BaseView
                         if ($field->getName() === 'plots_data') {
                             $field->set($plotService->generateAllPlots($this->getService()->getActivatedProjectId(), '{application}', $applicationRequestedId, true));
                         } else {
-                            $fieldData = $fullApplicationsData[$applicationRequestedId][$field->getName()];
+                            $fieldData = $fullApplicationsData[$applicationRequestedId][$field->getName()] ?? null;
 
                             if ($fieldData) {
                                 /** @phpstan-ignore-next-line */
