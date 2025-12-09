@@ -2079,7 +2079,7 @@ class UserService extends BaseService
                             true,
                         );
                         $uploadNum = FileHelper::getUploadNumByType($parentObjectType);
-                        $groupName = $parentObjData['name'];
+                        $groupName = $parentObjData->name->get();
                         $commentHtml .= MessageHelper::conversationTreeComment(
                             $commentData,
                             1,
@@ -2162,7 +2162,7 @@ class UserService extends BaseService
                             true,
                         );
                         $uploadNum = FileHelper::getUploadNumByType($parentObjectType);
-                        $groupName = $parentObjData['name'];
+                        $groupName = $parentObjData->name->get();
                         $commentHtml .= MessageHelper::conversationTreeComment(
                             $commentData,
                             1,
