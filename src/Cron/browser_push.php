@@ -37,7 +37,7 @@ foreach ($result as $data) {
 
     if (DataHelper::clearBraces($data['obj_type']) === 'application') {
         $parentObjData = DB->select('project_application', ['id' => $data['obj_id']], true);
-        $clickAction = ABSOLUTE_PATH . '/application/application/' . $data['obj_id'] . '/act=edit&project_id=' . $parentObjData['project_id'];
+        $clickAction = ABSOLUTE_PATH . '/application/application/' . $data['obj_id'] . '/act=edit&project_id=' . ($parentObjData['project_id'] ?? 0);
     }
 
     /** Проверяем, хочет ли пользователь получать оповещения данного типа */
