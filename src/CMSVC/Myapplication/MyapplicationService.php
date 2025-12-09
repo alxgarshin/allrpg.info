@@ -1090,7 +1090,7 @@ class MyapplicationService extends BaseService
                 ],
                 true,
             );
-            $money = $feeOptionDateData['cost'];
+            $money = $feeOptionDateData['cost'] ?? 0;
         }
 
         if (!$newApplicationModel->money_paid->get()) {

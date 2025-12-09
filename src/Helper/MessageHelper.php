@@ -942,8 +942,8 @@ abstract class MessageHelper implements Helper
                 'important' => UniversalHelper::drawImportant(
                     'conversation_message',
                     $commentData['id'],
-                    $commentData['marked_important'] > 0,
-                    $commentData['marked_important_count'],
+                    ($commentData['marked_important'] ?? 0) > 0,
+                    $commentData['marked_important_count'] ?? 0,
                 ),
             ];
 
@@ -1184,8 +1184,8 @@ abstract class MessageHelper implements Helper
             UniversalHelper::drawImportant(
                 'conversation_message',
                 $commentData['id'],
-                $commentData['marked_important'] > 0,
-                $commentData['marked_important_count'],
+                ($commentData['marked_important'] ?? 0) > 0,
+                $commentData['marked_important_count'] ?? 0,
             ) .
             (
                 $commentData['use_group_name'] === '1' ? $userService->showNameExtended($commentCreator, true, true, 'use_group_name') : ''
