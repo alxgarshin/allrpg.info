@@ -361,7 +361,15 @@
             "report"
           ],
           "name": "Informes",
-          "edit": "report/action=setFilters&search_creator_id[{user_id}]=on"
+          "visibility": "not_logged"
+        },
+        {
+          "kind": [
+            "report"
+          ],
+          "name": "Informes",
+          "edit": "report/action=setFilters&search_creator_id_filtered[{user_id}]=on",
+          "visibility": "logged"
         },
         {
           "kind": [

@@ -17,6 +17,9 @@
       "creator_id": {
         "shownName": "Author"
       },
+      "creator_id_filtered": {
+        "shownName": "Author"
+      },
       "name": {
         "shownName": "Title"
       },

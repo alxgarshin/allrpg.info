@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\CMSVC\PublicationsEdit;
 
-use Fraym\BaseObject\{BaseController, CMSVC};
+use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
 
 /** @extends BaseController<PublicationsEditService> */
 #[CMSVC(
@@ -12,6 +12,11 @@ use Fraym\BaseObject\{BaseController, CMSVC};
     service: PublicationsEditService::class,
     view: PublicationsEditView::class,
 )]
-class PublicationsEditController extends BaseController
-{
-}
+#[IsAccessible(
+    redirectPath: '/login/',
+    redirectData: [
+        'redirectToKind' => KIND,
+        'redirectToId' => ID,
+    ],
+)]
+class PublicationsEditController extends BaseController {}

@@ -17,6 +17,9 @@
       "creator_id": {
         "shownName": "Автор"
       },
+      "creator_id_filtered": {
+        "shownName": "Автор"
+      },
       "name": {
         "shownName": "Заголовок отчета"
       },

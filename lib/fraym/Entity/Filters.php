@@ -168,7 +168,7 @@ final class Filters
 
             if ($filtersBlock->getModelItems()[0] ?? false) {
                 $modelItem = $filtersBlock->getModelItems()[0];
-                $queryElementName = $modelItem->getName();
+                $queryElementName = $modelItem->getAttribute()->getAlternativeDataColumnName() ?? $modelItem->getName();
             }
 
             if (!$getDataFromCookies) {
@@ -366,7 +366,8 @@ final class Filters
                                     $selectbreaks = false;
                                 }
                                 /** Если здесь поставить AND, то при поиске в мультиселектах нужно будет совпадение со всеми поисковыми галочками,
-                                 * выставленными пользователями. Если OR, то хотя бы с одной из них */ elseif ($dataArray[$filtersViewSecondItem->getName()] === '2') {
+                                 * выставленными пользователями. Если OR, то хотя бы с одной из них */
+                                elseif ($dataArray[$filtersViewSecondItem->getName()] === '2') {
                                     $blockSearchQuerySql .= " AND";
                                 } else {
                                     $blockSearchQuerySql .= " OR";
@@ -406,7 +407,8 @@ final class Filters
                                     $blockSearchQuerySql .= " (t1." . $queryElementName . "='" . $stripped_val . "')";
                                 }
                             }
-                            /** Предполагаем, что тип колонки в этом случае = varchar */ elseif ($value[0] === 'not_set') {
+                            /** Предполагаем, что тип колонки в этом случае = varchar */
+                            elseif ($value[0] === 'not_set') {
                                 $blockSearchQuerySql .= " (t1." . $queryElementName . " IS NULL OR t1." . $queryElementName . "='' OR t1." . $queryElementName . "='-'
                                 OR t1." . $queryElementName . "='--')";
                             } else {
@@ -478,7 +480,7 @@ final class Filters
                             '4' => "<",
                             default => '',
                         }
-                        . "'" . $date_in_format . "'";
+                            . "'" . $date_in_format . "'";
 
                         if ($selectType === '2' || $selectType === '4') {
                             $blockSearchQuerySql .= " OR t1." . $queryElementName . " IS NULL";
@@ -500,7 +502,7 @@ final class Filters
                         '4' => "<" . $thistime1,
                         default => '',
                     }
-                    . ")";
+                        . ")";
                 } elseif (
                     $modelItem instanceof Item\Number &&
                     (
@@ -832,12 +834,12 @@ final class Filters
                 $searchFieldName = 'search' . ($modelItem->getEntity() instanceof CatalogItemEntity ? '2' : '') . '_' . $modelItem->getName();
 
                 if ($modelItem instanceof Item\Select && !is_null($modelItem->getHelper())) {
-                    $filterBlock->addFiltersViewItem(clone ($modelItem))
+                    $filterBlock->addFiltersViewItem(clone($modelItem))
                         ->setName($searchFieldName)
                         ->getAttribute()->setObligatory(false);
                 } elseif ($modelItem instanceof Item\Multiselect) {
                     /** @var Item\Multiselect */
-                    $clonedModelItem = $filterBlock->addFiltersViewItem(clone ($modelItem))
+                    $clonedModelItem = $filterBlock->addFiltersViewItem(clone($modelItem))
                         ->setName($searchFieldName);
 
                     $clonedModelItem->getAttribute()
@@ -884,7 +886,7 @@ final class Filters
                         );
 
                     /** @var Item\Calendar|Item\Number */
-                    $clonedModelItem =  $filterBlock->addFiltersViewItem(clone ($modelItem))
+                    $clonedModelItem =  $filterBlock->addFiltersViewItem(clone($modelItem))
                         ->setName($searchFieldName);
 
                     $clonedModelItem->getAttribute()

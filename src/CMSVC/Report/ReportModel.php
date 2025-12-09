@@ -31,4 +31,13 @@ class ReportModel extends BaseModel
         obligatory: true,
     )]
     public Item\Wysiwyg $content;
+
+    #[Attribute\Select(
+        values: 'getSortCreatorId',
+        useInFilters: true,
+        context: [],
+        noData: true,
+        alternativeDataColumnName: 'creator_id',
+    )]
+    public Item\Select $creator_id_filtered;
 }
