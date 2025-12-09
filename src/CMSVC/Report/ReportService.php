@@ -58,7 +58,7 @@ class ReportService extends BaseService
 
     public function getDefaultCalendarEventId(): ?int
     {
-        return $_REQUEST['calendar_event_id'] ?? null;
+        return ($_REQUEST['calendar_event_id'] ?? false) ? (int) $_REQUEST['calendar_event_id'] : null;
     }
 
     public function checkRights(): bool

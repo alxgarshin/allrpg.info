@@ -166,8 +166,12 @@ final class CurrentUser
 
                 if ($admUser > 0) {
                     if (CURRENT_USER->id() === $admUser) {
-                        CookieHelper::batchDeleteCookie(['admUser']);
-                        ResponseHelper::success($LOCALE['switched_to_your_profile']);
+                        if ($admUserRequest) {
+                            CookieHelper::batchSetCookie(['admUser' => (string) CURRENT_USER->id()]);
+                            ResponseHelper::success($LOCALE['switched_to_your_profile']);
+                        } else {
+                            CookieHelper::batchDeleteCookie(['admUser']);
+                        }
                     } else {
                         $userData = DB->select(
                             'user',
