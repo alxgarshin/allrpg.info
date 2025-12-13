@@ -29,7 +29,7 @@ class LoginService extends BaseService
                 $newPassword .= $tmp;
                 ++$i;
             }
-            DB->update('user', ['password_hashed' => AuthHelper::hashPassword($newPassword)], ['id' => $userData['id']]);
+            DB->update('user', ['password_hashed' => AuthHelper::hashPassword($newPassword), 'hash_version' => 'final_v2'], ['id' => $userData['id']]);
 
             $myname = str_replace(['http://', 'https://', 'www', '/'], '', ABSOLUTE_PATH);
             $contactemail = $em;

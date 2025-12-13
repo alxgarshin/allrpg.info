@@ -19,4 +19,6 @@ use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
         'redirectToId' => ID,
     ],
 )]
-class PublicationsEditController extends BaseController {}
+class PublicationsEditController extends BaseController
+{
+}
