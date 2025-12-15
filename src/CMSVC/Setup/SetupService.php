@@ -159,7 +159,7 @@ class SetupService extends BaseService
 
         foreach ($showIfValuesData as $showIfValueData) {
             $showIfValueData['field_values'] = DataHelper::escapeOutput($showIfValueData['field_values']);
-            preg_match_all('#\[(\d+)]\[([^]]+)]#', $showIfValueData['field_values'], $matches);
+            preg_match_all('#\[(\d+)]\[([^]]+)]#', ($showIfValueData['field_values'] ?? ''), $matches);
 
             foreach ($matches[1] as $key => $value) {
                 $showIfValues[] = [
