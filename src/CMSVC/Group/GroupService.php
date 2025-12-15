@@ -146,7 +146,7 @@ class GroupService extends BaseService
                 DB->update(
                     'project_group',
                     [
-                        'parent' => $afterObjId,
+                        'parent' => ($afterObjId === 0 ? null : $afterObjId),
                         'code' => 1,
                         'updated_at' => DateHelper::getNow(),
                     ],
