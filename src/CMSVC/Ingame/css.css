@@ -704,21 +704,4 @@ div.mp3_player {
     div.qrpg_keys_list div.qrpg_key div.timer {
         font-size: .8em;
     }
-
-    div.myapplication_project_selection {
-        grid-template-columns: 1fr;
-    }
-
-    div.myapplication_project_selection_project_links a {
-        margin-right: 40%;
-    }
-
-    div.myapplication_project_selection_project_links div.project_links_avatar {
-        width: 8em;
-        max-width: 8em;
-        min-width: 8em;
-        height: 8em;
-        min-height: 8em;
-        max-height: 8em;
-    }
 }
