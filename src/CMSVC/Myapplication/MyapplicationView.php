@@ -9,7 +9,7 @@ use App\Helper\{DateHelper, DesignHelper, FileHelper, MessageHelper};
 use Fraym\BaseObject\{BaseView, Controller};
 use Fraym\Entity\{EntitySortingItem, Rights, TableEntity};
 use Fraym\Enum\{ActEnum, SubstituteDataTypeEnum, TableFieldOrderEnum};
-use Fraym\Helper\{CMSVCHelper, DataHelper, LocaleHelper, ResponseHelper};
+use Fraym\Helper\{CMSVCHelper, DataHelper, LocaleHelper, ResponseHelper, TextHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\HtmlResponse;
 
@@ -75,7 +75,7 @@ class MyapplicationView extends BaseView
         $LOCALE = $this->getLOCALE();
 
         $RESPONSE_DATA = '';
-        $PAGETITLE = $LOCALE['title'];
+        $PAGETITLE = TextHelper::mb_ucfirst($LOCALE['add_application']);
 
         $RESPONSE_DATA = '<div class="maincontent_data kind_' . KIND . '">
     <h1 class="page_header"><a href="' . ABSOLUTE_PATH . '/' . KIND . '/">' . $PAGETITLE . '</a></h1>
