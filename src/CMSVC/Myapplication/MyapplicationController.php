@@ -22,12 +22,15 @@ class MyapplicationController extends BaseController
     public function Response(): ?Response
     {
         if (!CURRENT_USER->isLogged() && !(DataHelper::getActDefault($this->getEntity()) === ActEnum::add && !DataHelper::getId() && (int) ($_REQUEST['project_id'] ?? false) === 0)) {
+            $forProjectId = (int) ($_REQUEST['for_project_id'] ?? false);
+            $characterId = (int) ($_REQUEST['character_id'] ?? false);
+
             ResponseHelper::redirect(
                 '/login/',
                 [
-                    'redirectobj' => KIND,
-                    'redirectid' => DataHelper::getId(),
-                    'redirectparams' => ((int) ($_REQUEST['project_id'] ?? false) > 0 ? 'act=add&project_id=' . (int) $_REQUEST['project_id'] : (DataHelper::getActDefault($this->getEntity()) === ActEnum::add ? 'act=add' : '')),
+                    'redirectToKind' => KIND,
+                    'redirectToId' => DataHelper::getId(),
+                    'redirectParams' => ((int) ($_REQUEST['project_id'] ?? false) > 0 ? 'act=add&project_id=' . (int) $_REQUEST['project_id'] : ($forProjectId > 0 ? 'for_project_id=' . $forProjectId . ($characterId > 0 ? '&character_id=' . $characterId : '') : (DataHelper::getActDefault($this->getEntity()) === ActEnum::add ? 'act=add' : ''))),
                 ],
             );
         }

@@ -23,8 +23,8 @@ class ReportController extends BaseController
             ResponseHelper::redirect(
                 '/login/',
                 [
-                    'redirectobj' => KIND,
-                    'redirectparams' => 'act=' . ActEnum::add->value . '&calendar_event_id=' . (int) ($_REQUEST['calendar_event_id'] ?? 0),
+                    'redirectToKind' => KIND,
+                    'redirectParams' => 'act=' . ActEnum::add->value . '&calendar_event_id=' . (int) ($_REQUEST['calendar_event_id'] ?? 0),
                 ],
             );
         }
