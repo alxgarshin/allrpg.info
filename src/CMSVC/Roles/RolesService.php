@@ -879,7 +879,7 @@ class RolesService extends BaseService
             if ($applicationData['id'] !== null && (!$this->showOnlyAcceptedRoles || $applicationData['application_status'] === '3')) {
                 $userModel = $this->getUserService()->arrayToModel($applicationData);
 
-                $result .= '<div class="allrpgRolesListApplicationsListApplication" data-obj-type="application" data-obj-id="' . $applicationData['application_id'] . '">' . ($applicationData['application_id'] !== '' ? '<a class="sbi sbi-info" obj_id="' . $applicationData['id'] . '" obj_type="roleslist" value="' . $projectData->id->getAsInt() . '"></a>' . ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/application/' . $applicationData['application_id'] . '/">' . $this->getUserService()->showNameWithId($userModel) . '</a>' : $this->getUserService()->showName($userModel, true)) . ($applicationData['application_status'] !== '3' ? $LOCALE['question'] : '') : '') .
+                $result .= '<div class="allrpgRolesListApplicationsListApplication" data-obj-type="application" data-obj-id="' . $applicationData['application_id'] . '">' . ($applicationData['application_id'] !== '' ? '<a class="sbi sbi-info" obj_id="' . $applicationData['id'] . '" obj_type="roleslist" value="' . $projectData->id->getAsInt() . '"></a>' . ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/application/' . $applicationData['application_id'] . '/">' . $this->getUserService()->showNameWithId($userModel) . '</a>' : $this->getUserService()->showName($userModel, true)) . ($applicationData['application_status'] !== 3 ? $LOCALE['question'] : '') : '') .
                     ($applicationsAcceptedCount + $applicationsToBeAcceptedCount > 1 ? '<div class="allrpgRolesListApplicationsListApplicationSorter">' .
                         ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/application/' . $applicationData['application_id'] . '/">' . DataHelper::escapeOutput($applicationData['application_sorter']) . '</a>' : DataHelper::escapeOutput($applicationData['application_sorter'])) . '</div>' : '') .
                     '</div>';
@@ -900,11 +900,7 @@ class RolesService extends BaseService
 
                 if (count($maybetaken) > 0 && !$this->showOnlyAcceptedRoles) {
                     foreach ($maybetaken as $value) {
-                        $result .= '<div class="allrpgRolesListApplicationsListApplication">' . ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/character/' . $applicationData['character_id'] . '/">' . trim(
-                            $value,
-                        ) . $LOCALE['question'] . '</a>' : trim(
-                            $value,
-                        ) . $LOCALE['question']) . '</div>';
+                        $result .= '<div class="allrpgRolesListApplicationsListApplication">' . ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/character/' . $applicationData['character_id'] . '/">' . trim($value) . $LOCALE['question'] . '</a>' : trim($value) . $LOCALE['question']) . '</div>';
                     }
                 }
             }
