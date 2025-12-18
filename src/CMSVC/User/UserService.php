@@ -2311,7 +2311,7 @@ class UserService extends BaseService
     }
 
     /** Список всех диалогов */
-    public function getAllConversationsIds(): array
+    public function getAllConversationsIds(): ?array
     {
         if (!$this->initializedAllConversationsIds) {
             $this->initializedAllConversationsIds = true;
