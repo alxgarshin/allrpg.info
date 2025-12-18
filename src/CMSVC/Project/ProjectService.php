@@ -695,13 +695,15 @@ class ProjectService extends BaseService
 
     public function getProjectInfoData(int $projectId): array
     {
-        return DB->query(
+        $data = DB->query(
             "SELECT p.id, paf.id AS individual_field_id, paf2.id AS team_field_id, pg.id AS group_id FROM project p LEFT JOIN project_application_field paf ON paf.project_id=p.id AND paf.application_type='0' LEFT JOIN project_application_field paf2 ON paf2.project_id=p.id AND paf2.application_type='1' LEFT JOIN project_group pg ON pg.project_id=p.id AND (pg.rights=0 OR pg.rights=1) WHERE (paf.id IS NOT NULL OR paf2.id IS NOT NULL) AND p.id=:id GROUP BY p.id, paf.id, paf2.id, pg.id",
             [
                 ['id', $projectId],
             ],
             true,
         );
+
+        return $data ? $data : [];
     }
 
     public function getApplicationData(int $projectId): ?ApplicationModel
