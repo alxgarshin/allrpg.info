@@ -14,13 +14,13 @@ if (el('form#form_setup')) {
         }
     });
 
-    _('textarea[name^="field_values"]').on('focus', function () {
+    _('textarea[name^="field_values"]').on('focusin', function () {
         if (_(this).val() == '' && (_('select[name^="field_type"]').val() == 'select' || _('select[name^="field_type"]').val() == 'multiselect')) {
             _(this).val('[1][]\r\n[2][]\r\n[3][]');
         }
     });
 
-    _('textarea[name^="field_default"]').on('focus', function () {
+    _('textarea[name^="field_default"]').on('focusin', function () {
         const self = _(this);
 
         if (self.val() == '') {
