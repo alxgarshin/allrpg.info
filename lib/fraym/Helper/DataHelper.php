@@ -469,7 +469,7 @@ abstract class DataHelper implements Helper
                 $fieldAttribute->defaultValue = DataHelper::escapeOutput($fieldData[$prefix . 'default'] ?? null);
             }
 
-            if (method_exists($fieldAttribute, 'setValues')) {
+            if (property_exists($fieldAttribute, 'values')) {
                 /** @var Attribute\Multiselect|Attribute\Select $fieldAttribute */
                 $fieldAttribute->values = $values;
             }
