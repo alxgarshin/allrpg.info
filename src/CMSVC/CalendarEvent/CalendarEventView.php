@@ -133,7 +133,7 @@ class CalendarEventView extends BaseView
             $mgData = implode(
                 ', ',
                 array_map(
-                    static fn (string $value): string => '<a href="' . ABSOLUTE_PATH . '/gamemaster/' . str_replace('&', '-and-', trim($value)) . '/">' .
+                    static fn(string $value): string => '<a href="' . ABSOLUTE_PATH . '/gamemaster/' . str_replace('&', '-and-', trim($value)) . '/">' .
                         str_replace('&', '-and-', trim($value)) . '</a>',
                     $mgGroups,
                 ),
@@ -184,7 +184,7 @@ class CalendarEventView extends BaseView
             . $LOCALE['allrpg_project2'] . '</a><br>' : '') . '
                 ' . ($regionData ? '<span class="gray">' . $objData->region->shownName .
             ':</span><a href="' . ABSOLUTE_PATH . '/calendar_event/search_region=' . $regionData['id'] . '&action=setFilters">' .
-            DataHelper::escapeOutput($regionData['name']) . ($regionParentData ? ' (' . DataHelper::escapeOutput($regionParentData['name']) . ')</a>' : '') : '<br>') . '
+            DataHelper::escapeOutput($regionData['name']) . ($regionParentData ? ' (' . DataHelper::escapeOutput($regionParentData['name']) . ')</a>' : '') . '<br>' : '') . '
                 ' . ($objData->playernum->get() > 0 ? '<span class="gray">' . $objData->playernum->shownName . ':</span><span>' .
             DataHelper::escapeOutput($objData->playernum->get()) . '</span><br>' : '') . '
                 <a class="show_hidden">' . $LOCALE_GLOBAL['show_next'] . '</a>
@@ -443,18 +443,18 @@ class CalendarEventView extends BaseView
                         $report_data['name'],
                     ) : $LOCALE_PUBLICATION['no_name']) . '</a></td>
                             <td><a href="' . ABSOLUTE_PATH . '/report/' . $report_data['id'] . '/">' . $userService->showNameExtended(
-                        $userService->get($report_data['creator_id']),
-                        true,
-                        false,
-                        '',
-                        false,
-                        false,
-                        true,
-                    ) . '</a></td>
+                    $userService->get($report_data['creator_id']),
+                    true,
+                    false,
+                    '',
+                    false,
+                    false,
+                    true,
+                ) . '</a></td>
                             <td><a href="' . ABSOLUTE_PATH . '/report/' . $report_data['id'] . '/">' . date(
-                        'd.m.Y ' . $LOCALE_FRAYM['datetime']['at'] . ' H:i',
-                        $report_data['created_at'],
-                    ) . '</a></td>
+                    'd.m.Y ' . $LOCALE_FRAYM['datetime']['at'] . ' H:i',
+                    $report_data['created_at'],
+                ) . '</a></td>
                         </tr>';
                 ++$string_num;
             }
