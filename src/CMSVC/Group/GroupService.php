@@ -749,7 +749,7 @@ class GroupService extends BaseService
                 foreach ($charactersData as $characterData) {
                     $charactersId[] = $characterData['id'];
                 }
-                $characterService->changeCharacterGroupParents($charactersId, (int) $savedGroupData['parent'], $parent);
+                $characterService->changeCharacterGroupParents($charactersId, (int) $savedGroupData->parent->getAsInt(), $parent);
             }
 
             /** Если изменился ответственный мастер, меняем у всех наследующих групп и заявок в них предыдущего ответственного мастера на нового */

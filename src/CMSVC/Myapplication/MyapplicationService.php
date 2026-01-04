@@ -1277,7 +1277,7 @@ class MyapplicationService extends BaseService
                         $projectGroupData = DB->findObjectById($requestedGroupId, 'project_group');
                         $responsibleGamemasterData = $this->getUserService()->get($projectGroupData['responsible_gamemaster_id']);
 
-                        if ($responsibleGamemasterData->id->get()) {
+                        if ($responsibleGamemasterData?->id->get()) {
                             $message = "@" . $this->getUserService()->showName($responsibleGamemasterData) .
                                 '[' . $responsibleGamemasterData->sid->get() . ']
                             

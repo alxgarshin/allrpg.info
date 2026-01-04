@@ -1130,7 +1130,7 @@ class ApplicationService extends BaseService
 
             /** Если была изменена вручную сумма и у нас есть всего одна опция взноса, логично отвязать ее от изменений через раздел опций, т.к. это какой-то специальный, особенный взнос. При этом мы пока что не хотим совсем уж терять понимание, к какой опции была привязка. */
             if (count($this->getFeeOptions()) === 1 && (int) $oldApplicationData['money'] !== $currentApplication->money->get()) {
-                $firstFeeOption = $this->getFeeOptions()[0][0];
+                $firstFeeOption = (string) $this->getFeeOptions()[0][0];
 
                 $feeId = str_replace('.1', '', $firstFeeOption);
                 $feeData = DB->findObjectById((int) $feeId, 'project_fee');
