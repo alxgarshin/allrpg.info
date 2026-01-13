@@ -42,10 +42,10 @@ class StartView extends BaseView
         $i = 0;
 
         if (CURRENT_USER->isLogged()) {
-            $applications_full_data = [];
-            $already_found_project = [];
-            $more_than_one_application_on_a_project = [];
-            $applications_data = DB->query(
+            $applicationsFullData = [];
+            $alreadyFoundProject = [];
+            $moreThanOneApplicationOnAProject = [];
+            $applicationsData = DB->query(
                 "SELECT pa.creator_id, pa.id, pa.sorter, p.name as project_name, p.id as project_id, p.attachments as project_attachments FROM project_application pa LEFT JOIN project p ON p.id=pa.project_id WHERE pa.creator_id=:creator_id AND p.date_to >= :date_to AND pa.deleted_by_player='0' ORDER BY p.name, pa.sorter",
                 [
                     ['creator_id', CURRENT_USER->id()],
@@ -53,39 +53,39 @@ class StartView extends BaseView
                 ],
             );
 
-            foreach ($applications_data as $application_data) {
-                $applications_full_data[] = $application_data;
+            foreach ($applicationsData as $applicationData) {
+                $applicationsFullData[] = $applicationData;
 
-                if (in_array($application_data['project_id'], $already_found_project)) {
-                    $more_than_one_application_on_a_project[] = $application_data['project_id'];
+                if (in_array($applicationData['project_id'], $alreadyFoundProject)) {
+                    $moreThanOneApplicationOnAProject[] = $applicationData['project_id'];
                 }
-                $already_found_project[] = $application_data['project_id'];
+                $alreadyFoundProject[] = $applicationData['project_id'];
             }
-            unset($already_found_project);
+            unset($alreadyFoundProject);
 
-            foreach ($applications_full_data as $application_data) {
-                if ($application_data['id'] > 0) {
+            foreach ($applicationsFullData as $applicationData) {
+                if ($applicationData['id'] > 0) {
                     $result = DB->query(
                         "SELECT c.id as c_id, c.name as c_name, c.sub_obj_type as c_sub_obj_type, cm.* FROM conversation c LEFT JOIN conversation_message cm ON cm.conversation_id=c.id LEFT JOIN conversation_message_status cms ON cms.message_id=cm.id AND cms.user_id=:user_id WHERE c.obj_type='{project_application_conversation}' AND c.obj_id=:obj_id AND (c.sub_obj_type='{from_player}' OR c.sub_obj_type='{to_player}' OR c.sub_obj_type IS NULL) AND (cms.message_read='0' OR cms.message_read IS NULL) GROUP BY cm.id, c.id",
                         [
                             ['user_id', CURRENT_USER->id()],
-                            ['obj_id', $application_data['id']],
+                            ['obj_id', $applicationData['id']],
                         ],
                     );
-                    $conversations_data_count = count($result);
+                    $conversationsDataCount = count($result);
 
                     $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/myapplication/' . $application_data['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
-                        FileHelper::getImagePath($application_data['project_attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
+                <a href="' . ABSOLUTE_PATH . '/myapplication/' . $applicationData['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
+                        FileHelper::getImagePath($applicationData['project_attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
                             ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_application.svg',
                     ) . '"><div class="mainpage_block_body_item_avatar_counter' .
-                        ($conversations_data_count > 0 ? ' filled' : '') . '">' . $conversations_data_count . '</div></a>
-                <a href="' . ABSOLUTE_PATH . '/myapplication/' . $application_data['id'] . '/" class="mainpage_block_body_item_name">' . $application_data['project_name'] . (in_array(
-                            $application_data['project_id'],
-                            $more_than_one_application_on_a_project,
-                        ) ? ' (' . $application_data['sorter'] . ')' : '') . '</a>
-                <a href="' . ABSOLUTE_PATH . '/roles/' . $application_data['project_id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
+                        ($conversationsDataCount > 0 ? ' filled' : '') . '">' . $conversationsDataCount . '</div></a>
+                <a href="' . ABSOLUTE_PATH . '/myapplication/' . $applicationData['id'] . '/" class="mainpage_block_body_item_name">' . $applicationData['project_name'] . (in_array(
+                            $applicationData['project_id'],
+                            $moreThanOneApplicationOnAProject,
+                        ) ? ' (' . $applicationData['sorter'] . ')' : '') . '</a>
+                <a href="' . ABSOLUTE_PATH . '/roles/' . $applicationData['project_id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
                             $LOCALE['roleslist'],
                         ) . '</a>
             </div>';
@@ -94,24 +94,24 @@ class StartView extends BaseView
             }
         } else {
             /* список последний появившихся проектов */
-            $project_info = DB->query(
+            $projectInfo = DB->query(
                 "SELECT p.id, p.name, p.date_from, p.date_to, p.external_link, p.attachments FROM project p LEFT JOIN project_application_field paf ON paf.project_id=p.id AND paf.application_type='0' LEFT JOIN project_application_field paf2 ON paf2.project_id=p.id AND paf2.application_type='1' LEFT JOIN project_group pg ON pg.project_id=p.id AND (pg.rights=0 OR pg.rights=1) WHERE p.status='1' AND p.date_to>=:date_to AND (paf.id IS NOT NULL OR paf2.id IS NOT NULL) GROUP BY p.id ORDER BY p.name",
                 [
                     ['date_to', date('Y-m-d')],
                 ],
             );
 
-            foreach ($project_info as $project_info_data) {
+            foreach ($projectInfo as $projectInfoData) {
                 $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/myapplication/act=add&project_id=' . $project_info_data['id'] . '&application_type=0" class="mainpage_block_body_item_avatar" style="' .
+                <a href="' . ABSOLUTE_PATH . '/myapplication/act=add&project_id=' . $projectInfoData['id'] . '&application_type=0" class="mainpage_block_body_item_avatar" style="' .
                     DesignHelper::getCssBackgroundImage(
-                        FileHelper::getImagePath($project_info_data['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
+                        FileHelper::getImagePath($projectInfoData['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
                             ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_project.svg',
                     ) .
                     '"></a>
-                <a href="' . ABSOLUTE_PATH . '/myapplication/act=add&project_id=' . $project_info_data['id'] . '&application_type=0" class="mainpage_block_body_item_name">' . $project_info_data['name'] . '</a>
-                <a href="' . ABSOLUTE_PATH . '/roles/' . $project_info_data['id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
+                <a href="' . ABSOLUTE_PATH . '/myapplication/act=add&project_id=' . $projectInfoData['id'] . '&application_type=0" class="mainpage_block_body_item_name">' . $projectInfoData['name'] . '</a>
+                <a href="' . ABSOLUTE_PATH . '/roles/' . $projectInfoData['id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
                         $LOCALE['roleslist'],
                     ) . '</a>
             </div>';
@@ -140,40 +140,40 @@ class StartView extends BaseView
 
             if ($projects) {
                 $projects = array_unique($projects);
-                $projects_data = DB->select('project', [['id', $projects]]);
-                $projects_data_sort = [];
-                $projects_data_sort2 = [];
-                $projects_data_sort3 = [];
+                $projectsData = DB->select('project', [['id', $projects]]);
+                $projectsDataSort = [];
+                $projectsDataSort2 = [];
+                $projectsDataSort3 = [];
 
-                if (is_array($projects_data)) {
-                    foreach ($projects_data as $key => $project_data) {
-                        if (is_null($project_data['date_to'])) {
-                            $project_data['date_to'] = '';
+                if (is_array($projectsData)) {
+                    foreach ($projectsData as $key => $projectData) {
+                        if (is_null($projectData['date_to'])) {
+                            $projectData['date_to'] = '';
                         }
 
-                        if ($project_data['id'] !== '' && strtotime($project_data['date_to']) >= strtotime('today')) {
-                            $projects_data[$key]['new_count'] = UniversalHelper::checkForUpdates('{project}', (int) $project_data['id']);
-                            $projects_data_sort[$key] = $projects_data[$key]['new_count'];
-                            $projects_data_sort2[$key] = $projects_data[$key]['name'];
-                            $projects_data_sort3[$key] = $project_data['date_to'];
+                        if ($projectData['id'] !== '' && strtotime($projectData['date_to']) >= strtotime('today')) {
+                            $projectsData[$key]['new_count'] = UniversalHelper::checkForUpdates('{project}', (int) $projectData['id']);
+                            $projectsDataSort[$key] = $projectsData[$key]['new_count'];
+                            $projectsDataSort2[$key] = $projectsData[$key]['name'];
+                            $projectsDataSort3[$key] = $projectData['date_to'];
                         } else {
-                            unset($projects_data[$key]);
+                            unset($projectsData[$key]);
                         }
                     }
                 }
 
-                if ($projects_data) {
-                    array_multisort($projects_data_sort, SORT_DESC, $projects_data_sort3, SORT_DESC, $projects_data_sort2, SORT_ASC, $projects_data);
+                if ($projectsData) {
+                    array_multisort($projectsDataSort, SORT_DESC, $projectsDataSort3, SORT_DESC, $projectsDataSort2, SORT_ASC, $projectsData);
 
-                    foreach ($projects_data as $project_data) {
-                        if ($project_data['id'] > 0) {
+                    foreach ($projectsData as $projectData) {
+                        if ($projectData['id'] > 0) {
                             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/project/' . $project_data['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
-                                FileHelper::getImagePath($project_data['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ?? ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_project.svg',
-                            ) . '"><div class="mainpage_block_body_item_avatar_counter' . ($project_data['new_count'] > 0 ? ' filled' : '') . '">' . $project_data['new_count'] . '</div></a>
-                <a href="' . ABSOLUTE_PATH . '/project/' . $project_data['id'] . '/" class="mainpage_block_body_item_name">' . $project_data['name'] . '</a>
-                <a href="' . ABSOLUTE_PATH . '/roles/' . $project_data['id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
+                <a href="' . ABSOLUTE_PATH . '/project/' . $projectData['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
+                                FileHelper::getImagePath($projectData['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ?? ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_project.svg',
+                            ) . '"><div class="mainpage_block_body_item_avatar_counter' . ($projectData['new_count'] > 0 ? ' filled' : '') . '">' . $projectData['new_count'] . '</div></a>
+                <a href="' . ABSOLUTE_PATH . '/project/' . $projectData['id'] . '/" class="mainpage_block_body_item_name">' . $projectData['name'] . '</a>
+                <a href="' . ABSOLUTE_PATH . '/roles/' . $projectData['id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
                                 $LOCALE['roleslist'],
                             ) . '</a>
             </div>';
@@ -183,7 +183,7 @@ class StartView extends BaseView
                 }
             }
         } else {
-            $projects_data = DB->select(
+            $projectsData = DB->select(
                 tableName: 'project',
                 order: [
                     'id DESC',
@@ -191,15 +191,15 @@ class StartView extends BaseView
                 limit: 10,
             );
 
-            foreach ($projects_data as $project_data) {
+            foreach ($projectsData as $projectData) {
                 $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/project/' . $project_data['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
-                    FileHelper::getImagePath($project_data['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
+                <a href="' . ABSOLUTE_PATH . '/project/' . $projectData['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
+                    FileHelper::getImagePath($projectData['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
                         ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_project.svg',
                 ) . '"></a>
-                <a href="' . ABSOLUTE_PATH . '/project/' . $project_data['id'] . '/" class="mainpage_block_body_item_name">' . $project_data['name'] . '</a>
-                <a href="' . ABSOLUTE_PATH . '/roles/' . $project_data['id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
+                <a href="' . ABSOLUTE_PATH . '/project/' . $projectData['id'] . '/" class="mainpage_block_body_item_name">' . $projectData['name'] . '</a>
+                <a href="' . ABSOLUTE_PATH . '/roles/' . $projectData['id'] . '/" class="mainpage_block_body_additional">' . TextHelper::mb_ucfirst(
                     $LOCALE['roleslist'],
                 ) . '</a>
             </div>';
@@ -274,40 +274,40 @@ class StartView extends BaseView
 
             if ($communities) {
                 $communities = array_unique($communities);
-                $communities_data = DB->select('community', [['id', $communities]]);
-                $communities_data_sort = [];
-                $communities_data_sort2 = [];
+                $communitiesData = DB->select('community', [['id', $communities]]);
+                $communitiesDataSort = [];
+                $communitiesDataSort2 = [];
 
-                if (is_array($communities_data)) {
-                    foreach ($communities_data as $key => $community_data) {
-                        if ($community_data['id'] !== '') {
-                            $communities_data[$key]['new_count'] = UniversalHelper::checkForUpdates('{community}', (int) $community_data['id']);
-                            $communities_data_sort[$key] = $communities_data[$key]['new_count'];
-                            $communities_data_sort2[$key] = $communities_data[$key]['name'];
+                if (is_array($communitiesData)) {
+                    foreach ($communitiesData as $key => $communityData) {
+                        if ($communityData['id'] !== '') {
+                            $communitiesData[$key]['new_count'] = UniversalHelper::checkForUpdates('{community}', (int) $communityData['id']);
+                            $communitiesDataSort[$key] = $communitiesData[$key]['new_count'];
+                            $communitiesDataSort2[$key] = $communitiesData[$key]['name'];
                         } else {
-                            unset($communities_data[$key]);
+                            unset($communitiesData[$key]);
                         }
                     }
                 }
 
-                if ($communities_data) {
+                if ($communitiesData) {
                     array_multisort(
-                        $communities_data_sort,
+                        $communitiesDataSort,
                         SORT_DESC,
-                        $communities_data_sort2,
+                        $communitiesDataSort2,
                         SORT_ASC,
-                        $communities_data,
+                        $communitiesData,
                     );
 
-                    foreach ($communities_data as $community_data) {
-                        if ($community_data['id'] > 0) {
+                    foreach ($communitiesData as $communityData) {
+                        if ($communityData['id'] > 0) {
                             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/community/' . $community_data['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
-                                FileHelper::getImagePath($community_data['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
+                <a href="' . ABSOLUTE_PATH . '/community/' . $communityData['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
+                                FileHelper::getImagePath($communityData['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ??
                                     ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_community.svg',
-                            ) . '"><div class="mainpage_block_body_item_avatar_counter' . ($community_data['new_count'] > 0 ? ' filled' : '') . '">' . $community_data['new_count'] . '</div></a>
-                <a href="' . ABSOLUTE_PATH . '/community/' . $community_data['id'] . '/" class="mainpage_block_body_item_name">' . $community_data['name'] . '</a>
+                            ) . '"><div class="mainpage_block_body_item_avatar_counter' . ($communityData['new_count'] > 0 ? ' filled' : '') . '">' . $communityData['new_count'] . '</div></a>
+                <a href="' . ABSOLUTE_PATH . '/community/' . $communityData['id'] . '/" class="mainpage_block_body_item_name">' . $communityData['name'] . '</a>
             </div>';
                             ++$i;
                         }
@@ -315,7 +315,7 @@ class StartView extends BaseView
                 }
             }
         } else {
-            $communities_data = DB->select(
+            $communitiesData = DB->select(
                 tableName: 'community',
                 order: [
                     'id DESC',
@@ -323,13 +323,13 @@ class StartView extends BaseView
                 limit: 10,
             );
 
-            foreach ($communities_data as $community_data) {
+            foreach ($communitiesData as $communityData) {
                 $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/community/' . $community_data['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
-                    FileHelper::getImagePath($community_data['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ?? ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_community.svg',
+                <a href="' . ABSOLUTE_PATH . '/community/' . $communityData['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
+                    FileHelper::getImagePath($communityData['attachments'], FileHelper::getUploadNumByType('projects_and_communities_avatars'), true) ?? ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_community.svg',
                 ) . '"></a>
-                <a href="' . ABSOLUTE_PATH . '/community/' . $community_data['id'] . '/" class="mainpage_block_body_item_name">' . $community_data['name'] . '</a>
+                <a href="' . ABSOLUTE_PATH . '/community/' . $communityData['id'] . '/" class="mainpage_block_body_item_name">' . $communityData['name'] . '</a>
             </div>';
                 ++$i;
             }
@@ -349,7 +349,7 @@ class StartView extends BaseView
         <div class="mainpage_block_body">';
 
         $i = 0;
-        $calendar_data = DB->select(
+        $calendarData = DB->select(
             tableName: 'calendar_event',
             order: [
                 'id DESC',
@@ -357,17 +357,17 @@ class StartView extends BaseView
             limit: 10,
         );
 
-        foreach ($calendar_data as $calendar_item_data) {
+        foreach ($calendarData as $calendarItemData) {
             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/calendar_event/' . $calendar_item_data['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
-                FileHelper::getImagePath($calendar_item_data['logo'], FileHelper::getUploadNumByType('calendar_event'), true) ??
+                <a href="' . ABSOLUTE_PATH . '/calendar_event/' . $calendarItemData['id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
+                FileHelper::getImagePath($calendarItemData['logo'], FileHelper::getUploadNumByType('calendar_event'), true) ??
                     ABSOLUTE_PATH . $_ENV['DESIGN_PATH'] . 'no_avatar_event.svg',
             ) . '"></a>
-                <a href="' . ABSOLUTE_PATH . '/calendar_event/' . $calendar_item_data['id'] . '/" class="mainpage_block_body_item_name">' . $calendar_item_data['name'] . '</a>
+                <a href="' . ABSOLUTE_PATH . '/calendar_event/' . $calendarItemData['id'] . '/" class="mainpage_block_body_item_name">' . $calendarItemData['name'] . '</a>
                 <span class="mainpage_block_body_additional inverted">' . DateHelper::dateFromToEvent(
-                $calendar_item_data['date_from'],
-                $calendar_item_data['date_to'],
+                $calendarItemData['date_from'],
+                $calendarItemData['date_to'],
             ) . '</span>
             </div>';
             ++$i;
@@ -387,15 +387,15 @@ class StartView extends BaseView
         <div class="mainpage_block_body">';
 
         $i = 0;
-        $exchange_data = DB->query(
+        $exchangeData = DB->query(
             'SELECT e.name, e.id AS exchange_item_id, e.price_buy, e.price_lease, e.currency, u.* FROM exchange_item AS e LEFT JOIN user AS u ON u.id=e.creator_id ORDER BY e.id DESC LIMIT 5',
             [],
         );
 
-        foreach ($exchange_data as $exchange_item_data) {
-            $userModel = $userService->arrayToModel($exchange_item_data);
+        foreach ($exchangeData as $exchangeItemData) {
+            $userModel = $userService->arrayToModel($exchangeItemData);
             $filepath = $userService->photoUrl($userModel, true);
-            $inFilePath = ABSOLUTE_PATH . '/thumbnails' . $_ENV['UPLOADS_PATH'] . $_ENV['UPLOADS'][16]['path'] . $exchange_item_data['exchange_item_id'] . '.jpg';
+            $inFilePath = ABSOLUTE_PATH . '/thumbnails' . $_ENV['UPLOADS_PATH'] . $_ENV['UPLOADS'][16]['path'] . $exchangeItemData['exchange_item_id'] . '.jpg';
 
             if (FileHelper::checkImageExists($inFilePath)) {
                 $filepath = $inFilePath;
@@ -403,11 +403,11 @@ class StartView extends BaseView
 
             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/exchange/' . $exchange_item_data['exchange_item_id'] . '/" class="mainpage_block_body_item_avatar" style="'
+                <a href="' . ABSOLUTE_PATH . '/exchange/' . $exchangeItemData['exchange_item_id'] . '/" class="mainpage_block_body_item_avatar" style="'
                 . DesignHelper::getCssBackgroundImage($filepath) . '"></a>
-                <a href="' . ABSOLUTE_PATH . '/exchange/' . $exchange_item_data['exchange_item_id'] . '/" class="mainpage_block_body_item_name">' . $exchange_item_data['name'] . '</a>
-                <span class="mainpage_block_body_additional inverted">' . ($exchange_item_data['price_lease'] > 0 ? $exchange_item_data['price_lease'] :
-                    $exchange_item_data['price_buy']) . TextHelper::currencyNameToSign($exchange_item_data['currency']) . '</span>
+                <a href="' . ABSOLUTE_PATH . '/exchange/' . $exchangeItemData['exchange_item_id'] . '/" class="mainpage_block_body_item_name">' . $exchangeItemData['name'] . '</a>
+                <span class="mainpage_block_body_additional inverted">' . ($exchangeItemData['price_lease'] > 0 ? $exchangeItemData['price_lease'] :
+                    $exchangeItemData['price_buy']) . TextHelper::currencyNameToSign($exchangeItemData['currency']) . '</span>
             </div>';
             ++$i;
         }
@@ -426,7 +426,7 @@ class StartView extends BaseView
         <div class="mainpage_block_body">';
 
         $i = 0;
-        $reports_data = DB->query(
+        $reportsData = DB->query(
             "SELECT r.id AS report_id, r.name AS report_name, count(r2.id) as rating, ce.name AS event_name, ce.id AS event_id, u.*
         FROM report AS r
         LEFT JOIN calendar_event AS ce ON ce.id=r.calendar_event_id
@@ -442,16 +442,16 @@ class StartView extends BaseView
             [],
         );
 
-        foreach ($reports_data as $report_data) {
-            $userModel = $userService->arrayToModel($report_data);
+        foreach ($reportsData as $reportData) {
+            $userModel = $userService->arrayToModel($reportData);
 
             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/report/' . $report_data['report_id'] . '/" class="mainpage_block_body_item_avatar" style="'
+                <a href="' . ABSOLUTE_PATH . '/report/' . $reportData['report_id'] . '/" class="mainpage_block_body_item_avatar" style="'
                 . DesignHelper::getCssBackgroundImage($userService->photoUrl($userModel, true)) . '"><div class="mainpage_block_body_item_avatar_counter">'
-                . $report_data['rating'] . '</div></a>
-                <a href="' . ABSOLUTE_PATH . '/report/' . $report_data['report_id'] . '/" class="mainpage_block_body_item_name">' . ($report_data['report_name'] !== '' ? $report_data['report_name'] : '<i>' . $LOCALE['publication_no_name'] . '</i>') . '</a>
-                <a class="mainpage_block_body_additional inverted" href="' . ABSOLUTE_PATH . '/calendar_event/' . $report_data['event_id'] . '/">' . $report_data['event_name'] . '</a>
+                . $reportData['rating'] . '</div></a>
+                <a href="' . ABSOLUTE_PATH . '/report/' . $reportData['report_id'] . '/" class="mainpage_block_body_item_name">' . ($reportData['report_name'] !== '' ? $reportData['report_name'] : '<i>' . $LOCALE['publication_no_name'] . '</i>') . '</a>
+                <a class="mainpage_block_body_additional inverted" href="' . ABSOLUTE_PATH . '/calendar_event/' . $reportData['event_id'] . '/">' . $reportData['event_name'] . '</a>
             </div>';
             ++$i;
         }
@@ -469,7 +469,7 @@ class StartView extends BaseView
         <div class="mainpage_block_body">';
 
         $i = 0;
-        $ruling_items_data = DB->query(
+        $rulingItemsData = DB->query(
             "SELECT r.id AS ruling_item_id, r.name AS ruling_item_name, r.author AS ruling_item_author, count(r2.id) as rating, u.*
         FROM ruling_item AS r
         LEFT JOIN relation r2 ON r.id=r2.obj_id_to AND
@@ -483,28 +483,28 @@ class StartView extends BaseView
             [],
         );
 
-        foreach ($ruling_items_data as $ruling_item_data) {
-            $author_result = false;
-            $authors_array = DataHelper::multiselectToArray($ruling_item_data['ruling_item_author']);
+        foreach ($rulingItemsData as $rulingItemData) {
+            $authorResult = false;
+            $authorsArray = DataHelper::multiselectToArray($rulingItemData['ruling_item_author']);
 
-            foreach ($authors_array as $author) {
+            foreach ($authorsArray as $author) {
                 if ((int) trim($author) > 0) {
-                    $author_result = $userService->get(trim($author));
+                    $authorResult = $userService->get(trim($author));
                     break;
                 }
             }
 
             $userModel = $userService->getModelInstance($userService->model);
-            $userModel->photo->set($ruling_item_data['photo']);
+            $userModel->photo->set($rulingItemData['photo']);
 
             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/ruling/' . $ruling_item_data['ruling_item_id'] . '/" class="mainpage_block_body_item_avatar" style="' .
+                <a href="' . ABSOLUTE_PATH . '/ruling/' . $rulingItemData['ruling_item_id'] . '/" class="mainpage_block_body_item_avatar" style="' .
                 DesignHelper::getCssBackgroundImage(
-                    $author_result ? $userService->photoUrl($author_result, true) : $userService->photoUrl($userModel, true),
+                    $authorResult ? $userService->photoUrl($authorResult, true) : $userService->photoUrl($userModel, true),
                 ) .
-                '"><div class="mainpage_block_body_item_avatar_counter">' . $ruling_item_data['rating'] . '</div></a>
-                <a href="' . ABSOLUTE_PATH . '/ruling/' . $ruling_item_data['ruling_item_id'] . '/" class="mainpage_block_body_item_name">' . $ruling_item_data['ruling_item_name'] . '</a>
+                '"><div class="mainpage_block_body_item_avatar_counter">' . $rulingItemData['rating'] . '</div></a>
+                <a href="' . ABSOLUTE_PATH . '/ruling/' . $rulingItemData['ruling_item_id'] . '/" class="mainpage_block_body_item_name">' . $rulingItemData['ruling_item_name'] . '</a>
             </div>';
             ++$i;
         }
@@ -522,7 +522,7 @@ class StartView extends BaseView
         </div>
         <div class="mainpage_block_body">';
 
-        $interesting_publications = DB->query(
+        $interestingPublications = DB->query(
             "SELECT p.id AS publication_id, p.name AS publication_name, count(r.id) as rating, u.*
         FROM publication p
         LEFT JOIN relation r ON p.id=r.obj_id_to
@@ -537,19 +537,14 @@ class StartView extends BaseView
         );
         $i = 0;
 
-        foreach ($interesting_publications as $interesting_publication_data) {
+        foreach ($interestingPublications as $interestingPublicationData) {
             $userModel = $userService->getModelInstance($userService->model);
-            $userModel->photo->set($interesting_publication_data['photo']);
+            $userModel->photo->set($interestingPublicationData['photo']);
 
             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/publication/' . $interesting_publication_data['publication_id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage(
-                $userService->photoUrl(
-                    $userModel,
-                    true,
-                ),
-            ) . '"><div class="mainpage_block_body_item_avatar_counter">' . $interesting_publication_data['rating'] . '</div></a>
-                <a href="' . ABSOLUTE_PATH . '/publication/' . $interesting_publication_data['publication_id'] . '/" class="mainpage_block_body_item_name">' . $interesting_publication_data['publication_name'] . '</a>
+                <a href="' . ABSOLUTE_PATH . '/publication/' . $interestingPublicationData['publication_id'] . '/" class="mainpage_block_body_item_avatar" style="' . DesignHelper::getCssBackgroundImage($userService->photoUrl($userModel, true)) . '"><div class="mainpage_block_body_item_avatar_counter">' . $interestingPublicationData['rating'] . '</div></a>
+                <a href="' . ABSOLUTE_PATH . '/publication/' . $interestingPublicationData['publication_id'] . '/" class="mainpage_block_body_item_name">' . $interestingPublicationData['publication_name'] . '</a>
             </div>';
             ++$i;
         }
@@ -566,18 +561,18 @@ class StartView extends BaseView
         </div>
         <div class="mainpage_block_body">';
 
-        $news_data = DB->query(
+        $newsData = DB->query(
             "SELECT * FROM news WHERE active='1' AND ((show_date<NOW() AND (from_date IS NULL OR from_date<CURDATE()) AND to_date IS NULL) OR to_date<CURDATE()) ORDER BY show_date DESC, updated_at DESC LIMIT 4",
             [],
         );
         $i = 0;
 
-        foreach ($news_data as $news_item_data) {
-            $news_date = DateHelper::dateFromTo($news_item_data);
+        foreach ($newsData as $newsItemData) {
+            $news_date = DateHelper::dateFromTo($newsItemData);
             $RESPONSE_DATA .= '
             <div class="mainpage_block_body_item string' . ($i % 2 === 0 ? '2' : '1') . '">
-                <a href="' . ABSOLUTE_PATH . '/news/' . $news_item_data['id'] . '/" class="mainpage_block_body_item_name">' . strip_tags(
-                $news_item_data['annotation'],
+                <a href="' . ABSOLUTE_PATH . '/news/' . $newsItemData['id'] . '/" class="mainpage_block_body_item_name">' . strip_tags(
+                $newsItemData['annotation'],
             ) . '</a>
                 <span class="mainpage_block_body_additional inverted">' . $news_date['date'] . '</span>
             </div>';

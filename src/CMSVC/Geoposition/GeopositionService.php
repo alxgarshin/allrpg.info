@@ -60,7 +60,7 @@ class GeopositionService extends BaseService
                     'name' => DataHelper::escapeOutput($pag['sorter']),
                     'coords_longitude' => $pag['longitude'],
                     'coords_latitude' => $pag['latitude'],
-                    'photo' => $userService->photoUrl($userService->arrayToModel($pag)),
+                    'photo' => $userService->photoUrl($userService->arrayToModel($pag), true),
                     'player' => $userService->showNameWithId($userService->arrayToModel($pag), true),
                     'active' => (time() - $pag['pag_created'] <= 60),
                     'last_active' => date('d.m.Y H:i:s', $pag['pag_created']),

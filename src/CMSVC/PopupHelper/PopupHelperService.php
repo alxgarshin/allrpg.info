@@ -242,7 +242,7 @@ class PopupHelperService extends BaseService
                     $responseData[$userData->id->getAsInt()] = [
                         'user_id' => $userData->id->getAsInt(),
                         'fio' => DataHelper::escapeOutput($userData->fio->get()),
-                        'photo' => $userService->photoUrl($userData),
+                        'photo' => $userService->photoUrl($userData, true),
                     ];
 
                     $foundItem = true;

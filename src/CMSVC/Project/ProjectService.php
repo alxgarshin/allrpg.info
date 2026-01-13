@@ -121,7 +121,7 @@ class ProjectService extends BaseService
                                 $memberId,
                                 $userService->showName($userService->get($memberId)),
                                 'other',
-                                $userService->photoUrl($userService->get($memberId)),
+                                $userService->photoUrl($userService->get($memberId), true),
                             ];
                         } elseif (!$colleaguesOnly) {
                             $membersData[] = [
@@ -152,7 +152,7 @@ class ProjectService extends BaseService
                             $memberId,
                             $userService->showName($userService->get($memberId)),
                             'other',
-                            $userService->photoUrl($userService->get($memberId)),
+                            $userService->photoUrl($userService->get($memberId), true),
                         ];
                     }
                 }

@@ -1145,7 +1145,7 @@ class UserService extends BaseService
                 $link ?
                 '<a href="' . ABSOLUTE_PATH . '/people/' . (!is_null($userModel->sid->get()) ? $userModel->sid->get() . '/' : '') . '" ' . ($noDynamicContent ? 'class="no_dynamic_content"' : '') . '>' :
                 ''
-            ) . '<div class="photoName_photo_wrapper"><div class="photoName_photo' . ($class !== '' ? ' ' . $class : '') . '" style="' . DesignHelper::getCssBackgroundImage($this->photoUrl($userModel)) . '" ' .
+            ) . '<div class="photoName_photo_wrapper"><div class="photoName_photo' . ($class !== '' ? ' ' . $class : '') . '" style="' . DesignHelper::getCssBackgroundImage($this->photoUrl($userModel, true)) . '" ' .
             (
                 $fixedtitle === false ? '' : ($fixedtitle !== '' ?
                     'title="' . $fixedtitle . '"' :

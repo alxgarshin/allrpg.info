@@ -853,7 +853,7 @@ class FileService extends BaseService
                         $userData = $userService->get($value);
 
                         if ($userData->id->getAsInt()) {
-                            $image = $userService->photoUrl($userData);
+                            $image = $userService->photoUrl($userData, true);
                             $userIds[$userData->id->getAsInt()] = [
                                 'user_id' => $userData->id->getAsInt(),
                                 'fio' => $userService->showNameExtended($userData, true),
