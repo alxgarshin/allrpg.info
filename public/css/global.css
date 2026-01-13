@@ -901,6 +901,10 @@ div.mobile_menu span.menu_float_right {
     margin-top: .2em;
 }
 
+div.mobile_menu span.menu_float_right.shown {
+    display: block;
+}
+
 div.mobile_menu div.submenu>a:last-child {
     margin-bottom: 0;
 }
