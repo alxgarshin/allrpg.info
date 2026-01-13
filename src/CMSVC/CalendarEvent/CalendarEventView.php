@@ -133,7 +133,7 @@ class CalendarEventView extends BaseView
             $mgData = implode(
                 ', ',
                 array_map(
-                    static fn(string $value): string => '<a href="' . ABSOLUTE_PATH . '/gamemaster/' . str_replace('&', '-and-', trim($value)) . '/">' .
+                    static fn (string $value): string => '<a href="' . ABSOLUTE_PATH . '/gamemaster/' . str_replace('&', '-and-', trim($value)) . '/">' .
                         str_replace('&', '-and-', trim($value)) . '</a>',
                     $mgGroups,
                 ),
@@ -443,18 +443,18 @@ class CalendarEventView extends BaseView
                         $report_data['name'],
                     ) : $LOCALE_PUBLICATION['no_name']) . '</a></td>
                             <td><a href="' . ABSOLUTE_PATH . '/report/' . $report_data['id'] . '/">' . $userService->showNameExtended(
-                    $userService->get($report_data['creator_id']),
-                    true,
-                    false,
-                    '',
-                    false,
-                    false,
-                    true,
-                ) . '</a></td>
+                        $userService->get($report_data['creator_id']),
+                        true,
+                        false,
+                        '',
+                        false,
+                        false,
+                        true,
+                    ) . '</a></td>
                             <td><a href="' . ABSOLUTE_PATH . '/report/' . $report_data['id'] . '/">' . date(
-                    'd.m.Y ' . $LOCALE_FRAYM['datetime']['at'] . ' H:i',
-                    $report_data['created_at'],
-                ) . '</a></td>
+                        'd.m.Y ' . $LOCALE_FRAYM['datetime']['at'] . ' H:i',
+                        $report_data['created_at'],
+                    ) . '</a></td>
                         </tr>';
                 ++$string_num;
             }

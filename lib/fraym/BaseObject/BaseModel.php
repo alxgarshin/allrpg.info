@@ -307,14 +307,16 @@ abstract class BaseModel
     public function removeElement(string $elementName): static
     {
         if (property_exists($this, $elementName)) {
-            $property = $this->{$elementName};
+            if (isset($this->{$elementName})) {
+                $property = $this->{$elementName};
 
-            if ($property instanceof ElementItem) {
-                $elementsList = $this->elementsList;
-                $key = array_search($property, $elementsList);
-                unset($elementsList[$key]);
-                $this->elementsList = $elementsList;
-                unset($this->{$elementName});
+                if ($property instanceof ElementItem) {
+                    $elementsList = $this->elementsList;
+                    $key = array_search($property, $elementsList);
+                    unset($elementsList[$key]);
+                    $this->elementsList = $elementsList;
+                    unset($this->{$elementName});
+                }
             }
         }
 
