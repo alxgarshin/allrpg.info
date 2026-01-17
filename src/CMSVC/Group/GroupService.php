@@ -694,6 +694,7 @@ class GroupService extends BaseService
                     [],
                     true,
                 );
+
                 DB->update(
                     'project_group',
                     [
@@ -724,6 +725,7 @@ class GroupService extends BaseService
                         'id' => $projectGroupData['id'],
                     ],
                 );
+
                 ++$code;
             }
 
@@ -780,6 +782,18 @@ class GroupService extends BaseService
                         ],
                     );
                 }
+            }
+
+            if ($parent === 0) {
+                DB->update(
+                    'project_group',
+                    [
+                        'parent' => null,
+                    ],
+                    [
+                        'id' => $successfulResultsId,
+                    ],
+                );
             }
 
             ++$key;
