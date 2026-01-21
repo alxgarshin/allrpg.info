@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Fraym\Enum\{EscapeModeEnum, OperandEnum};
 use Fraym\Helper\{DataHelper, EmailHelper};
 
-require_once __DIR__ . '/../../lib/fraym/AppStart.php';
+require_once __DIR__ . '/../../public/fraym.php';
 
 /** Выставляем счетчик количества писем */
 $counter = 0;

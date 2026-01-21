@@ -39,7 +39,7 @@ class ArticleController extends BaseController
                 $parent_data = DB->select(
                     tableName: 'article',
                     criteria: [
-                        'id' => $parent_data['parent'] ?? false,
+                        'id' => $parent_data['parent'],
                     ],
                 );
             }
@@ -115,7 +115,7 @@ class ArticleController extends BaseController
                 $parent_data = DB->select(
                     tableName: 'article',
                     criteria: [
-                        'id' => $parent_data['parent'] ?? false,
+                        'id' => $parent_data['parent'],
                         'active' => '1',
                     ],
                 );

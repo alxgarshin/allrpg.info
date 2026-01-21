@@ -737,7 +737,7 @@ class TransactionService extends BaseService
 
             $projectPaymentTypes = DB->getArrayOfItemsAsArray('project_payment_type WHERE project_id=' . $projectData->id->getAsInt() . (KIND === 'myapplication' ? " AND registration_type='0'" . $projectPaymentTypesDependentQuery : ''), 'id', 'name');
 
-            if (is_null($projectPaymentTypeDefaultId) && $projectPaymentTypes !== null) {
+            if (is_null($projectPaymentTypeDefaultId) && $projectPaymentTypes) {
                 $projectPaymentTypeDefaultId = $projectPaymentTypes[array_key_first($projectPaymentTypes)][0];
             }
 

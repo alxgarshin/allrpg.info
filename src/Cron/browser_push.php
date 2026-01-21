@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Fraym\Helper\DataHelper;
 use Minishlink\WebPush\{MessageSentReport, Subscription, WebPush};
 
-require_once __DIR__ . '/../../lib/fraym/AppStart.php';
+require_once __DIR__ . '/../../public/fraym.php';
 
 $auth = [
     'VAPID' => [

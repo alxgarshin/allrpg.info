@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-require_once __DIR__ . '/../lib/fraym/AppStart.php';
+require_once __DIR__ . '/fraym.php';
 
-/** Переходим в основной обработчик сайта */
 include_once INNER_PATH . 'src/index.php';

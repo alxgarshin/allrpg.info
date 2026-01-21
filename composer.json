@@ -1,21 +1,12 @@
 {
   "type": "project",
-  "license": "proprietary",
-  "minimum-stability": "stable",
+  "license": "MIT",
+  "minimum-stability": "beta",
   "prefer-stable": true,
   "require": {
     "php": ">=8.4.0",
-    "ext-ctype": "*",
-    "ext-curl": "*",
-    "ext-gd": "*",
-    "ext-iconv": "*",
-    "ext-imagick": "*",
-    "ext-openssl": "*",
-    "ext-pdo": "*",
-    "minishlink/web-push": "^9.0",
-    "phpdocumentor/reflection-docblock": "^5.3",
-    "phpmailer/phpmailer": "*",
-    "phpstan/phpdoc-parser": "^1.22.1"
+    "alxgarshin/fraym": "^0.8",
+    "minishlink/web-push": "^9.0"
   },
   "config": {
     "allow-plugins": {
@@ -28,10 +19,11 @@
     "sort-packages": true
   },
   "scripts": {
-    "drop": "./bin/recreateDb",
-    "drop-force": "@drop --force",
-    "test-fixtures": [
-      "@drop-force"
+    "drop": [
+      "./vendor/bin/console database:drop --env=test --force",
+      "./vendor/bin/console database:migrate --env=test",
+      "./vendor/bin/console database:drop --force",
+      "./vendor/bin/console database:migrate"
     ],
     "app:cache:clear": "./bin/d clear-var",
     "app:test:unit": "./bin/phpunit",
@@ -45,7 +37,7 @@
     ],
     "app:full:precommit:check": [
       "@app:lint",
-      "@test-fixtures",
+      "@drop",
       "@app:test:unit"
     ],
     "post-install-cmd": [
@@ -58,7 +50,6 @@
   "autoload": {
     "psr-4": {
       "App\\": "src/",
-      "Fraym\\": "lib/fraym/",
       "Captcha\\": "src/Lib/captcha/",
       "Ical\\": "src/Lib/ical/",
       "Identicon\\": "src/Lib/identicon",
@@ -73,6 +64,8 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.64",
+    "phpdocumentor/reflection-docblock": "^5.3",
+    "phpstan/phpdoc-parser": "^1.22.1",
     "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^9.5"
   }

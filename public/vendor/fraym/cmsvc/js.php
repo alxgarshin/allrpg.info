@@ -11,7 +11,7 @@
 
 use Fraym\Helper\TextHelper;
 
-require_once __DIR__ . '/../../../../lib/fraym/AppStart.php';
+require_once __DIR__ . '/../../../fraym.php';
 
 if (KIND) {
     $CMSCVName = TextHelper::snakeCaseToCamelCase(KIND);

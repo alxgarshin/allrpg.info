@@ -1,23 +1,18 @@
 includes:
+	- vendor/alxgarshin/fraym/extension.neon
 	- phpstan-baseline.neon
 parameters:
 	dynamicConstantNames:
-		- KIND
-		- CMSVC
-		- OBJ_TYPE
-		- OBJ_ID
 		- BID
 		- MODAL
 		- TEST_MODE
 		- REQUEST_PROJECT_ID
 	bootstrapFiles:
-		- src/bootstrap.php
+		- tests/phpstan-bootstrap.php
 	level: 5
 	paths:
 		- tests
-		- lib/fraym/
 		- public
 		- src
 	excludePaths:
-		- lib/fraym/Vendor/*
 		- src/Lib/*

@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
-namespace Fraym\Enum;
-
-enum ActEnum: string
-{
-    case list = 'list';
-    case add = 'add';
-    case view = 'view';
-    case edit = 'edit';
+foreach ([__DIR__ . '/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
 }
+
+use Fraym\Kernel;
+
+Kernel::init();

@@ -138,7 +138,7 @@ class TaskService extends BaseService
                 true,
             );
 
-            while ($lookingForDateTo && $data && !is_null($data['date_to']) && (string) $data['date_to'] !== '') {
+            while ($lookingForDateTo && $data && ($data['date_to'] ?? false)) {
                 $dateFrom = date('Y-m-d H:i', strtotime((string) $data['date_to'] . ' +15 minutes'));
 
                 if ($diffInSeconds) {

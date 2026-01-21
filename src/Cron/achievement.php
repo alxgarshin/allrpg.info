@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\CMSVC\User\UserService;
 use Fraym\Helper\CMSVCHelper;
 
-require_once __DIR__ . '/../../lib/fraym/AppStart.php';
+require_once __DIR__ . '/../../public/fraym.php';
 
 /** Выставляем счетчик количества пользователей */
 $counter = 0;

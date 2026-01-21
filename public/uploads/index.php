@@ -11,7 +11,7 @@
 
 use Fraym\Vendor\UploadHandler\UploadHandler;
 
-require_once __DIR__ . '/../../lib/fraym/AppStart.php';
+require_once __DIR__ . '/../fraym.php';
 
 $uploadType = $_REQUEST['type'] ?? false;
 $uploads = $_ENV['UPLOADS'];

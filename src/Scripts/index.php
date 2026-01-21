@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Captcha\Captcha;
 use Identicon\Identicon;
 
-$pathToLoader = __DIR__ . '/../../lib/fraym/AppStart.php';
+$pathToLoader = __DIR__ . '/../../public/fraym.php';
 
 $path = $_REQUEST['path'];
 

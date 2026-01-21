@@ -12,8 +12,7 @@
 use Fraym\Enum\OperandEnum;
 use WideImage\WideImage;
 
-require_once __DIR__ . '/../../lib/fraym/BaseVar.php';
-require_once __DIR__ . '/../../lib/fraym/AppStart.php';
+require_once __DIR__ . '/../fraym.php';
 
 $path = basename($_GET['path']);
 $name = $_GET['name'] ?? false;

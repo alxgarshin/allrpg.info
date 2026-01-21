@@ -140,7 +140,7 @@ class FeeService extends BaseService
                     $projectFeeIds = DataHelper::multiselectToArray($applicationData['project_fee_ids']);
                     unset($projectFeeIds[array_search($feeId, $projectFeeIds)]);
 
-                    $money = (int) ($applicationData['money'] - $feeCosts[$key] + $feeOptionDateData['cost']);
+                    $money = (int) $applicationData['money'] - (int) $feeCosts[$key] + (int) $feeOptionDateData['cost'];
 
                     if ($feeOptionDateData['id'] > 0) {
                         $projectFeeIds[] = $feeOptionDateData['id'];
@@ -245,7 +245,7 @@ class FeeService extends BaseService
 
                     /** Добавляем единственно верную дату */
                     $projectFeeIds[] = $feeOptionDateData['id'];
-                    $money += $feeOptionDateData['cost'];
+                    $money += (int) $feeOptionDateData['cost'];
 
                     $moneyPaid = $applicationData['money_provided'] >= $money;
                     DB->update(

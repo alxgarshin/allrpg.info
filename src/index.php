@@ -15,17 +15,12 @@ use Fraym\Interface\Response;
 use Fraym\Response\{ArrayResponse, HtmlResponse};
 use Fraym\Service\GlobalTimerService;
 
-/** Проверяем наличие таймера */
-if (!isset($_GLOBALTIMER)) {
-    $_GLOBALTIMER = new GlobalTimerService();
-}
+/** Таймер */
+$_GLOBALTIMER = new GlobalTimerService();
 
 /** Устанавливаем глобальные переменные */
 define('BID', $_REQUEST['bid'] ?? null);
 define('MODAL', $_REQUEST['modal'] ?? false);
-define('OBJ_TYPE', $_REQUEST['obj_type'] ?? null);
-$objId = ($_REQUEST['obj_id'] ?? false) ? (is_array($_REQUEST['obj_id']) ? $_REQUEST['obj_id'][0] : $_REQUEST['obj_id']) : null;
-define('OBJ_ID', is_numeric($objId) ? (int) $objId : $objId);
 
 /** Логинимся / выходим */
 if ('logout' === ACTION) {

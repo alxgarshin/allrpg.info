@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Fraym\Helper\DataHelper;
 
-require_once __DIR__ . '/../../lib/fraym/AppStart.php';
+require_once __DIR__ . '/../../public/fraym.php';
 
 /** Делаем выборку дат изменения опций взноса */
 $feesChangedData = DB->query('SELECT * FROM project_fee WHERE date_from = CURDATE() AND parent > 0', []);
@@ -58,7 +58,7 @@ foreach ($feesChangedData as $feeChangedData) {
 
             /** Добавляем единственно верную дату */
             $projectFeeIds[] = $feeOptionDateData['id'];
-            $money += $feeOptionDateData['cost'];
+            $money += (int) $feeOptionDateData['cost'];
 
             $moneyPaid = $applicationData['money_provided'] >= $money;
             DB->update(

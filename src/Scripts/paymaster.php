@@ -107,7 +107,7 @@ if ($transactionId > 0) {
                         $resolvedData = DB->select(
                             tableName: 'conversation_message',
                             criteria: [
-                                'parent' => $conversationMessageData['id'] ?? false,
+                                'parent' => $conversationMessageData['id'],
                             ],
                             oneResult: true,
                             order: [

@@ -1,8 +1,0 @@
-#!/usr/bin/env php
-<?php
-
-if (!is_file(__DIR__.'/../lib/fraym/Tools/console.php')) {
-    throw new LogicException('Fraym console is missing.');
-}
-
-require_once __DIR__.'/../lib/fraym/Tools/console.php';
