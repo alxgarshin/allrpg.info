@@ -70,6 +70,9 @@ const preloadedImages = [];
 /** Переменная, хранящая открытый Noty-диалог / промпт */
 let notyDialog = null;
 
+/** Реестр активных таймеров */
+const _debounceTimers = {};
+
 /** Массив сообщений */
 window['messages'] = defaultFor(window['messages'], []);
 
@@ -437,10 +440,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
             const self = _(this);
 
             /** Ждем немного возможного дальнейшего ввода */
-            window.clearTimeout(window['dropfield2_search']);
-            window['dropfield2_search'] = setTimeout(function () {
-                filterDropfield(self, self.val());
-            }, 200);
+            debounce('filterDropfield', filterDropfield(self, self.val()), 200);
         });
 
         _(document).on('click', '.dropfield2_search a.create', function (e) {
@@ -2062,8 +2062,8 @@ class FraymElement {
 
             _each(listeners.split(' '), listener => {
                 if (!handlerInHandlersMap[listener]) {
-                    if (element === document && !elementSelectorOrHandler) {
-                        document.addEventListener(listener, handler);
+                    if (typeof element === 'object' && !elementSelectorOrHandler) {
+                        element.addEventListener(listener, handler);
 
                         handlerInHandlersMap[listener] = true;
                     } else {
@@ -2310,6 +2310,23 @@ function delay(ms) {
     ms = defaultFor(ms, 200);
 
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Выполняет функцию с задержкой, автоматически очищая предыдущий таймер по ID.
+ * @param {string} id
+ * @param {Function} func
+ * @param {number} delay
+ */
+function debounce(id, func, delay) {
+    if (_debounceTimers[id]) {
+        clearTimeout(_debounceTimers[id]);
+    }
+
+    _debounceTimers[id] = setTimeout(() => {
+        func();
+        delete _debounceTimers[id];
+    }, delay);
 }
 
 /** Получение корректных цифр выделения в textarea */
@@ -3608,6 +3625,25 @@ function dateFromString(str) {
     const dateFrom = date.split('.');
     const timeFrom = time.split(':');
     return new Date(parseInt(dateFrom[2]), parseInt(dateFrom[1]) - 1, parseInt(dateFrom[0]), parseInt(timeFrom[0]), parseInt(timeFrom[1]));
+}
+
+/** Хелпер для денег */
+function formatMoney(amount, currency = 'USD', locale = navigator.language) {
+    return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: currency,
+    }).format(amount);
+}
+
+/** Хелпер для дат */
+function formatDate(dateString, locale = navigator.language) {
+    const date = new Date(dateString);
+
+    return new Intl.DateTimeFormat(locale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    }).format(date);
 }
 
 /** Инициализация функций полей date и datetime-local */

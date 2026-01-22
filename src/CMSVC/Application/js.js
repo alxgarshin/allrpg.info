@@ -7,8 +7,7 @@ loadJsComponent('application').then(function () {
             //ждем немного дальнейшего ввода
             const self = _(this);
 
-            window.clearTimeout(window['application_search_timeout']);
-            window['application_search_timeout'] = setTimeout(function () {
+            debounce('applicationSearch', function () {
                 if (self.val() != '') {
                     actionRequest({
                         action: 'application/get_applications_table',
@@ -26,8 +25,7 @@ loadJsComponent('application').then(function () {
             //ждем немного дальнейшего ввода
             const self = _(this);
 
-            window.clearTimeout(window['application_comments_search_timeout']);
-            window['application_comments_search_timeout'] = setTimeout(function () {
+            debounce('applicationCommentsSearch', function () {
                 if (self.val() != '') {
                     actionRequest({
                         action: 'application/get_applications_comments_table',

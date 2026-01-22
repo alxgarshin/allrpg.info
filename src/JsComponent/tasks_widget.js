@@ -367,6 +367,5 @@ function loadTasksTimeout() {
         });
     }
 
-    window.clearTimeout(window['load_tasks']);
-    window['load_tasks'] = window.setTimeout(loadTasksTimeout, loadTasksTimeoutTimer);
+    debounce('loadTasks', loadTasksTimeout, loadTasksTimeoutTimer);
 }

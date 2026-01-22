@@ -31,8 +31,6 @@ if (el('div.kind_geoposition')) {
                 getPlayersGeopositionTimeoutTimer = 10000;
                 getPlayersGeopositionTimeout();
             } else {
-                window.clearTimeout(window['get_players_geoposition']);
-
                 _each(iconFeaturesActiveLayer.getSource().getFeatures(), function (feature, index) {
                     if (feature.get('name').toLowerCase().match(searchText) || feature.get('application_name').toLowerCase().match(searchText)) {
                         if (feature.get('hidden')) {
@@ -104,8 +102,7 @@ function getPlayersGeopositionTimeout() {
         });
     }
 
-    window.clearTimeout(window['get_players_geoposition']);
-    window['get_players_geoposition'] = window.setTimeout(getPlayersGeopositionTimeout, getPlayersGeopositionTimeoutTimer);
+    debounce('getPlayersGeoposition', getPlayersGeopositionTimeout, getPlayersGeopositionTimeoutTimer);
 }
 
 /** Карта геопозиции игроков, ее popup и обработчики */

@@ -1255,8 +1255,6 @@ function customHashHandler(newHrefParsed) {
 
 /** Обновление глобальной информации */
 function getNewEventsTimeout() {
-    window.clearTimeout(window['get_new_events']);
-
     if (el('div.header_right div.login_user_data')) {
         if (document.addEventListener === undefined || visibilityChangeHidden === undefined || !document[visibilityChangeHidden] || isInStandalone) {
             actionRequest({
@@ -1266,7 +1264,7 @@ function getNewEventsTimeout() {
             });
         }
 
-        window['get_new_events'] = window.setTimeout(getNewEventsTimeout, getNewEventsTimeoutTimer);
+        debounce('getNewEvents', getNewEventsTimeout, getNewEventsTimeoutTimer);
     }
 }
 

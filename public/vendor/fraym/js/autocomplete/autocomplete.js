@@ -85,9 +85,7 @@ class FraymAutocomplete {
 			})
 		});
 
-		this.input.on('keyup', this.handleInput.bind(this));
-		this.input.on('change', this.handleInput.bind(this));
-		this.input.on('activate', this.handleInput.bind(this));
+		this.input.on('keyup change activate', this.handleInput.bind(this));
 	}
 
 	handleInput(e) {

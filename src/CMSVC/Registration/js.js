@@ -5,8 +5,7 @@ if (el('input#registration_search')) {
         //ждем немного дальнейшего ввода
         const self = _(this);
 
-        window.clearTimeout(window['registration_search_timeout']);
-        window['registration_search_timeout'] = setTimeout(function () {
+        debounce('registrationSearch', function () {
             if (self.val() != '') {
                 actionRequest({
                     action: 'registration/get_registration_player',

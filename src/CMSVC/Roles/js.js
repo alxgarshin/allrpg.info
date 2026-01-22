@@ -74,30 +74,29 @@ if (el('div#allrpgRolesListDiv')) {
 
     _('input#allrpgRolesListFilterInput').on('keyup change', function () {
         //ждем немного дальнейшего ввода
-        window.clearTimeout(window['allrpgRolesListFilterInput_timeout']);
-        window['allrpgRolesListFilterInput_timeout'] = setTimeout(function () {
+        debounce('allrpgRolesListFilterInput', function () {
             const self = _('input#allrpgRolesListFilterInput');
             const string = self.val();
             const roleslist = _('div#allrpgRolesListDiv');
 
             if (string == '') {
-                roleslist.find('.allrpgRolesListGroup').show();
-                roleslist.find('.allrpgRolesListString').show();
+                roleslist.find('.allrpgRolesListGroup')?.show();
+                roleslist.find('.allrpgRolesListString')?.show();
             } else {
-                roleslist.find('.allrpgRolesListGroup').hide();
-                roleslist.find('.allrpgRolesListString').hide();
+                roleslist.find('.allrpgRolesListGroup')?.hide();
+                roleslist.find('.allrpgRolesListString')?.hide();
 
-                roleslist.find(`.allrpgRolesListCharacterName`, false, string).each(function () {
-                    _(this).closest('.allrpgRolesListString').show();
-                    _(this).closest('.allrpgRolesListGroup').show();
+                roleslist.find(`.allrpgRolesListCharacterName`, false, string)?.each(function () {
+                    _(this).closest('.allrpgRolesListString')?.show();
+                    _(this).closest('.allrpgRolesListGroup')?.show();
                 });
 
-                roleslist.find(`.allrpgRolesListGroupName`, false, string).each(function () {
-                    _(this).closest('.allrpgRolesListGroup').show();
-                    _(this).closest('.allrpgRolesListGroup').find('.allrpgRolesListString').show();
+                roleslist.find(`.allrpgRolesListGroupName`, false, string)?.each(function () {
+                    _(this).closest('.allrpgRolesListGroup')?.show();
+                    _(this).closest('.allrpgRolesListGroup')?.find('.allrpgRolesListString')?.show();
                 });
             }
-        }, 500);
+        }, 300);
     });
 
     _('a.expand_group').on('click', function () {
