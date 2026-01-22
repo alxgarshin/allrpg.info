@@ -104,8 +104,6 @@ loadJsComponent('application').then(function () {
             } else {
                 self.html('<span class="sbi sbi-times"></span>');
             }
-
-            loadSbiBackground();
         });
 
         /** Выставление групп в соответствии с выбранным персонажем и переход к персонажу */

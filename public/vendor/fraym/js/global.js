@@ -11,9 +11,6 @@
 const showTimeMode = false;
 let startTime = new Date().getTime();
 
-/** Включение дебага последовательности исполнения листенеров */
-let debugListenersShow = false;
-
 /** Токен авторизации */
 let jwtToken;
 let jwtTokenRefreshing = null;
@@ -66,6 +63,9 @@ const wysiwygObjs = new Map();
 
 /** Массив FilePond-элементов для корректировки передаваемых на сервер значений */
 const filepondObjs = new Map();
+
+/** Массив предварительно загруженных изображений */
+const preloadedImages = [];
 
 /** Переменная, хранящая открытый Noty-диалог / промпт */
 let notyDialog = null;
@@ -1156,15 +1156,32 @@ async function fraymInit(withDocumentEvents, updateHash) {
                 });
             });
 
+        /** Автоподгрузка фоновых svg */
+        const sbiSelector = '.sbi:not(.loading):not(.loaded)';
+
+        const elements = elAll(sbiSelector);
+        if (elements.length) {
+            elements.forEach(el => loadSbiBackground(el));
+        }
+
+        const sbiObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) {
+                        if (node.matches(sbiSelector)) loadSbiBackground(node);
+                        elAll(sbiSelector, node).forEach(el => loadSbiBackground(el));
+                    }
+                });
+            });
+        });
+
+        sbiObserver.observe(document.body, { childList: true, subtree: true });
+
         showExecutionTime('Document events end');
     }
 
-    loadSbiBackground();
-
     /** Защита от svg файлов без viewbox'а */
     fixSvgWithoutViewBox();
-
-    showExecutionTime('Svg functions');
 
     _('select[name="searchAllTextFieldsValues"]').trigger('change');
 
@@ -1492,8 +1509,10 @@ class FraymElement {
         const fraymElement = this;
 
         _each(fraymElement.handlersMap, (listeners, handlerHash) => {
-            _each(listeners, (wrappedFunction, listener) => {
-                document.removeEventListener(listener, wrappedFunction);
+            _each(listeners, (observer, listener) => {
+                if (observer instanceof MutationObserver) {
+                    observer.disconnect();
+                }
             })
 
             fraymElement.handlersMap.delete(handlerHash);
@@ -2038,92 +2057,40 @@ class FraymElement {
             if (!this.handlersMap.get(handlerHash)) {
                 this.handlersMap.set(handlerHash, {});
             }
+
             const handlerInHandlersMap = this.handlersMap.get(handlerHash);
 
             _each(listeners.split(' '), listener => {
                 if (!handlerInHandlersMap[listener]) {
-                    const handlerWrapper = event => {
-                        let target = event.target;
+                    if (element === document && !elementSelectorOrHandler) {
+                        document.addEventListener(listener, handler);
 
-                        if (element === document && !elementSelectorOrHandler) {
-                            if (debugListenersShow) {
-                                console.log({
-                                    'event': event,
-                                    'element': element,
-                                    'handler': handler
-                                });
-                            }
-
-                            handler.call(document, event);
-                        } else {
-                            while (target) {
-                                if (target === document) {
-                                    break;
-                                }
-                                if (
-                                    element === window ||
-                                    (
-                                        !elementDOMName &&
-                                        (
-                                            elementSelectorOrHandler ?
-                                                element.contains(target) &&
-                                                target.matches(elementSelectorOrHandler) :
-                                                target === element
-                                        )
-                                    ) || (
-                                        elementDOMName &&
-                                        target.matches(elementDOMName)
-                                    )
-                                ) {
-                                    if (debugListenersShow) {
-                                        console.log({
-                                            'event': event,
-                                            'element': element,
-                                            'handler': handler
-                                        });
-                                    }
-
-                                    handler.call(target, event);
-                                    break;
-                                }
-                                target = target.parentNode;
-                            }
+                        handlerInHandlersMap[listener] = true;
+                    } else {
+                        const elements = elAll(elementDOMName);
+                        if (elements.length) {
+                            elements.forEach(el => el.addEventListener(listener, handler));
                         }
-                    };
 
-                    handlerInHandlersMap[listener] = handlerWrapper;
-                    document.addEventListener(listener, handlerWrapper);
+                        const observer = new MutationObserver((mutations) => {
+                            mutations.forEach((mutation) => {
+                                mutation.addedNodes.forEach((node) => {
+                                    if (node.nodeType === 1) {
+                                        if (node.matches(elementDOMName)) {
+                                            node.addEventListener(listener, handler);
+                                        }
+
+                                        elAll(elementDOMName, node).forEach(child => child.addEventListener(listener, handler));
+                                    }
+                                });
+                            });
+                        });
+
+                        observer.observe(document.body, { childList: true, subtree: true });
+
+                        handlerInHandlersMap[listener] = observer;
+                    }
                 }
-            });
-        }
-
-        return this;
-    }
-
-    /**
-     * @param {String} listeners
-     * @param {Function} handler
-     * 
-     * @return {FraymElement}
-     */
-    off(listeners, handler) {
-        if (listeners !== undefined && handler !== undefined) {
-            const handlerHash = hashCode(handler.toString());
-
-            if (!this.handlersMap.get(handlerHash)) {
-                return this;
-            }
-
-            const handlerInHandlersMap = this.handlersMap.get(handlerHash);
-
-            _each(listeners.split(' '), listener => {
-                if (!handlerInHandlersMap[listener]) {
-                    return this;
-                }
-
-                document.removeEventListener(listener, handlerInHandlersMap[listener]);
-
-                handlerInHandlersMap.delete(listener);
             });
         }
 
@@ -2446,52 +2413,52 @@ function removeInvalidChars(field) {
 }
 
 /** Импортируем svg в код страницы, чтобы управлять ими через css */
-function loadSbiBackground() {
-    _each(elAll('.sbi'), sbi => {
-        const imgURL = window.getComputedStyle(sbi).getPropertyValue('background-image')?.replace('url(', '').replace(')', '').replace(/"/gi, "");
-        const classList = [...sbi.classList].map(cls => `.${cls}`).join('') + ':not(.loading):not(.loaded)';
+function loadSbiBackground(sbi) {
+    const imgURL = window.getComputedStyle(sbi).getPropertyValue('background-image')?.replace('url(', '').replace(')', '').replace(/"/gi, "");
+    const classList = [...sbi.classList].map(cls => `.${cls}`).join('') + ':not(.loading):not(.loaded)';
 
-        if (
-            !sbi.classList.contains('loading')
-            && !sbi.classList.contains('loaded')
-            && imgURL !== undefined
-            && imgURL !== 'none'
-        ) {
-            const allSvgParents = _(classList, { noCache: true });
+    if (
+        !sbi.classList.contains('loading')
+        && !sbi.classList.contains('loaded')
+        && imgURL !== undefined
+        && imgURL !== 'none'
+    ) {
+        const allSvgParents = _(classList, { noCache: true });
 
-            allSvgParents.addClass('loading');
+        allSvgParents.addClass('loading');
 
-            fetchData(imgURL, { method: 'GET' }).then(function (data) {
-                if (allSvgParents.asDomElement()) {
-                    const svg = _(elFromHTML(data), { noCache: true });
+        fetchData(imgURL, { method: 'GET' }).then(function (data) {
+            if (allSvgParents.asDomElement()) {
+                const svg = _(elFromHTML(data), { noCache: true });
 
-                    svg
-                        .attr('xmlns:a', null)
-                        .attr('preserveAspectRatio', 'xMidYMid meet')
-                        .attr('width', '100%')
-                        .attr('height', '100%');
+                svg
+                    .attr('xmlns:a', null)
+                    .attr('preserveAspectRatio', 'xMidYMid meet')
+                    .attr('width', '100%')
+                    .attr('height', '100%');
 
-                    const svgHtml = svg.asDomElement().outerHTML;
-
-                    svg.destroy();
-
-                    allSvgParents.each(function () {
-                        const svgHolder = _(this, { noCache: true });
-
-                        svgHolder.insert(svgHtml, 'end');
-                        svgHolder.asDomElement().style.backgroundImage = 'none';
-                        svgHolder.removeClass('loading').addClass('loaded');
-
-                        svgHolder.destroy();
-                    })
+                if (!svg.attr('viewBox')) {
+                    svg.attr('viewBox', `0 0 100% 100%`);
                 }
 
-                allSvgParents.destroy();
+                const svgHtml = svg.asDomElement().outerHTML;
 
-                fixSvgWithoutViewBox();
-            })
-        }
-    });
+                svg.destroy();
+
+                allSvgParents.each(function () {
+                    const svgHolder = _(this, { noCache: true });
+
+                    svgHolder.insert(svgHtml, 'end');
+                    svgHolder.asDomElement().style.backgroundImage = 'none';
+                    svgHolder.removeClass('loading').addClass('loaded');
+
+                    svgHolder.destroy();
+                })
+            }
+
+            allSvgParents.destroy();
+        })
+    }
 }
 
 /** Исправление svg без viewBox */
@@ -3122,8 +3089,12 @@ const loadJsComponent = component => new Promise((resolve, reject) => {
 /** Предзагрузка изображений, картинку которых нужно менять на лету без мигания */
 function preload(arrayOfImages) {
     _each(arrayOfImages, image => {
-        const img = new Image();
-        img.src = image;
+        if (preloadedImages.indexOf(image) == -1) {
+            const img = new Image();
+            img.src = image;
+
+            preloadedImages.push(image);
+        }
     })
 }
 

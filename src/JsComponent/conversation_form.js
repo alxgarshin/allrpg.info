@@ -243,8 +243,6 @@ if (withDocumentEvents) {
                         fraymPlaceholder(field);
                     }
                 });
-
-                loadSbiBackground();
             }
 
             _('body').click();

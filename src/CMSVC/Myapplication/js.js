@@ -132,8 +132,6 @@ loadJsComponent('application').then(function () {
                     self.html('<span class="sbi sbi-times"></span>');
                 }
 
-                loadSbiBackground();
-
                 window.feeLockedRoomCheck();
             });
 

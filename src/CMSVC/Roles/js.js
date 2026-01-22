@@ -107,8 +107,6 @@ if (el('div#allrpgRolesListDiv')) {
         self.find('.sbi-plus').toggle();
         self.find('.sbi-minus').toggle();
         _(`div.group_filter[parent_id="${groupId}"]`).toggle();
-
-        loadSbiBackground();
     });
 
     /** Переключение видимости сетки ролей и режима ее вывода */

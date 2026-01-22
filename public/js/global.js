@@ -33,8 +33,6 @@ async function projectInit(withDocumentEvents, updateHash) {
 
     await loadJsCssForCMSVC();
 
-    loadSbiBackground();
-
     /** Остановить камеру */
     stopVideo();
 
@@ -689,8 +687,6 @@ async function projectInit(withDocumentEvents, updateHash) {
                 _('#conversations_widget_list_search_input').focus();
 
                 fraymPlaceholder('#conversations_widget_list_search_input');
-
-                loadSbiBackground();
             } else if (params['get_opened_dialogs'] == true) {
                 if (jsonData['response_data'] !== undefined) {
                     _each(jsonData['response_data'], function (value, key) {
@@ -982,8 +978,6 @@ async function projectInit(withDocumentEvents, updateHash) {
                     }
                 }
             });
-
-            loadSbiBackground();
         })
 
         actionRequestSupressErrorForActions.push('load_tasks_list');

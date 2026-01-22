@@ -61,20 +61,14 @@ if (withDocumentEvents) {
 
     _arSuccess('set_registration_player', function (jsonData, params, target) {
         target.parent().html('<span class="sbi sbi-check"></span>');
-
-        loadSbiBackground();
     })
 
     _arSuccess('set_registration_player_money', function (jsonData, params, target) {
         target.parent().html('<span class="sbi sbi-check"></span>');
-
-        loadSbiBackground();
     })
 
     _arSuccess('set_registration_eco_money', function (jsonData, params, target) {
         target.parent().html('<span class="sbi sbi-check"></span>');
-
-        loadSbiBackground();
     })
 
     _arSuccess('set_registration_comments', function () { })

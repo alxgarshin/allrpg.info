@@ -177,7 +177,7 @@ class FraymAudioPlayer {
 				.on(eCancel + ' ' + eEnd, function (e) {
 					e.stopImmediatePropagation();
 
-					theBar.off(eMove, adjustCurrentTimeWrapper);
+					theBar.removeEventListener(eMove, adjustCurrentTimeWrapper);
 				});
 
 			volumeButton.on('click', function () {
@@ -217,7 +217,7 @@ class FraymAudioPlayer {
 				.on(eCancel + ' ' + eEnd, function (e) {
 					e.stopImmediatePropagation();
 
-					volumeAdjuster.off(eMove, adjustVolumeWrapper);
+					volumeAdjuster.removeEventListener(eMove, adjustVolumeWrapper);
 				});
 		}
 		else {

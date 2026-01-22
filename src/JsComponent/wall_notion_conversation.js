@@ -270,8 +270,6 @@ if (withDocumentEvents) {
                 }
             }
         }
-
-        loadSbiBackground();
     })
 
     _arSuccess('show_hide_notion', function (jsonData, params, target) {

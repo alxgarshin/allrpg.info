@@ -431,8 +431,6 @@ if (withDocumentEvents) {
                         action: 'user/get_new_events'
                     });
                 }
-
-                loadSbiBackground();
             }
         })
 
@@ -495,8 +493,6 @@ if (withDocumentEvents) {
                         });
                     }
                 });
-
-                loadSbiBackground();
             }
 
             if (params['set_position'] == true) {
