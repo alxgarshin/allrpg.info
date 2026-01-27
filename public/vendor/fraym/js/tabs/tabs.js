@@ -12,14 +12,13 @@ class FraymTabs {
         if (!element) return false;
 
         const self = _(element);
+        const navPanel = self.find(':scope > ul');
+        const controls = navPanel.find('li');
+        const panels = self.find(':scope > div[id]');
 
         if (!self.hasClass('fraymTabsApplied')) {
             const tabs = function () {
                 self.addClass('fraymTabsApplied');
-
-                const navPanel = self.find(':scope > ul');
-                const controls = navPanel.find('li');
-                const panels = self.find(':scope > div[id]');
 
                 panels.addClass('fraymtabs-panel');
 
@@ -29,7 +28,7 @@ class FraymTabs {
                     }
                 });
 
-                _(document).on('activate', '.fraymtabs>ul>li', function () {
+                _('.fraymtabs>ul>li').on('activate', function () {
                     const self = _(this);
 
                     if (!self.hasClass('fraymtabs-active') && !self.is('[disabled]')) {
@@ -44,7 +43,7 @@ class FraymTabs {
                     }
                 });
 
-                _(document).on('activateWithParents', '.fraymtabs>ul>li', function () {
+                _('.fraymtabs>ul>li').on('activateWithParents', function () {
                     const self = _(this);
 
                     self.trigger('activate');
@@ -56,7 +55,7 @@ class FraymTabs {
                     }
                 });
 
-                _(document).on('click', '.fraymtabs>ul>li', function (e) {
+                _('.fraymtabs>ul>li').on('click', function (e) {
                     e.preventDefault();
 
                     const self = _(this);
@@ -69,20 +68,20 @@ class FraymTabs {
                         componentsUpdateState((self.index() !== 0 || (parentFraymTabsPanel && parentFraymTabsPanel.asDomElement())) ? hash : '');
                     }
                 });
-
-                const hash = window.location.hash.substring(1);
-
-                if (hash !== '' && el(`.fraymtabs li>a#${hash}`, navPanel.asDomElement())) {
-                    if (el(`.fraymtabs div#fraymtabs-${hash}`).checkVisibility()) {
-                    } else {
-                        _(`.fraymtabs li>a#${hash}`).click();
-                    }
-                } else {
-                    controls.first().trigger('activate');
-                }
             };
 
             tabs();
+        }
+
+        const hash = window.location.hash.substring(1);
+
+        if (hash !== '' && el(`.fraymtabs li>a#${hash}`, navPanel.asDomElement())) {
+            if (el(`.fraymtabs div#fraymtabs-${hash}`).checkVisibility()) {
+            } else {
+                _(`.fraymtabs li>a#${hash}`).click();
+            }
+        } else {
+            controls.first().trigger('activate');
         }
     }
 }

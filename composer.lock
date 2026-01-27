@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "alxgarshin/fraym",
-            "version": "v0.8.4",
+            "version": "v0.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alxgarshin/fraym.git",
-                "reference": "faab6be3d342861b1016ca4a91f332581f5a931c"
+                "reference": "0ed47bba636a5a784b16bec01b63cd475faaf9c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alxgarshin/fraym/zipball/faab6be3d342861b1016ca4a91f332581f5a931c",
-                "reference": "faab6be3d342861b1016ca4a91f332581f5a931c",
+                "url": "https://api.github.com/repos/alxgarshin/fraym/zipball/0ed47bba636a5a784b16bec01b63cd475faaf9c2",
+                "reference": "0ed47bba636a5a784b16bec01b63cd475faaf9c2",
                 "shasum": ""
             },
             "require": {
@@ -44,7 +44,10 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Fraym\\": "src/"
+                    "Fraym\\": "src/",
+                    "Captcha\\": "src/Vendor/Captcha/",
+                    "Identicon\\": "src/Vendor/Identicon",
+                    "WideImage\\": "src/Vendor/Wideimage/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -65,9 +68,9 @@
             ],
             "support": {
                 "issues": "https://github.com/alxgarshin/fraym/issues",
-                "source": "https://github.com/alxgarshin/fraym/tree/v0.8.4"
+                "source": "https://github.com/alxgarshin/fraym/tree/v0.8.8"
             },
-            "time": "2026-01-22T18:44:28+00:00"
+            "time": "2026-01-27T17:37:55+00:00"
         },
         {
             "name": "brick/math",

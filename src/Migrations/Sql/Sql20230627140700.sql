@@ -673,7 +673,7 @@ CREATE TABLE `project_group` (
   `project_id` int(11) DEFAULT NULL,
   `parent` int(11) DEFAULT '0',
   `name` varchar(255) NOT NULL,
-  `code` int(11) NOT NULL DEFAULT '1',
+  `code` int(11) DEFAULT '1' NULL,
   `content` varchar(255) NOT NULL DEFAULT '{menu}',
   `description` text,
   `image` varchar(500) DEFAULT NULL,
