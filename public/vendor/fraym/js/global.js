@@ -49,6 +49,15 @@ const dataLoaded = {
 */
 const fraymElementsMap = new Map();
 
+/** Хранит основной обсервер для listener'ов */
+let globalFraymListenersObserver;
+
+/** Хранит все listener'ы данной конкретной страницы
+ * 
+ * @type {Map<FraymElement, Object>}
+*/
+const activeListeners = new Map();
+
 /** Хранит все коллбэки (успеха и провала) для соответствующих действий */
 const actionRequestCallbacks = {
     'success': {},
@@ -1488,7 +1497,6 @@ class FraymElement {
         this.observer = null;
         this.onDOMChange = [];
         this.element = element;
-        this.handlersMap = new Map();
 
         try {
             if (options) {
@@ -1508,15 +1516,9 @@ class FraymElement {
     destroy() {
         const fraymElement = this;
 
-        _each(fraymElement.handlersMap, (listeners, handlerHash) => {
-            _each(listeners, (observer, listener) => {
-                if (observer instanceof MutationObserver) {
-                    observer.disconnect();
-                }
-            })
-
-            fraymElement.handlersMap.delete(handlerHash);
-        })
+        if (activeListeners.get(fraymElement)) {
+            activeListeners.delete(fraymElement);
+        }
 
         fraymElementsMap.delete(this.element);
 
@@ -2044,6 +2046,34 @@ class FraymElement {
      * @return {FraymElement}
      */
     on(listeners, elementSelectorOrHandler, handler) {
+        if (globalFraymListenersObserver === undefined) {
+            globalFraymListenersObserver = new MutationObserver((mutations) => {
+                if (activeListeners.size === 0) return;
+
+                for (const mutation of mutations) {
+                    for (const node of mutation.addedNodes) {
+                        if (node.nodeType !== 1) continue;
+
+                        _each(activeListeners, (fraymElementListeners) => {
+                            _each(fraymElementListeners, (handlerHashesData, elementDOMName) => {
+                                _each(handlerHashesData, (data) => {
+                                    _each(data.listeners, listener => {
+                                        if (node.matches(elementDOMName)) {
+                                            node.addEventListener(listener, data.handler);
+                                        }
+
+                                        elAll(elementDOMName, node).forEach(child => child.addEventListener(listener, data.handler));
+                                    })
+                                })
+                            })
+                        })
+                    }
+                }
+            });
+
+            globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
+        }
+
         if (listeners !== undefined) {
             if (handler === undefined) {
                 handler = elementSelectorOrHandler;
@@ -2051,47 +2081,44 @@ class FraymElement {
             }
 
             const element = this.element;
-            const elementDOMName = element === document || typeof element === 'string' ? `${element === document ? '' : element}${elementSelectorOrHandler ? ' ' + elementSelectorOrHandler : ''}` : null;
-            const handlerHash = hashCode(handler.toString());
+            const elementDOMName = element === document || typeof element === 'string' ? `${element === document ? '' : element}${elementSelectorOrHandler ? (element === document ? '' : ' ') + elementSelectorOrHandler : ''}` : null;
+            const handlerHash = hashCode(listeners + elementDOMName + handler.toString());
 
-            if (!this.handlersMap.get(handlerHash)) {
-                this.handlersMap.set(handlerHash, {});
-            }
+            if (typeof element === 'object' && !elementSelectorOrHandler) {
+                _each(listeners.split(' '), listener => {
+                    _each(this.DOMElements, elem => elem.addEventListener(listener, handler));
+                })
+            } else {
+                if (!activeListeners.get(this)) {
+                    activeListeners.set(this, {});
+                }
 
-            const handlerInHandlersMap = this.handlersMap.get(handlerHash);
+                const elementInActiveListenersMap = activeListeners.get(this);
 
-            _each(listeners.split(' '), listener => {
-                if (!handlerInHandlersMap[listener]) {
-                    if (typeof element === 'object' && !elementSelectorOrHandler) {
-                        element.addEventListener(listener, handler);
+                if (elementInActiveListenersMap[elementDOMName] === undefined) {
+                    elementInActiveListenersMap[elementDOMName] = {};
+                }
 
-                        handlerInHandlersMap[listener] = true;
-                    } else {
+                const elementDOMNameHandlerMap = elementInActiveListenersMap[elementDOMName];
+
+                if (elementDOMNameHandlerMap[handlerHash] === undefined) {
+                    elementDOMNameHandlerMap[handlerHash] = { handler: handler, listeners: [] };
+                }
+
+                const handlerDataInHandlersMap = elementDOMNameHandlerMap[handlerHash];
+
+                _each(listeners.split(' '), listener => {
+                    if (!handlerDataInHandlersMap.listeners.includes(listener)) {
                         const elements = elAll(elementDOMName);
+
                         if (elements.length) {
                             elements.forEach(el => el.addEventListener(listener, handler));
                         }
 
-                        const observer = new MutationObserver((mutations) => {
-                            mutations.forEach((mutation) => {
-                                mutation.addedNodes.forEach((node) => {
-                                    if (node.nodeType === 1) {
-                                        if (node.matches(elementDOMName)) {
-                                            node.addEventListener(listener, handler);
-                                        }
-
-                                        elAll(elementDOMName, node).forEach(child => child.addEventListener(listener, handler));
-                                    }
-                                });
-                            });
-                        });
-
-                        observer.observe(document.body, { childList: true, subtree: true });
-
-                        handlerInHandlersMap[listener] = observer;
+                        handlerDataInHandlersMap.listeners.push(listener);
                     }
-                }
-            });
+                })
+            }
         }
 
         return this;
@@ -2145,7 +2172,6 @@ class FraymElement {
         if (self) {
             _each(this.onDOMChange, savedCallback => {
                 if (savedCallback === callback) {
-                    console.log('same');
                     return this;
                 }
             });

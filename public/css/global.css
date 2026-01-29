@@ -2835,6 +2835,10 @@ div.tasks_widget_list_close:hover {
     cursor: pointer;
 }
 
+div.tasks_widget_list_header div.tasks_widget_list_close path {
+    fill: var(--white);
+}
+
 div.tasks_widget_list_functions {
     float: right;
     margin-right: .6em;
