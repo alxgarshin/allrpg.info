@@ -9,14 +9,8 @@ if (withDocumentEvents) {
         _(this).next('div[class*=_message_more_list]').show();
     });
 
-    _(document.body).observerDOMChange(() => {
-        _('div.wall_message_container:not(.mouseEventsAdded), div.conversation_message_container:not(.mouseEventsAdded)').each(function () {
-            this.classList.add('mouseEventsAdded');
-
-            this.addEventListener('mouseleave', function () {
-                _(this).find('div[class*=_message_more_list]')?.hide();
-            });
-        });
+    _(document).on('mouseleave', 'div.wall_message_container, div.conversation_message_container', function () {
+        _(this).find('div[class*=_message_more_list]')?.hide();
     });
 
     _(document).on('click', 'a.wall_message_more_function.wall_message_more_edit, a.conversation_message_more_function.conversation_message_more_edit', function () {

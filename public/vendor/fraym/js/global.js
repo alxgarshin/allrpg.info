@@ -321,17 +321,15 @@ async function fraymInit(withDocumentEvents, updateHash) {
         fraymNotyInit();
 
         /** Всплывающие подсказки / тултипы */
-        _(document.body).observerDOMChange(() => {
-            _('[title]', { noCache: true }).each(function () {
-                const self = _(this, { noCache: true });
-                const title = self.attr('title');
+        _(document).on('mouseenter', '[title]:not([data-tooltip-text])', function () {
+            const self = _(this, { noCache: true });
+            const title = self.attr('title');
 
-                if (title) {
-                    self.attr('data-tooltip-text', title);
-                }
+            if (title) {
+                self.attr('data-tooltip-text', title);
+            }
 
-                self.attr('title', null).destroy();
-            }).destroy();
+            self.attr('title', null).destroy();
         });
 
         /** Блокировка дефолтного поведения при нажатии на кнопку */
@@ -1134,36 +1132,30 @@ async function fraymInit(withDocumentEvents, updateHash) {
         });
 
         /** Стрелочки направления сортировок Excel-подобной таблицы объектов */
-        _(document.body).observerDOMChange(() => {
-            _('.menu a:not(.mouseEventsAdded)').each(function () {
-                this.classList.add('mouseEventsAdded');
+        _(document).on('mouseenter', '.menu a', function () {
+            const self = _(this);
 
-                this.addEventListener('mouseenter', function () {
-                    const self = _(this);
+            if (!self.hasClass('arrowAppended')) {
+                if (!self.hasClass('arrow_up') && !self.hasClass('arrow_down')) {
+                    self.addClass('arrowAppended');
+                    self.addClass('arrow_down');
+                } else if (!self.hasClass('arrowChanged')) {
+                    self.addClass('arrowChanged');
+                    self.toggleClass('arrow_up').toggleClass('arrow_down');
+                }
+            }
+        });
 
-                    if (!self.hasClass('arrowAppended')) {
-                        if (!self.hasClass('arrow_up') && !self.hasClass('arrow_down')) {
-                            self.addClass('arrowAppended');
-                            self.addClass('arrow_down');
-                        } else if (!self.hasClass('arrowChanged')) {
-                            self.addClass('arrowChanged');
-                            self.toggleClass('arrow_up').toggleClass('arrow_down');
-                        }
-                    }
-                });
+        _(document).on('mouseleave', '.menu a', function () {
+            const self = _(this);
 
-                this.addEventListener('mouseleave', function () {
-                    const self = _(this);
-
-                    if (self.hasClass('arrowAppended')) {
-                        self.removeClass('arrowAppended');
-                        self.removeClass('arrow_down');
-                    } else if (self.hasClass('arrowChanged')) {
-                        self.removeClass('arrowChanged');
-                        self.toggleClass('arrow_up').toggleClass('arrow_down');
-                    }
-                });
-            });
+            if (self.hasClass('arrowAppended')) {
+                self.removeClass('arrowAppended');
+                self.removeClass('arrow_down');
+            } else if (self.hasClass('arrowChanged')) {
+                self.removeClass('arrowChanged');
+                self.toggleClass('arrow_up').toggleClass('arrow_down');
+            }
         });
 
         /** В типе cardtable у созданных cardtable_card автоматически исправляем названия, если они есть */
@@ -1527,7 +1519,6 @@ class FraymElement {
     constructor(element, options) {
         this.DOMElements = [];
         this.observer = null;
-        this.onDOMChange = [];
         this.element = element;
 
         try {
@@ -2165,37 +2156,6 @@ class FraymElement {
         return this;
     }
 
-    /**
-     * @param {Function} callback
-     * 
-     * @return {FraymElement}
-     */
-    observerDOMChange(callback) {
-        const self = this.asDomElement();
-
-        if (self) {
-            _each(this.onDOMChange, savedCallback => {
-                if (savedCallback === callback) {
-                    return this;
-                }
-            });
-
-            this.onDOMChange.push(callback);
-
-            const observer = new MutationObserver(mutationsList => {
-                for (const mutation of mutationsList) {
-                    if (mutation.type === 'childList') {
-                        _each(this.onDOMChange, callback => callback());
-                    }
-                }
-            });
-
-            observer.observe(self, { childList: true, subtree: true });
-        }
-
-        return this;
-    }
-
     /** @return {FraymElement} */
     insert(htmlOrElement, position) {
         this.each(function () {
@@ -2528,42 +2488,40 @@ function loadSbiBackground(sbiElements) {
         allSvgParents.addClass('loading');
 
         fetchData(url, { method: 'GET' }).then(function (data) {
-            if (allSvgParents.asDomElement()) {
-                const svg = _(elFromHTML(data), { noCache: true });
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data;
+            const rawSvg = tempDiv.querySelector('svg');
 
-                svg
-                    .attr('xmlns:a', null)
-                    .attr('preserveAspectRatio', 'xMidYMid meet')
-                    .attr('width', '100%')
-                    .attr('height', '100%');
+            if (!rawSvg) return;
 
-                if (!svg.attr('viewBox')) {
-                    svg.attr('viewBox', `0 0 100% 100%`);
-                }
-
-                const svgHtml = svg.asDomElement().outerHTML;
-
-                svg.destroy();
-
-                sbiObserver.disconnect();
-                globalFraymListenersObserver.disconnect();
-
-                allSvgParents.each(function () {
-                    const svgHolder = _(this, { noCache: true });
-
-                    svgHolder.insert(svgHtml, 'end');
-                    svgHolder.asDomElement().style.backgroundImage = 'none';
-                    svgHolder.removeClass('loading').addClass('loaded');
-
-                    svgHolder.destroy();
-                })
-
-                globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
-                sbiObserver.observe(document.body, { childList: true, subtree: true });
+            rawSvg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+            rawSvg.setAttribute('width', '100%');
+            rawSvg.setAttribute('height', '100%');
+            rawSvg.removeAttribute('xmlns:a');
+            if (!rawSvg.hasAttribute('viewBox')) {
+                rawSvg.setAttribute('viewBox', '0 0 100 100');
             }
 
-            allSvgParents.destroy();
+            sbiObserver.disconnect();
+            globalFraymListenersObserver.disconnect();
+
+            for (let i = 0; i < elements.length; i++) {
+                const el = elements[i];
+
+                el.appendChild(rawSvg.cloneNode(true));
+
+                el.style.backgroundImage = 'none';
+                el.classList.remove('loading');
+                el.classList.add('loaded');
+            }
+
+            globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
+            sbiObserver.observe(document.body, { childList: true, subtree: true });
+
+            tempDiv.remove();
         })
+
+        allSvgParents.destroy();
     })
 }
 

@@ -1289,45 +1289,39 @@ function getHelperData(object, action) {
         }
     });
 
-    _(document.body).observerDOMChange(() => {
-        _(`${object}:not(.mouseEventsAdded)`).each(function () {
-            this.classList.add('mouseEventsAdded');
+    _(document).on('mouseenter', object, function () {
+        const self = _(this);
 
-            this.addEventListener('mouseenter', function () {
-                const self = _(this);
+        if (self.find('div.helper')) {
+            window.clearInterval(window[`helper${self['obj_id']}`]);
 
-                if (self.find('div.helper')) {
-                    window.clearInterval(window[`helper${self['obj_id']}`]);
-
-                    window[`helper${self['obj_id']}`] = setInterval(function () {
-                        self.find('div.helper').show();
-
-                        window.clearInterval(window[`helper${self['obj_id']}`]);
-                    }, 1000);
-                } else {
-                    window.clearInterval(window[`helper${self['obj_id']}`]);
-
-                    window[`helper${self['obj_id']}`] = setInterval(function () {
-                        actionRequest({
-                            action: `popup_helper/${action}`,
-                            obj_id: self.attr('obj_id'),
-                            obj_type: self.attr('obj_type'),
-                            value: self.attr('value')
-                        }, self);
-
-                        window.clearInterval(window[`helper${self['obj_id']}`]);
-                    }, 1000);
-                }
-            });
-
-            this.addEventListener('mouseleave', function () {
-                const self = _(this);
+            window[`helper${self['obj_id']}`] = setInterval(function () {
+                self.find('div.helper').show();
 
                 window.clearInterval(window[`helper${self['obj_id']}`]);
+            }, 1000);
+        } else {
+            window.clearInterval(window[`helper${self['obj_id']}`]);
 
-                _('div.helper').hide();
-            });
-        });
+            window[`helper${self['obj_id']}`] = setInterval(function () {
+                actionRequest({
+                    action: `popup_helper/${action}`,
+                    obj_id: self.attr('obj_id'),
+                    obj_type: self.attr('obj_type'),
+                    value: self.attr('value')
+                }, self);
+
+                window.clearInterval(window[`helper${self['obj_id']}`]);
+            }, 1000);
+        }
+    });
+
+    _(document).on('mouseleave', object, function () {
+        const self = _(this);
+
+        window.clearInterval(window[`helper${self['obj_id']}`]);
+
+        _('div.helper').hide();
     });
 }
 
