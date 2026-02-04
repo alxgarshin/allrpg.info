@@ -1192,6 +1192,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
 
         /** Автоподгрузка фоновых svg */
         loadSbiBackground(elAll(sbiSelector));
+        sbiObserver.observe(document.body, { childList: true, subtree: true });
 
         showExecutionTime('Document events end');
     }
@@ -2520,8 +2521,6 @@ function loadSbiBackground(sbiElements) {
         }
     }
 
-    sbiObserver.disconnect();
-
     itemsToLoad.forEach((elements, url) => {
         const allSvgParents = _(elements, { noCache: true });
 
@@ -2545,6 +2544,8 @@ function loadSbiBackground(sbiElements) {
 
                 svg.destroy();
 
+                sbiObserver.disconnect();
+
                 allSvgParents.each(function () {
                     const svgHolder = _(this, { noCache: true });
 
@@ -2554,13 +2555,13 @@ function loadSbiBackground(sbiElements) {
 
                     svgHolder.destroy();
                 })
+
+                sbiObserver.observe(document.body, { childList: true, subtree: true });
             }
 
             allSvgParents.destroy();
         })
     })
-
-    sbiObserver.observe(document.body, { childList: true, subtree: true });
 }
 
 /** Исправление svg без viewBox */
