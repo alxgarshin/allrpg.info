@@ -2056,15 +2056,20 @@ class FraymElement {
 
                         _each(activeListeners, (fraymElementListeners) => {
                             _each(fraymElementListeners, (handlerHashesData, elementDOMName) => {
-                                _each(handlerHashesData, (data) => {
-                                    _each(data.listeners, listener => {
-                                        if (node.matches(elementDOMName)) {
-                                            node.addEventListener(listener, data.handler);
-                                        }
+                                let verifyElement = node.matches(elementDOMName);
+                                let childElements = elAll(elementDOMName, node);
 
-                                        elAll(elementDOMName, node).forEach(child => child.addEventListener(listener, data.handler));
+                                if (verifyElement || childElements.length > 0) {
+                                    _each(handlerHashesData, (data) => {
+                                        _each(data.listeners, listener => {
+                                            if (verifyElement) {
+                                                node.addEventListener(listener, data.handler);
+                                            }
+
+                                            childElements.forEach(child => child.addEventListener(listener, data.handler));
+                                        })
                                     })
-                                })
+                                }
                             })
                         })
                     }
