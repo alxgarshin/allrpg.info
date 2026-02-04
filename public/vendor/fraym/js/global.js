@@ -2064,30 +2064,7 @@ class FraymElement {
 
                 if (nodesToProcess.length === 0) return;
 
-                setTimeout(function () {
-                    for (const node of nodesToProcess) {
-                        _each(activeListeners, (fraymElementListeners) => {
-                            _each(fraymElementListeners, (handlerHashesData, elementDOMName) => {
-                                let verifyElement = node.matches(elementDOMName);
-                                let childElements = elAll(elementDOMName, node);
-
-                                if (verifyElement || childElements.length > 0) {
-                                    _each(handlerHashesData, (data) => {
-                                        _each(data.listeners, listener => {
-                                            if (verifyElement) {
-                                                node.addEventListener(listener, data.handler);
-                                            }
-
-                                            if (childElements.length > 0) {
-                                                childElements.forEach(child => child.addEventListener(listener, data.handler));
-                                            }
-                                        });
-                                    });
-                                }
-                            });
-                        });
-                    }
-                }, 0);
+                this.processInBatches(nodesToProcess);
             });
 
             globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
@@ -2141,6 +2118,46 @@ class FraymElement {
         }
 
         return this;
+    }
+
+    processInBatches(items, startIndex = 0) {
+        const BATCH_SIZE = 50;
+        const endIndex = Math.min(startIndex + BATCH_SIZE, items.length);
+
+        for (let i = startIndex; i < endIndex; i++) {
+            const node = items[i];
+
+            _each(activeListeners, (fraymElementListeners) => {
+                _each(fraymElementListeners, (handlerHashesData, elementDOMName) => {
+                    let verifyElement = node.matches(elementDOMName);
+                    let childElements = [];
+
+                    if (node.childElementCount > 0) {
+                        childElements = elAll(elementDOMName, node);
+                    }
+
+                    if (verifyElement || childElements.length > 0) {
+                        _each(handlerHashesData, (data) => {
+                            _each(data.listeners, listener => {
+                                if (verifyElement) {
+                                    node.addEventListener(listener, data.handler);
+                                }
+
+                                if (childElements.length > 0) {
+                                    childElements.forEach(child => child.addEventListener(listener, data.handler));
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        }
+
+        if (endIndex < items.length) {
+            setTimeout(() => {
+                this.processInBatches(items, endIndex);
+            }, 0);
+        }
     }
 
     /** @return {FormData} */
