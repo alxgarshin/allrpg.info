@@ -2,7 +2,7 @@
 
 if (postAllrpgRolesList === undefined) {
     function postAllrpgRolesList() {
-        fraymDragDropApply('div#allrpgRolesListDiv div.allrpgRolesListString', {
+        fraymDragDropApply('div#allrpgRolesListDiv div.allrpgRolesListGroup.editable div.allrpgRolesListString', {
             sortable: true,
             handler: 'span.character_move',
             dragEnd: function (e) {
