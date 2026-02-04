@@ -50,7 +50,25 @@ const dataLoaded = {
 const fraymElementsMap = new Map();
 
 /** Хранит основной обсервер для listener'ов */
-let globalFraymListenersObserver;
+const globalFraymListenersObserver = new MutationObserver((mutations) => {
+    if (activeListeners.size === 0) return;
+
+    const nodesToProcess = [];
+
+    for (const mutation of mutations) {
+        if (mutation.addedNodes.length > 0) {
+            for (const node of mutation.addedNodes) {
+                if (node.nodeType === 1) {
+                    nodesToProcess.push(node);
+                }
+            }
+        }
+    }
+
+    if (nodesToProcess.length === 0) return;
+
+    processInBatches(nodesToProcess);
+});
 
 /** Хранит все listener'ы данной конкретной страницы
  * 
@@ -223,6 +241,11 @@ async function fraymInit(withDocumentEvents, updateHash) {
     /** Фиксируем время начала отработки */
     startTime = new Date().getTime();
 
+    if (withDocumentEvents) {
+        /** Запуск глобального observer'а для всех событий */
+        globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
     /** Очищаем из fraymElementsMap всё кроме ключа document, т.е. установленных перманентных элементов / листенеров */
     for (const [key, value] of fraymElementsMap.entries()) {
         if (key !== document && key !== window) {
@@ -294,6 +317,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
     showExecutionTime('Tabs');
 
     if (withDocumentEvents) {
+        /** Всплывающие уведомления */
         fraymNotyInit();
 
         /** Всплывающие подсказки / тултипы */
@@ -2054,30 +2078,6 @@ class FraymElement {
      * @return {FraymElement}
      */
     on(listeners, elementSelectorOrHandler, handler) {
-        if (globalFraymListenersObserver === undefined) {
-            globalFraymListenersObserver = new MutationObserver((mutations) => {
-                if (activeListeners.size === 0) return;
-
-                const nodesToProcess = [];
-
-                for (const mutation of mutations) {
-                    if (mutation.addedNodes.length > 0) {
-                        for (const node of mutation.addedNodes) {
-                            if (node.nodeType === 1) {
-                                nodesToProcess.push(node);
-                            }
-                        }
-                    }
-                }
-
-                if (nodesToProcess.length === 0) return;
-
-                this.processInBatches(nodesToProcess);
-            });
-
-            globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
-        }
-
         if (listeners !== undefined) {
             if (handler === undefined) {
                 handler = elementSelectorOrHandler;
@@ -2126,46 +2126,6 @@ class FraymElement {
         }
 
         return this;
-    }
-
-    processInBatches(items, startIndex = 0) {
-        const BATCH_SIZE = 50;
-        const endIndex = Math.min(startIndex + BATCH_SIZE, items.length);
-
-        for (let i = startIndex; i < endIndex; i++) {
-            const node = items[i];
-
-            _each(activeListeners, (fraymElementListeners) => {
-                _each(fraymElementListeners, (handlerHashesData, elementDOMName) => {
-                    let verifyElement = node.matches(elementDOMName);
-                    let childElements = [];
-
-                    if (node.childElementCount > 0) {
-                        childElements = elAll(elementDOMName, node);
-                    }
-
-                    if (verifyElement || childElements.length > 0) {
-                        _each(handlerHashesData, (data) => {
-                            _each(data.listeners, listener => {
-                                if (verifyElement) {
-                                    node.addEventListener(listener, data.handler);
-                                }
-
-                                if (childElements.length > 0) {
-                                    childElements.forEach(child => child.addEventListener(listener, data.handler));
-                                }
-                            });
-                        });
-                    }
-                });
-            });
-        }
-
-        if (endIndex < items.length) {
-            setTimeout(() => {
-                this.processInBatches(items, endIndex);
-            }, 0);
-        }
     }
 
     /** @return {FormData} */
@@ -2325,6 +2285,47 @@ class FraymElement {
         });
 
         return this;
+    }
+}
+
+/** Подключение листенеров пачками с паузами для прорисовки */
+function processInBatches(items, startIndex = 0) {
+    const BATCH_SIZE = 50;
+    const endIndex = Math.min(startIndex + BATCH_SIZE, items.length);
+
+    for (let i = startIndex; i < endIndex; i++) {
+        const node = items[i];
+
+        _each(activeListeners, (fraymElementListeners) => {
+            _each(fraymElementListeners, (handlerHashesData, elementDOMName) => {
+                let verifyElement = node.matches(elementDOMName);
+                let childElements = [];
+
+                if (node.childElementCount > 0) {
+                    childElements = elAll(elementDOMName, node);
+                }
+
+                if (verifyElement || childElements.length > 0) {
+                    _each(handlerHashesData, (data) => {
+                        _each(data.listeners, listener => {
+                            if (verifyElement) {
+                                node.addEventListener(listener, data.handler);
+                            }
+
+                            if (childElements.length > 0) {
+                                childElements.forEach(child => child.addEventListener(listener, data.handler));
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    }
+
+    if (endIndex < items.length) {
+        setTimeout(() => {
+            processInBatches(items, endIndex);
+        }, 0);
     }
 }
 
@@ -2545,6 +2546,7 @@ function loadSbiBackground(sbiElements) {
                 svg.destroy();
 
                 sbiObserver.disconnect();
+                globalFraymListenersObserver.disconnect();
 
                 allSvgParents.each(function () {
                     const svgHolder = _(this, { noCache: true });
@@ -2556,6 +2558,7 @@ function loadSbiBackground(sbiElements) {
                     svgHolder.destroy();
                 })
 
+                globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
                 sbiObserver.observe(document.body, { childList: true, subtree: true });
             }
 
