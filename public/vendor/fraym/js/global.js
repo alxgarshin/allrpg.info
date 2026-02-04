@@ -99,6 +99,31 @@ let swipeTimeDiff = 0;
 let swipeTimeThreshold = 200;
 let swipeDiffThreshold = 130;
 
+/** Переменные для автоподгрузки svg из бэкграундов в DOM (для управления через css) */
+const sbiSelector = '.sbi:not(.loading):not(.loaded)';
+const sbiObserver = new MutationObserver((mutations) => {
+    const nodesToProcess = [];
+
+    for (const mutation of mutations) {
+        if (mutation.addedNodes.length > 0) {
+            for (const node of mutation.addedNodes) {
+                if (node.nodeType === 1) {
+                    if (node.matches(sbiSelector)) nodesToProcess.push(node);
+
+                    if (node.firstElementChild) {
+                        elAll(sbiSelector, node).forEach(el => nodesToProcess.push(el));
+                    }
+
+                }
+            }
+        }
+    }
+
+    if (nodesToProcess.length === 0) return;
+
+    loadSbiBackground(nodesToProcess);
+});
+
 ready(() => {
     /** Проверяем, поддерживает ли браузер изменение адреса */
     if ('pushState' in history) {
@@ -1166,25 +1191,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
             });
 
         /** Автоподгрузка фоновых svg */
-        const sbiSelector = '.sbi:not(.loading):not(.loaded)';
-
-        const elements = elAll(sbiSelector);
-        if (elements.length) {
-            elements.forEach(el => loadSbiBackground(el));
-        }
-
-        /* const sbiObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                mutation.addedNodes.forEach((node) => {
-                    if (node.nodeType === 1) {
-                        if (node.matches(sbiSelector)) loadSbiBackground(node);
-                        elAll(sbiSelector, node).forEach(el => loadSbiBackground(el));
-                    }
-                });
-            });
-        });
-
-        sbiObserver.observe(document.body, { childList: true, subtree: true }); */
+        loadSbiBackground(elAll(sbiSelector));
 
         showExecutionTime('Document events end');
     }
@@ -2492,21 +2499,35 @@ function removeInvalidChars(field) {
 }
 
 /** Импортируем svg в код страницы, чтобы управлять ими через css */
-function loadSbiBackground(sbi) {
-    const imgURL = window.getComputedStyle(sbi).getPropertyValue('background-image')?.replace('url(', '').replace(')', '').replace(/"/gi, "");
-    const classList = [...sbi.classList].map(cls => `.${cls}`).join('') + ':not(.loading):not(.loaded)';
+function loadSbiBackground(sbiElements) {
+    const itemsToLoad = new Map();
 
-    if (
-        !sbi.classList.contains('loading')
-        && !sbi.classList.contains('loaded')
-        && imgURL !== undefined
-        && imgURL !== 'none'
-    ) {
-        const allSvgParents = _(classList, { noCache: true });
+    for (const el of sbiElements) {
+        if (el.classList.contains('loading') || el.classList.contains('loaded')) continue;
+
+        const style = window.getComputedStyle(el);
+        const bgImage = style.getPropertyValue('background-image');
+
+        if (bgImage && bgImage !== 'none') {
+            const url = bgImage.replace(/^url\(['"]?/, '').replace(/['"]?\)$/, '');
+
+            if (!itemsToLoad.has(url)) {
+                itemsToLoad.set(url, []);
+            }
+
+            let itemsToLoadByUrl = itemsToLoad.get(url);
+            itemsToLoadByUrl.push(el);
+        }
+    }
+
+    sbiObserver.disconnect();
+
+    itemsToLoad.forEach((elements, url) => {
+        const allSvgParents = _(elements, { noCache: true });
 
         allSvgParents.addClass('loading');
 
-        fetchData(imgURL, { method: 'GET' }).then(function (data) {
+        fetchData(url, { method: 'GET' }).then(function (data) {
             if (allSvgParents.asDomElement()) {
                 const svg = _(elFromHTML(data), { noCache: true });
 
@@ -2537,7 +2558,9 @@ function loadSbiBackground(sbi) {
 
             allSvgParents.destroy();
         })
-    }
+    })
+
+    sbiObserver.observe(document.body, { childList: true, subtree: true });
 }
 
 /** Исправление svg без viewBox */
