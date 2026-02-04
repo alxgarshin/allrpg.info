@@ -2050,10 +2050,22 @@ class FraymElement {
             globalFraymListenersObserver = new MutationObserver((mutations) => {
                 if (activeListeners.size === 0) return;
 
-                for (const mutation of mutations) {
-                    for (const node of mutation.addedNodes) {
-                        if (node.nodeType !== 1) continue;
+                const nodesToProcess = [];
 
+                for (const mutation of mutations) {
+                    if (mutation.addedNodes.length > 0) {
+                        for (const node of mutation.addedNodes) {
+                            if (node.nodeType === 1) {
+                                nodesToProcess.push(node);
+                            }
+                        }
+                    }
+                }
+
+                if (nodesToProcess.length === 0) return;
+
+                setTimeout(function () {
+                    for (const node of nodesToProcess) {
                         _each(activeListeners, (fraymElementListeners) => {
                             _each(fraymElementListeners, (handlerHashesData, elementDOMName) => {
                                 let verifyElement = node.matches(elementDOMName);
@@ -2066,14 +2078,16 @@ class FraymElement {
                                                 node.addEventListener(listener, data.handler);
                                             }
 
-                                            childElements.forEach(child => child.addEventListener(listener, data.handler));
-                                        })
-                                    })
+                                            if (childElements.length > 0) {
+                                                childElements.forEach(child => child.addEventListener(listener, data.handler));
+                                            }
+                                        });
+                                    });
                                 }
-                            })
-                        })
+                            });
+                        });
                     }
-                }
+                }, 0);
             });
 
             globalFraymListenersObserver.observe(document.body, { childList: true, subtree: true });
