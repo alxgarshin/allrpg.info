@@ -1173,7 +1173,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
             elements.forEach(el => loadSbiBackground(el));
         }
 
-        const sbiObserver = new MutationObserver((mutations) => {
+        /* const sbiObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
                     if (node.nodeType === 1) {
@@ -1184,7 +1184,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
             });
         });
 
-        sbiObserver.observe(document.body, { childList: true, subtree: true });
+        sbiObserver.observe(document.body, { childList: true, subtree: true }); */
 
         showExecutionTime('Document events end');
     }
