@@ -3594,9 +3594,11 @@ function initDynamicFields() {
                         }
 
                         if (domElem) {
-                            const elem = _(domElem);
+                            if (!el(`[id="${dependencyItem.name}"]`) && !el(`[id="${dependencyItem.name}[${dependencyItem.value}]"]`)) {
+                                const elem = _(domElem);
 
-                            elem.hide();
+                                elem.hide();
+                            }
                         }
                     }
                 })
