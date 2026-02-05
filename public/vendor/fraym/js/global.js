@@ -3521,11 +3521,7 @@ function toggleDynamicFields(self) {
         })
 
         if (selfAffectsElem) {
-            let domElem = el(`[id^="field_${item.name}"]`);
-
-            if (!domElem) {
-                domElem = el(item.name);
-            }
+            let domElem = el(`[id^="field_${item.name}"]`) || el(item.name);
 
             if (hideElem && domElem) {
                 const elem = _(domElem);
@@ -3562,7 +3558,7 @@ function initDynamicFields() {
         _each(currentDynamicFieldsList.reverse(), function (item) {
             _each(item.dependencies, function (dependencyItems) {
                 _each(dependencyItems, function (dependencyItem) {
-                    let curName = '';
+                    let curName;
 
                     if (dependencyItem.type == 'select') {
                         curName = `select[name="${dependencyItem.name}"]`;
@@ -3574,13 +3570,23 @@ function initDynamicFields() {
                         }
                     }
 
-                    _(curName).on('change', function () {
-                        if (currentDynamicFieldsList.length) {
-                            toggleDynamicFields(_(this));
-                        }
-                    })
+                    if (el(curName)) {
+                        _(curName).on('change', function () {
+                            if (currentDynamicFieldsList.length) {
+                                toggleDynamicFields(_(this));
+                            }
+                        })
 
-                    _(curName).trigger('change');
+                        _(curName).trigger('change');
+                    } else {
+                        let domElem = el(`[id^="field_${item.name}"]`) || el(item.name);
+
+                        if (domElem) {
+                            const elem = _(domElem);
+
+                            elem.hide();
+                        }
+                    }
                 })
             })
         })
