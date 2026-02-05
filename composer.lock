@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2040491853183823cd6edd9fdcbf3cca",
+    "content-hash": "33f86e6837bc697ac2772086e981fce6",
     "packages": [
         {
             "name": "alxgarshin/fraym",
-            "version": "v0.8.9",
+            "version": "v0.9.52",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alxgarshin/fraym.git",
-                "reference": "ab18991ac00f73e448d4faba1a4c3ac12d3fdbd8"
+                "reference": "9ce5308670211631b290720cecc71ed40a101957"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alxgarshin/fraym/zipball/ab18991ac00f73e448d4faba1a4c3ac12d3fdbd8",
-                "reference": "ab18991ac00f73e448d4faba1a4c3ac12d3fdbd8",
+                "url": "https://api.github.com/repos/alxgarshin/fraym/zipball/9ce5308670211631b290720cecc71ed40a101957",
+                "reference": "9ce5308670211631b290720cecc71ed40a101957",
                 "shasum": ""
             },
             "require": {
@@ -68,9 +68,9 @@
             ],
             "support": {
                 "issues": "https://github.com/alxgarshin/fraym/issues",
-                "source": "https://github.com/alxgarshin/fraym/tree/v0.8.9"
+                "source": "https://github.com/alxgarshin/fraym/tree/v0.9.52"
             },
-            "time": "2026-01-29T14:41:59+00:00"
+            "time": "2026-02-05T23:04:24+00:00"
         },
         {
             "name": "brick/math",
