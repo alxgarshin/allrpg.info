@@ -3543,7 +3543,7 @@ function toggleDynamicFields(self) {
                 })
                 doDropfieldRefresh = true;
                 _(`[id="selected_${item.name}"]`).trigger('refresh');
-            } else {
+            } else if (domElem) {
                 const parentField = self.closest('div.field');
 
                 parentField.asDomElement().after(domElem);
