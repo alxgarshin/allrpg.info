@@ -3581,10 +3581,10 @@ function getDependencyItemsMapElementValues(elemName) {
                 }
             })
         } else {
-            const checkMultiselectRadio = el(`input[type="radio"][name="${elemName}"]:checked`);
+            const checkMultiselectRadio = el(`input[type="radio"][name="${elemName}"]`);
 
             if (checkMultiselectRadio) {
-                value.push(el(`input[type="radio"][name="${elemName}"]:checked`).value);
+                value.push(el(`input[type="radio"][name="${elemName}"]:checked`)?.value);
             } else {
                 const staticElements = elAll(`[id^="${elemName}["]`);
 
@@ -3620,12 +3620,12 @@ function initDynamicFields() {
                     let responsibleItem;
 
                     if (dependencyItem.type == 'select') {
-                        responsibleItem = el(`select[name="${dependencyItem.name}"]`);
+                        responsibleItem = `select[name="${dependencyItem.name}"]`;
                     } else if (dependencyItem.type == 'multiselect') {
-                        responsibleItem = el(`input[type="radio"][name="${dependencyItem.name}"]`);
+                        responsibleItem = `input[type="radio"][name="${dependencyItem.name}"]`;
 
-                        if (!responsibleItem) {
-                            responsibleItem = el(`input[name="${dependencyItem.name}[${dependencyItem.value}]"]`);
+                        if (!el(responsibleItem)) {
+                            responsibleItem = `input[name="${dependencyItem.name}[${dependencyItem.value}]"]`;
                         }
                     }
 
@@ -3642,9 +3642,9 @@ function initDynamicFields() {
                         if (!responsibleItems.has(responsibleItem)) {
                             responsibleItems.set(responsibleItem, true);
 
-                            responsibleItem.addEventListener('change', function () {
+                            _(responsibleItem).on('change', function () {
                                 if (currentDynamicFieldsList.length) {
-                                    toggleDynamicFields(responsibleItem);
+                                    toggleDynamicFields(this);
                                 }
                             })
                         }
