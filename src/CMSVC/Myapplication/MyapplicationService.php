@@ -848,7 +848,7 @@ class MyapplicationService extends BaseService
 
                     if ($checkApplicationPresent) {
                         $letToApply = false;
-                        ResponseHelper::error($LOCALE['oneorderfromplayer']);
+                        ResponseHelper::error($LOCALE['messages']['oneorderfromplayer']);
                         ResponseHelper::redirect(ABSOLUTE_PATH . '/' . KIND . '/' . $checkApplicationPresent['id'] . '/');
                     }
                 }
