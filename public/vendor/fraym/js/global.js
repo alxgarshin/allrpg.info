@@ -106,6 +106,7 @@ window['messages'] = defaultFor(window['messages'], []);
 /** Механизм сокрытия / показа полей в зависимости от других полей */
 let dynamicFieldsList = [];
 let currentDynamicFieldsList = [];
+let dependencyItemsMap = new Map();
 
 /** Проверка сделанных свайпов для переключения между вкладками на странице */
 let touchingDevice = false;
@@ -3476,44 +3477,50 @@ function filterDropfield(el, string) {
     }
 }
 
-/** Показ и сокрытие динамических полей */
-function toggleDynamicFields(self) {
-    const selfType = self.asDomElement().tagName === 'SELECT' ? 'select' : 'multiselect';
-    const selfName = self.attr('name');
+/** Показ и сокрытие динамических полей
+ * 
+ * @param {HTMLElement} [element]
+*/
+function toggleDynamicFields(element = null) {
+    const selfType = element?.tagName === 'SELECT' ? 'select' : 'multiselect';
+    const selfName = element?.getAttribute('name');
+
+    if (element) {
+        let elemName = element.getAttribute('name');
+
+        if (selfType == 'multiselect' && element.getAttribute('type') == 'checkbox') {
+            elemName = elemName.replace(/\[\d+\]$/, '');
+        }
+
+        dependencyItemsMap.set(
+            elemName,
+            getDependencyItemsMapElementValues(elemName)
+        );
+    }
 
     _each(currentDynamicFieldsList, function (item) {
-        let selfAffectsElem = false;
+        let selfAffectsElem = !element;
         let hideElem = true;
 
         _each(item.dependencies, function (dependencyItems) {
             let foundFullGroup = true;
 
-            _each(dependencyItems, function (dependencyItem) {
-                if (
-                    (selfType == 'select' && dependencyItem.type == 'select' && dependencyItem.name == selfName) ||
-                    (selfType == 'multiselect' && dependencyItem.type == 'multiselect' && `${dependencyItem.name}[${dependencyItem.value}]` == selfName) ||
-                    (selfType == 'multiselect' && dependencyItem.type == 'multiselect' && dependencyItem.name == selfName)
-                ) {
-                    selfAffectsElem = true;
-                }
+            if (element) {
+                _each(dependencyItems, function (dependencyItem) {
+                    if (selfType == dependencyItem.type && (dependencyItem.name == selfName || `${dependencyItem.name}[${dependencyItem.value}]` == selfName)) {
+                        selfAffectsElem = true;
+                        return;
+                    }
+                });
+            }
 
-                if (dependencyItem.type == 'select' && _(`select[name="${dependencyItem.name}"]`).val() != dependencyItem.value) {
-                    foundFullGroup = false;
-                } else if (
-                    dependencyItem.type == 'multiselect' &&
-                    (
-                        (
-                            el(`input[type="checkbox"][name="${dependencyItem.name}[${dependencyItem.value}]"]`) &&
-                            !_(`input[type="checkbox"][name="${dependencyItem.name}[${dependencyItem.value}]"]`).is(':checked')
-                        ) || (
-                            el(`input[type="radio"][name="${dependencyItem.name}"]`) &&
-                            _(`input[type="radio"][name="${dependencyItem.name}"]:checked`).val() != dependencyItem.value
-                        )
-                    )
-                ) {
-                    foundFullGroup = false;
-                }
-            })
+            if (selfAffectsElem) {
+                _each(dependencyItems, function (dependencyItem) {
+                    if (!dependencyItemsMap.get(dependencyItem.name).includes(dependencyItem.value)) {
+                        foundFullGroup = false;
+                    }
+                })
+            }
 
             if (foundFullGroup) {
                 hideElem = false;
@@ -3529,32 +3536,78 @@ function toggleDynamicFields(self) {
                 } catch (e) { }
             }
 
-            if (hideElem && domElem) {
-                const elem = _(domElem);
+            if (domElem) {
+                if (hideElem) {
+                    const elem = _(domElem);
 
-                elem.hide();
-                elem.find('input[type="text"], select, textarea')?.val('').trigger('change');
-                doDropfieldRefresh = false;
-                elem.find('input:checked:not(:disabled)')?.each(function () {
-                    _(this, { noCache: true })
-                        .checked(false)
-                        .change()
-                        .destroy();
-                })
-                doDropfieldRefresh = true;
-                _(`[id="selected_${item.name}"]`).trigger('refresh');
-            } else if (domElem) {
-                const parentField = self.closest('div.field');
-
-                parentField.asDomElement().after(domElem);
-                _(domElem).show().trigger('change');
+                    elem.hide();
+                    elem.find('input[type="text"], select, textarea')?.val('').trigger('change');
+                    doDropfieldRefresh = false;
+                    elem.find('input:checked:not(:disabled)')?.each(function () {
+                        _(this, { noCache: true })
+                            .checked(false)
+                            .change()
+                            .destroy();
+                    })
+                    doDropfieldRefresh = true;
+                    _(`[id="selected_${item.name}"]`).trigger('refresh');
+                } else if (element) {
+                    _(domElem).show().trigger('change');
+                }
             }
         }
     })
 }
 
+/** Формирование карты значений динамических полей */
+function getDependencyItemsMapElementValues(elemName) {
+    let value = [];
+
+    const checkSelect = el(`select[name="${elemName}"]`);
+
+    if (checkSelect) {
+        value.push(checkSelect.value);
+    } else {
+        const checkMultiselect = elAll(`input[type="checkbox"][name^="${elemName}["]`);
+
+        if (checkMultiselect.length > 0) {
+            checkMultiselect.forEach(input => {
+                if (input.checked) {
+                    const match = input.getAttribute('name').match(/\[(\d+)\]$/);
+
+                    if (match) {
+                        value.push(match[1]);
+                    }
+                }
+            })
+        } else {
+            const checkMultiselectRadio = el(`input[type="radio"][name="${elemName}"]:checked`);
+
+            if (checkMultiselectRadio) {
+                value.push(el(`input[type="radio"][name="${elemName}"]:checked`).value);
+            } else {
+                const staticElements = elAll(`[id^="${elemName}["]`);
+
+                staticElements.forEach(input => {
+                    const match = input.getAttribute('id').match(/\[(\d+)\]$/);
+
+                    if (match) {
+                        value.push(match[1]);
+                    }
+                })
+            }
+        }
+    }
+
+    return value;
+}
+
 /** Инициализация динамических полей */
 function initDynamicFields() {
+    dependencyItemsMap = new Map();
+
+    let responsibleItems = new Map();
+
     if (dynamicFieldsList.length > 0) {
         currentDynamicFieldsList = dynamicFieldsList;
 
@@ -3564,26 +3617,37 @@ function initDynamicFields() {
         _each(currentDynamicFieldsList.reverse(), function (item) {
             _each(item.dependencies, function (dependencyItems) {
                 _each(dependencyItems, function (dependencyItem) {
-                    let curName;
+                    let responsibleItem;
 
                     if (dependencyItem.type == 'select') {
-                        curName = `select[name="${dependencyItem.name}"]`;
+                        responsibleItem = el(`select[name="${dependencyItem.name}"]`);
                     } else if (dependencyItem.type == 'multiselect') {
-                        if (el(`input[type="radio"][name="${dependencyItem.name}"]`)) {
-                            curName = `input[name="${dependencyItem.name}"]`;
-                        } else {
-                            curName = `input[name="${dependencyItem.name}[${dependencyItem.value}]"]`;
+                        responsibleItem = el(`input[type="radio"][name="${dependencyItem.name}"]`);
+
+                        if (!responsibleItem) {
+                            responsibleItem = el(`input[name="${dependencyItem.name}[${dependencyItem.value}]"]`);
                         }
                     }
 
-                    if (el(curName)) {
-                        _(curName).on('change', function () {
-                            if (currentDynamicFieldsList.length) {
-                                toggleDynamicFields(_(this));
-                            }
-                        })
+                    const elemName = dependencyItem.name;
 
-                        _(curName).trigger('change');
+                    if (!dependencyItemsMap.has(elemName)) {
+                        dependencyItemsMap.set(
+                            elemName,
+                            getDependencyItemsMapElementValues(elemName)
+                        );
+                    }
+
+                    if (responsibleItem) {
+                        if (!responsibleItems.has(responsibleItem)) {
+                            responsibleItems.set(responsibleItem, true);
+
+                            responsibleItem.addEventListener('change', function () {
+                                if (currentDynamicFieldsList.length) {
+                                    toggleDynamicFields(responsibleItem);
+                                }
+                            })
+                        }
                     } else {
                         let domElem = el(`[id^="field_${item.name}"]`);
 
@@ -3594,7 +3658,7 @@ function initDynamicFields() {
                         }
 
                         if (domElem) {
-                            if (!el(`[id="${dependencyItem.name}"]`) && !el(`[id="${dependencyItem.name}[${dependencyItem.value}]"]`)) {
+                            if (!el(`[id="${dependencyItem.name}[${dependencyItem.value}]"]`)) {
                                 const elem = _(domElem);
 
                                 elem.hide();
@@ -3604,6 +3668,8 @@ function initDynamicFields() {
                 })
             })
         })
+
+        toggleDynamicFields();
     } else {
         currentDynamicFieldsList = [];
     }
