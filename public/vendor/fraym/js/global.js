@@ -3520,10 +3520,9 @@ function toggleDynamicFields(self) {
         })
 
         if (selfAffectsElem) {
-            let domElem = el(`div.field[id^="field_${item.name}"]`);
+            let domElem = el(`[id^="field_${item.name}"]`);
 
-            if (domElem) {
-            } else {
+            if (!domElem) {
                 domElem = el(item.name);
             }
 
