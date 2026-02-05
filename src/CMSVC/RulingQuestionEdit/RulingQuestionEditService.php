@@ -50,7 +50,7 @@ class RulingQuestionEditService extends BaseService
             );
 
             foreach ($rulingQuestions as $rulingQuestion) {
-                $rulingQuestion['field_values'] = DataHelper::escapeOutput($rulingQuestion['field_values']);
+                $rulingQuestion['field_values'] = DataHelper::escapeOutput($rulingQuestion['field_values']) ?? '';
                 preg_match_all('#\[(\d+)\]\[([^\]]+)\]#', $rulingQuestion['field_values'], $matches);
 
                 foreach ($matches[1] as $key => $value) {
