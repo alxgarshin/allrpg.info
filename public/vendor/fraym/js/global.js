@@ -496,7 +496,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
             const self = _(this);
 
             /** Ждем немного возможного дальнейшего ввода */
-            debounce('filterDropfield', filterDropfield(self, self.val()), 200);
+            debounce('filterDropfield', filterDropfield, 200, self, self.val());
         });
 
         _(document).on('click', '.dropfield2_search a.create', function (e) {
@@ -2348,14 +2348,15 @@ function delay(ms) {
  * @param {string} id
  * @param {Function} func
  * @param {number} delay
+ * @param {...*} [args] - Аргументы, которые будут переданы в функцию func
  */
-function debounce(id, func, delay) {
+function debounce(id, func, delay, ...args) {
     if (_debounceTimers[id]) {
         clearTimeout(_debounceTimers[id]);
     }
 
     _debounceTimers[id] = setTimeout(() => {
-        func();
+        func(...args);
         delete _debounceTimers[id];
     }, delay);
 }
