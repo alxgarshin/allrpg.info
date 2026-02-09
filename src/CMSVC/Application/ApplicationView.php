@@ -473,7 +473,7 @@ class ApplicationView extends BaseView
 
         $LOCALE = $this->LOCALE;
         $LOCALE_GLOBAL = LocaleHelper::getLocale(['global']);
-        $LOCALE_INGAME = LocaleHelper::getLocale(['myapplication', 'global']);
+        $LOCALE_INGAME = LocaleHelper::getLocale(['ingame', 'global']);
 
         $excelHtml = '<tr><th>#</th><th>' . $LOCALE_INGAME['to_application'] . '</th>';
 
@@ -530,24 +530,24 @@ class ApplicationView extends BaseView
                                 $userInfo = [
                                     [
                                         $applicationData['creator_id'],
-                                        ($applicationData['em'] !== '' ? '<a href="mailto:' . DataHelper::escapeOutput($applicationData['em']) . '">' . DataHelper::escapeOutput($applicationData['em']) . '</a><br>' : '') .
-                                            ($applicationData['phone'] !== '' ? '<a href="tel:' . DataHelper::escapeOutput($applicationData['phone']) . '">' . DataHelper::escapeOutput($applicationData['phone']) . '</a><br>' : '') .
+                                        ($applicationData['em'] ? '<a href="mailto:' . DataHelper::escapeOutput($applicationData['em']) . '">' . DataHelper::escapeOutput($applicationData['em']) . '</a><br>' : '') .
+                                            ($applicationData['phone'] ? '<a href="tel:' . DataHelper::escapeOutput($applicationData['phone']) . '">' . DataHelper::escapeOutput($applicationData['phone']) . '</a><br>' : '') .
                                             '<br>' .
                                             $userService->showName($userService->arrayToModel($applicationData), true) . ', ' .
                                             $LOCALE_GLOBAL['user_id'] . ' ' . $applicationData['sid'] . ', ' .
                                             ($applicationData['gender'] === 2 ? $LOCALE['woman'] : $LOCALE['man']) . ', ' .
                                             $LOCALE['birth'] . ' ' . date('d.m.Y', strtotime($applicationData['birth'])) . '<br>' .
                                             DataHelper::escapeOutput($applicationData['g_city']) . ', ' . DataHelper::escapeOutput($applicationData['g_area']) . '<br>' .
-                                            ($applicationData['telegram'] !== '' ? $LOCALE['telegram'] . ': <a target="_blank" href="https://t.me/' . DataHelper::escapeOutput($applicationData['telegram']) . '">' . DataHelper::escapeOutput($applicationData['telegram']) . '</a><br>' : '') .
-                                            ($applicationData['skype'] !== '' ? $LOCALE['skype'] . ': <a href="skype:' . DataHelper::escapeOutput($applicationData['skype']) . '">' . DataHelper::escapeOutput($applicationData['skype']) . '</a><br>' : '') .
-                                            ($applicationData['facebook_visible'] !== '' ? (true ? '' : $LOCALE['facebook_visible'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['facebook_visible']), 'facebook') . '<br>') : '') . // @phpstan-ignore-line
-                                            ($applicationData['vkontakte_visible'] !== '' ? $LOCALE['vkontakte'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['vkontakte_visible']), 'vkontakte') . '<br>' : '') .
-                                            ($applicationData['twitter'] !== '' ? $LOCALE['twitter'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['twitter']), 'twitter') . '<br>' : '') .
-                                            ($applicationData['livejournal'] !== '' ? $LOCALE['livejournal'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['livejournal']), 'livejournal') . '<br>' : '') .
-                                            ($applicationData['linkedin'] !== '' ? $LOCALE['linkedin'] . ': ' . DataHelper::escapeOutput($applicationData['linkedin']) . '<br>' : '') .
-                                            ($applicationData['jabber'] !== '' ? $LOCALE['jabber'] . ': ' . DataHelper::escapeOutput($applicationData['jabber']) . '<br>' : '') .
-                                            ($applicationData['icq'] !== '' ? $LOCALE['icq'] . ': ' . DataHelper::escapeOutput($applicationData['icq']) . '<br>' : '') .
-                                            ($applicationData['sickness'] !== '' ? $LOCALE['sickness'] . ': ' . DataHelper::escapeOutput($applicationData['sickness']) . '<br>' : ''),
+                                            ($applicationData['telegram'] ? $LOCALE['telegram'] . ': <a target="_blank" href="https://t.me/' . DataHelper::escapeOutput($applicationData['telegram']) . '">' . DataHelper::escapeOutput($applicationData['telegram']) . '</a><br>' : '') .
+                                            ($applicationData['skype'] ? $LOCALE['skype'] . ': <a href="skype:' . DataHelper::escapeOutput($applicationData['skype']) . '">' . DataHelper::escapeOutput($applicationData['skype']) . '</a><br>' : '') .
+                                            ($applicationData['facebook_visible'] ? (true ? '' : $LOCALE['facebook_visible'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['facebook_visible']), 'facebook') . '<br>') : '') . // @phpstan-ignore-line
+                                            ($applicationData['vkontakte_visible'] ? $LOCALE['vkontakte'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['vkontakte_visible']), 'vkontakte') . '<br>' : '') .
+                                            ($applicationData['twitter'] ? $LOCALE['twitter'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['twitter']), 'twitter') . '<br>' : '') .
+                                            ($applicationData['livejournal'] ? $LOCALE['livejournal'] . ': ' . $userService->social2(DataHelper::escapeOutput($applicationData['livejournal']), 'livejournal') . '<br>' : '') .
+                                            ($applicationData['linkedin'] ? $LOCALE['linkedin'] . ': ' . DataHelper::escapeOutput($applicationData['linkedin']) . '<br>' : '') .
+                                            ($applicationData['jabber'] ? $LOCALE['jabber'] . ': ' . DataHelper::escapeOutput($applicationData['jabber']) . '<br>' : '') .
+                                            ($applicationData['icq'] ? $LOCALE['icq'] . ': ' . DataHelper::escapeOutput($applicationData['icq']) . '<br>' : '') .
+                                            ($applicationData['sickness'] ? $LOCALE['sickness'] . ': ' . DataHelper::escapeOutput($applicationData['sickness']) . '<br>' : ''),
                                     ],
                                 ];
                                 $element->getAttribute()->values = $userInfo;
