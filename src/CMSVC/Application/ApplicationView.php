@@ -535,8 +535,8 @@ class ApplicationView extends BaseView
                                             '<br>' .
                                             $userService->showName($userService->arrayToModel($applicationData), true) . ', ' .
                                             $LOCALE_GLOBAL['user_id'] . ' ' . $applicationData['sid'] . ', ' .
-                                            ($applicationData['gender'] === 2 ? $LOCALE['woman'] : $LOCALE['man']) . ', ' .
-                                            $LOCALE['birth'] . ' ' . date('d.m.Y', strtotime($applicationData['birth'])) . '<br>' .
+                                            ($applicationData['gender'] === 2 ? $LOCALE['woman'] : $LOCALE['man']) . ($applicationData['birth'] ? ', ' .
+                                                $LOCALE['birth'] . ' ' . date('d.m.Y', strtotime($applicationData['birth'])) : '') . '<br>' .
                                             DataHelper::escapeOutput($applicationData['g_city']) . ', ' . DataHelper::escapeOutput($applicationData['g_area']) . '<br>' .
                                             ($applicationData['telegram'] ? $LOCALE['telegram'] . ': <a target="_blank" href="https://t.me/' . DataHelper::escapeOutput($applicationData['telegram']) . '">' . DataHelper::escapeOutput($applicationData['telegram']) . '</a><br>' : '') .
                                             ($applicationData['skype'] ? $LOCALE['skype'] . ': <a href="skype:' . DataHelper::escapeOutput($applicationData['skype']) . '">' . DataHelper::escapeOutput($applicationData['skype']) . '</a><br>' : '') .
