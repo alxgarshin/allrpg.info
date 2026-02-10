@@ -104,8 +104,8 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
     {
         $requestProjectId = ($_REQUEST['project_id'] ?? false) && !is_array($_REQUEST['project_id']) ? (int) $_REQUEST['project_id'] : null;
 
-        if (!defined('REQUEST_PROJECT_ID') && $requestProjectId) {
-            define('REQUEST_PROJECT_ID', 'project_id=' . $requestProjectId);
+        if (!defined('REQUEST_PROJECT_ID')) {
+            define('REQUEST_PROJECT_ID', $requestProjectId ? 'project_id=' . $requestProjectId : null);
         }
 
         if (!CURRENT_USER->isLogged()) {
