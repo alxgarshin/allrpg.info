@@ -545,32 +545,26 @@ async function fraymInit(withDocumentEvents, updateHash) {
         _(document).on('click', '.dropfield2_select_all a', function (e) {
             e.stopImmediatePropagation();
 
-
-            const parent = _(this).closest('.dropfield2');
+            const self = _(this);
+            const parent = self.closest('.dropfield2');
+            const selectAll = self.parent().hasClass('dropfield2_select_all');
 
             doDropfieldRefresh = false;
-            parent.find('div.dropfield2_field:not(.hidden) > input:not(:checked):not(.disabled)').each(function () {
-                this.checked = true;
-            });
+            if (selectAll) {
+                parent.find('div.dropfield2_field:not(.hidden) > input:not(:checked):not(.disabled)').each(function () {
+                    this.checked = true;
+                });
+                self.text(LOCALE.deselectAll).parent().addClass('dropfield2_deselect_all').removeClass('dropfield2_select_all');
+            } else {
+                parent.find('div.dropfield2_field:not(.hidden) > input:checked:not(.disabled)').each(function () {
+                    this.checked = false;
+                });
+                self.text(LOCALE.selectAll).parent().addClass('dropfield2_select_all').removeClass('dropfield2_deselect_all');
+            }
             doDropfieldRefresh = true;
 
             parent.prev('.dropfield').trigger('refresh');
-            _(this).text(LOCALE.deselectAll).parent().addClass('dropfield2_deselect_all').removeClass('dropfield2_select_all');
-        });
 
-        _(document).on('click', '.dropfield2_deselect_all a', function (e) {
-            e.stopImmediatePropagation();
-
-            const parent = _(this).closest('.dropfield2');
-
-            doDropfieldRefresh = false;
-            parent.find('div.dropfield2_field:not(.hidden) > input:checked:not(.disabled)').each(function () {
-                this.checked = false;
-            });
-            doDropfieldRefresh = true;
-
-            parent.prev('.dropfield').trigger('refresh');
-            _(this).text(LOCALE.selectAll).parent().addClass('dropfield2_select_all').removeClass('dropfield2_deselect_all');
         });
 
         _(document).on('click', '.dropfield2', function (e) {
