@@ -939,7 +939,7 @@ div.dropfield div.options a[rel] {
     width: .65em;
     height: .65em;
     display: inline-block;
-    background: url(/design/close_blue.svg) center center no-repeat;
+    background: url(../design/close_blue.svg) center center no-repeat;
     background-size: contain;
     vertical-align: baseline;
     margin-left: .4em;

@@ -640,9 +640,9 @@ class MyapplicationService extends BaseService
                 $foundGroupLevel = -1;
 
                 foreach ($projectGroupIds as $projectGroupId) {
-                    $groupInfo = $projectGroupsDataById[$projectGroupId];
+                    $groupInfo = $projectGroupsDataById[$projectGroupId] ?? null;
 
-                    if ($groupInfo[2]['responsible_gamemaster_id'] > 0 && $foundGroupLevel < $groupInfo[1]) {
+                    if ($groupInfo && $groupInfo[2]['responsible_gamemaster_id'] > 0 && $foundGroupLevel < $groupInfo[1]) {
                         $responsibleGamemasterId = $groupInfo[2]['responsible_gamemaster_id'];
                         $foundGroupLevel = $groupInfo[1];
                     }

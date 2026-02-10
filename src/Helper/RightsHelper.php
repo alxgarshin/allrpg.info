@@ -102,9 +102,9 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
     /** Проверка прав проекта и установки переменной project_id. Чаще всего используется так: $projectRights = RightsHelper::checkProjectRights(); */
     public static function checkProjectRights(bool|array|string $type = false, ?int $projectId = null): bool|array
     {
-        $requestProjectId = ($_REQUEST['project_id'] ?? false) && !is_array($_REQUEST['project_id']) ? (int) $_REQUEST['project_id'] : 0;
+        $requestProjectId = ($_REQUEST['project_id'] ?? false) && !is_array($_REQUEST['project_id']) ? (int) $_REQUEST['project_id'] : null;
 
-        if (!defined('REQUEST_PROJECT_ID')) {
+        if (!defined('REQUEST_PROJECT_ID') && $requestProjectId) {
             define('REQUEST_PROJECT_ID', 'project_id=' . $requestProjectId);
         }
 
@@ -116,7 +116,7 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
             $projectId = DataHelper::getId();
         }
 
-        if (is_null($projectId) && $requestProjectId > 0) {
+        if (is_null($projectId) && $requestProjectId) {
             $projectId = $requestProjectId;
         } elseif (is_null($projectId) && self::getActivatedProjectId()) {
             $projectId = self::getActivatedProjectId();
