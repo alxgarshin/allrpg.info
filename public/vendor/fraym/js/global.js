@@ -3075,7 +3075,7 @@ const cssLoad = (name, url) => new Promise((resolve, reject) => {
             resolve();
         };
 
-        link.onerror = reject
+        link.onerror = resolve
 
         document.head.appendChild(link);
     } else {

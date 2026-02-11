@@ -106,7 +106,7 @@ if (is_null($RESPONSE_DATA)) {
 
 /** Если в результате обработки контента нет, ошибка 404 */
 if (!($RESPONSE_DATA instanceof Response)) {
-    (new Error404Controller())->construct(CMSVCinit: false)->init()->Default();
+    $RESPONSE_DATA = (new Error404Controller())->construct(CMSVCinit: false)->init()->Default();
 }
 
 /** Подгружаем базовую локаль проекта */
