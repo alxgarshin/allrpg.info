@@ -933,8 +933,10 @@ trait ApplicationServiceTrait
                     }
                 }
             } else {
-                if (DataHelper::getId() && $applicationData && $applicationData['money_paid'] !== '1') {
-                    $model->getElement('money_provided')->getAttribute()->linkAt = new Item\LinkAt(null, ' <a id="provide_payment">' . $LOCALE['provide_payment'] . '</a>');
+                if (DataHelper::getId() && $applicationData) {
+                    if ($applicationData['money_paid'] !== '1') {
+                        $model->getElement('money_provided')->getAttribute()->linkAt = new Item\LinkAt(null, ' <a id="provide_payment">' . $LOCALE['provide_payment'] . '</a>');
+                    }
 
                     $model->getElement('project_group_ids')->getAttribute()->linkAt = new Item\LinkAt('<span id="project_group_ids[0][{value}]">', '</span>');
                 }
