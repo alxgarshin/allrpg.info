@@ -376,6 +376,11 @@ async function fraymInit(withDocumentEvents, updateHash) {
                     const self2 = element.cloneNode(true);
                     self2.id = self2.id.replace(/\[0]$/, `[${newIdNumber}]`);
 
+                    _each(elAll('.wysiwyg-editor', self2), input => { input.classList.remove('quillApplied') });
+                    _each(elAll('[data-wysiwyg-id]', self2), input => { input.remove() });
+                    _each(elAll('.ql-toolbar', self2), input => { input.remove() });
+                    _each(elAll('.ql-editor', self2), input => { input.innerHTML = '' });
+
                     const inputs = elAll('[id$="[0]"], [name$="[0]"], [id*="[0]["], [name*="[0]["], [for*="[0]["]', self2);
 
                     _each(inputs, input => {
@@ -387,11 +392,13 @@ async function fraymInit(withDocumentEvents, updateHash) {
                             }
                         }
 
-                        if (input.name) {
-                            if (input.name.match(/]\[0]\[[^\]]+\]$/)) {
-                                input.name = input.name.replace(/]\[0](\[[^\]]+])$/, `][${newIdNumber}]$1`);
-                            } else if (input.name.match(/\[0]$/)) {
-                                input.name = input.name.replace(/\[0]$/, `[${newIdNumber}]`);
+                        const inputName = input.getAttribute('name');
+
+                        if (inputName) {
+                            if (inputName.match(/]\[0]\[[^\]]+\]$/)) {
+                                input.setAttribute('name', inputName.replace(/]\[0](\[[^\]]+])$/, `][${newIdNumber}]$1`));
+                            } else if (inputName.match(/\[0]$/)) {
+                                input.setAttribute('name', inputName.replace(/\[0]$/, `[${newIdNumber}]`))
                             }
                         }
 
@@ -442,6 +449,10 @@ async function fraymInit(withDocumentEvents, updateHash) {
                 _('[tabindex]').each(function () {
                     this.setAttribute('tabindex', tabindex);
                     tabindex++;
+                });
+
+                _('.wysiwyg-editor').each(function () {
+                    fraymWysiwygApply(this);
                 });
             }
         });
