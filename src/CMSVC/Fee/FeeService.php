@@ -151,7 +151,7 @@ class FeeService extends BaseService
                     DB->update(
                         tableName: 'project_application',
                         data: [
-                            'project_fee_ids' => implode('-', $projectFeeIds),
+                            'project_fee_ids' => DataHelper::arrayToMultiselect($projectFeeIds),
                             'money' => $money,
                             'money_paid' => $moneyPaid ? '1' : '0',
                         ],
@@ -251,7 +251,7 @@ class FeeService extends BaseService
                     DB->update(
                         tableName: 'project_application',
                         data: [
-                            'project_fee_ids' => implode('-', $projectFeeIds),
+                            'project_fee_ids' => DataHelper::arrayToMultiselect($projectFeeIds),
                             'money' => $money,
                             'money_paid' => $moneyPaid ? '1' : '0',
                         ],
