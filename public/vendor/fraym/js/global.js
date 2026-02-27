@@ -852,9 +852,9 @@ async function fraymInit(withDocumentEvents, updateHash) {
         _(document).on('submit', 'form', function (e) {
             const self = _(this);
 
-            if (self.attr('target') !== '_blank' && !blockDefaultSubmit) {
-                e.preventDefault();
+            e.preventDefault();
 
+            if (self.attr('target') !== '_blank' && !blockDefaultSubmit) {
                 const href = self.attr('action');
                 const checkActionRequest = self.hasAttr('action_request_form');
                 const noDynamicContent = self.hasAttr('no_dynamic_content');
@@ -2939,6 +2939,10 @@ async function fetchData(url, options = {}, data = null) {
             headers.Authorization = 'Bearer ' + jwtToken;
         }
 
+        if (window['csrfToken']) {
+            headers['X-CSRF-Token'] = window['csrfToken'];
+        }
+
         let requestOptions;
         if (options.method === 'POST' || options.method === 'PUT') {
             data = new URLSearchParams(data);
@@ -3933,6 +3937,10 @@ function fraymFileUploadApply(element) {
 
                                 const request = new XMLHttpRequest();
                                 request.open('POST', `${uploadPath}?type=${uploadNum}`);
+
+                                if (window['csrfToken']) {
+                                    request.setRequestHeader('X-CSRF-Token', window['csrfToken']);
+                                }
 
                                 request.upload.onprogress = (e) => {
                                     progress(e.lengthComputable, e.loaded, e.total);
