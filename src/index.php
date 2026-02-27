@@ -10,13 +10,9 @@ use App\Helper\RightsHelper;
 use App\Template\{BannersTemplate, LoginTemplate, MainTemplate};
 use Fraym\BaseObject\{BaseController, BaseHelper};
 use Fraym\Enum\ActionEnum;
-use Fraym\Helper\{CookieHelper, DataHelper, LocaleHelper, ResponseHelper, TextHelper};
+use Fraym\Helper\{AuthHelper, CookieHelper, DataHelper, LocaleHelper, ResponseHelper, TextHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\{ArrayResponse, HtmlResponse};
-use Fraym\Service\GlobalTimerService;
-
-/** Таймер */
-$_GLOBALTIMER = new GlobalTimerService();
 
 /** Устанавливаем глобальные переменные */
 define('BID', $_REQUEST['bid'] ?? null);
@@ -127,9 +123,9 @@ if ($RESPONSE_DATA instanceof ArrayResponse) {
         } else {
             $RESPONSE_RESULT['messages'] = $cookieMessages ?? [];
         }
-        $RESPONSE_RESULT['executionTime'] = $_GLOBALTIMER->getTimerDiff();
+        $RESPONSE_RESULT['executionTime'] = GLOBALTIMER->getTimerDiff();
     }
-    header('Access-Control-Allow-Origin: *');
+    ResponseHelper::setCorsHeaders();
     echo DataHelper::jsonFixedEncode($RESPONSE_RESULT);
 } elseif ($RESPONSE_DATA instanceof HtmlResponse) {
     /** Если предоставлено альтернативное название страницы, убеждаемся, что оно идет с большой буквы */
@@ -158,10 +154,10 @@ if ($RESPONSE_DATA instanceof ArrayResponse) {
                 'html' => $RESPONSE_DATA->getHtml(),
                 'pageTitle' => $PAGETITLE,
                 'messages' => $cookieMessages ?? [],
-                'executionTime' => $_GLOBALTIMER->getTimerDiff(),
+                'executionTime' => GLOBALTIMER->getTimerDiff(),
             ],
         );
-        header('Access-Control-Allow-Origin: *');
+        ResponseHelper::setCorsHeaders();
         echo $RESPONSE_RESULT;
     } else {
         /** Вносим блоки информации в заданный шаблон визуализации */
@@ -211,11 +207,16 @@ if ($RESPONSE_DATA instanceof ArrayResponse) {
                 $messageArray .= 'messages.push(Array("' . $message[0] . '","' . str_replace('"', '\"', $message[1]) . '"));';
             }
         }
+
+        if (CURRENT_USER->isLogged()) {
+            $messageArray .= 'window["csrfToken"] = "' . AuthHelper::generateCsrfToken() . '";';
+        }
+
         $messageArray .= '</script>';
         $RESPONSE_RESULT = preg_replace('#<!--messages-->#', $messageArray, $RESPONSE_RESULT);
 
         /** Выводим html */
         echo $RESPONSE_RESULT;
-        echo $_GLOBALTIMER->getTimerDiffStr();
+        echo GLOBALTIMER->getTimerDiffStr();
     }
 }
