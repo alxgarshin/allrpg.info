@@ -22,10 +22,14 @@ trait ProjectDataTrait
                 if (in_array(KIND, ['myapplication', 'ingame'])) {
                     if (DataHelper::getId()) {
                         $applicationData = DB->findObjectById(DataHelper::getId(), 'project_application');
-                        $this->activatedProjectId = $applicationData['project_id'];
+                        if ($applicationData) {
+                            $this->activatedProjectId = $applicationData['project_id'];
+                        }
                     } elseif (KIND === 'ingame' && CookieHelper::getCookie('ingame_application_id')) {
                         $applicationData = DB->findObjectById(CookieHelper::getCookie('ingame_application_id'), 'project_application');
-                        $this->activatedProjectId = $applicationData['project_id'];
+                        if ($applicationData) {
+                            $this->activatedProjectId = $applicationData['project_id'];
+                        }
                     } elseif ($this->act === ActEnum::add && ($_REQUEST['project_id'] ?? false)) {
                         $this->activatedProjectId = (int) $_REQUEST['project_id'];
                     } elseif (ACTION === ActionEnum::create && ($_REQUEST['project_id'][0] ?? false)) {

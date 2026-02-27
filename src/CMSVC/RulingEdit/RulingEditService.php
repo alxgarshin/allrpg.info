@@ -72,7 +72,7 @@ class RulingEditService extends BaseService
             $questionsValues[$question['id']]['name'] = DataHelper::escapeOutput($question['field_name']);
 
             unset($matches);
-            preg_match_all('#\[(\d+)]\[([^]]+)]#', DataHelper::escapeOutput($question['field_values']), $matches);
+            preg_match_all('#\[(\d+)]\[([^]]+)]#', DataHelper::escapeOutput($question['field_values']) ?? '', $matches);
 
             foreach ($matches[1] as $key => $value) {
                 $questionsValues[$question['id']][$value] = $matches[2][$key];

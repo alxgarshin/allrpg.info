@@ -148,7 +148,7 @@ class RulingView extends BaseView
                 $RESPONSE_DATA .= $text . '</div><hr>';
 
                 // Данная модель будет показана в генераторе, если
-                $showIfs = DataHelper::jsonFixedDecode($objData->show_if->get()[0]);
+                $showIfs = $objData->show_if->get();
 
                 foreach ($showIfs as $showIf) {
                     $RESPONSE_DATA .= '<div class="ruling_injection_2">' . $LOCALE['will_be_shown'] . '<ul>';
@@ -224,7 +224,7 @@ class RulingView extends BaseView
 		<div class="block" id="ruling_wall">
             <div class="block_header">' . MessageHelper::conversationForm(null, '{ruling_item_wall}', DataHelper::getId(), $LOCALE_PUBLICATION['input_message']) . '</div>
             <div class="block_data">
-                <a class="load_wall" obj_type="{ruling_item_wall}" obj_id="' . $objData->id->getAsInt() . '">' . $LOCALE_GLOBAL['show_more'] . '</a>
+                <a class="load_wall" obj_type="{ruling_item_wall}" obj_id="' . $objData->id->getAsInt() . '">' . $LOCALE_PUBLICATION['show_more'] . '</a>
             </div>
         </div>';
                 }
