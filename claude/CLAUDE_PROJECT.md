@@ -3,7 +3,7 @@
 Портал для живых ролевых игр (LARP). PHP 8.4 + **MySQL** + Fraym framework (^0.9).
 
 > Документация фреймворка: `vendor/alxgarshin/fraym/claude/CLAUDE_PROJECT.md`
-> Bootstrap-цепочка, .env-порядок, CMSVC-паттерн, BaseModel lifecycle, стандартные трейты, CSRF, JWT-аутентификация, ResponseHelper, DatabaseDialect, именование миграций — описаны там.
+> CLI (Console), Bootstrap-цепочка, .env-порядок, Proxy-паттерн (DB/CACHE/CURRENT_USER), RequestTypeEnum, CMSVC-паттерн, ValueObject bridge (Attribute→Item), контекст-система (полное дерево), BaseModel lifecycle, стандартные трейты, BaseController lifecycle, BaseService lifecycle hooks, fraymAction структура данных, SQLDatabaseService полный API, CacheService, CurrentUser, CSRF, JWT-аутентификация, LocaleHelper API, валидаторы, RightsHelper базовый, DataHelper, ResponseHelper, DatabaseDialect (17 методов), Migration механизм, CatalogEntity/TableEntity/MultiObjectsEntity, EnvService, ключевые env-переменные — описаны там.
 
 ---
 
@@ -324,11 +324,12 @@ obj_type_from | obj_id_from | type       | obj_type_to | obj_id_to
 
 ### Docker
 ```
-bin/d install   # первичная установка (clone → build → composer → migrate)
-bin/d up        # запуск
-bin/d app       # войти в контейнер
-bin/d cache     # очистить кэш
-bin/test        # phpstan + psalm + phpunit
+bin/d install         # первичная установка (clone → build → composer → migrate)
+bin/d up              # запуск
+bin/d app             # войти в контейнер
+bin/d cache           # очистить кэш
+bin/test              # phpstan + psalm + phpunit
+composer app:cs:fix   # fix code style
 ```
 
 ### Миграции

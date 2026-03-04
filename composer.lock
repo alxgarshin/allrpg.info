@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "alxgarshin/fraym",
-            "version": "v0.9.90",
+            "version": "v0.9.93",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alxgarshin/fraym.git",
-                "reference": "2e4d1575d4748a2cbdc7f7339325764a58fdc82d"
+                "reference": "9971640501d1bf1653cfe244bfe95b8f915e91c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alxgarshin/fraym/zipball/2e4d1575d4748a2cbdc7f7339325764a58fdc82d",
-                "reference": "2e4d1575d4748a2cbdc7f7339325764a58fdc82d",
+                "url": "https://api.github.com/repos/alxgarshin/fraym/zipball/9971640501d1bf1653cfe244bfe95b8f915e91c8",
+                "reference": "9971640501d1bf1653cfe244bfe95b8f915e91c8",
                 "shasum": ""
             },
             "require": {
@@ -68,9 +68,9 @@
             ],
             "support": {
                 "issues": "https://github.com/alxgarshin/fraym/issues",
-                "source": "https://github.com/alxgarshin/fraym/tree/v0.9.90"
+                "source": "https://github.com/alxgarshin/fraym/tree/v0.9.93"
             },
-            "time": "2026-03-03T15:06:09+00:00"
+            "time": "2026-03-04T18:02:08+00:00"
         },
         {
             "name": "brick/math",

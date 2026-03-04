@@ -2818,7 +2818,11 @@ function updateState(newHref, replacedDiv, form) {
 
                         if (scripts) {
                             for (let ix = 0; ix < scripts.length; ix++) {
-                                eval(scripts[ix].text);
+                                const newScript = document.createElement('script');
+
+                                newScript.text = scripts[ix].text;
+                                document.head.appendChild(newScript);
+                                newScript.remove();
                             }
                         }
 

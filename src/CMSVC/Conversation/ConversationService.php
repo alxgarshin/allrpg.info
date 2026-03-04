@@ -27,29 +27,29 @@ class ConversationService extends BaseService
     private ?array $connectedObjectUsers = null;
 
     /** Эта функция полностью заменяет собой стандартную методику добавления объектов для данной модели */
-    public function PreCreate(): void
+    public function preCreate(): void
     {
-        $LOCALE = $this->LOCALE;
+        $LOCALE = $this->LOCALE['messages'];
 
         $objId = OBJ_ID;
         $objType = OBJ_TYPE;
 
         $cId = $_REQUEST['c_id'] ?? null;
 
-        if (count($_REQUEST['user_id'][0]) >= 2 && is_null($cId) && $_REQUEST['name'][0] === '') {
-            ResponseHelper::response([['error', $LOCALE['has_to_fill_topic_on_multidialog']]], '', ['name']);
+        if (count(($_REQUEST['user_id'][0] ?? [])) >= 2 && is_null($cId) && $_REQUEST['name'][0] === '') {
+            ResponseHelper::responseOneBlock('error', $LOCALE['has_to_fill_topic_on_multidialog'], ['name']);
         }
 
         if ($objId > 0 && $objType !== '' && $_REQUEST['name'][0] === '') {
-            ResponseHelper::response([['error', $LOCALE['has_to_fill_topic_on_object_dialog']]], '', ['name']);
+            ResponseHelper::responseOneBlock('error', $LOCALE['has_to_fill_topic_on_object_dialog'], ['name']);
         }
 
         if ($_REQUEST['user_id'][0][CURRENT_USER->id()] === 'on') {
-            ResponseHelper::response([['error', $LOCALE['cant_set_myself_as_address']]], '', ['user_id']);
+            ResponseHelper::responseOneBlock('error', $LOCALE['cant_set_myself_as_address'], ['user_id']);
         }
 
         if ($_REQUEST['content'][0] === '' || $_REQUEST['content'][0] === $LOCALE['conversation']['type_your_message']) {
-            ResponseHelper::response([['error', $LOCALE['text_must_be_set']]], '', ['content']);
+            ResponseHelper::responseOneBlock('error', $LOCALE['text_must_be_set'], ['content']);
         }
 
         $additionalFields = [];
@@ -59,10 +59,10 @@ class ConversationService extends BaseService
                 $additionalFields['obj_type'] = DataHelper::addBraces($objType);
                 $additionalFields['obj_id'] = $objId;
             } elseif (count($_REQUEST['user_id'][0]) === 0 && is_null($cId)) {
-                ResponseHelper::response([['error', $LOCALE['no_address_selected']]], '', ['user_id']);
+                ResponseHelper::responseOneBlock('error', $LOCALE['no_address_selected'], ['user_id']);
             }
         } elseif (count($_REQUEST['user_id'][0]) === 0 && is_null($cId)) {
-            ResponseHelper::response([['error', $LOCALE['no_address_selected']]], '', ['user_id']);
+            ResponseHelper::responseOneBlock('error', $LOCALE['no_address_selected'], ['user_id']);
         }
 
         /* аватарка диалога */
@@ -93,6 +93,7 @@ class ConversationService extends BaseService
                     }
                 }
             }
+
             ResponseHelper::response([['success', $LOCALE['message_send_success']]], ABSOLUTE_PATH . '/conversation/');
         } elseif ($result) {
             ResponseHelper::response([], 'stayhere');

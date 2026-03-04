@@ -1,6 +1,6 @@
 # allrpg.info — Фронтенд: специфика проекта
 
-> Общая архитектура фронтенда (FraymElement API, SPA, actionRequest, event delegation, lazy-загрузка, JWT/CSRF, UI-компоненты, паттерны модулей, утилиты, антипаттерны):
+> Общая архитектура фронтенда (FraymElement API, SPA/updateState, actionRequest полная спецификация, fetchData детально, window.fetch Proxy (JWT auto-refresh), event delegation, MutationObserver batch processing, lazy-загрузка JS/CSS, JWT/CSRF, UI-компоненты: Modal, Tabs, FilePond, Quill, Autocomplete, DragDrop, Noty, SBI, FraymStyler, FraymAudioPlayer, Dropfield, паттерны CMSVC-модулей, условные поля, валидация форм, deep links/hash-routing, CSS-архитектура, локали, keyboard shortcuts, swipe gestures, .careful, no_dynamic_content, утилиты, антипаттерны):
 > `vendor/alxgarshin/fraym/claude/CLAUDE_PROJECT_FRONTEND.md`
 
 ---
