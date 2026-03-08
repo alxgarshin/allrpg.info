@@ -140,6 +140,10 @@ span.bought_by_gamemaster_amount {
 }
 
 @media only screen and (max-device-width: 767px) {
+    form#form_budget_add div.multi_objects_table.excel {
+        grid-template-columns: 4em 4em 12em 12em 12em 12em 1fr 15em 14em 5em 5em;
+    }
+
     form#form_budget_add td {
         padding: 1em 0.5em !important;
     }
@@ -147,6 +151,7 @@ span.bought_by_gamemaster_amount {
     form#form_budget_add input:not([type="checkbox"]),
     form#form_budget_add select,
     form#form_budget_add textarea {
+        width: 100%;
         min-width: 10em;
         padding-left: 0.5em;
     }

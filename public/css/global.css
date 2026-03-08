@@ -4180,30 +4180,6 @@ div.webpush_why>div.webpush_denied {
         margin-top: .5em;
     }
 
-    div.multi_objects_table.excel,
-    table.menutable {
-        width: 100%;
-        overflow-x: auto;
-        max-width: 100%;
-        display: block;
-    }
-
-    div.multi_objects_table.excel div.tr {
-        display: table-row;
-    }
-
-    div.multi_objects_table.excel div.td,
-    div.multi_objects_table.excel div.tr div.td:nth-of-type(3) {
-        width: auto !important;
-        min-width: unset !important;
-        display: table-cell;
-        padding: 1em !important;
-    }
-
-    div.multi_objects_table.excel div.tr.menu div.td:nth-of-type(3) {
-        font-size: 1.2em;
-    }
-
     /** Вкладки */
     .fraymtabs>ul a.simulate_tab {
         margin-right: 3em;

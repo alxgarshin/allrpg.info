@@ -25,3 +25,9 @@ form#form_org_add input[disabled]+label {
     padding-left: 0;
     font-weight: bold;
 }
+
+@media only screen and (max-device-width: 767px) {
+    div.kind_org div.multi_objects_table.excel div.tr:not(.full_width) div.td:last-of-type {
+        width: 30em;
+    }
+}

@@ -683,6 +683,12 @@ div.fieldvalue>.inputradio+label {
     opacity: 1;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
 option[disabled] {
     color: var(--color-background-main) !important;
     background-color: var(--color-background-gray);
@@ -823,6 +829,7 @@ div.field_group_separator {
 input[type=text].obligatory,
 input[type=password].obligatory,
 input[type=date].obligatory,
+input[type=datetime-local].obligatory,
 textarea.obligatory {
     padding-right: 1.5em;
     background: url(../design/asterix.svg) right .5em center no-repeat var(--color-background-main);
@@ -906,7 +913,7 @@ div.placeholder {
     position: absolute;
     display: block;
     margin-left: 5px;
-    font-size: 130%;
+    font-size: 1.3em;
 }
 
 div.dropfield {
@@ -1050,6 +1057,7 @@ div.dropfield2_search {
 
 div.dropfield2_search input {
     font-size: .8em;
+    width: 100% !important;
 }
 
 div.dropfield2_search a.create {
@@ -1378,29 +1386,21 @@ div.multi_objects_table.cards .inputcheckbox+label {
 
 div.multi_objects_table.excel {
     display: grid;
-    grid-template-columns: 4em 4em repeat(var(--mot_columns_count), minmax(min-content, max-content));
+    grid-template-columns: 4em 4em repeat(var(--mot_columns_count), minmax(max-content, 1fr));
 }
 
 div.multi_objects_table.excel.without_delete_column {
-    grid-template-columns: 4em repeat(var(--mot_columns_count), minmax(min-content, max-content));
+    grid-template-columns: 4em repeat(var(--mot_columns_count), minmax(max-content, 1fr));
 }
 
 div.multi_objects_table.excel thead,
-div.multi_objects_table.excel tbody {
-    display: contents;
-}
-
+div.multi_objects_table.excel tbody,
 div.multi_objects_table.excel div.tr {
     display: contents;
 }
 
 div.multi_objects_table.excel div.tr>div:first-of-type {
     grid-column-start: 1;
-}
-
-div.multi_objects_table.excel div.tr div.td:last-of-type,
-div.multi_objects_table.excel div.tr div.th:last-of-type {
-    grid-column-end: none;
 }
 
 div.multi_objects_table.excel div.td,
@@ -1435,7 +1435,7 @@ table.menutable tr.menu {
     background-color: var(--main-underlay);
     color: var(--color-background-main);
     text-align: left;
-    font-size: 130%;
+    font-size: 1.3em;
 }
 
 div.multi_objects_table div.tr.menu a,
@@ -1493,9 +1493,13 @@ div.multi_objects_table.excel div.td.multi_objects_delete {
 }
 
 div.multi_objects_table.excel div.td.multi_objects_num {
-    font-size: 130%;
+    font-size: 1.3em;
     vertical-align: middle;
     font-weight: bold;
+}
+
+div.multi_objects_table.excel div.tr.readonly div.td {
+    font-size: 1.3em;
 }
 
 div.maincontent_data.autocreated div.multi_objects_table.cards div.cardtable_card_num {
@@ -2434,52 +2438,23 @@ div.maincontent_data.autocreated form .fraymtabs>div.shown {
         font-size: 1.6rem;
     }
 
-    /** Перестраиваем автоматические таблицы под удобный для работы формат */
+    table.menutable {
+        width: 100%;
+        overflow-x: auto;
+        max-width: 100%;
+        display: block;
+    }
+
     div.multi_objects_table.excel {
         width: 100%;
+        overflow-x: auto;
+        max-width: 100%;
     }
 
-    div.multi_objects_table.excel div.tr {
-        width: 100%;
-        display: inline-block;
-    }
-
-    div.multi_objects_table.excel div.tr.menu {
-        font-size: inherit;
-    }
-
-    div.multi_objects_table.excel div.tr.menu div.td {
-        font-size: 1.3rem;
-    }
-
-    div.multi_objects_table.excel div.td {
-        display: inline-block;
-        text-align: left;
-        padding: 0 !important;
-        margin: 1% !important;
-    }
-
-    div.multi_objects_table.excel div.tr.menu div.td:nth-of-type(3) {
-        font-size: 1.6rem;
-    }
-
-    div.multi_objects_table.excel div.tr div.td:nth-of-type(3) {
-        width: 90% !important;
-        min-width: 90% !important;
-    }
-
-    div.multi_objects_table.excel div.tr div.td:nth-of-type(4n) {
-        margin-left: 9% !important;
-    }
-
-    div.multi_objects_table.excel div.td {
-        width: 21% !important;
-        min-width: 21% !important;
-    }
-
-    div.multi_objects_table.excel div.tr.menu div.td[colspan] {
-        width: 100% !important;
-        margin: 1% 0 !important;
+    div.multi_objects_table.excel select,
+    div.multi_objects_table.excel input,
+    div.multi_objects_table.excel textarea {
+        width: 10em;
     }
 
     div.indexer_toggle {
@@ -2530,6 +2505,10 @@ div.maincontent_data.autocreated form .fraymtabs>div.shown {
         border-radius: 0;
         border-bottom: 1px solid var(--gray-very-light);
         margin: 0;
+    }
+
+    [data-tooltip-text]::after {
+        font-size: 1.2rem;
     }
 
     /** Модальное окно */
