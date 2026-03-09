@@ -480,7 +480,7 @@ trait ApplicationServiceTrait
                 }
 
                 if ($this->getServiceEntityName() === 'myapplication') {
-                    $params['disallow_applications'] = 0;
+                    $params['disallow_applications'] = '0';
 
                     if ($this->act === ActEnum::add) {
                         $charactersApplicationTakenCountQuery = DB->query(
