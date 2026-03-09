@@ -206,7 +206,7 @@ trait ApplicationServiceTrait
                     'SELECT * FROM project_application_field WHERE project_id=:project_id AND application_type=:application_type' . ($this->act === ActEnum::add ? ' AND (hide_field_on_application_create IS NULL OR hide_field_on_application_create="0")' : '') . ' ORDER BY field_code',
                     [
                         ['project_id', $this->getActivatedProjectId()],
-                        ['application_type', $this->getExcelType() > 0 ? $this->getExcelType() : $this->applicationType],
+                        ['application_type', (string) ($this->getExcelType() > 0 ? $this->getExcelType() : $this->applicationType)],
                     ],
                     'field_',
                     [
@@ -476,7 +476,7 @@ trait ApplicationServiceTrait
                 ];
 
                 if (DataHelper::getId() || ($_REQUEST['application_type'] ?? false)) {
-                    $params['team_character'] = $this->applicationType;
+                    $params['team_character'] = (string) $this->applicationType;
                 }
 
                 if ($this->getServiceEntityName() === 'myapplication') {
