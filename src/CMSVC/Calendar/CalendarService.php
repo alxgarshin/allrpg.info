@@ -20,7 +20,7 @@ class CalendarService extends BaseService
             $userService = CMSVCHelper::getService('user');
 
             $userData = $userService->get(CURRENT_USER->id());
-            DB->update('user', ['calendarstyle' => !$userData->calendarstyle->get() ? 1 : 0], ['id' => CURRENT_USER->id()]);
+            DB->update('user', ['calendarstyle' => !$userData->calendarstyle->get() ? '1' : '0'], ['id' => CURRENT_USER->id()]);
         }
 
         return ['response' => 'success'];

@@ -47,17 +47,17 @@ class KogdaigraController extends BaseController
 
             $info = $kogdaIgraService->loadDataFromKogdaigra($id);
 
-            $name = $info['name'];
-            $region = $info['sub_region_name'];
+            $name = $info['name'] ?? '';
+            $region = $info['sub_region_name'] ?? '';
             // $gametype = $info['game_type_name'];
-            $polygon = $info['polygon_name'];
-            $mg = $info['mg'];
+            $polygon = $info['polygon_name'] ?? '';
+            $mg = $info['mg'] ?? '';
             $allrpgId = (int) ($info['allrpg_info_id'] ?? 0);
 
-            if (($name !== '' || $allrpgId > 0) && $info['deleted_flag'] !== '1') {
+            if (($name !== '' || $allrpgId > 0) && ($info['deleted_flag'] ?? '0') !== '1') {
                 $dateArrival = '';
 
-                $allrpgData = $kogdaIgraService->findGameInAllrpg($id, $allrpgId, $name, $info['begin']);
+                $allrpgData = $kogdaIgraService->findGameInAllrpg($id, $allrpgId, $name, ($info['begin'] ?? ''));
 
                 $resultRow['kogda_igra_id'] = $id;
                 $resultRow['kogda_igra_name'] = $name;
@@ -92,21 +92,21 @@ class KogdaigraController extends BaseController
 
                 $sqlValues['mg'] = str_replace(['«', '»'], '', $mg);
 
-                if ($info['uri'] !== '') {
+                if ($info['uri'] ?? false) {
                     if (preg_match('#allrpg\.info#', $info['uri']) || preg_match('#joinrpg\.ru#', $info['uri'])) {
                         $sqlValues['orderpage'] = $info['uri'];
                     } else {
                         $sqlValues['site'] = $info['uri'];
                     }
-                } elseif ($info['vk_club'] !== '') {
+                } elseif ($info['vk_club'] ?? false) {
                     $sqlValues['site'] = 'https://www.vk.com/' . $info['vk_club'];
-                } elseif ($info['lj_comm'] !== '') {
+                } elseif ($info['lj_comm'] ?? false) {
                     $sqlValues['site'] = 'http://' . $info['lj_comm'] . '.livejournal.com/profile';
-                } elseif ($info['fb_comm'] !== '') {
+                } elseif ($info['fb_comm'] ?? false) {
                     $sqlValues['site'] = 'https://www.facebook.com/groups/' . $info['fb_comm'] . '/';
                 }
 
-                $sqlValues['date_from'] = $info['begin'];
+                $sqlValues['date_from'] = $info['begin'] ?? '';
 
                 $dateTo = date('Y-m-d', strtotime($info['begin']) + 3600 * 24 * ($info['time'] - 1));
                 $sqlValues['date_to'] = $dateTo;
@@ -115,14 +115,14 @@ class KogdaigraController extends BaseController
                     $sqlValues['date_arrival'] = $info['begin'];
                 }
 
-                if ($info['players_count'] !== '') {
+                if ($info['players_count'] ?? false) {
                     $sqlValues['playernum'] = $info['players_count'];
                 }
 
                 $sqlValues['updated_at'] = DateHelper::getNow();
 
-                $sqlValues['moved'] = $info['status'] === 3 ? 1 : 0;
-                $sqlValues['wascancelled'] = $info['status'] === 5 ? 1 : 0;
+                $sqlValues['moved'] = $info['status'] === 3 ? '1' : '0';
+                $sqlValues['wascancelled'] = $info['status'] === 5 ? '1' : '0';
 
                 $resultRow['status_text'] = $sqlValues['moved'] ? 'отложена' : ($sqlValues['wascancelled'] ? 'отменена' : '');
 

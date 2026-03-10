@@ -538,8 +538,8 @@ class TransactionService extends BaseService
                                 tableName: 'project_application',
                                 data: [
                                     'money_provided' => ($applicationData->money_provided->get() + $transactionData['amount']),
-                                    'money_paid' => (($applicationData->money_provided->get() + $transactionData['amount']) >= $applicationData->money->get() ? 1 : 0),
-                                    'money_need_approve' => ($moreTransactionsToApprove > 0 ? 1 : 0),
+                                    'money_paid' => (($applicationData->money_provided->get() + $transactionData['amount']) >= $applicationData->money->get() ? '1' : '0'),
+                                    'money_need_approve' => ($moreTransactionsToApprove > 0 ? '1' : '0'),
                                 ],
                                 criteria: [
                                     'id' => $applicationData->id->getAsInt(),
