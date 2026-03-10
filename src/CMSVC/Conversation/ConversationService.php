@@ -675,7 +675,7 @@ class ConversationService extends BaseService
             DB->update(
                 'conversation_message_status',
                 [
-                    'message_read' => 1,
+                    'message_read' => '1',
                     'updated_at' => DateHelper::getNow(),
                 ],
                 [
@@ -900,7 +900,7 @@ class ConversationService extends BaseService
                 DB->delete('conversation_message', ['id' => $objId]);
                 DB->delete('conversation_message_status', ['message_id' => $objId]);
             } else {
-                DB->update('conversation_message_status', ['message_deleted' => 1], ['message_id' => $objId, 'user_id' => CURRENT_USER->id()]);
+                DB->update('conversation_message_status', ['message_deleted' => '1'], ['message_id' => $objId, 'user_id' => CURRENT_USER->id()]);
             }
 
             return [
@@ -1285,7 +1285,7 @@ class ConversationService extends BaseService
                                     DB->update(
                                         'conversation_message_status',
                                         [
-                                            'message_read' => 1,
+                                            'message_read' => '1',
                                             'updated_at' => DateHelper::getNow(),
                                         ],
                                         [
@@ -1299,7 +1299,7 @@ class ConversationService extends BaseService
                                         [
                                             'message_id' => $resolvedId,
                                             'user_id' => $conversationUser,
-                                            'message_read' => 1,
+                                            'message_read' => '1',
                                             'created_at' => DateHelper::getNow(),
                                             'updated_at' => DateHelper::getNow(),
                                         ],
@@ -1317,7 +1317,7 @@ class ConversationService extends BaseService
                                 if ($checkRecord['id']) {
                                     DB->update(
                                         'conversation_message_status',
-                                        ['message_read' => 1, 'updated_at' => DateHelper::getNow()],
+                                        ['message_read' => '1', 'updated_at' => DateHelper::getNow()],
                                         ['message_id' => $message['id'], 'user_id' => $conversationUser],
                                     );
                                 } else {
@@ -1326,7 +1326,7 @@ class ConversationService extends BaseService
                                         [
                                             'message_id' => $message['id'],
                                             'user_id' => $conversationUser,
-                                            'message_read' => 1,
+                                            'message_read' => '1',
                                             'created_at' => DateHelper::getNow(),
                                             'updated_at' => DateHelper::getNow(),
                                         ],

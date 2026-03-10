@@ -1601,7 +1601,7 @@ class MessageService extends BaseService
                 [
                     ['message_id', $cmId],
                     ['user_id', CURRENT_USER->id()],
-                    ['message_read', 1],
+                    ['message_read', '1'],
                     ['created_at', $additionalFields['created_at']],
                     ['updated_at', $additionalFields['updated_at']],
                 ],
@@ -1616,7 +1616,7 @@ class MessageService extends BaseService
                     [
                         ['message_id', $cmId],
                         ['user_id', $value],
-                        ['message_read', 0],
+                        ['message_read', '0'],
                         ['created_at', $additionalFields['created_at']],
                         ['updated_at', $additionalFields['updated_at']],
                     ],

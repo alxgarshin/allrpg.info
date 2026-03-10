@@ -1748,7 +1748,7 @@ abstract class MessageHelper implements Helper
                         DB->update(
                             'conversation_message_status',
                             [
-                                'message_read' => 1,
+                                'message_read' => '1',
                                 'updated_at' => DateHelper::getNow(),
                             ],
                             [
@@ -1762,7 +1762,7 @@ abstract class MessageHelper implements Helper
                             [
                                 'message_id' => $value,
                                 'user_id' => CURRENT_USER->id(),
-                                'message_read' => 1,
+                                'message_read' => '1',
                                 'created_at' => DateHelper::getNow(),
                                 'updated_at' => DateHelper::getNow(),
                             ],
