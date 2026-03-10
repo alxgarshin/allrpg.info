@@ -465,7 +465,7 @@ class ProjectService extends BaseService
             DB->update(
                 'project',
                 [
-                    'show_roleslist' => 0,
+                    'show_roleslist' => '0',
                     'player_count' => 100,
                     'currency' => 'RUR',
                 ],
@@ -500,7 +500,7 @@ class ProjectService extends BaseService
                     'project_id' => $id,
                     'field_name' => $LOCALE_MESSAGES['character'],
                     'field_type' => 'h1',
-                    'field_mustbe' => 0,
+                    'field_mustbe' => '0',
                     'field_rights' => 4,
                     'field_code' => 1,
                     'application_type' => 0,
@@ -515,7 +515,7 @@ class ProjectService extends BaseService
                     'project_id' => $id,
                     'field_name' => $LOCALE_MESSAGES['character_name'],
                     'field_type' => 'text',
-                    'field_mustbe' => 1,
+                    'field_mustbe' => '1',
                     'field_rights' => 4,
                     'field_code' => 2,
                     'application_type' => 0,

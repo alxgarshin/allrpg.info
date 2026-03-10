@@ -125,11 +125,11 @@ class NotionService extends BaseService
                     $responseData = [];
 
                     if ($notion['active'] === '1') {
-                        DB->update('notion', ['active' => 0], ['id' => $objId]);
+                        DB->update('notion', ['active' => '0'], ['id' => $objId]);
                         $responseData['text'] = $LOCALE['placeholders']['show'];
                         $responseData['active'] = 0;
                     } else {
-                        DB->update('notion', ['active' => 1], ['id' => $objId]);
+                        DB->update('notion', ['active' => '1'], ['id' => $objId]);
                         $responseData['text'] = $LOCALE['placeholders']['hide'];
                         $responseData['active'] = 1;
                     }

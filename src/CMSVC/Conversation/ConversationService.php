@@ -793,7 +793,7 @@ class ConversationService extends BaseService
                                 DB->delete('conversation_message', ['id' => $objId]);
 
                                 /* удаляем неверифицированные транзакции, привязанные к сообщению */
-                                DB->delete('project_transaction', ['conversation_message_id' => $objId, 'verified' => 0]);
+                                DB->delete('project_transaction', ['conversation_message_id' => $objId, 'verified' => '0']);
                             } elseif ($deleteType === 'delete all') {
                                 DB->query(
                                     'DELETE conversation_message_status FROM conversation_message_status LEFT JOIN conversation_message AS cm ON cm.id=conversation_message_status.message_id WHERE cm.conversation_id=:conversation_id AND cm.id IS NOT NULL',
@@ -824,14 +824,14 @@ class ConversationService extends BaseService
                             /* если это сообщение про попытку оплаты в заявке, то проверяем, не надо ли убрать галочку: оплата требует подтверждения - с заявки */
                             if ($conversationData['obj_type'] === '{project_application_conversation}' && $objData['message_action'] === '{fee_payment}' && $conversationData['obj_id'] > 0) {
                                 /* если к транзакции была привязана заявка, проверяем есть ли еще транзакции с ней. Если нет, то ставим признак, что их нет, в заявке */
-                                $result = DB->select('project_transaction', ['project_application_id' => $conversationData['obj_id'], 'verified' => 0]);
+                                $result = DB->select('project_transaction', ['project_application_id' => $conversationData['obj_id'], 'verified' => '0']);
                                 $moreTransactionsToApprove = count($result);
 
                                 if ($moreTransactionsToApprove === 0) {
                                     DB->update(
                                         tableName: 'project_application',
                                         data: [
-                                            'money_need_approve' => 0,
+                                            'money_need_approve' => '0',
                                         ],
                                         criteria: [
                                             'id' => $conversationData['obj_id'],
@@ -1031,8 +1031,8 @@ class ConversationService extends BaseService
                                     criteria: [
                                         'project_id' => $roomData['project_id'],
                                         'creator_id' => CURRENT_USER->id(),
-                                        'deleted_by_player' => 0,
-                                        'deleted_by_gamemaster' => 0,
+                                        'deleted_by_player' => '0',
+                                        'deleted_by_gamemaster' => '0',
                                     ],
                                     order: [
                                         'updated_at DESC',

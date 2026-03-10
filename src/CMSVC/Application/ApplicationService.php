@@ -752,7 +752,7 @@ class ApplicationService extends BaseService
             tableName: 'project_application',
             data: [
                 'offer_to_user_id' => $offerToUserId,
-                'offer_denied' => 0,
+                'offer_denied' => '0',
                 'deleted_by_gamemaster' => '0',
             ],
             criteria: [
@@ -783,7 +783,7 @@ class ApplicationService extends BaseService
                 tableName: 'project_application',
                 data: [
                     'offer_to_user_id' => 0,
-                    'offer_denied' => 0,
+                    'offer_denied' => '0',
                 ],
                 criteria: [
                     'id' => $objId,
@@ -826,11 +826,11 @@ class ApplicationService extends BaseService
                 data: [
                     'project_group_ids' => DataHelper::arrayToMultiselect($characterData->project_group_ids->get()),
                     'setparentgroups' => $characterData->setparentgroups->get(),
-                    'disallow_applications' => 1,
+                    'disallow_applications' => '1',
                     'team_character' => $characterData->team_character->get(),
                     'name' => $newCharacterSorter,
                     'applications_needed_count' => 1,
-                    'auto_new_character_creation' => 0,
+                    'auto_new_character_creation' => '0',
                     'team_applications_needed_count' => $characterData->team_applications_needed_count->get(),
                     'content' => $characterData->name->get(),
                     'project_id' => $this->getActivatedProjectId(),

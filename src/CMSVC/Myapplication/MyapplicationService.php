@@ -696,7 +696,7 @@ class MyapplicationService extends BaseService
                                     data: [
                                         'em' => $fieldData,
                                         'login' => $fieldData,
-                                        'em_verified' => 0,
+                                        'em_verified' => '0',
                                     ],
                                     criteria: [
                                         'id' => $userData->id->get(),

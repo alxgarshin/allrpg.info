@@ -226,7 +226,7 @@ class CalendarEventView extends BaseView
             'played',
             [
                 'calendar_event_id' => $objData->id->getAsInt(),
-                'active' => 1,
+                'active' => '1',
             ],
             false,
             null,
@@ -328,7 +328,7 @@ class CalendarEventView extends BaseView
                 ['calendar_event_id', $objData->id->getAsInt()],
                 ['specializ2', '-'],
                 ['specializ2_2', ''],
-                ['active', 1],
+                ['active', '1'],
             ],
         );
         $userCount = count($result);
@@ -356,7 +356,7 @@ class CalendarEventView extends BaseView
                 ['calendar_event_id', $objData->id->getAsInt()],
                 ['specializ3', '-'],
                 ['specializ3_2', ''],
-                ['active', 1],
+                ['active', '1'],
             ],
         );
         $userCount = count($result);
@@ -382,7 +382,7 @@ class CalendarEventView extends BaseView
                 ['calendar_event_id', $objData->id->getAsInt()],
                 ['specializ2', '-'],
                 ['specializ3', '-'],
-                ['active', 1],
+                ['active', '1'],
             ],
         );
         $userCount = count($result);
@@ -466,7 +466,7 @@ class CalendarEventView extends BaseView
 
         $notion = DB->query("SELECT SUM(IF(rating = '1', 1, IF(rating = '-1', -1, 0))) FROM notion WHERE calendar_event_id=:calendar_event_id AND active=:active", [
             ['calendar_event_id', $objData->id->getAsInt()],
-            ['active', 1],
+            ['active', '1'],
         ], true);
         $rating = $notion[0] ?? 0;
 
@@ -489,7 +489,7 @@ class CalendarEventView extends BaseView
         if (CURRENT_USER->isAdmin() || CURRENT_USER->checkAllrights('info') || $objData->creator_id->getAsInt() === CURRENT_USER->id()) {
             $notion = DB->select('notion', ['calendar_event_id' => $objData->id->getAsInt()], false, ['created_at DESC']);
         } else {
-            $notion = DB->select('notion', ['calendar_event_id' => $objData->id->getAsInt(), 'active' => 1], false, ['created_at DESC']);
+            $notion = DB->select('notion', ['calendar_event_id' => $objData->id->getAsInt(), 'active' => '1'], false, ['created_at DESC']);
         }
         $notion_count = count($notion);
 

@@ -96,7 +96,7 @@ class ExchangeService extends BaseService
         if ($_REQUEST['category'] ?? false) {
             $exchangeItemsData = $this->exchangeItemEditService->getAll(
                 [
-                    'active' => 1,
+                    'active' => '1',
                     'region' => ($userRegion === 'all' ? null : explode(',', $userRegion)),
                     ['exchange_category_ids', '%-' . $_REQUEST['category'] . '-%', [OperandEnum::LIKE]],
                 ],
@@ -110,7 +110,7 @@ class ExchangeService extends BaseService
                 DB->query(
                     'SELECT * FROM exchange_item WHERE active<=>:active' . ($userRegion === 'all' ? '' : ' AND region IN (:region)') . ' AND (name LIKE :input1 OR description LIKE :input2) ORDER BY created_at DESC LIMIT :limit OFFSET :offset',
                     [
-                        ['active', 1],
+                        ['active', '1'],
                         ['region', $userRegion === 'all' ? null : explode(',', $userRegion)],
                         ['input1', '%' . $_REQUEST['search'] . '%'],
                         ['input2', '%' . $_REQUEST['search'] . '%'],
@@ -122,7 +122,7 @@ class ExchangeService extends BaseService
         } else {
             $exchangeItemsData = $this->exchangeItemEditService->getAll(
                 [
-                    'active' => 1,
+                    'active' => '1',
                     'region' => ($userRegion === 'all' ? null : explode(',', $userRegion)),
                 ],
                 false,
@@ -136,7 +136,7 @@ class ExchangeService extends BaseService
                 CookieHelper::batchSetCookie(['user_region' => 'all']);
                 $exchangeItemsData = $this->exchangeItemEditService->getAll(
                     [
-                        'active' => 1,
+                        'active' => '1',
                     ],
                     false,
                     ['created_at DESC'],
@@ -146,7 +146,7 @@ class ExchangeService extends BaseService
             } else {
                 $exchangeItemsData = $this->exchangeItemEditService->getAll(
                     [
-                        'active' => 1,
+                        'active' => '1',
                         'region' => ($userRegion === 'all' ? null : explode(',', $userRegion)),
                     ],
                     false,
@@ -168,7 +168,7 @@ class ExchangeService extends BaseService
         $allExchangeItemsCount = DB->select(
             'exchange_item',
             [
-                'active' => 1,
+                'active' => '1',
             ],
             false,
             null,
@@ -182,7 +182,7 @@ class ExchangeService extends BaseService
             $itemsWithCategoryCount = DB->select(
                 'exchange_item',
                 [
-                    'active' => 1,
+                    'active' => '1',
                     ['exchange_category_ids', '%-' . $exchangeCategoryData->id->getAsInt() . '-%', [OperandEnum::LIKE]],
                 ],
                 false,

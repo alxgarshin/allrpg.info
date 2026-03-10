@@ -214,8 +214,8 @@ class StartView extends BaseView
         $photoData = DB->select(
             tableName: 'banner',
             criteria: [
-                'type' => 1,
-                'active' => 1,
+                'type' => '1',
+                'active' => '1',
             ],
             oneResult: true,
             order: [

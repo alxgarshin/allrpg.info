@@ -44,7 +44,7 @@ class ProfileService extends BaseService
             );
 
             if (!$checkEmailExists) {
-                DB->update('user', ['em_verified' => 0], ['id' => CURRENT_USER->id()]);
+                DB->update('user', ['em_verified' => '0'], ['id' => CURRENT_USER->id()]);
 
                 $idToReverify = md5($userData->id->getAsInt() . $userData->created_at->getAsTimeStamp() . $_REQUEST['em'][0] . $_ENV['PROJECT_HASH_WORD']);
                 $text = sprintf(

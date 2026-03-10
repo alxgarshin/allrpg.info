@@ -58,7 +58,7 @@ class CalendarEventService extends BaseService
 
     public function preDelete(): void
     {
-        DB->update('calendar_event', ['wascancelled' => 1], ['id' => DataHelper::getId()]);
+        DB->update('calendar_event', ['wascancelled' => '1'], ['id' => DataHelper::getId()]);
         ResponseHelper::response([['success', $this->entity->getObjectMessages($this->entity)[2]]], '/' . KIND . '/');
     }
 
@@ -76,7 +76,7 @@ class CalendarEventService extends BaseService
             if (CURRENT_USER->isLogged()) {
                 DB->update('calendar_event', ['creator_id' => CURRENT_USER->id()], ['id' => $id]);
             } else {
-                DB->update('calendar_event', ['addip' => DataHelper::getRealIp(), 'tomoderate' => 1], ['id' => $id]);
+                DB->update('calendar_event', ['addip' => DataHelper::getRealIp(), 'tomoderate' => '1'], ['id' => $id]);
             }
 
             CurlHelper::curlPostAsync(

@@ -32,7 +32,7 @@ class PublicationService extends BaseService
         if ($_REQUEST['tag'] ?? false) {
             $publicationsData = $publicationsEditService->getAll(
                 [
-                    'active' => 1,
+                    'active' => '1',
                     ['tags', '%-' . $_REQUEST['tag'] . '-%', [OperandEnum::LIKE]],
                 ],
                 false,
@@ -44,7 +44,7 @@ class PublicationService extends BaseService
                 DB->query(
                     'SELECT * FROM publication WHERE active=:active AND (name LIKE :input1 OR annotation LIKE :input2 OR content LIKE :input3) ORDER BY name',
                     [
-                        ['active', 1],
+                        ['active', '1'],
                         ['input1', '%' . $_REQUEST['search'] . '%'],
                         ['input2', '%' . $_REQUEST['search'] . '%'],
                         ['input3', '%' . $_REQUEST['search'] . '%'],
@@ -54,7 +54,7 @@ class PublicationService extends BaseService
         } else {
             $publicationsData = $publicationsEditService->getAll(
                 [
-                    'active' => 1,
+                    'active' => '1',
                 ],
                 false,
                 ['updated_at DESC'],
@@ -92,12 +92,12 @@ class PublicationService extends BaseService
     {
         $RESPONSE_DATA = '';
 
-        $allPublicationsCount = DB->count('publication', ['active' => 1]);
+        $allPublicationsCount = DB->count('publication', ['active' => '1']);
 
         $tagsData = DB->query(
             'SELECT t.id, t.name, count(p.id) as publications_count FROM tag AS t LEFT JOIN publication AS p ON p.tags LIKE CONCAT("%-",t.id,"-%") AND p.active=:active GROUP BY t.id ORDER BY t.name',
             [
-                ['active', 1],
+                ['active', '1'],
             ],
         );
 

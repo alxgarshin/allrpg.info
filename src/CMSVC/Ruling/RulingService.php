@@ -279,7 +279,7 @@ class RulingService extends BaseService
         if ($rulingTagId > 0) {
             $rulingTags = $rulingTagEditService->getAll(['id' => $rulingTagId]);
         } else {
-            $rulingTags = $rulingTagEditService->getAll(['show_in_cloud' => 1], false, ['name']);
+            $rulingTags = $rulingTagEditService->getAll(['show_in_cloud' => '1'], false, ['name']);
         }
 
         foreach ($rulingTags as $rulingTagData) {

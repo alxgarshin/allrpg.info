@@ -777,7 +777,7 @@ class MessageService extends BaseService
                         $dataField => $objId,
                         'content' => $content,
                         'rating' => $rating,
-                        'active' => 1,
+                        'active' => '1',
                         'created_at' => DateHelper::getNow(),
                         'updated_at' => DateHelper::getNow(),
                     ],
