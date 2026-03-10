@@ -228,9 +228,9 @@ class SetupService extends BaseService
         return $nextFieldCode;
     }
 
-    public function getApplicationType(): int
+    public function getApplicationType(): string
     {
-        return (int) CookieHelper::getCookie('application_type');
+        return (string) (int) CookieHelper::getCookie('application_type');
     }
 
     public function setApplicationType(): void

@@ -97,9 +97,11 @@ class DocumentService extends BaseService
             foreach ($applicationFields as $applicationField) {
                 if ($applicationField->shownName) {
                     $fields[] = $applicationField;
+                    $showIf = $applicationField->getAttribute()->additionalData['show_if'];
+                    $fieldsData = DataHelper::multiselectToArray($showIf);
 
-                    if (str_replace('-', '', $applicationField->getAttribute()->additionalData['show_if'] ?? '') !== '') {
-                        $fieldsShowIf[$applicationField->name] = $applicationField->getAttribute()->additionalData['show_if'];
+                    if ($fieldsData) {
+                        $fieldsShowIf[$applicationField->name] = $fieldsData;
                     }
                 }
             }

@@ -141,24 +141,24 @@ class DocumentView extends BaseView
 
                             $showConditions = $fieldsShowIf[$field->name];
 
-                            unset($matches);
-                            preg_match_all('#-(\d+):(\d+)#', $showConditions, $matches);
+                            foreach ($showConditions as $fieldData) {
+                                unset($match);
+                                preg_match('#(.+):(\d+)#', $fieldData, $match);
 
-                            foreach ($matches[1] as $key => $value) {
-                                if ($fullApplicationsData[$applicationRequestedId]['virtual' . $value] === $matches[2][$key] || preg_match(
-                                    '#-' . $matches[2][$key] . '-#',
-                                    ($fullApplicationsData[$applicationRequestedId]['virtual' . $value] ?? ''),
-                                )) {
-                                    $changeToValue = true;
-                                }
-                            }
+                                $key = $match[1];
+                                $value = $match[2];
 
-                            unset($matches);
-                            preg_match_all('#-locat:(\d+)#', $showConditions, $matches);
-
-                            foreach ($matches[1] as $key => $value) {
-                                if (preg_match('#-' . $value . '-#', $fullApplicationsData[$applicationRequestedId]['project_group_ids'])) {
-                                    $changeToValue = true;
+                                if ($match[1] === 'locat') {
+                                    if (preg_match('#-' . $value . '-#', $fullApplicationsData[$applicationRequestedId]['project_group_ids'])) {
+                                        $changeToValue = true;
+                                    }
+                                } else {
+                                    if ($fullApplicationsData[$applicationRequestedId]['virtual' . $key] === $value || preg_match(
+                                        '#-' . $value . '-#',
+                                        ($fullApplicationsData[$applicationRequestedId]['virtual' . $key] ?? ''),
+                                    )) {
+                                        $changeToValue = true;
+                                    }
                                 }
                             }
                         }

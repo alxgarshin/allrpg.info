@@ -235,56 +235,58 @@ trait ApplicationServiceTrait
                     if (!is_null($showIf) && str_replace('-', '', $showIf) !== '') {
                         $dependentFields = [];
 
-                        unset($matches);
-                        preg_match_all('#-(\d+):(\d+)#', $showIf, $matches);
+                        $fieldsData = DataHelper::multiselectToArray($showIf);
 
-                        foreach ($matches[1] as $key => $value) {
-                            $dependingOnField = $model->getElement('virtual' . $value);
+                        foreach ($fieldsData as $fieldData) {
+                            unset($match);
+                            preg_match('#(.+):(\d+)#', $fieldData, $match);
 
-                            $virtualFieldData = $_REQUEST['virtual' . $value][0] ?? null;
+                            $key = $match[1];
+                            $value = $match[2];
 
-                            if (
-                                in_array(ACTION, [ActionEnum::create, ActionEnum::change])
-                                && $virtualFieldData
-                                && (
-                                    ($dependingOnField instanceof Item\Multiselect && ($virtualFieldData[$matches[2][$key]] ?? null) === 'on') ||
-                                    ($dependingOnField instanceof Item\Select && $virtualFieldData === $matches[2][$key])
-                                )
-                            ) {
-                                $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
-                            }
+                            if ($match[1] === 'locat') {
+                                if (
+                                    in_array(ACTION, [ActionEnum::create, ActionEnum::change]) &&
+                                    ($_REQUEST['project_group_ids'][0][$value] ?? false) === 'on'
+                                ) {
+                                    $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
+                                }
 
-                            if ($dependingOnField instanceof Item\Multiselect) {
                                 $dependentFields[] = [
                                     'type' => 'multiselect',
-                                    'name' => 'virtual' . $value . '[0]',
-                                    'value' => $matches[2][$key],
+                                    'name' => 'project_group_ids[0]',
+                                    'value' => $value,
                                 ];
-                            } elseif ($dependingOnField instanceof Item\Select) {
-                                $dependentFields[] = [
-                                    'type' => 'select',
-                                    'name' => 'virtual' . $value . '[0]',
-                                    'value' => $matches[2][$key],
-                                ];
+                            } else {
+                                $dependingOnField = $model->getElement('virtual' . $key);
+
+                                $virtualFieldData = $_REQUEST['virtual' . $key][0] ?? null;
+
+                                if (
+                                    in_array(ACTION, [ActionEnum::create, ActionEnum::change])
+                                    && $virtualFieldData
+                                    && (
+                                        ($dependingOnField instanceof Item\Multiselect && ($virtualFieldData[$value] ?? null) === 'on') ||
+                                        ($dependingOnField instanceof Item\Select && $virtualFieldData === $value)
+                                    )
+                                ) {
+                                    $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
+                                }
+
+                                if ($dependingOnField instanceof Item\Multiselect) {
+                                    $dependentFields[] = [
+                                        'type' => 'multiselect',
+                                        'name' => 'virtual' . $key . '[0]',
+                                        'value' => $value,
+                                    ];
+                                } elseif ($dependingOnField instanceof Item\Select) {
+                                    $dependentFields[] = [
+                                        'type' => 'select',
+                                        'name' => 'virtual' . $key . '[0]',
+                                        'value' => $value,
+                                    ];
+                                }
                             }
-                        }
-
-                        unset($matches);
-                        preg_match_all('#-locat:(\d+)#', $showIf, $matches);
-
-                        foreach ($matches[1] as $key => $value) {
-                            if (
-                                in_array(ACTION, [ActionEnum::create, ActionEnum::change]) &&
-                                ($_REQUEST['project_group_ids'][0][$value] ?? false) === 'on'
-                            ) {
-                                $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
-                            }
-
-                            $dependentFields[] = [
-                                'type' => 'multiselect',
-                                'name' => 'project_group_ids[0]',
-                                'value' => $value,
-                            ];
                         }
 
                         $this->dependentFields[$applicationField->name] = [
