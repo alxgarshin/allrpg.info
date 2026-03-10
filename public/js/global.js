@@ -168,7 +168,7 @@ async function projectInit(withDocumentEvents, updateHash) {
             _('a.submenu.roles_list').attr('href', `${absolutePath()}/roles/${projectControlId}/`);
         } else {
             if (projectControlId > 0 && projectControlItemsName && !el(`div.item6 a.submenu[obj_id="${projectControlId}"]`)) {
-                _(`div.mobile_menu div.submenu_6`).insert(`<a class="submenu submenu_4_item_2 selected" href="${projectHref}" obj_id="${projectControlId}">${projectControlItemsName}</a>`, `end`);
+                _(`div.mobile_menu div.submenu_4`).insert(`<a class="submenu submenu_4_item_2 selected" href="${projectHref}" obj_id="${projectControlId}">${projectControlItemsName}</a>`, `end`);
             }
 
             controlItemsDiv
