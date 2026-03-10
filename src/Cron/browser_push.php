@@ -42,7 +42,7 @@ foreach ($result as $data) {
 
     /** Проверяем, хочет ли пользователь получать оповещения данного типа */
     if (
-        preg_match('#-' . $data['obj_type'] . '-#', $data['subs_objects'])
+        preg_match('#' . $data['obj_type'] . '#', $data['subs_objects'])
         || in_array(DataHelper::clearBraces($data['obj_type']), ['application', 'myapplication'])
     ) {
         /** Отправляем уведомление в браузере, если есть токен у пользователя */

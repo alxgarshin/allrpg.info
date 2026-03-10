@@ -61,9 +61,7 @@ class PlotService extends BaseService
             $usedCharactersIds = [];
 
             foreach ($values as $value) {
-                if ($value === '0') {
-                    // $applicationsList[] = array('all0', '<b>' . $LOCALE['global_story_2'] . '</b>');
-                } elseif (str_contains($value, 'group')) {
+                if (str_contains($value, 'group')) {
                     $value = preg_replace('#group#', '', $value);
                     $usedGroupsIds[] = $value;
                 } elseif ($value > 0) {
@@ -274,7 +272,12 @@ class PlotService extends BaseService
             $projectApplicationData = $forPlayer ? $this->myApplicationService->get($objId) : $this->applicationService->get($objId);
 
             if (!$forPlayer || ($projectApplicationData->status->get() === 3 && !$projectApplicationData->deleted_by_gamemaster->get() && !$projectApplicationData->deleted_by_player->get())) {
-                $applicationQuery = "pp.applications_1_side_ids LIKE '%-" . $objId . "-%'";
+                $applicationQuery = "pp.applications_1_side_ids LIKE '%-" . $objId . "-%' OR 
+IF(
+    JSON_VALID(pp.applications_1_side_ids),
+    JSON_CONTAINS(pp.applications_1_side_ids, '" . $objId . "'),
+    0
+) = 1";
 
                 $objApplicationsIds[] = $objId;
 
@@ -284,7 +287,12 @@ class PlotService extends BaseService
                 foreach ($projectApplicationGroups as $projectApplicationGroup) {
                     if ($projectApplicationGroup > 0 && !in_array($projectApplicationGroup, $groupsFound)) {
                         $groupsFound[] = $projectApplicationGroup;
-                        $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-group" . $projectApplicationGroup . "-%'";
+                        $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-group" . $projectApplicationGroup . "-%' OR 
+IF(
+    JSON_VALID(pp.applications_1_side_ids),
+    JSON_CONTAINS(pp.applications_1_side_ids, '\"group" . $projectApplicationGroup . "\"'),
+    0
+) = 1";
                     }
                 }
 
@@ -295,12 +303,22 @@ class PlotService extends BaseService
                         $objCharacterId = $projectCharacterData->id->getAsInt();
                         $projectCharacterGroups = $projectCharacterData->project_group_ids->get();
 
-                        $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-all" . $objCharacterId . "-%'";
+                        $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-all" . $objCharacterId . "-%' OR 
+IF(
+    JSON_VALID(pp.applications_1_side_ids),
+    JSON_CONTAINS(pp.applications_1_side_ids, '\"all" . $objCharacterId . "\"'),
+    0
+) = 1";
 
                         foreach ($projectCharacterGroups as $projectCharacterGroup) {
                             if ($projectCharacterGroup > 0 && !in_array($projectCharacterGroup, $groupsFound)) {
                                 $groupsFound[] = $projectCharacterGroup;
-                                $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-group" . $projectCharacterGroup . "-%'";
+                                $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-group" . $projectCharacterGroup . "-%' OR 
+IF(
+    JSON_VALID(pp.applications_1_side_ids),
+    JSON_CONTAINS(pp.applications_1_side_ids, '\"group" . $projectCharacterGroup . "\"'),
+    0
+) = 1";
                             }
                         }
                     }
@@ -338,10 +356,24 @@ class PlotService extends BaseService
 
                 foreach ($objGroups as $projectCharacterGroup) {
                     if ($projectCharacterGroup > 0) {
-                        $groupQuery .= ' OR pp.applications_1_side_ids LIKE :project_character_group_' . $objGroupsCount . ' OR pp.applications_2_side_ids LIKE :project_character_group_' . ($objGroupsCount + 1);
+                        $groupQuery .= ' OR pp.applications_1_side_ids LIKE :project_character_group_' . $objGroupsCount . ' OR pp.applications_2_side_ids LIKE :project_character_group_' . ($objGroupsCount + 1) . ' OR 
+IF(
+    JSON_VALID(pp.applications_1_side_ids),
+    JSON_CONTAINS(pp.applications_1_side_ids, :project_character_group_' . ($objGroupsCount + 2) . '),
+    0
+) = 1  OR 
+IF(
+    JSON_VALID(pp.applications_2_side_ids),
+    JSON_CONTAINS(pp.applications_2_side_ids, :project_character_group_' . ($objGroupsCount + 3) . '),
+    0
+) = 1';
+
                         $groupParams[] = ['project_character_group_' . $objGroupsCount, '%-group' . $projectCharacterGroup . '-%'];
                         $groupParams[] = ['project_character_group_' . ($objGroupsCount + 1), '%-group' . $projectCharacterGroup . '-%'];
-                        $objGroupsCount += 2;
+                        $groupParams[] = ['project_character_group_' . ($objGroupsCount + 2), json_encode('group' . $projectCharacterGroup)];
+                        $groupParams[] = ['project_character_group_' . ($objGroupsCount + 3), json_encode('group' . $projectCharacterGroup)];
+
+                        $objGroupsCount += 4;
                     }
                 }
 
@@ -356,19 +388,45 @@ class PlotService extends BaseService
 
                 foreach ($projectCharacterApplicationsData as $projectCharacterApplicationData) {
                     $objApplicationsIds[] = $projectCharacterApplicationData['id'];
-                    $applicationsQuery .= ' OR pp.applications_1_side_ids LIKE :project_character_application_data_' . $projectCharacterApplicationsDataCount . ' OR pp.applications_2_side_ids LIKE :project_character_application_data_' . ($projectCharacterApplicationsDataCount + 1);
+                    $applicationsQuery .= ' OR pp.applications_1_side_ids LIKE :project_character_application_data_' . $projectCharacterApplicationsDataCount . ' OR pp.applications_2_side_ids LIKE :project_character_application_data_' . ($projectCharacterApplicationsDataCount + 1) . ' OR 
+IF(
+    JSON_VALID(pp.applications_1_side_ids),
+    JSON_CONTAINS(pp.applications_1_side_ids, :project_character_application_data_' . ($projectCharacterApplicationsDataCount + 2) . '),
+    0
+) = 1  OR 
+IF(
+    JSON_VALID(pp.applications_2_side_ids),
+    JSON_CONTAINS(pp.applications_2_side_ids, :project_character_application_data_' . ($projectCharacterApplicationsDataCount + 3) . '),
+    0
+) = 1';
+
                     $applicationsParams[] = ['project_character_application_data_' . $projectCharacterApplicationsDataCount, '%-' . $projectCharacterApplicationData['id'] . '-%'];
                     $applicationsParams[] = ['project_character_application_data_' . ($projectCharacterApplicationsDataCount + 1), '%-' . $projectCharacterApplicationData['id'] . '-%'];
-                    $projectCharacterApplicationsDataCount += 2;
+                    $applicationsParams[] = ['project_character_application_data_' . ($projectCharacterApplicationsDataCount + 2), json_encode($projectCharacterApplicationData['id'])];
+                    $applicationsParams[] = ['project_character_application_data_' . ($projectCharacterApplicationsDataCount + 3), json_encode($projectCharacterApplicationData['id'])];
+
+                    $projectCharacterApplicationsDataCount += 4;
                 }
             }
 
             $plotsData = DB->query(
-                'SELECT DISTINCT pp.*, pp2.todo AS plot_todo, pp2.code AS plot_code FROM project_plot AS pp LEFT JOIN project_plot AS pp2 ON pp2.id=pp.parent WHERE pp.project_id=:project_id AND pp.parent>0 AND (pp.applications_1_side_ids LIKE :applications_ids_1 OR pp.applications_2_side_ids LIKE :applications_ids_2' . $groupQuery . $applicationsQuery . ') ORDER BY plot_code DESC, pp.code DESC, pp.updated_at DESC',
+                'SELECT DISTINCT pp.*, pp2.todo AS plot_todo, pp2.code AS plot_code FROM project_plot AS pp LEFT JOIN project_plot AS pp2 ON pp2.id=pp.parent WHERE pp.project_id=:project_id AND pp.parent>0 AND (pp.applications_1_side_ids LIKE :applications_ids_1 OR pp.applications_2_side_ids LIKE :applications_ids_2 OR 
+IF(
+    JSON_VALID(pp.applications_1_side_ids),
+    JSON_CONTAINS(pp.applications_1_side_ids, :applications_ids_3),
+    0
+) = 1  OR 
+IF(
+    JSON_VALID(pp.applications_2_side_ids),
+    JSON_CONTAINS(pp.applications_2_side_ids, :applications_ids_4),
+    0
+) = 1' . $groupQuery . $applicationsQuery . ') ORDER BY plot_code DESC, pp.code DESC, pp.updated_at DESC',
                 array_merge([
                     ['project_id', $projectId],
                     ['applications_ids_1', '%-all' . $objId . '-%'],
                     ['applications_ids_2', '%-all' . $objId . '-%'],
+                    ['applications_ids_3', json_encode('all' . $objId)],
+                    ['applications_ids_4', json_encode('all' . $objId)],
                 ], $applicationsParams, $groupParams),
             );
         } else {
@@ -446,6 +504,8 @@ class PlotService extends BaseService
                         $tempResult .= '<i>' . $LOCALE['too_many'] . '</i>';
                     } else {
                         foreach ($applications1SideIds as $applications1SideId) {
+                            $applications1SideId = (string) $applications1SideId;
+
                             if ($applications1SideId !== '') {
                                 $query = '';
                                 $queryParams = [];
@@ -471,8 +531,6 @@ class PlotService extends BaseService
                                         $query = "SELECT * FROM project_application WHERE project_character_id=:project_character_id AND deleted_by_gamemaster='0' AND project_id=:project_id";
                                         $queryParams[] = ['project_character_id', $projectCharacterData->id->getAsInt()];
                                         $queryParams[] = ['project_id', $projectId];
-                                    } elseif ($applications1SideId === 0) {
-                                        $tempResult .= '<i>' . $LOCALE['global_story'] . '</i>, ';
                                     } else {
                                         $tempResult .= '<i>' . $LOCALE['deleted_character'] . '</i>, ';
                                     }
@@ -553,6 +611,8 @@ class PlotService extends BaseService
                             ' <i>' . $LOCALE['too_many'] . '</i>';
                     } else {
                         foreach ($applications2SideIds as $applications2SideId) {
+                            $applications2SideId = (string) $applications2SideId;
+
                             if ($applications2SideId !== '') {
                                 if (str_contains($applications2SideId, 'group')) {
                                     $projectGroupData = $groupService->get((int) str_replace('group', '', $applications2SideId), ['project_id' => $projectId]);
@@ -614,8 +674,6 @@ class PlotService extends BaseService
                                             $tempResult2 .= '<a href="' . ABSOLUTE_PATH . '/roles/' . $projectId . '/character/' . $projectCharacterData->id->getAsInt() . '/">' .
                                                 $projectCharacterData->name->get() . '</a>, ';
                                         }
-                                    } elseif ($applications2SideId === 0) {
-                                        $tempResult2 .= '<i>' . $LOCALE['global_story_2'] . '</i>, ';
                                     } else {
                                         $tempResult2 .= '<i>' . $LOCALE['deleted_character_2'] . '</i>, ';
                                     }
@@ -862,6 +920,8 @@ class PlotService extends BaseService
                         $resultFor = '';
 
                         foreach ($applications1SideIds as $applications1SideId) {
+                            $applications1SideId = (string) $applications1SideId;
+
                             if ($applications1SideId !== '') {
                                 $checkFollowup = false;
                                 $applicationsCount = 0;
@@ -878,8 +938,6 @@ class PlotService extends BaseService
                                 } elseif (str_contains($applications1SideId, 'all')) {
                                     if ($fullCharacterData[str_replace('all', '', $applications1SideId)][0]) {
                                         $resultFor .= $fullCharacterData[str_replace('all', '', $applications1SideId)][0];
-                                    } elseif ($applications1SideId === 0) {
-                                        $resultFor .= '<i>' . $LOCALE['global_story'] . '</i>';
                                     } else {
                                         $resultFor .= '<i>' . $LOCALE['deleted_character'] . '</i>';
                                     }
@@ -917,6 +975,8 @@ class PlotService extends BaseService
                         $resultAbout = '';
 
                         foreach ($applications2SideIds as $applications2SideId) {
+                            $applications2SideId = (string) $applications2SideId;
+
                             if ($applications2SideId !== '') {
                                 $checkFollowup = false;
                                 $applicationsCount = 0;
@@ -933,8 +993,6 @@ class PlotService extends BaseService
                                 } elseif (str_contains($applications2SideId, 'all')) {
                                     if ($fullCharacterData[str_replace('all', '', $applications2SideId)][0] ?? false) {
                                         $resultAbout .= $fullCharacterData[str_replace('all', '', $applications2SideId)][0];
-                                    } elseif ($applications2SideId === 0) {
-                                        $resultAbout .= '<i>' . $LOCALE['global_story_2'] . '</i>';
                                     } else {
                                         $resultAbout .= '<i>' . $LOCALE['deleted_character_2'] . '</i>';
                                     }

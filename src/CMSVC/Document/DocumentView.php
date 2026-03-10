@@ -141,6 +141,8 @@ class DocumentView extends BaseView
 
                             $showConditions = $fieldsShowIf[$field->name];
 
+                            $projectGroupIdsData = DataHelper::multiselectToArray($fullApplicationsData[$applicationRequestedId]['project_group_ids']);
+
                             foreach ($showConditions as $fieldData) {
                                 unset($match);
                                 preg_match('#(.+):(\d+)#', $fieldData, $match);
@@ -149,15 +151,18 @@ class DocumentView extends BaseView
                                 $value = $match[2];
 
                                 if ($match[1] === 'locat') {
-                                    if (preg_match('#-' . $value . '-#', $fullApplicationsData[$applicationRequestedId]['project_group_ids'])) {
+                                    if (in_array($value, $projectGroupIdsData)) {
                                         $changeToValue = true;
                                     }
                                 } else {
-                                    if ($fullApplicationsData[$applicationRequestedId]['virtual' . $key] === $value || preg_match(
-                                        '#-' . $value . '-#',
-                                        ($fullApplicationsData[$applicationRequestedId]['virtual' . $key] ?? ''),
-                                    )) {
+                                    if (($fullApplicationsData[$applicationRequestedId]['virtual' . $key] ?? null) === $value) {
                                         $changeToValue = true;
+                                    } else {
+                                        $virtualFieldData = DataHelper::multiselectToArray($fullApplicationsData[$applicationRequestedId]['virtual' . $key]);
+
+                                        if (in_array($value, $virtualFieldData)) {
+                                            $changeToValue = true;
+                                        }
                                     }
                                 }
                             }

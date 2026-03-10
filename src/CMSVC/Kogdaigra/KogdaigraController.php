@@ -272,13 +272,16 @@ class KogdaigraController extends BaseController
                 data: [],
             );
 
+            $specializ2 = DataHelper::multiselectToArray($calendarEventData['specializ2']);
+            $specializ3 = DataHelper::multiselectToArray($calendarEventData['specializ3']);
+
             foreach ($masters as $master) {
                 $duties = [];
 
                 foreach ($specialities as $speciality) {
                     if (
-                        preg_match('#-' . $speciality['id'] . '-#', $calendarEventData['specializ2'])
-                        || preg_match('#-' . $speciality['id'] . '-#', $calendarEventData['specializ3'])
+                        in_array($speciality['id'], $specializ2)
+                        || in_array($speciality['id'], $specializ3)
                     ) {
                         $duties[] = DataHelper::escapeOutput($speciality['name']);
                     }

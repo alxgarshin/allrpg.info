@@ -23,7 +23,7 @@ foreach ($result as $data) {
         // if((date('G')=='12' && $data["subs_type"]==2) || $data["subs_type"]==1) {
         /** Проверяем, хочет ли пользователь получать оповещения данного типа */
         if (
-            preg_match('#-' . $data['obj_type'] . '-#', $data['subs_objects'])
+            preg_match('#' . $data['obj_type'] . '#', $data['subs_objects'])
             || in_array($data['obj_type'], ['{project_application}', '{ruling_item_wall}'])
             || ($data['obj_type'] === '{project_application_conversation}' && $data['user_id'] !== 1)
         ) {

@@ -330,19 +330,39 @@ class ApplicationView extends BaseView
                         $plotsToCount = 0;
 
                         foreach ($plotsInfo as $plotInfo) {
-                            if (preg_match('#-' . $applicationId . '-#', ($plotInfo['applications_1_side_ids'] ?? '')) || preg_match('#-all' . $applicationData['project_character_id'] . '-#', ($plotInfo['applications_1_side_ids'] ?? ''))) {
+                            $app1SideIds = DataHelper::multiselectToArray($plotInfo['applications_1_side_ids']);
+                            $app2SideIds = DataHelper::multiselectToArray($plotInfo['applications_2_side_ids']);
+                            $hasTodo = (bool) ($plotInfo['todo'] ?? '');
+                            $groupIds = DataHelper::multiselectToArray($plotInfo['project_group_ids']);
+
+                            if (
+                                in_array($applicationId, $app1SideIds)
+                                || in_array('all' . $applicationData['project_character_id'], $app1SideIds)
+                            ) {
                                 ++$plotsFromPersonalCount;
 
-                                if (($plotInfo['todo'] ?? '') !== '' || ($plotInfo['plot_todo'] ?? '') !== '') {
+                                if ($hasTodo) {
                                     ++$plotsFromNotVisibleCount;
                                 }
-                            } elseif (preg_match('#-group(' . implode('|', $applicationData['project_group_ids']) . ')-#', ($plotInfo['applications_1_side_ids'] ?? ''))) {
+                            } elseif (
+                                array_any(
+                                    $groupIds,
+                                    static fn ($id) => in_array('group' . $id, $app1SideIds),
+                                )
+                            ) {
                                 ++$plotsFromCount;
 
-                                if (($plotInfo['todo'] ?? '') !== '' || ($plotInfo['plot_todo'] ?? '') !== '') {
+                                if ($hasTodo) {
                                     ++$plotsFromNotVisibleCount;
                                 }
-                            } elseif (preg_match('#-' . $applicationId . '-#', ($plotInfo['applications_2_side_ids'] ?? '')) || preg_match('#-all' . $applicationData['project_character_id'] . '-#', ($plotInfo['applications_2_side_ids'] ?? '')) || preg_match('#-group[' . implode('|', $applicationData['project_group_ids']) . ']-#', ($plotInfo['applications_2_side_ids'] ?? ''))) {
+                            } elseif (
+                                in_array($applicationId, $app2SideIds)
+                                || in_array('all' . $applicationData['project_character_id'], $app2SideIds)
+                                || array_any(
+                                    $groupIds,
+                                    static fn ($id) => in_array('group' . $id, $app2SideIds),
+                                )
+                            ) {
                                 ++$plotsToCount;
                             }
                         }
