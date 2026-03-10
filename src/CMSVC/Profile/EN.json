@@ -12,7 +12,7 @@
     },
     "verify_em": {
       "name": "Email verification on a website «%s»",
-      "base_text": "Good day!<br><br>We've received a request to register a user with your email on a website «%s».<br><br>To verify current email, please, follow the link: <a href=\"%s\">%s</a>.<br><br>If you haven't registered on the website, please, ignore the current message.<br><br>Have a nice day."
+      "base_text": "Good day!<br><br>We've received a request to register a user with your email on a website «%s».<br><br>To verify current email, please, follow the link: <a href=\"%s\">%s</a><br><br>If you haven't registered on the website, please, ignore the current message.<br><br>Have a nice day."
     }
   },
   "fraym_model": {
