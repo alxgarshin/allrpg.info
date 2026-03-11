@@ -26,7 +26,7 @@ class NewsView extends BaseView
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
         $RESPONSE_DATA = '';
 
-        $newsData = DataHelper::getId() > 0 ? $newsService->getOneItem(DataHelper::getId()) : $newsService->getAllItems();
+        $newsData = DataHelper::getId() > 0 ? $newsService->getOneItem((int) DataHelper::getId()) : $newsService->getAllItems();
 
         if ($newsData) {
             $RESPONSE_DATA .= '<div class="maincontent_data autocreated kind_' . KIND . '">';

@@ -18,7 +18,7 @@ class NewsService extends BaseService
 
     public function getOneItem(int $id): ?NewsEditModel
     {
-        return $this->newsEditService->get($id, ['active' => true]);
+        return $this->newsEditService->get($id, ['active' => '1']);
     }
 
     /** @return array{0: NewsEditModel[], 1: int} */

@@ -1395,7 +1395,7 @@ trait ApplicationServiceTrait
         $updatingUserData = $this->getUserService()->get(CURRENT_USER->id());
 
         foreach ($successfulResultsIds as $successfulResultsId) {
-            $applicationData = $this->arrayToModel($this->deletedApplicationsData[$successfulResultsId]) ?? $this->get($successfulResultsId);
+            $applicationData = ($this->deletedApplicationsData[$successfulResultsId] ?? false) ? $this->arrayToModel($this->deletedApplicationsData[$successfulResultsId]) : $this->get($successfulResultsId);
             $applicationName = DataHelper::escapeOutput($applicationData->sorter->get());
 
             $projectData = $this->getProjectData($applicationData->project_id->getAsInt());
