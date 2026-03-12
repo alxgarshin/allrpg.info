@@ -25,7 +25,7 @@
       },
       "list_of_social_networks": {
         "shownName": " ",
-        "defaultValue": "<div class=\"or_use_social_network_list\"><a href=\"\/vkauth\/\" title=\"Ingresar usando Vkontakte\" class=\"social_1\"><span class=\"sbi sbi-vk\"></span></a><a href=\"\/fbauth\/\" title=\"Ingresar usando Facebook\" class=\"social_2\"><span class=\"sbi sbi-fb\"></span></a></div>"
+        "defaultValue": "<div class=\"or_use_social_network_list\"><a href=\"\/vkauth\/\" title=\"Ingresar usando Vkontakte\" class=\"social_1\"><span class=\"sbi sbi-vk\"></span></a></div>"
       },
       "or_by_inputting_data": {
         "shownName": "O completa la información"

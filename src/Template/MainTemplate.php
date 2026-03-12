@@ -449,7 +449,7 @@ final class MainTemplate implements Template
             </div>
             
             <div class="footer_middle">
-                <a href="https://www.facebook.com/groups/allrpginfo/" target="_blank" class="social_network f"></a><a href="https://vk.ru/allrpginfo" target="_blank" class="social_network v"></a><a href="https://t.me/allrpginfo" target="_blank" class="social_network t"></a>
+                <a href="https://vk.ru/allrpginfo" target="_blank" class="social_network v"></a>
             </div>
             
             <div class="footer_right">

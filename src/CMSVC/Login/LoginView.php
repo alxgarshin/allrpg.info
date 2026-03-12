@@ -40,7 +40,6 @@ class LoginView extends BaseView
 <div class="text2">' . $LOCALE['enter_using'] . '</div>
 <div class="or_use_social_network_list">
 	<a href="' . ABSOLUTE_PATH . '/vkauth/" title="' . $LOCALE['enter_using_vkontakte'] . '" class="social_1"><span class="sbi sbi-vk"></span></a>
-	<a href="' . ABSOLUTE_PATH . '/fbauth/" title="' . $LOCALE['enter_using_facebook'] . '" class="social_2"><span class="sbi sbi-fb"></span></a>
 </div>
 ';
         }
