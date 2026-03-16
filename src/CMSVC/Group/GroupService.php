@@ -688,7 +688,7 @@ class GroupService extends BaseService
         foreach ($successfulResultsIds as $successfulResultsId) {
             $parent = (int) $_REQUEST['parent'][$key];
 
-            if ($_REQUEST['code'][$key] === -1) {
+            if ($_REQUEST['code'][$key] === '-1') {
                 $highestCode = DB->query(
                     'SELECT code FROM project_group WHERE (parent=' . ($parent === 0 ? $parent . ' OR parent IS NULL' : $parent) . ') ORDER BY code DESC LIMIT 1',
                     [],

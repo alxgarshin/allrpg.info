@@ -303,7 +303,7 @@ async function projectInit(withDocumentEvents, updateHash) {
 
         /** Регистрация service worker'а необходимого для PWA */
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/js/pwa_sw.min.js').catch(function (err) {
+            navigator.serviceWorker.register('/pwa_sw.min.js').catch(function (err) {
                 console.warn('Error whilst registering application service worker', err);
             });
         }

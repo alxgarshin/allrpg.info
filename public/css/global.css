@@ -1032,6 +1032,7 @@ div.multi_objects_table.excel tr.hidden {
 }
 
 div.multi_objects_table.excel div.td,
+div.multi_objects_table.excel div.tr.readonly div.td,
 div.multi_objects_table.excel div.th,
 form table.menutable td,
 form table.menutable th {
