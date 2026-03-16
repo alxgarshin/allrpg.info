@@ -388,7 +388,7 @@ class CharacterService extends BaseService
                             'project_group_ids' => DataHelper::arrayToMultiselect($applicationGroups),
                         ],
                         criteria: [
-                            'id' => $applicationData['id'],
+                            'id' => $applicationData->id->getAsInt(),
                         ],
                     );
                 }
@@ -561,7 +561,7 @@ class CharacterService extends BaseService
                             'project_group_ids' => DataHelper::arrayToMultiselect($applicationGroups),
                         ],
                         criteria: [
-                            'id' => $applicationData['id'],
+                            'id' => $applicationData->id->getAsInt(),
                         ],
                     );
                 }
