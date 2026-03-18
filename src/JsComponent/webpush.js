@@ -50,8 +50,10 @@ if (withDocumentEvents) {
                         {
                             text: LOCALE.webpush.turn_on,
                             class: 'main',
-                            click: function () {
-                                if (permission === 'granted') {
+                            click: async function () {
+                                await webpushInit();
+
+                                if (Notification.permission === 'granted') {
                                     success = true;
 
                                     _('input[name^="messaging_active"]').checked(true);

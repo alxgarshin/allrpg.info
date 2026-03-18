@@ -1,5 +1,5 @@
 // cacheName for cache versioning
-const cacheName = '20250902_1600';
+const cacheName = '20250903_1600';
 
 self.addEventListener('install', function (event) {
     // Всегда активировать новый SW немедленно, не ждать закрытия вкладок
@@ -7,12 +7,13 @@ self.addEventListener('install', function (event) {
 
     event.waitUntil(
         caches.open(cacheName).then(function (cache) {
-            const urlsToPrefetch = [
+            var urlsToPrefetch = [
                 '/offline.html',
 
                 '/js/global.min.js',
-                '/js/roles.min.js',
                 '/css/global.min.css',
+
+                '/js/roles.min.js',
 
                 '/design/networks/fb_icon.svg',
                 '/design/networks/tg_icon.svg',
@@ -440,21 +441,24 @@ self.addEventListener('fetch', function (event) {
             'woff',
             'woff2',
             'eot',
+            'json',
         ];
 
         if (ignoredExtensions.includes(extension)) {
             event.respondWith(
-                // Network-first: всегда пытаемся получить свежую версию, кэш только как fallback
-                fetch(event.request).then(function (networkResponse) {
-                    if (networkResponse && networkResponse.status === 200) {
-                        var responseClone = networkResponse.clone();
-                        caches.open(cacheName).then(function (cache) {
-                            cache.put(event.request, responseClone);
-                        });
+                caches.match(event.request).then(function (cachedResponse) {
+                    if (cachedResponse) {
+                        return cachedResponse;
                     }
-                    return networkResponse;
-                }).catch(function () {
-                    return caches.match(event.request);
+                    return fetch(event.request).then(function (networkResponse) {
+                        if (networkResponse && networkResponse.status === 200) {
+                            var responseClone = networkResponse.clone();
+                            caches.open(cacheName).then(function (cache) {
+                                cache.put(event.request, responseClone);
+                            });
+                        }
+                        return networkResponse;
+                    });
                 })
             );
         }
