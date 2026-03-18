@@ -2984,7 +2984,6 @@ window.fetch = new Proxy(window.fetch, {
         const isLocalUrl = function (url) {
             try {
                 const u = new URL(typeof url === 'string' ? url : url.url, location.href);
-                if (u.href === REFRESH_URL) return false;
                 return u.origin === location.origin;
             } catch {
                 return false;

@@ -1,5 +1,5 @@
 // cacheName for cache versioning
-const cacheName = '20250903_1600';
+const cacheName = '20250904_1600';
 
 self.addEventListener('install', function (event) {
     // Всегда активировать новый SW немедленно, не ждать закрытия вкладок
@@ -226,6 +226,16 @@ self.addEventListener('install', function (event) {
                 '/vendor/fraym/cmsvc/vkauth.js',
                 '/vendor/fraym/cmsvc/wall.js',
                 '/vendor/fraym/cmsvc/wall2.js',
+
+                '/vendor/fraym/cmsvc/actions.js?component=1',
+                '/vendor/fraym/cmsvc/application.js?component=1',
+                '/vendor/fraym/cmsvc/conversation_form.js?component=1',
+                '/vendor/fraym/cmsvc/conversations_widget.js?component=1',
+                '/vendor/fraym/cmsvc/library.js?component=1',
+                '/vendor/fraym/cmsvc/task_event.js?component=1',
+                '/vendor/fraym/cmsvc/tasks_widget.js?component=1',
+                '/vendor/fraym/cmsvc/wall_notion_conversation.js?component=1',
+                '/vendor/fraym/cmsvc/webpush.js?component=1',
 
                 '/vendor/fraym/cmsvc/agreement.css',
                 '/vendor/fraym/cmsvc/application.css',
@@ -468,7 +478,12 @@ self.addEventListener('fetch', function (event) {
         event.respondWith(
             (async () => {
                 try {
-                    return await fetch(event.request);
+                    const response = await fetch(event.request);
+                    /** 401 при истёкшей сессии — редирект на логин (критично для PWA, где нет адресной строки) */
+                    if (response.status === 401) {
+                        return Response.redirect('/login/', 302);
+                    }
+                    return response;
                 } catch (error) {
                     const cache = await caches.open(cacheName);
                     return await cache.match('/offline.html');

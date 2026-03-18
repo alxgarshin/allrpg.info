@@ -21,6 +21,13 @@ fastcgi_param PHP_VALUE "default_charset=utf-8;\n request_order=GP;\n max_input_
 #fastcgi_param PHP_FLAG "display_startup_errors=off;\n display_errors=off;\n html_errors=off;";
 #fastcgi_param PHP_VALUE "docref_root=0;\n docref_ext=0;";
 
+# Service Worker: запретить кеширование
+location = /pwa_sw.min.js {
+    root /var/www/public;
+    add_header Cache-Control "no-cache, no-store, must-revalidate" always;
+    add_header Pragma "no-cache" always;
+}
+
 location ~ \.php$ {
     root /var/www/public;
 
