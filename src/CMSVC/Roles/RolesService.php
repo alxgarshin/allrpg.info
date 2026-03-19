@@ -135,7 +135,7 @@ class RolesService extends BaseService
 
         if (is_numeric($objId)) {
             $objId = [$objId];
-        } elseif (str_contains($objId, '&open;')) {
+        } elseif (str_contains((string) $objId, '&open;')) {
             // нам прислали javascript массив
             $objId = str_replace(['&open;', '&close;'], '', $objId);
             $objId = explode(',', $objId);
@@ -1065,14 +1065,14 @@ class RolesService extends BaseService
 
         if ($this->getExcelView()) {
             $result = '<tr><td colspan="3"><b>' . $groupData['group_name'] . '</b>' . (str_contains(
-                $groupData['group_path'],
+                (string) ($groupData['group_path'] ?? ''),
                 'allrpgRolesListGroupNamePathSeparator',
             ) ? '<br>' . $groupData['group_path'] : '') . '</td></tr>' . ($groupData['group_description'] !== '' ? '<tr><td colspan="3">'
                 . TextHelper::makeURLsActive(
                     TextHelper::bbCodesInDescription($this->imageLinksToWebp($groupData['group_description'])),
                 ) . '</td></tr>' : '');
         } else {
-            $result = '<div class="allrpgRolesListGroup' . ($this->projectGamemaster ? ' editable' : '') . '" data-obj-type="' . (OBJ_TYPE === 'application' ? 'application' : 'group') . '" data-obj-id="' . $groupData['group_id'] . '" data-obj-level="' . min($groupData['group_level'] - $this->projectGroupSubstract, 6) . '">' . ($this->projectGamemaster ? ($groupData['group_disabled'] ? '<span class="sbi sbi-arrow-move group_move tooltipBottomRight disabled" title="' . $LOCALE_GROUP['messages']['disable_changes_active'] . '"></span>' : '<span class="sbi sbi-arrow-move group_move tooltipBottomRight" title="' . $LOCALE_ROLES['change_order'] . '"></span>') : '') . '<div class="allrpgRolesListGroupHeader"><div class="allrpgRolesListGroupName">' . ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/character/character/act=add&project_group_ids=-' . $groupData['group_id'] . '-&project_id=' . $this->projectData->id->getAsInt() . '"><span class="sbi sbi-user" title="' . $LOCALE_ROLES['add_character'] . '"></span></a><a href="' . ABSOLUTE_PATH . '/group/group/act=add&parent=' . $groupData['group_id'] . '&project_id=' . $projectData->id->getAsInt() . '"><span class="sbi sbi-users tooltipBottom" title="' . $LOCALE_ROLES['add_group'] . '"></span></a><a href="' . ABSOLUTE_PATH . '/group/group/' . $groupData['group_id'] . '/act=edit&project_id=' . $projectData->id->getAsInt() . '"><span class="sbi sbi-pencil" title = "' . $LOCALE_ROLES['edit'] . '"></span></a>' : '') . $groupData['group_name'] . ' </div> ' . (str_contains($groupData['group_path'], 'allrpgRolesListGroupNamePathSeparator') ? '<div class="allrpgRolesListGroupNamePath">' . $groupData['group_path'] . '</div>' : '') . '
+            $result = '<div class="allrpgRolesListGroup' . ($this->projectGamemaster ? ' editable' : '') . '" data-obj-type="' . (OBJ_TYPE === 'application' ? 'application' : 'group') . '" data-obj-id="' . $groupData['group_id'] . '" data-obj-level="' . min($groupData['group_level'] - $this->projectGroupSubstract, 6) . '">' . ($this->projectGamemaster ? ($groupData['group_disabled'] ? '<span class="sbi sbi-arrow-move group_move tooltipBottomRight disabled" title="' . $LOCALE_GROUP['messages']['disable_changes_active'] . '"></span>' : '<span class="sbi sbi-arrow-move group_move tooltipBottomRight" title="' . $LOCALE_ROLES['change_order'] . '"></span>') : '') . '<div class="allrpgRolesListGroupHeader"><div class="allrpgRolesListGroupName">' . ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/character/character/act=add&project_group_ids=-' . $groupData['group_id'] . '-&project_id=' . $this->projectData->id->getAsInt() . '"><span class="sbi sbi-user" title="' . $LOCALE_ROLES['add_character'] . '"></span></a><a href="' . ABSOLUTE_PATH . '/group/group/act=add&parent=' . $groupData['group_id'] . '&project_id=' . $projectData->id->getAsInt() . '"><span class="sbi sbi-users tooltipBottom" title="' . $LOCALE_ROLES['add_group'] . '"></span></a><a href="' . ABSOLUTE_PATH . '/group/group/' . $groupData['group_id'] . '/act=edit&project_id=' . $projectData->id->getAsInt() . '"><span class="sbi sbi-pencil" title = "' . $LOCALE_ROLES['edit'] . '"></span></a>' : '') . $groupData['group_name'] . ' </div> ' . (str_contains((string) ($groupData['group_path'] ?? ''), 'allrpgRolesListGroupNamePathSeparator') ? '<div class="allrpgRolesListGroupNamePath">' . $groupData['group_path'] . '</div>' : '') . '
 <div class="allrpgRolesListGroupDescription">' . (($groupData['group_image'] ?? false) ? '<div class="allrpgRolesListGroupDescriptionImage"><img src = "' . $this->imageLinkToWebp($groupData['group_image']) . '"></div> ' : '') . TextHelper::makeURLsActive(TextHelper::bbCodesInDescription($this->imageLinksToWebp($groupData['group_description']))) . ' </div></div>';
         }
 

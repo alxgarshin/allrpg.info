@@ -968,7 +968,7 @@ abstract class MessageHelper implements Helper
             $pathToObj = '/' . $parentObjType . '/' . $parentObjDataId . '/';
         }
 
-        $commentContent = '<div class="conversation_message' . ($commentData['parent'] > 0 ? ' child' : '') . (($commentData['icon'] ?? false) && str_contains($commentData['icon'], 'need_response') ? ' need_response' : '') . '" message_id="' . $commentData['id'] . '" obj_id="' . $commentData['id'] . '" level="' . $level . '">';
+        $commentContent = '<div class="conversation_message' . ($commentData['parent'] > 0 ? ' child' : '') . (($commentData['icon'] ?? false) && str_contains((string) $commentData['icon'], 'need_response') ? ' need_response' : '') . '" message_id="' . $commentData['id'] . '" obj_id="' . $commentData['id'] . '" level="' . $level . '">';
 
         $imagePath = null;
         $commentFromParentObj = false;
@@ -1025,14 +1025,14 @@ abstract class MessageHelper implements Helper
             ) {
                 $commentContent .= '<a class="conversation_message_more_function conversation_message_more_delete">' . $LOCALE['placeholders']['delete'] . '</a>';
 
-                if (!($commentData['icon'] ?? false) || !str_contains($commentData['icon'], 'mark_read')) {
+                if (!($commentData['icon'] ?? false) || !str_contains((string) $commentData['icon'], 'mark_read')) {
                     $commentContent .= '<a class="conversation_message_more_function conversation_message_more_mark_read">' . $LOCALE['placeholders']['mark_read'] . '</a>';
                 }
                 $commentContent .= '<a class="conversation_message_more_function conversation_message_more_need_response' .
-                    (!($commentData['icon'] ?? false) || !str_contains($commentData['icon'], 'need_response') ? '' : ' hidden') .
+                    (!($commentData['icon'] ?? false) || !str_contains((string) $commentData['icon'], 'need_response') ? '' : ' hidden') .
                     '">' . $LOCALE['placeholders']['mark_need_response'] . '</a>';
                 $commentContent .= '<a class="conversation_message_more_function conversation_message_more_has_response' .
-                    (!($commentData['icon'] ?? false) || !str_contains($commentData['icon'], 'need_response') ? ' hidden' : '') .
+                    (!($commentData['icon'] ?? false) || !str_contains((string) $commentData['icon'], 'need_response') ? ' hidden' : '') .
                     '">' . $LOCALE['placeholders']['mark_has_response'] . '</a>';
             }
 

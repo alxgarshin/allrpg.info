@@ -106,7 +106,7 @@ class MarkService extends BaseService
             $applicationData = $this->applicationService->get($conversationData['obj_id']);
 
             if ($applicationData->project_id->getAsInt() === CookieHelper::getCookie('project_id')) {
-                if (!str_contains($message['icon'], 'mark_read')) {
+                if (!str_contains(($message['icon'] ?? ''), 'mark_read')) {
                     DB->update(
                         'conversation_message',
                         [

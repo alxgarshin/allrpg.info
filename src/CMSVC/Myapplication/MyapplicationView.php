@@ -146,7 +146,7 @@ class MyapplicationView extends BaseView
         if (DataHelper::getId()) {
             $applicationData = $myapplicationService->getApplicationData();
 
-            if ($applicationData['offer_to_user_id'] === CURRENT_USER->id() && $applicationData['offer_denied'] !== '1') {
+            if ($applicationData && $applicationData['offer_to_user_id'] === CURRENT_USER->id() && $applicationData['offer_denied'] !== '1') {
                 $this->viewRights->deleteRight = false;
 
                 foreach ($this->model->elementsList as $element) {

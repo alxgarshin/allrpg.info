@@ -61,7 +61,7 @@ class PlotService extends BaseService
             $usedCharactersIds = [];
 
             foreach ($values as $value) {
-                if (str_contains($value, 'group')) {
+                if (str_contains((string) $value, 'group')) {
                     $value = preg_replace('#group#', '', $value);
                     $usedGroupsIds[] = $value;
                 } elseif ($value > 0) {
@@ -469,7 +469,7 @@ IF(
                 } else {
                     foreach ($applications1SideIds as $applications1SideId) {
                         if ($applications1SideId !== '') {
-                            if (str_contains($applications1SideId, 'group')) {
+                            if (str_contains((string) $applications1SideId, 'group')) {
                                 foreach ($objGroups as $groupId) {
                                     if (in_array('group' . $groupId, $applications1SideIds)) {
                                         $inGroupFor = true;
@@ -510,7 +510,7 @@ IF(
                                 $query = '';
                                 $queryParams = [];
 
-                                if (str_contains($applications1SideId, 'group')) {
+                                if (str_contains((string) $applications1SideId, 'group')) {
                                     $projectGroupData = $groupService->get((int) str_replace('group', '', $applications1SideId), ['project_id' => $projectId]);
 
                                     if ($projectGroupData?->name->get()) {
@@ -523,7 +523,7 @@ IF(
                                         $tempResult .= '<i>' . $LOCALE['deleted_group'] . '</i>, ';
                                     }
                                     $gotSomeCharacter = true;
-                                } elseif (str_contains($applications1SideId, 'all')) {
+                                } elseif (str_contains((string) $applications1SideId, 'all')) {
                                     $projectCharacterData = $characterService->get((int) str_replace('all', '', $applications1SideId), ['project_id' => $projectId]);
 
                                     if ($projectCharacterData?->name->get()) {
@@ -614,7 +614,7 @@ IF(
                             $applications2SideId = (string) $applications2SideId;
 
                             if ($applications2SideId !== '') {
-                                if (str_contains($applications2SideId, 'group')) {
+                                if (str_contains((string) $applications2SideId, 'group')) {
                                     $projectGroupData = $groupService->get((int) str_replace('group', '', $applications2SideId), ['project_id' => $projectId]);
 
                                     if ($projectGroupData->name->get()) {
@@ -647,7 +647,7 @@ IF(
                                         $tempResult2 .= '<i>' . $LOCALE['deleted_group_2'] . '</i>, ';
                                         $gotSomeCharacter = true;
                                     }
-                                } elseif (str_contains($applications2SideId, 'all')) {
+                                } elseif (str_contains((string) $applications2SideId, 'all')) {
                                     $projectCharacterData = $characterService->get((int) str_replace('all', '', $applications2SideId), ['project_id' => $projectId]);
 
                                     if ($projectCharacterData?->name->get()) {
@@ -926,7 +926,7 @@ IF(
                                 $checkFollowup = false;
                                 $applicationsCount = 0;
 
-                                if (str_contains($applications1SideId, 'group')) {
+                                if (str_contains((string) $applications1SideId, 'group')) {
                                     if ($fullGroupData[str_replace('group', '', $applications1SideId)][0]) {
                                         $resultFor .= $fullGroupData[str_replace('group', '', $applications1SideId)][0];
                                     } else {
@@ -935,7 +935,7 @@ IF(
                                     $applicationsCount = $fullGroupData[str_replace('group', '', $applications1SideId)][1];
                                     $checkFollowup = true;
                                     $gotSomeCharacter = true;
-                                } elseif (str_contains($applications1SideId, 'all')) {
+                                } elseif (str_contains((string) $applications1SideId, 'all')) {
                                     if ($fullCharacterData[str_replace('all', '', $applications1SideId)][0]) {
                                         $resultFor .= $fullCharacterData[str_replace('all', '', $applications1SideId)][0];
                                     } else {
@@ -981,7 +981,7 @@ IF(
                                 $checkFollowup = false;
                                 $applicationsCount = 0;
 
-                                if (str_contains($applications2SideId, 'group')) {
+                                if (str_contains((string) $applications2SideId, 'group')) {
                                     if ($fullGroupData[str_replace('group', '', $applications2SideId)][0] ?? false) {
                                         $resultAbout .= $fullGroupData[str_replace('group', '', $applications2SideId)][0];
                                     } else {
@@ -990,7 +990,7 @@ IF(
                                     $applicationsCount = $fullGroupData[str_replace('group', '', $applications2SideId)][1];
                                     $checkFollowup = true;
                                     $gotSomeCharacter = true;
-                                } elseif (str_contains($applications2SideId, 'all')) {
+                                } elseif (str_contains((string) $applications2SideId, 'all')) {
                                     if ($fullCharacterData[str_replace('all', '', $applications2SideId)][0] ?? false) {
                                         $resultAbout .= $fullCharacterData[str_replace('all', '', $applications2SideId)][0];
                                     } else {

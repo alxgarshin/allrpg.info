@@ -146,7 +146,7 @@ final class MainTemplate implements Template
 			<div id="project_control_items">';
 
             foreach ($LOCALE['project_control_items'] as $key => $data) {
-                if (str_contains($key, 'tab')) {
+                if (str_contains((string) $key, 'tab')) {
                     if ($key !== 'tab1') {
                         $anyMenuHtml .= '
                 </div>';

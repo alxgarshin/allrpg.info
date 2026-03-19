@@ -868,7 +868,7 @@ class UserService extends BaseService
                 && $userData->birth->get() !== null
                 && $userData->city->get() !== null
                 && (
-                    $userData->photo->get() !== null && !str_contains($userData->photo->get(), 'identicon')
+                    $userData->photo->get() !== null && !str_contains((string) $userData->photo->get(), 'identicon')
                 )
             ) {
                 $profileCompletion = 100;
@@ -1024,7 +1024,7 @@ class UserService extends BaseService
                 if ($imageData && file_put_contents(INNER_PATH . 'public' . $_ENV['UPLOADS_PATH'] . $uploads[2]['path'] . $tryName . '.png', $imageData)) {
                     $name = $tryName;
 
-                    if (!$photo || str_contains($photo, 'identicon')) {
+                    if (!$photo || str_contains((string) $photo, 'identicon')) {
                         DB->update(
                             tableName: 'user',
                             data: [
