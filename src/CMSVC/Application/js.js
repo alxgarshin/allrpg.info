@@ -103,6 +103,7 @@ loadJsComponent('application').then(function () {
                 self.html('<span class="sbi sbi-times"></span>');
             }
         });
+        _('input[name="money[0]"]').change();
 
         /** Выставление групп в соответствии с выбранным персонажем и переход к персонажу */
         let projectCharacterId = _('input[name="project_character_id[0]"]:checked').val();
