@@ -1,5 +1,5 @@
 // cacheName for cache versioning
-const cacheName = '20250904_1700';
+const cacheName = '20250904_1800';
 
 self.addEventListener('install', function (event) {
     // Всегда активировать новый SW немедленно, не ждать закрытия вкладок

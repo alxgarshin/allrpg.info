@@ -4222,6 +4222,7 @@ div.webpush_why>div.webpush_denied {
         z-index: 10;
         position: fixed;
         background-color: var(--color-background-main);
+        flex: none;
     }
 
     div.header>div {
