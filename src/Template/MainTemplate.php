@@ -372,16 +372,17 @@ final class MainTemplate implements Template
 <link rel="mask-icon" href="/favicons/apple-mask-icon.svg" color="#55739C">
 <link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png">
 <link rel="manifest" href="/favicons/manifest-' . mb_strtolower($LOCALE_NAME) . '.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" id="status-bar-style" content="default">
 <script>
     const themeColor = document.getElementById("theme-color");
     function switchthemeColor(usesDarkMode) {
         themeColor.content = usesDarkMode ? "#1d2632" : "#ffffff";
+        document.getElementById("status-bar-style").content = usesDarkMode ? "black" : "default";
     }
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener( "change", (e) => switchthemeColor(e.matches));
     switchthemeColor(window.matchMedia("(prefers-color-scheme: dark)").matches || false);
 </script>
-<script type="text/javascript" src="/vendor/pwacompat/pwacompat.min.js"></script>
-
 </head>
 
 <body class="allrpg">

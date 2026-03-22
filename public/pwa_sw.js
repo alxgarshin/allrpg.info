@@ -1,5 +1,5 @@
 // cacheName for cache versioning
-const cacheName = '20250904_1800';
+const cacheName = '20250904_1900';
 
 self.addEventListener('install', function (event) {
     // Всегда активировать новый SW немедленно, не ждать закрытия вкладок
@@ -317,7 +317,6 @@ self.addEventListener('install', function (event) {
                 '/vendor/nlgraph/nlgraph.min.js',
                 '/vendor/openlayers/ol.min.css',
                 '/vendor/openlayers/ol.min.js',
-                '/vendor/pwacompat/pwacompat.min.js',
                 '/vendor/qrcodereader/qr_packed.min.js',
 
                 '/vendor/fraym/js/global.min.js',
