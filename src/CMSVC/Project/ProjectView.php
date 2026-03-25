@@ -102,7 +102,7 @@ class ProjectView extends BaseView
                 <div class="control_buttons">
                     ' . (($objData->status->get() === '1' && (!$objData->oneorderfromplayer->get() || is_null($applicationData)) && $projectInfoData['individual_field_id']) || !is_null($applicationData) ? '<a href="' . ABSOLUTE_PATH . '/go/' . $objData->id->getAsInt() . '/">' . ($applicationData ? $LOCALE['view_application'] : $LOCALE_MYAPPLICATION['send_individual_application']) . '</a>' : '') . '
                     ' . (($objData->status->get() === '1' && (!$objData->oneorderfromplayer->get() || is_null($applicationData)) && $projectInfoData['team_field_id']) ? '<a href="' . ABSOLUTE_PATH . '/myapplication/act=add&project_id=' . $objData->id->getAsInt() . '&application_type=1">' . $LOCALE_MYAPPLICATION['send_team_application'] . '</a>' : '') . '
-                    ' . ($projectInfoData['group_id'] > 0 && $objData->show_roleslist->get() !== '1' ? '<a href="' . ABSOLUTE_PATH . '/roles/' . $objData->id->getAsInt() . '/">' . $LOCALE_MYAPPLICATION['roles_list'] . '</a>' : '') . '
+                    ' . (($projectInfoData['group_id'] ?? false) && $objData->show_roleslist->get() !== '1' ? '<a href="' . ABSOLUTE_PATH . '/roles/' . $objData->id->getAsInt() . '/">' . $LOCALE_MYAPPLICATION['roles_list'] . '</a>' : '') . '
 	            </div>
                 <div class="overflown_content em15"><div class="object_description">' . TextHelper::basePrepareText(DataHelper::escapeOutput($projectAccess ? $objData->description->get() : $objData->annotation->get(), EscapeModeEnum::plainHTML)) . '</div></div>
                 <a class="show_hidden">' . $LOCALE_GLOBAL['show_next'] . '</a>

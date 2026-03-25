@@ -371,7 +371,7 @@ class SearchService extends BaseService
             if (mb_strlen($content) - 150 > 0) {
                 $content = mb_substr($content, 0, 150) . '&#8230;';
             }
-            $content = mb_substr($content, 0, mb_stripos($content, $phrase)) . '<b>' . mb_substr(
+            $content = mb_substr($content, 0, mb_stripos($content, $phrase) ?: null) . '<b>' . mb_substr(
                 $content,
                 mb_stripos($content, $phrase),
                 mb_strlen($phrase),

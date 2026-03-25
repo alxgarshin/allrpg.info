@@ -22,7 +22,7 @@ class RolesView extends BaseView
 
         $rolesService = $this->service;
 
-        $projectData = $rolesService->getProjectData(DataHelper::getId());
+        $projectData = $rolesService->getProjectData((int) DataHelper::getId());
 
         if (!$projectData) {
             return null;

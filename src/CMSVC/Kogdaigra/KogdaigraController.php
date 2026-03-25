@@ -150,7 +150,7 @@ class KogdaigraController extends BaseController
                 }
 
                 $resultRow['sql_result'] = DB->rowCount();
-            } elseif ($info['deleted_flag'] === '1') {
+            } elseif (($info['deleted_flag'] ?? false) === '1') {
                 if ($allrpgId > 0) {
                     DB->delete(
                         tableName: 'calendar_event',

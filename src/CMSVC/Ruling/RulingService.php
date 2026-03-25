@@ -265,14 +265,14 @@ class RulingService extends BaseService
         $listOfTags = $rulingItemEditService->rulingTagIdsValues;
         $rulingItemsCount = DB->count('ruling_item');
 
-        $parentTagId = 0;
+        $parentTagId = null;
 
         if ($rulingTagId > 0) {
             $rulingTagData = $rulingTagEditService->get($rulingTagId);
-            $parentTagId = $rulingTagData->parent->get();
+            $parentTagId = $rulingTagData?->parent->get();
         }
 
-        if ($parentTagId > 0) {
+        if ($parentTagId) {
             $RESPONSE_DATA .= '<div class="tags_cloud_tag"><a href="' . ABSOLUTE_PATH . '/' . KIND . '/ruling_tag=' . $parentTagId . '">&larr;</a></div>';
         }
 

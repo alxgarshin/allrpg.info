@@ -534,33 +534,35 @@ class RolesService extends BaseService
                         foreach ($this->rolesDataArray as $roleData) {
                             if (($roleData['character_id'] ?? false) && ($checkingForDoubles[$roleData['character_id']] ?? false)) {
                                 /* проверяем, является ли группа родительской для данного инстанса персонажа, и видна ли она */
-                                $idInProjectGroupsList = $projectGroupsListIdToKey[$roleData['group_id']];
-                                $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList];
-                                $level = $projectGroupData[2];
+                                if ($roleData['group_id'] ?? false && $roleData['group_id'] !== '') {
+                                    $idInProjectGroupsList = $projectGroupsListIdToKey[$roleData['group_id']];
+                                    $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList];
+                                    $level = $projectGroupData[2];
 
-                                while ($level > 0 && $idInProjectGroupsList > 0) {
-                                    --$idInProjectGroupsList;
-                                    $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList] ?? [];
+                                    while ($level > 0 && $idInProjectGroupsList > 0) {
+                                        --$idInProjectGroupsList;
+                                        $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList] ?? [];
 
-                                    if ($projectGroupData && $projectGroupData[2] < $level) {
-                                        $level = $projectGroupData[2];
+                                        if ($projectGroupData && $projectGroupData[2] < $level) {
+                                            $level = $projectGroupData[2];
 
-                                        if (($projectGroupData[0] ?? false) && ($projectGroupData[0] ?? false) && is_array($charactersGroupsToRolesData[$projectGroupData[0]] ?? false)) {
-                                            while (
-                                                in_array(
-                                                    $roleData['character_id'],
-                                                    $charactersGroupsToRolesData[$projectGroupData[0]],
-                                                    true,
-                                                )
-                                            ) {
-                                                $keyInRolesDataArray = array_search(
-                                                    $roleData['character_id'],
-                                                    $charactersGroupsToRolesData[$projectGroupData[0]],
-                                                    true,
-                                                );
-                                                unset($this->rolesDataArray[$keyInRolesDataArray]['character_id']);
-                                                unset($charactersGroupsToRolesData[$projectGroupData[0]][$keyInRolesDataArray]);
-                                                // $this->rolesDataArray[$keyInRolesDataArray]['character_id'] = 'do_not_show';
+                                            if (($projectGroupData[0] ?? false) && ($projectGroupData[0] ?? false) && is_array($charactersGroupsToRolesData[$projectGroupData[0]] ?? false)) {
+                                                while (
+                                                    in_array(
+                                                        $roleData['character_id'],
+                                                        $charactersGroupsToRolesData[$projectGroupData[0]],
+                                                        true,
+                                                    )
+                                                ) {
+                                                    $keyInRolesDataArray = array_search(
+                                                        $roleData['character_id'],
+                                                        $charactersGroupsToRolesData[$projectGroupData[0]],
+                                                        true,
+                                                    );
+                                                    unset($this->rolesDataArray[$keyInRolesDataArray]['character_id']);
+                                                    unset($charactersGroupsToRolesData[$projectGroupData[0]][$keyInRolesDataArray]);
+                                                    // $this->rolesDataArray[$keyInRolesDataArray]['character_id'] = 'do_not_show';
+                                                }
                                             }
                                         }
                                     }

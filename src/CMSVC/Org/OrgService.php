@@ -181,13 +181,15 @@ class OrgService extends BaseService
     private function clearLockedRadioButtons(): void
     {
         /** Вычищаем изменение заблокированных radio-кнопок */
-        foreach ($_REQUEST['type'] as $key => $type) {
-            if (is_array($type)) {
-                if (count($type) === 1) {
-                    $correctKey = array_keys($type);
-                    $_REQUEST['type'][$key] = $correctKey[0];
-                } else {
-                    unset($_REQUEST['type'][$key]);
+        if ($_REQUEST['type'] ?? false) {
+            foreach ($_REQUEST['type'] as $key => $type) {
+                if (is_array($type)) {
+                    if (count($type) === 1) {
+                        $correctKey = array_keys($type);
+                        $_REQUEST['type'][$key] = $correctKey[0];
+                    } else {
+                        unset($_REQUEST['type'][$key]);
+                    }
                 }
             }
         }
