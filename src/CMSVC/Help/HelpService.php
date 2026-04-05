@@ -54,7 +54,7 @@ class HelpService extends BaseService
                         $supportUsersIds = [];
                         $supportUsers = DB->select(
                             'user',
-                            [['rights', '%-help-%', [OperandEnum::LIKE]]],
+                            [['rights', '%"help"%', [OperandEnum::LIKE]]],
                         );
 
                         foreach ($supportUsers as $supportUserData) {
