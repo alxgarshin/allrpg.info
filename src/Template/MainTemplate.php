@@ -373,6 +373,7 @@ final class MainTemplate implements Template
 <link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png">
 <link rel="manifest" href="/favicons/manifest-' . mb_strtolower($LOCALE_NAME) . '.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" id="status-bar-style" content="default">
 <script>
     const themeColor = document.getElementById("theme-color");
