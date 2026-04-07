@@ -454,13 +454,11 @@ class ApplicationService extends BaseService
             );
 
             foreach ($userProjectRelations as $userProjectRelation) {
-                if (!is_null($userProjectRelation['comment']) && !json_decode($userProjectRelation['comment'])) {
-                    $commentData = DataHelper::multiselectToArray($userProjectRelation['comment']);
+                $commentData = DataHelper::multiselectToArray($userProjectRelation['comment'] ?? '');
 
-                    foreach ($commentData as $possibleFilterset) {
-                        if (is_numeric($possibleFilterset)) {
-                            $this->fixedFilterSets[] = $possibleFilterset;
-                        }
+                foreach ($commentData as $possibleFilterset) {
+                    if (is_numeric($possibleFilterset)) {
+                        $this->fixedFilterSets[] = $possibleFilterset;
                     }
                 }
             }

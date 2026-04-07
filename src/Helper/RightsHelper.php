@@ -202,7 +202,7 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
                                 $allowedSections = DataHelper::multiselectToArray($comments[$key]);
 
                                 foreach ($allowedSections as $allowedSection) {
-                                    if (!is_numeric($allowedSection) && in_array($allowedSection, $LOCALE_GLOBAL['project_control_items'])) {
+                                    if (!is_numeric($allowedSection) && ($LOCALE_GLOBAL['project_control_items'][$allowedSection] ?? false)) {
                                         $addResults[] = DataHelper::addBraces($allowedSection);
                                     }
                                 }

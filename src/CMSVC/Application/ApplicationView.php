@@ -447,7 +447,7 @@ class ApplicationView extends BaseView
                             $fieldValues = $element->getValues();
 
                             foreach ($fieldValues as $value) {
-                                if ($value[0] === $filtersetValue) {
+                                if ((string) $value[0] === (string) $filtersetValue) {
                                     $filtersetName .= ': ' . $value[1];
                                     break;
                                 }

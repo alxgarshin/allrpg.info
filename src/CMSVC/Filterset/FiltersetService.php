@@ -23,7 +23,7 @@ class FiltersetService extends BaseService
     public function postCreate(array $successfulResultsIds): void
     {
         foreach ($successfulResultsIds as $successfulResultsId) {
-            $key = array_search($successfulResultsId, $_REQUEST['id']);
+            $key = array_search($successfulResultsId, $_REQUEST['id'] ?? []);
 
             $linkCleared = str_replace(
                 ABSOLUTE_PATH . '/application/object=application&action=setFilters&',
@@ -46,7 +46,10 @@ class FiltersetService extends BaseService
     public function getNameDefault(): string
     {
         if (($_REQUEST['save'] ?? false) === '1') {
-            return CookieHelper::getCookie('filters_name');
+            $filtersName = CookieHelper::getCookie('filters_name');
+            $filtersName = str_replace('&rarr;', '→', $filtersName);
+
+            return $filtersName;
         }
 
         return '';
