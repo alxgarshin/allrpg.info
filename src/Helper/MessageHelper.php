@@ -1580,7 +1580,7 @@ abstract class MessageHelper implements Helper
 
                     if (is_array($projectRights)) {
                         if (in_array('{admin}', $projectRights) || in_array('{gamemaster}', $projectRights)) {
-                            $html .= '<div class="commands"><a action_request="group/confirm_group_request" obj_id="' . $conversationMessageData['id'] . '" class="bold">' . $LOCALE['actions']['confirm_group_request'] . '</a><a action_request="group/decline_group_request" obj_id="' . $conversationMessageData['id'] . '">' . $LOCALE['actions']['decline_group_request'] . '</a></div>';
+                            $html .= '<div class="commands"><a action_request="application/confirm_group_request" obj_id="' . $conversationMessageData['id'] . '" class="bold">' . $LOCALE['actions']['confirm_group_request'] . '</a><a action_request="application/decline_group_request" obj_id="' . $conversationMessageData['id'] . '">' . $LOCALE['actions']['decline_group_request'] . '</a></div>';
                             $responseContent['commands']['confirm_group_request'] = $LOCALE['actions']['confirm_group_request'];
                             $responseContent['commands']['decline_group_request'] = $LOCALE['actions']['decline_group_request'];
                         }

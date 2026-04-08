@@ -8,7 +8,7 @@ if (el('form#form_plot')) {
             source: '/helper_application/',
             select: function () {
                 actionRequest({
-                    action: 'group/get_list_of_groups_by_character_or_application',
+                    action: 'plot/get_list_of_groups_by_character_or_application',
                     obj_id: this.obj_id,
                     obj_type: this.obj_type
                 });
@@ -17,13 +17,13 @@ if (el('form#form_plot')) {
 
         if (el('input[name="search_groups_by_name_default_application[0]"]')) {
             actionRequest({
-                action: 'group/get_list_of_groups_by_character_or_application',
+                action: 'plot/get_list_of_groups_by_character_or_application',
                 obj_id: _('input[name="search_groups_by_name_default_application[0]"]').val(),
                 obj_type: 'application'
             });
         } else if (el('input[name="search_groups_by_name_default_character[0]"]')) {
             actionRequest({
-                action: 'group/get_list_of_groups_by_character_or_application',
+                action: 'plot/get_list_of_groups_by_character_or_application',
                 obj_id: _('input[name="search_groups_by_name_default_character[0]"]').val(),
                 obj_type: 'character'
             });

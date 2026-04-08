@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\CMSVC\Application;
 
+use App\CMSVC\Group\GroupService;
 use App\Helper\RightsHelper;
 use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\Helper\CMSVCHelper;
 use Fraym\Interface\Response;
 
 /** @extends BaseController<ApplicationService> */
@@ -105,6 +107,26 @@ class ApplicationController extends BaseController
             $this->service->getListOfRoomNeighboors(
                 OBJ_ID,
             ),
+        );
+    }
+
+    public function confirmGroupRequest(): ?Response
+    {
+        /** @var GroupService */
+        $groupService = CMSVCHelper::getService('group');
+
+        return $this->asArray(
+            $groupService->confirmGroupRequest(OBJ_ID),
+        );
+    }
+
+    public function declineGroupRequest(): ?Response
+    {
+        /** @var GroupService */
+        $groupService = CMSVCHelper::getService('group');
+
+        return $this->asArray(
+            $groupService->declineGroupRequest(OBJ_ID),
         );
     }
 }

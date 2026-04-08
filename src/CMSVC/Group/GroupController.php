@@ -26,33 +26,6 @@ use Fraym\Interface\Response;
 )]
 class GroupController extends BaseController
 {
-    public function confirmGroupRequest(): ?Response
-    {
-        $groupService = $this->service;
-
-        return $this->asArray(
-            $groupService->confirmGroupRequest(OBJ_ID),
-        );
-    }
-
-    public function declineGroupRequest(): ?Response
-    {
-        $groupService = $this->service;
-
-        return $this->asArray(
-            $groupService->declineGroupRequest(OBJ_ID),
-        );
-    }
-
-    public function getListOfGroupsByCharacterOrApplication(): ?Response
-    {
-        $groupService = $this->service;
-
-        return $this->asArray(
-            $groupService->getListOfGroupsByCharacterOrApplication(OBJ_ID, OBJ_TYPE),
-        );
-    }
-
     public function getChildGroups(): ?Response
     {
         $groupService = $this->service;
