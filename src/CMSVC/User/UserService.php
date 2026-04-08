@@ -1665,31 +1665,34 @@ class UserService extends BaseService
             foreach ($usersOnlineStatuses as $key => $value) {
                 if (!$value) {
                     $userInfo = $this->get($key);
-                    $conversationDataName = false;
 
-                    if (!in_array($contactConversations[$key] ?? '', ['new', ''])) {
-                        $conversationData = DB->findObjectById($contactConversations[$key], 'conversation');
-                        $conversationDataName = DataHelper::escapeOutput($conversationData['name']);
+                    if ($userInfo) {
+                        $conversationDataName = false;
+
+                        if (!in_array($contactConversations[$key] ?? '', ['new', ''])) {
+                            $conversationData = DB->findObjectById($contactConversations[$key], 'conversation');
+                            $conversationDataName = DataHelper::escapeOutput($conversationData['name']);
+                        }
+
+                        $userDatas[] = [
+                            'dialog_name' => (
+                                $conversationDataName ?: $this->showNameExtended(
+                                    $userInfo,
+                                    true,
+                                    false,
+                                    '',
+                                    false,
+                                    false,
+                                    true,
+                                )
+                            ),
+                            'dialog_avatar' => FileHelper::getImagePath($userInfo->photo->get(), FileHelper::getUploadNumByType('user')) ??
+                                $this->createIdenticon($userInfo),
+                            'obj_id' => $contactConversations[$key],
+                            'user_id' => $userInfo->id->getAsInt(),
+                            'photoNameLink' => $this->photoNameLink($userInfo, '', false),
+                        ];
                     }
-
-                    $userDatas[] = [
-                        'dialog_name' => (
-                            $conversationDataName ?: $this->showNameExtended(
-                                $userInfo,
-                                true,
-                                false,
-                                '',
-                                false,
-                                false,
-                                true,
-                            )
-                        ),
-                        'dialog_avatar' => FileHelper::getImagePath($userInfo->photo->get(), FileHelper::getUploadNumByType('user')) ??
-                            $this->createIdenticon($userInfo),
-                        'obj_id' => $contactConversations[$key],
-                        'user_id' => $userInfo->id->getAsInt(),
-                        'photoNameLink' => $this->photoNameLink($userInfo, '', false),
-                    ];
                 }
             }
 
