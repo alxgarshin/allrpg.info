@@ -106,7 +106,7 @@ class DocumentService extends BaseService
                 }
             }
 
-            $searchQuerySql = $this->applicationService->entity->filters->getPreparedSearchQuerySql();
+            $searchQuerySql = $this->applicationService->entity->filters->getPreparedSearchQuerySql('application');
 
             $result = DB->query(
                 "SELECT
@@ -126,6 +126,7 @@ class DocumentService extends BaseService
 		t1.sorter",
                 [
                     ['project_id', $this->getActivatedProjectId()],
+                    ...$this->applicationService->entity->filters->getPreparedSearchQueryParams('application'),
                 ],
             );
 

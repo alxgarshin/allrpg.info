@@ -972,7 +972,7 @@ class MessageService extends BaseService
 
                     $applicationService = CMSVCHelper::getService('application');
 
-                    $searchQuerySql = $applicationService->entity->filters->getPreparedSearchQuerySql();
+                    $searchQuerySql = $applicationService->entity->filters->getPreparedSearchQuerySql('application');
 
                     $applicationsData = DB->query(
                         'SELECT t1.* FROM project_application t1 WHERE t1.project_id=:project_id' .
@@ -989,7 +989,7 @@ class MessageService extends BaseService
                             ['needresponse_ids', count($needresponseIds) > 0 ? $needresponseIds : '0'],
                             ['nofilloblig_ids', count($nofillobligIds) > 0 ? $nofillobligIds : '0'],
                             ['nonsettled_ids', count($nonsettledIds) > 0 ? $nonsettledIds : '0'],
-                            ...$applicationService->entity->filters->getPreparedSearchQueryParams(),
+                            ...$applicationService->entity->filters->getPreparedSearchQueryParams('application'),
                         ],
                     );
 
