@@ -10,7 +10,7 @@ use App\Helper\DateHelper;
 use Fraym\BaseObject\{BaseService, Controller};
 use Fraym\Entity\{PostChange, PostCreate, PreChange, PreDelete};
 use Fraym\Enum\OperandEnum;
-use Fraym\Helper\{DataHelper, ResponseHelper};
+use Fraym\Helper\{DataHelper, MultiselectSqlHelper, ResponseHelper};
 use Generator;
 
 /** @extends BaseService<FeeModel|FeeOptionModel> */
@@ -132,7 +132,7 @@ class FeeService extends BaseService
                     criteria: [
                         'project_id' => $this->getActivatedProjectId(),
                         'money_paid' => '0',
-                        ['project_fee_ids', '%-' . $feeId . '-%', OperandEnum::LIKE],
+                        ['project_fee_ids', (int) $feeId, [OperandEnum::JSON_CONTAINS]],
                     ],
                 );
 
@@ -210,7 +210,7 @@ class FeeService extends BaseService
 
                 foreach ($allFeeOptionsData as $allFeeOptionData) {
                     $allFeeOptions[] = $allFeeOptionData;
-                    $projectFeeIdsSelector[] = "project_fee_ids LIKE '%-" . $allFeeOptionData['id'] . "-%'";
+                    $projectFeeIdsSelector[] = MultiselectSqlHelper::contains('project_fee_ids', MultiselectSqlHelper::jsonLiteral((int) $allFeeOptionData['id']));
                 }
 
                 $applicationsData = DB->query(

@@ -11,7 +11,7 @@ use App\Helper\UniversalHelper;
 use Fraym\BaseObject\{BaseService, Controller};
 use Fraym\Element\{Attribute, Item};
 use Fraym\Enum\{EscapeModeEnum, OperandEnum};
-use Fraym\Helper\{CMSVCHelper, DataHelper, LocaleHelper};
+use Fraym\Helper\{CMSVCHelper, DataHelper, LocaleHelper, MultiselectSqlHelper};
 use Generator;
 
 #[Controller(RulingController::class)]
@@ -54,13 +54,13 @@ class RulingService extends BaseService
 
             if ($childTagIds) {
                 foreach ($childTagIds as $childTagId) {
-                    $childTagSelectString .= ' OR ruling_tag_ids LIKE "%-' . $childTagId . '-%"';
+                    $childTagSelectString .= ' OR ' . MultiselectSqlHelper::contains('ruling_tag_ids', MultiselectSqlHelper::jsonLiteral((int) $childTagId));
                 }
             }
 
             $rulingItems = $rulingItemEditService->arraysToModels(
                 DB->query(
-                    'SELECT * FROM ruling_item WHERE ruling_tag_ids LIKE "%-' . $rulingTagId . '-%"' . $childTagSelectString . ' ORDER BY name',
+                    'SELECT * FROM ruling_item WHERE ' . MultiselectSqlHelper::contains('ruling_tag_ids', MultiselectSqlHelper::jsonLiteral((int) $rulingTagId)) . $childTagSelectString . ' ORDER BY name',
                     [],
                 ),
             );
@@ -304,10 +304,10 @@ class RulingService extends BaseService
             }
 
             foreach ($childTagIds as $childTagId) {
-                $childTagSelectString .= ' OR ruling_tag_ids LIKE "%-' . $childTagId . '-%"';
+                $childTagSelectString .= ' OR ' . MultiselectSqlHelper::contains('ruling_tag_ids', MultiselectSqlHelper::jsonLiteral((int) $childTagId));
             }
 
-            $taggedRulingItemsCount = DB->query('SELECT COUNT(id) FROM ruling_item WHERE ruling_tag_ids LIKE "%-' . $rulingTagData->id->getAsInt() . '-%"' . $childTagSelectString, [], true)[0];
+            $taggedRulingItemsCount = DB->query('SELECT COUNT(id) FROM ruling_item WHERE ' . MultiselectSqlHelper::contains('ruling_tag_ids', MultiselectSqlHelper::jsonLiteral($rulingTagData->id->getAsInt())) . $childTagSelectString, [], true)[0];
 
             if ((int) $taggedRulingItemsCount > 0) {
                 $delta = ceil($taggedRulingItemsCount / $rulingItemsCount * 100);
@@ -321,7 +321,7 @@ class RulingService extends BaseService
                 $childTags = $rulingTagEditService->getAll(['id' => $childTagIds], false, ['name']);
 
                 foreach ($childTags as $childTag) {
-                    $taggedRulingItemsCount = DB->count('ruling_item', [['ruling_tag_ids', '%-' . $childTag->id->getAsInt() . '-%', [OperandEnum::LIKE]]]);
+                    $taggedRulingItemsCount = DB->count('ruling_item', [['ruling_tag_ids', $childTag->id->getAsInt(), [OperandEnum::JSON_CONTAINS]]]);
 
                     if ($taggedRulingItemsCount > 0) {
                         $delta = ceil($taggedRulingItemsCount / $rulingItemsCount * 100);

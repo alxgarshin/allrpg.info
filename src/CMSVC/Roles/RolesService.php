@@ -534,7 +534,7 @@ class RolesService extends BaseService
                         foreach ($this->rolesDataArray as $roleData) {
                             if (($roleData['character_id'] ?? false) && ($checkingForDoubles[$roleData['character_id']] ?? false)) {
                                 /* проверяем, является ли группа родительской для данного инстанса персонажа, и видна ли она */
-                                if ($roleData['group_id'] ?? false && $roleData['group_id'] !== '') {
+                                if (($roleData['group_id'] ?? false) && $roleData['group_id'] !== '') {
                                     $idInProjectGroupsList = $projectGroupsListIdToKey[$roleData['group_id']];
                                     $projectGroupData = $this->projectGroupsList[$idInProjectGroupsList];
                                     $level = $projectGroupData[2];

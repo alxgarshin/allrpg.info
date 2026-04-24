@@ -13,7 +13,7 @@ use App\CMSVC\Trait\{GamemastersListTrait, GetUpdatedAtCustomAsHTMLRendererTrait
 use App\Helper\TextHelper;
 use Fraym\BaseObject\{BaseService, Controller, DependencyInjection};
 use Fraym\Entity\{PostCreate, PreCreate};
-use Fraym\Helper\{DataHelper, LocaleHelper};
+use Fraym\Helper\{DataHelper, LocaleHelper, MultiselectSqlHelper};
 use Generator;
 
 /** @extends BaseService<PlotModel|PlotPlotModel> */
@@ -272,12 +272,8 @@ class PlotService extends BaseService
             $projectApplicationData = $forPlayer ? $this->myApplicationService->get($objId) : $this->applicationService->get($objId);
 
             if (!$forPlayer || ($projectApplicationData->status->get() === 3 && !$projectApplicationData->deleted_by_gamemaster->get() && !$projectApplicationData->deleted_by_player->get())) {
-                $applicationQuery = "pp.applications_1_side_ids LIKE '%-" . $objId . "-%' OR 
-IF(
-    JSON_VALID(pp.applications_1_side_ids),
-    JSON_CONTAINS(pp.applications_1_side_ids, '" . $objId . "'),
-    0
-) = 1";
+                $containsSide1 = static fn (string $needle): string => MultiselectSqlHelper::contains('pp.applications_1_side_ids', $needle);
+                $applicationQuery = $containsSide1(MultiselectSqlHelper::jsonLiteral((int) $objId));
 
                 $objApplicationsIds[] = $objId;
 
@@ -287,12 +283,7 @@ IF(
                 foreach ($projectApplicationGroups as $projectApplicationGroup) {
                     if ($projectApplicationGroup > 0 && !in_array($projectApplicationGroup, $groupsFound)) {
                         $groupsFound[] = $projectApplicationGroup;
-                        $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-group" . $projectApplicationGroup . "-%' OR 
-IF(
-    JSON_VALID(pp.applications_1_side_ids),
-    JSON_CONTAINS(pp.applications_1_side_ids, '\"group" . $projectApplicationGroup . "\"'),
-    0
-) = 1";
+                        $applicationQuery .= ' OR ' . $containsSide1(MultiselectSqlHelper::jsonLiteral('group' . (int) $projectApplicationGroup));
                     }
                 }
 
@@ -303,22 +294,12 @@ IF(
                         $objCharacterId = $projectCharacterData->id->getAsInt();
                         $projectCharacterGroups = $projectCharacterData->project_group_ids->get();
 
-                        $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-all" . $objCharacterId . "-%' OR 
-IF(
-    JSON_VALID(pp.applications_1_side_ids),
-    JSON_CONTAINS(pp.applications_1_side_ids, '\"all" . $objCharacterId . "\"'),
-    0
-) = 1";
+                        $applicationQuery .= ' OR ' . $containsSide1(MultiselectSqlHelper::jsonLiteral('all' . $objCharacterId));
 
                         foreach ($projectCharacterGroups as $projectCharacterGroup) {
                             if ($projectCharacterGroup > 0 && !in_array($projectCharacterGroup, $groupsFound)) {
                                 $groupsFound[] = $projectCharacterGroup;
-                                $applicationQuery .= " OR pp.applications_1_side_ids LIKE '%-group" . $projectCharacterGroup . "-%' OR 
-IF(
-    JSON_VALID(pp.applications_1_side_ids),
-    JSON_CONTAINS(pp.applications_1_side_ids, '\"group" . $projectCharacterGroup . "\"'),
-    0
-) = 1";
+                                $applicationQuery .= ' OR ' . $containsSide1(MultiselectSqlHelper::jsonLiteral('group' . (int) $projectCharacterGroup));
                             }
                         }
                     }
@@ -348,6 +329,9 @@ IF(
             $applicationsQuery = '';
             $applicationsParams = [];
 
+            $containsSide1 = static fn (string $needle): string => MultiselectSqlHelper::contains('pp.applications_1_side_ids', $needle);
+            $containsSide2 = static fn (string $needle): string => MultiselectSqlHelper::contains('pp.applications_2_side_ids', $needle);
+
             if ($projectCharacterData->id->getAsInt()) {
                 $objCharacterId = $projectCharacterData->id->getAsInt();
 
@@ -356,24 +340,12 @@ IF(
 
                 foreach ($objGroups as $projectCharacterGroup) {
                     if ($projectCharacterGroup > 0) {
-                        $groupQuery .= ' OR pp.applications_1_side_ids LIKE :project_character_group_' . $objGroupsCount . ' OR pp.applications_2_side_ids LIKE :project_character_group_' . ($objGroupsCount + 1) . ' OR 
-IF(
-    JSON_VALID(pp.applications_1_side_ids),
-    JSON_CONTAINS(pp.applications_1_side_ids, :project_character_group_' . ($objGroupsCount + 2) . '),
-    0
-) = 1  OR 
-IF(
-    JSON_VALID(pp.applications_2_side_ids),
-    JSON_CONTAINS(pp.applications_2_side_ids, :project_character_group_' . ($objGroupsCount + 3) . '),
-    0
-) = 1';
+                        $groupQuery .= ' OR ' . $containsSide1(':project_character_group_' . $objGroupsCount) . ' OR ' . $containsSide2(':project_character_group_' . ($objGroupsCount + 1));
 
-                        $groupParams[] = ['project_character_group_' . $objGroupsCount, '%-group' . $projectCharacterGroup . '-%'];
-                        $groupParams[] = ['project_character_group_' . ($objGroupsCount + 1), '%-group' . $projectCharacterGroup . '-%'];
-                        $groupParams[] = ['project_character_group_' . ($objGroupsCount + 2), json_encode('group' . $projectCharacterGroup)];
-                        $groupParams[] = ['project_character_group_' . ($objGroupsCount + 3), json_encode('group' . $projectCharacterGroup)];
+                        $groupParams[] = ['project_character_group_' . $objGroupsCount, MultiselectSqlHelper::bindValue('group' . (int) $projectCharacterGroup)];
+                        $groupParams[] = ['project_character_group_' . ($objGroupsCount + 1), MultiselectSqlHelper::bindValue('group' . (int) $projectCharacterGroup)];
 
-                        $objGroupsCount += 4;
+                        $objGroupsCount += 2;
                     }
                 }
 
@@ -388,45 +360,21 @@ IF(
 
                 foreach ($projectCharacterApplicationsData as $projectCharacterApplicationData) {
                     $objApplicationsIds[] = $projectCharacterApplicationData['id'];
-                    $applicationsQuery .= ' OR pp.applications_1_side_ids LIKE :project_character_application_data_' . $projectCharacterApplicationsDataCount . ' OR pp.applications_2_side_ids LIKE :project_character_application_data_' . ($projectCharacterApplicationsDataCount + 1) . ' OR 
-IF(
-    JSON_VALID(pp.applications_1_side_ids),
-    JSON_CONTAINS(pp.applications_1_side_ids, :project_character_application_data_' . ($projectCharacterApplicationsDataCount + 2) . '),
-    0
-) = 1  OR 
-IF(
-    JSON_VALID(pp.applications_2_side_ids),
-    JSON_CONTAINS(pp.applications_2_side_ids, :project_character_application_data_' . ($projectCharacterApplicationsDataCount + 3) . '),
-    0
-) = 1';
+                    $applicationsQuery .= ' OR ' . $containsSide1(':project_character_application_data_' . $projectCharacterApplicationsDataCount) . ' OR ' . $containsSide2(':project_character_application_data_' . ($projectCharacterApplicationsDataCount + 1));
 
-                    $applicationsParams[] = ['project_character_application_data_' . $projectCharacterApplicationsDataCount, '%-' . $projectCharacterApplicationData['id'] . '-%'];
-                    $applicationsParams[] = ['project_character_application_data_' . ($projectCharacterApplicationsDataCount + 1), '%-' . $projectCharacterApplicationData['id'] . '-%'];
-                    $applicationsParams[] = ['project_character_application_data_' . ($projectCharacterApplicationsDataCount + 2), json_encode($projectCharacterApplicationData['id'])];
-                    $applicationsParams[] = ['project_character_application_data_' . ($projectCharacterApplicationsDataCount + 3), json_encode($projectCharacterApplicationData['id'])];
+                    $applicationsParams[] = ['project_character_application_data_' . $projectCharacterApplicationsDataCount, MultiselectSqlHelper::bindValue((int) $projectCharacterApplicationData['id'])];
+                    $applicationsParams[] = ['project_character_application_data_' . ($projectCharacterApplicationsDataCount + 1), MultiselectSqlHelper::bindValue((int) $projectCharacterApplicationData['id'])];
 
-                    $projectCharacterApplicationsDataCount += 4;
+                    $projectCharacterApplicationsDataCount += 2;
                 }
             }
 
             $plotsData = DB->query(
-                'SELECT DISTINCT pp.*, pp2.todo AS plot_todo, pp2.code AS plot_code FROM project_plot AS pp LEFT JOIN project_plot AS pp2 ON pp2.id=pp.parent WHERE pp.project_id=:project_id AND pp.parent>0 AND (pp.applications_1_side_ids LIKE :applications_ids_1 OR pp.applications_2_side_ids LIKE :applications_ids_2 OR 
-IF(
-    JSON_VALID(pp.applications_1_side_ids),
-    JSON_CONTAINS(pp.applications_1_side_ids, :applications_ids_3),
-    0
-) = 1  OR 
-IF(
-    JSON_VALID(pp.applications_2_side_ids),
-    JSON_CONTAINS(pp.applications_2_side_ids, :applications_ids_4),
-    0
-) = 1' . $groupQuery . $applicationsQuery . ') ORDER BY plot_code DESC, pp.code DESC, pp.updated_at DESC',
+                'SELECT DISTINCT pp.*, pp2.todo AS plot_todo, pp2.code AS plot_code FROM project_plot AS pp LEFT JOIN project_plot AS pp2 ON pp2.id=pp.parent WHERE pp.project_id=:project_id AND pp.parent>0 AND (' . $containsSide1(':applications_ids_1') . ' OR ' . $containsSide2(':applications_ids_2') . $groupQuery . $applicationsQuery . ') ORDER BY plot_code DESC, pp.code DESC, pp.updated_at DESC',
                 array_merge([
                     ['project_id', $projectId],
-                    ['applications_ids_1', '%-all' . $objId . '-%'],
-                    ['applications_ids_2', '%-all' . $objId . '-%'],
-                    ['applications_ids_3', json_encode('all' . $objId)],
-                    ['applications_ids_4', json_encode('all' . $objId)],
+                    ['applications_ids_1', MultiselectSqlHelper::bindValue('all' . (int) $objId)],
+                    ['applications_ids_2', MultiselectSqlHelper::bindValue('all' . (int) $objId)],
                 ], $applicationsParams, $groupParams),
             );
         } else {
@@ -516,8 +464,8 @@ IF(
                                     if ($projectGroupData?->name->get()) {
                                         $tempResult .= '<a href="' . ABSOLUTE_PATH . '/group/' . $projectGroupData->id->getAsInt() . '/">' .
                                             $projectGroupData->name->get() . '</a>, ';
-                                        $query = "SELECT * FROM project_application WHERE project_group_ids LIKE :project_group_ids AND deleted_by_gamemaster='0' AND project_id=:project_id";
-                                        $queryParams[] = ['project_group_ids', '%-' . $projectGroupData->id->getAsInt() . '-%'];
+                                        $query = 'SELECT * FROM project_application WHERE ' . MultiselectSqlHelper::contains('project_group_ids', ':project_group_ids') . " AND deleted_by_gamemaster='0' AND project_id=:project_id";
+                                        $queryParams[] = ['project_group_ids', MultiselectSqlHelper::bindValue($projectGroupData->id->getAsInt())];
                                         $queryParams[] = ['project_id', $projectId];
                                     } else {
                                         $tempResult .= '<i>' . $LOCALE['deleted_group'] . '</i>, ';
@@ -624,9 +572,9 @@ IF(
                                         } elseif (!in_array($projectGroupData->rights->get(), [2, 3])) {
                                             $gotSomeCharacter = true;
                                             $projectApplications = DB->query(
-                                                "SELECT u.*, pa.sorter AS application_sorter, pc.name AS character_name, pc.id as character_id FROM project_application AS pa LEFT JOIN project_character AS pc ON pc.id=pa.project_character_id LEFT JOIN user AS u ON u.id=pa.creator_id WHERE pa.project_group_ids LIKE :project_group_ids AND pa.deleted_by_gamemaster='0' AND pa.project_id=:project_id",
+                                                'SELECT u.*, pa.sorter AS application_sorter, pc.name AS character_name, pc.id as character_id FROM project_application AS pa LEFT JOIN project_character AS pc ON pc.id=pa.project_character_id LEFT JOIN user AS u ON u.id=pa.creator_id WHERE ' . MultiselectSqlHelper::contains('pa.project_group_ids', ':project_group_ids') . " AND pa.deleted_by_gamemaster='0' AND pa.project_id=:project_id",
                                                 [
-                                                    ['project_group_ids', '%-' . $projectGroupData->id->getAsInt() . '-%'],
+                                                    ['project_group_ids', MultiselectSqlHelper::bindValue($projectGroupData->id->getAsInt())],
                                                     ['project_id', $projectId],
                                                 ],
                                             );

@@ -10,7 +10,7 @@ use App\CMSVC\User\UserModel;
 use App\Helper\UniversalHelper;
 use Fraym\BaseObject\{BaseService, Controller};
 use Fraym\Enum\OperandEnum;
-use Fraym\Helper\{CMSVCHelper, DataHelper, LocaleHelper};
+use Fraym\Helper\{CMSVCHelper, DataHelper, LocaleHelper, MultiselectSqlHelper};
 
 /** @extends BaseService<PublicationsEditModel> */
 #[Controller(PublicationController::class)]
@@ -33,7 +33,7 @@ class PublicationService extends BaseService
             $publicationsData = $publicationsEditService->getAll(
                 [
                     'active' => '1',
-                    ['tags', '%-' . $_REQUEST['tag'] . '-%', [OperandEnum::LIKE]],
+                    ['tags', (int) $_REQUEST['tag'], [OperandEnum::JSON_CONTAINS]],
                 ],
                 false,
                 ['name'],
@@ -95,7 +95,7 @@ class PublicationService extends BaseService
         $allPublicationsCount = DB->count('publication', ['active' => '1']);
 
         $tagsData = DB->query(
-            'SELECT t.id, t.name, count(p.id) as publications_count FROM tag AS t LEFT JOIN publication AS p ON p.tags LIKE CONCAT("%-",t.id,"-%") AND p.active=:active GROUP BY t.id ORDER BY t.name',
+            'SELECT t.id, t.name, count(p.id) as publications_count FROM tag AS t LEFT JOIN publication AS p ON ' . MultiselectSqlHelper::contains('p.tags', 'CAST(t.id AS JSON)') . ' AND p.active=:active GROUP BY t.id ORDER BY t.name',
             [
                 ['active', '1'],
             ],

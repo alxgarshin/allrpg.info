@@ -9,7 +9,7 @@ use App\CMSVC\Task\TaskService;
 use App\CMSVC\User\{UserModel, UserService};
 use Fraym\BaseObject\{BaseHelper, BaseModel};
 use Fraym\Enum\OperandEnum;
-use Fraym\Helper\{CMSVCHelper, DataHelper};
+use Fraym\Helper\{CMSVCHelper, DataHelper, MultiselectSqlHelper};
 use Fraym\Interface\Response;
 
 class HelperSearchController extends BaseHelper
@@ -35,7 +35,7 @@ class HelperSearchController extends BaseHelper
 
             $entityData = DB->query(
                 'SELECT * FROM user WHERE ' .
-                    ($isInputInt ? 'sid=:input' : "(LOWER(fio) LIKE :input AND hidesome NOT LIKE '%-10-%') OR (LOWER(nick) LIKE :input2 AND hidesome NOT LIKE '%-0-%')"),
+                    ($isInputInt ? 'sid=:input' : '(LOWER(fio) LIKE :input AND NOT ' . MultiselectSqlHelper::contains('hidesome', MultiselectSqlHelper::jsonLiteral(10)) . ') OR (LOWER(nick) LIKE :input2 AND NOT ' . MultiselectSqlHelper::contains('hidesome', MultiselectSqlHelper::jsonLiteral(0)) . ')'),
                 [
                     ['input', $isInputInt ? $input : '%' . mb_strtolower($input) . '%'],
                     ['input2', $isInputInt ? $input : '%' . mb_strtolower($input) . '%'],

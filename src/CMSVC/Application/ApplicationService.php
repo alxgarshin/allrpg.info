@@ -11,7 +11,7 @@ use Fraym\BaseObject\{BaseService, Controller};
 use Fraym\Element\{Item};
 use Fraym\Entity\{Filters, PostChange, PostDelete, PreChange, PreDelete};
 use Fraym\Enum\{ActEnum, ActionEnum, OperandEnum};
-use Fraym\Helper\{CMSVCHelper, CookieHelper, DataHelper, LocaleHelper, ResponseHelper};
+use Fraym\Helper\{CMSVCHelper, CookieHelper, DataHelper, LocaleHelper, MultiselectSqlHelper, ResponseHelper};
 
 /** @extends BaseService<ApplicationModel> */
 #[Controller(ApplicationController::class)]
@@ -492,10 +492,9 @@ class ApplicationService extends BaseService
         $returnArr = [];
 
         $groupData = DB->findObjectById($objId, 'project_group');
+        $distributedItemAutoset = DataHelper::multiselectToArray($groupData['distributed_item_autoset']);
 
         if ($groupData['project_id'] === $this->getActivatedProjectId()) {
-            $listOfIds = [];
-
             $deletedView = $filter === 'deleted_view';
             $noreplyView = $filter === 'noreply_view';
             $needResponseView = $filter === 'needresponse_view';
@@ -503,18 +502,20 @@ class ApplicationService extends BaseService
             $noFillObligView = $filter === 'nofilloblig_view';
             $nonSettledView = $filter === 'nonsettled_view';
 
+            $searchQuerySql = $this->entity->filters->getPreparedSearchQuerySql();
+
             $applicationsData = DB->query(
-                'SELECT t1.* FROM project_application t1 WHERE t1.project_id=:project_id AND project_group_ids NOT LIKE :project_group_ids' .
+                'SELECT t1.id, t1.project_group_ids, t1.distributed_item_ids FROM project_application t1 WHERE t1.project_id=:project_id AND ' . MultiselectSqlHelper::notContains('t1.project_group_ids', ':project_group_ids') .
                     ($deletedView ? ' AND (t1.deleted_by_gamemaster="1" OR t1.deleted_by_player="1")' : ' AND t1.deleted_by_gamemaster="0" AND t1.deleted_by_player="0"') .
                     ($paymentApproveView ? ' AND t1.money_need_approve="1"' : '') .
                     ($noreplyView ? ' AND t1.id IN (' . (count($this->getNoReplyIds()) > 0 ? ':noreply_ids' : '0') . ')' : '') .
                     ($needResponseView ? ' AND id IN (' . (count($this->getNeedResponseIds()) > 0 ? ':needresponse_ids' : '0') . ')' : '') .
                     ($noFillObligView ? ' AND t1.id IN (' . (count($this->getNoFillObligIds()) > 0 ? ':nofilloblig_ids' : '0') . ')' : '') .
                     ($nonSettledView ? ' AND t1.id IN (' . (count($this->getNonSettledIds()) > 0 ? ':nonsettled_ids' : '0') . ')' : '') .
-                    $this->entity->filters->getPreparedSearchQuerySql(),
+                    ($searchQuerySql ? ' AND ' . $searchQuerySql : ''),
                 [
                     ['project_id', $this->getActivatedProjectId()],
-                    ['project_group_ids', '%-' . $objId . '-%'],
+                    ['project_group_ids', MultiselectSqlHelper::bindValue((int) $objId)],
                     ['noreply_ids', $this->getNoReplyIds()],
                     ['needresponse_ids', $this->getNeedResponseIds()],
                     ['nofilloblig_ids', $this->getNoFillObligIds()],
@@ -523,39 +524,41 @@ class ApplicationService extends BaseService
                 ],
             );
 
+            $groupSet = false;
+
             foreach ($applicationsData as $applicationData) {
-                $listOfIds[] = $applicationData['id'];
-            }
+                $groupSet = true;
 
-            if (count($listOfIds) > 0) {
-                DB->query(
-                    'UPDATE project_application SET project_group_ids = CONCAT(project_group_ids, :obj_id) WHERE id IN (:ids)',
-                    [
-                        ['obj_id', $objId . '-'],
-                        ['ids', $listOfIds],
-                    ],
-                );
+                $projectGroupIds = array_map('intval', DataHelper::multiselectToArray($applicationData['project_group_ids']));
+                $distributedItemIds = array_map('intval', DataHelper::multiselectToArray($applicationData['distributed_item_ids']));
 
-                foreach ($listOfIds as $applicationId) {
-                    RightsHelper::addRights('{member}', '{group}', $objId, '{application}', $applicationId);
+                if (!in_array($objId, $projectGroupIds, true)) {
+                    $projectGroupIds[] = $objId;
                 }
 
-                $distributedItemAutoset = DataHelper::multiselectToArray($groupData['distributed_item_autoset']);
+                foreach ($distributedItemAutoset as $distributedItemAutosetId) {
+                    $distributedItemAutosetIdInt = (int) $distributedItemAutosetId;
 
-                if (count($distributedItemAutoset) > 0) {
-                    foreach ($distributedItemAutoset as $distributedItemAutosetId) {
-                        DB->query(
-                            'UPDATE project_application SET distributed_item_ids = CONCAT(distributed_item_ids, :distributed_item_ids) WHERE id IN (:ids) AND project_id=:project_id AND distributed_item_ids NOT LIKE :distributed_item_autoset_id',
-                            [
-                                ['distributed_item_ids', $distributedItemAutosetId . '-'],
-                                ['ids', $listOfIds],
-                                ['project_id', $this->getActivatedProjectId()],
-                                ['distributed_item_autoset_id', '%-' . $distributedItemAutosetId . '-%'],
-                            ],
-                        );
+                    if (!in_array($distributedItemAutosetIdInt, $distributedItemIds, true)) {
+                        $distributedItemIds[] = $distributedItemAutosetIdInt;
                     }
                 }
 
+                DB->update(
+                    tableName: 'project_application',
+                    data: [
+                        'project_group_ids' => DataHelper::arrayToMultiselect(array_values(array_unique($projectGroupIds))),
+                        'distributed_item_ids' => DataHelper::arrayToMultiselect(array_values(array_unique($distributedItemIds))),
+                    ],
+                    criteria: [
+                        'id' => $applicationData['id'],
+                    ],
+                );
+
+                RightsHelper::addRights('{member}', '{group}', $objId, '{application}', $applicationData['id']);
+            }
+
+            if ($groupSet) {
                 $returnArr = [
                     'response' => 'success',
                     'response_text' => $LOCALE_APPLICATION['messages']['set_special_group'],

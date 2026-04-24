@@ -523,7 +523,7 @@ class ApplicationView extends BaseView
                 ($applicationService->getNeedResponseView() ? ' AND id IN (' . (count($applicationService->getNeedResponseIds()) > 0 ? implode(',', $applicationService->getNeedResponseIds()) : '0') . ')' : '') .
                 ($applicationService->getNoFillObligView() ? ' AND t1.id IN (' . (count($applicationService->getNoFillObligIds()) > 0 ? implode(',', $applicationService->getNoFillObligIds()) : '0') . ')' : '') .
                 ($applicationService->getNonSettledView() ? ' AND id IN (' . (count($applicationService->getNonSettledIds()) > 0 ? implode(',', $applicationService->getNonSettledIds()) : '0') . ')' : '') .
-                ($searchQuerySql ? ' AND' . $searchQuerySql : ''),
+                ($searchQuerySql ? ' AND ' . $searchQuerySql : ''),
             $this->entity->filters->getPreparedSearchQueryParams(),
         );
         $applicationsDataCount = count($applicationsData);

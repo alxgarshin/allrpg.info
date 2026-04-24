@@ -86,7 +86,7 @@ class KogdaigraController extends BaseController
                 $resultRow['kogda_igra_polygon'] = $info['polygon_name'];
 
                 $allrpgGametypes = (int) $types[$info['type']];
-                $sqlValues['gametype2'] = '-' . $allrpgGametypes . '-';
+                $sqlValues['gametype2'] = $allrpgGametypes;
                 $resultRow['allrpg_gametypes'] = $allrpgGametypes;
                 $resultRow['kogda_igra_gametype'] = $info['type'];
 
@@ -138,7 +138,7 @@ class KogdaigraController extends BaseController
                     $sqlValues['creator_id'] = 15;
                     $sqlValues['created_at'] = DateHelper::getNow();
                     $sqlValues['gametype3'] = 67;
-                    $sqlValues['gametype'] = '-38-'; // gametype = 38: не определен
+                    $sqlValues['gametype'] = '38'; //не определен
 
                     DB->insert(
                         tableName: 'calendar_event',

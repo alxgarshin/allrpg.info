@@ -7,7 +7,7 @@ namespace App\CMSVC\QrpgKey;
 use App\CMSVC\Trait\{ProjectDataTrait};
 use Fraym\BaseObject\{BaseService, Controller};
 use Fraym\Entity\{PreChange, PreCreate};
-use Fraym\Helper\{CookieHelper, DataHelper, ResponseHelper};
+use Fraym\Helper\{CookieHelper, DataHelper, MultiselectSqlHelper, ResponseHelper};
 use Generator;
 
 /** @extends BaseService<QrpgKeyModel> */
@@ -153,7 +153,7 @@ class QrpgKeyService extends BaseService
     {
         $usedInApplications = [];
         $usedInApplicationsQuery = DB->query(
-            "SELECT qk.id, COUNT(pa.id) AS application_count FROM qrpg_key AS qk LEFT JOIN project_application AS pa ON pa.qrpg_key LIKE CONCAT('%-', qk.id, '-%') AND pa.project_id=qk.project_id WHERE qk.project_id=:project_id GROUP BY qk.id, pa.id",
+            'SELECT qk.id, COUNT(pa.id) AS application_count FROM qrpg_key AS qk LEFT JOIN project_application AS pa ON ' . MultiselectSqlHelper::contains('pa.qrpg_key', 'CAST(qk.id AS JSON)') . ' AND pa.project_id=qk.project_id WHERE qk.project_id=:project_id GROUP BY qk.id, pa.id',
             [
                 ['project_id', $this->getActivatedProjectId()],
             ],

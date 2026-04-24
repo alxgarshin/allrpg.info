@@ -193,7 +193,7 @@ class GroupService extends BaseService
                         'project_character',
                         [
                             'project_id' => $this->getActivatedProjectId(),
-                            ['project_group_ids', '-' . $groupData->id->getAsInt() . '-', [OperandEnum::LIKE]],
+                            ['project_group_ids', $groupData->id->getAsInt(), [OperandEnum::JSON_CONTAINS]],
                         ],
                     );
 
@@ -473,7 +473,7 @@ class GroupService extends BaseService
             ],
             criteria: [
                 'responsible_gamemaster_id' => $oldResponsibleGamemasterId,
-                ['project_group_ids', $groupId, [OperandEnum::LIKE]],
+                ['project_group_ids', $groupId, [OperandEnum::JSON_CONTAINS]],
                 'project_id' => $this->getActivatedProjectId(),
             ],
         );
@@ -736,7 +736,7 @@ class GroupService extends BaseService
                     'project_character',
                     [
                         'project_id' => $this->getActivatedProjectId(),
-                        ['project_group_ids', '-' . $savedGroupData->id->getAsInt() . '-', [OperandEnum::LIKE]],
+                        ['project_group_ids', $savedGroupData->id->getAsInt(), [OperandEnum::JSON_CONTAINS]],
                     ],
                     false,
                     null,
@@ -772,15 +772,47 @@ class GroupService extends BaseService
             $distributedItemAutoset = $savedGroupData->distributed_item_autoset->get();
 
             if (count($distributedItemAutoset) > 0) {
-                foreach ($distributedItemAutoset as $distributedItemAutosetId) {
-                    DB->query(
-                        "UPDATE project_application SET distributed_item_ids = CONCAT(distributed_item_ids, '" . $distributedItemAutosetId . "-') WHERE project_group_ids LIKE :project_group_ids AND project_id=:project_id AND distributed_item_ids NOT LIKE :distributed_item_ids",
-                        [
-                            ['project_group_ids', '%-' . $savedGroupData->id->getAsInt() . '-%'],
-                            ['project_id', $this->getActivatedProjectId()],
-                            ['distributed_item_ids', '%-' . $distributedItemAutosetId . '-%'],
-                        ],
-                    );
+                $applicationsToUpdate = DB->select(
+                    'project_application',
+                    [
+                        ['project_group_ids', $savedGroupData->id->getAsInt(), [OperandEnum::JSON_CONTAINS]],
+                        'project_id' => $this->getActivatedProjectId(),
+                    ],
+                    false,
+                    null,
+                    null,
+                    null,
+                    false,
+                    [
+                        'id',
+                        'distributed_item_ids',
+                    ],
+                );
+
+                foreach ($applicationsToUpdate as $applicationDataToUpdate) {
+                    $distributedItemIds = array_map('intval', DataHelper::multiselectToArray($applicationDataToUpdate['distributed_item_ids']));
+                    $changed = false;
+
+                    foreach ($distributedItemAutoset as $distributedItemAutosetId) {
+                        $distributedItemAutosetIdInt = (int) $distributedItemAutosetId;
+
+                        if (!in_array($distributedItemAutosetIdInt, $distributedItemIds, true)) {
+                            $distributedItemIds[] = $distributedItemAutosetIdInt;
+                            $changed = true;
+                        }
+                    }
+
+                    if ($changed) {
+                        DB->update(
+                            tableName: 'project_application',
+                            data: [
+                                'distributed_item_ids' => DataHelper::arrayToMultiselect(array_values(array_unique($distributedItemIds))),
+                            ],
+                            criteria: [
+                                'id' => $applicationDataToUpdate['id'],
+                            ],
+                        );
+                    }
                 }
             }
 

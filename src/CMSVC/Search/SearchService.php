@@ -7,7 +7,7 @@ namespace App\CMSVC\Search;
 use App\CMSVC\User\UserService;
 use Fraym\BaseObject\{BaseService, Controller};
 use Fraym\Enum\{EscapeModeEnum, OperandEnum};
-use Fraym\Helper\{CMSVCHelper, DataHelper};
+use Fraym\Helper\{CMSVCHelper, DataHelper, MultiselectSqlHelper};
 
 #[Controller(SearchController::class)]
 class SearchService extends BaseService
@@ -64,7 +64,7 @@ class SearchService extends BaseService
             $tagsContain = ' AND (';
 
             foreach ($_REQUEST['tags_contain'] as $key => $value) {
-                $tagsContain .= 's.tags LIKE "%-' . $key . '-%" OR ';
+                $tagsContain .= MultiselectSqlHelper::contains('s.tags', MultiselectSqlHelper::jsonLiteral((int) $key)) . ' OR ';
             }
             $tagsContain = mb_substr($tagsContain, 0, mb_strlen($tagsContain) - 4);
             $tagsContain .= ')';
@@ -74,7 +74,7 @@ class SearchService extends BaseService
             $tagsNotContain = ' AND (';
 
             foreach ($_REQUEST['tags_not_contain'] as $key => $value) {
-                $tagsNotContain .= 's.tags NOT LIKE "%-' . $key . '-%" AND ';
+                $tagsNotContain .= MultiselectSqlHelper::notContains('s.tags', MultiselectSqlHelper::jsonLiteral((int) $key)) . ' AND ';
             }
             $tagsNotContain = mb_substr($tagsNotContain, 0, mb_strlen($tagsNotContain) - 5);
             $tagsNotContain .= ')';
@@ -108,28 +108,12 @@ class SearchService extends BaseService
 
         if (CURRENT_USER->isLogged()) {
             $result = DB->query(
-                'SELECT s.* FROM user AS s WHERE (s.fio' . $qwertySearch . " AND (s.hidesome NOT LIKE '%-10-%' OR s.hidesome IS NULL)) OR (s.nick" . $qwertySearch . " AND (s.hidesome NOT LIKE '%-0-%' OR s.hidesome IS NULL))" . (is_numeric($qwerty) ? ' OR s.sid=' . $qwerty : '') . $region . $tagsContain . $tagsNotContain,
+                'SELECT s.* FROM user AS s WHERE (s.fio' . $qwertySearch . ' AND NOT ' . MultiselectSqlHelper::contains('s.hidesome', MultiselectSqlHelper::jsonLiteral(10)) . ') OR (s.nick' . $qwertySearch . ' AND NOT ' . MultiselectSqlHelper::contains('s.hidesome', MultiselectSqlHelper::jsonLiteral(0)) . ')' . (is_numeric($qwerty) ? ' OR s.sid=' . $qwerty : '') . $region . $tagsContain . $tagsNotContain,
                 [],
             );
 
             foreach ($result as $a) {
                 $searchResults[$i] = ['<b>' . $userService->showNameWithId($userService->arrayToModel($a), true) . '</b>'];
-
-                /*$result3 = DB->query("SELECT s.* FROM publication AS s WHERE s.author LIKE '%-" . $a["id"] . "-%' OR s.creator_id=" . $a["id"] . $tagsContain . $tagsNotContain . " ORDER BY s.updated_at DESC", []);
-                foreach ($result3 as $c) {
-                    $author = '';
-
-                    if ($c["author"] != '' && $c["author"] != '-') {
-                        $author = ', автор(-ы): ';
-                        $tryauthor = multiselectToArray(DataHelper::escapeOutput($c["author"]));
-                        $tryauthor = array_filter($tryauthor);
-                        if (count($tryauthor) > 1) {
-                            $searchResults[$i][1][] = $LOCALE['publication_co_author'] . ' «<a href="' . ABSOLUTE_PATH . '/publication/' . $c["id"] . '/">' . DataHelper::escapeOutput($c["name"]) . '</a>»';
-                        } else {
-                            $searchResults[$i][1][] = $LOCALE['publication_author'] . ' «<a href="' . ABSOLUTE_PATH . '/publication/' . $c["id"] . '/">' . DataHelper::escapeOutput($c["name"]) . '</a>»';
-                        }
-                    }
-                }*/
 
                 ++$i;
             }
@@ -169,7 +153,7 @@ class SearchService extends BaseService
             $tags = '';
 
             foreach ($result3 as $c) {
-                if (mb_stripos($a['tags'] ?? '', '-' . $c['id'] . '-') !== false) {
+                if (in_array((int) $c['id'], array_map('intval', DataHelper::multiselectToArray($a['tags'] ?? null)), true)) {
                     $tags .= DataHelper::escapeOutput($c['name']) . ', ';
                 }
             }
@@ -194,7 +178,7 @@ class SearchService extends BaseService
             $tags = '';
 
             foreach ($result3 as $c) {
-                if (mb_stripos($a['tags'] ?? '', '-' . $c['id'] . '-') !== false) {
+                if (in_array((int) $c['id'], array_map('intval', DataHelper::multiselectToArray($a['tags'] ?? null)), true)) {
                     $tags .= DataHelper::escapeOutput($c['name']) . ', ';
                 }
             }
@@ -284,7 +268,7 @@ class SearchService extends BaseService
             $tags = '';
 
             foreach ($result3 as $c) {
-                if (mb_stripos($a['tags'] ?? '', '-' . $c['id'] . '-') !== false) {
+                if (in_array((int) $c['id'], array_map('intval', DataHelper::multiselectToArray($a['tags'] ?? null)), true)) {
                     $tags .= DataHelper::escapeOutput($c['name']) . ', ';
                 }
             }
@@ -310,7 +294,7 @@ class SearchService extends BaseService
                 $tags = '';
 
                 foreach ($result3 as $c) {
-                    if (mb_stripos($a['tags'] ?? '', '-' . $c['id'] . '-') !== false) {
+                    if (in_array((int) $c['id'], array_map('intval', DataHelper::multiselectToArray($a['tags'] ?? null)), true)) {
                         $tags .= DataHelper::escapeOutput($c['name']) . ', ';
                     }
                 }
@@ -337,7 +321,7 @@ class SearchService extends BaseService
                 $tags = '';
 
                 foreach ($result3 as $c) {
-                    if (mb_stripos($a['tags'] ?? '', '-' . $c['id'] . '-') !== false) {
+                    if (in_array((int) $c['id'], array_map('intval', DataHelper::multiselectToArray($a['tags'] ?? null)), true)) {
                         $tags .= DataHelper::escapeOutput($c['name']) . ', ';
                     }
                 }
