@@ -73,10 +73,8 @@ class PublicationService extends BaseService
             if (count($authorData) > 0) {
                 foreach ($authorData as $author) {
                     if ($author) {
-                        $authorId = (int) trim($author);
-
-                        if ($authorId > 0) {
-                            $usersIdsToPreload[] = $authorId;
+                        if (is_int($author) && $author > 0) {
+                            $usersIdsToPreload[] = $author;
                         }
                     }
                 }

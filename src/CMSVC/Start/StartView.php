@@ -488,8 +488,8 @@ class StartView extends BaseView
             $authorsArray = DataHelper::multiselectToArray($rulingItemData['ruling_item_author']);
 
             foreach ($authorsArray as $author) {
-                if ((int) trim($author) > 0) {
-                    $authorResult = $userService->get(trim($author));
+                if (is_int($author) && $author > 0) {
+                    $authorResult = $userService->get($author);
                     break;
                 }
             }
