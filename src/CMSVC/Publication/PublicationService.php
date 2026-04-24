@@ -119,13 +119,11 @@ class PublicationService extends BaseService
 
             foreach ($authorData as $author) {
                 if ($author) {
-                    $authorId = (int) trim($author);
-
-                    if ($authorId > 0) {
-                        if ($this->userNames[$authorId] ?? false) {
-                            $authorResult[] = $this->userNames[$authorId];
+                    if (is_int($author) && $author > 0) {
+                        if ($this->userNames[$author] ?? false) {
+                            $authorResult[] = $this->userNames[$author];
                         } else {
-                            $authorResult[] = $this->userNames[$authorId] = $this->getUserService()->showName($this->getUserService()->get($authorId), true);
+                            $authorResult[] = $this->userNames[$author] = $this->getUserService()->showName($this->getUserService()->get($author), true);
                         }
                     }
                 }
