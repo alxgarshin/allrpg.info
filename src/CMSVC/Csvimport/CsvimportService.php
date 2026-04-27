@@ -416,10 +416,10 @@ class CsvimportService extends BaseService
                         $money = 0;
                         $moneyProvided = 0;
 
-                        if ((int) trim($applicationData[$localeDependentFields['application_paid']]) > 0 || (int) trim($applicationData[$localeDependentFields['application_left']]) > 0) {
-                            $moneyProvided = (int) trim($applicationData[$localeDependentFields['application_paid']]);
-                            $money = (int) trim($applicationData[$localeDependentFields['application_paid']]) + (int) trim(
-                                $applicationData[$localeDependentFields['application_left']],
+                        if ((int) trim((string) $applicationData[$localeDependentFields['application_paid']]) > 0 || (int) trim((string) $applicationData[$localeDependentFields['application_left']]) > 0) {
+                            $moneyProvided = (int) trim((string) $applicationData[$localeDependentFields['application_paid']]);
+                            $money = (int) trim((string) $applicationData[$localeDependentFields['application_paid']]) + (int) trim(
+                                (string) $applicationData[$localeDependentFields['application_left']],
                             );
                         }
 

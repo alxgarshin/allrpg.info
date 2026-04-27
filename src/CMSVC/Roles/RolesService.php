@@ -141,10 +141,12 @@ class RolesService extends BaseService
             $objId = explode(',', $objId);
 
             foreach ($objId as $key => $value) {
-                if (trim($value) === 'all') {
+                $value = trim((string) $value);
+
+                if ($value === 'all') {
                     $objId[$key] = 'all';
                 } else {
-                    $objId[$key] = (int) trim($value);
+                    $objId[$key] = (int) $value;
                 }
             }
         } elseif (trim($objId) === 'all') {

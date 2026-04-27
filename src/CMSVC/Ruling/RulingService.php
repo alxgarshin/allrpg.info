@@ -208,8 +208,8 @@ class RulingService extends BaseService
 
         if (count($authorsArray) > 0) {
             foreach ($authorsArray as $author) {
-                if ($author && (int) trim($author) > 0) {
-                    $authorResult[] = $userService->showName($userService->get((int) trim($author)), true);
+                if (is_int($author) && $author > 0) {
+                    $authorResult[] = $userService->showName($userService->get($author), true);
                 }
             }
         }
