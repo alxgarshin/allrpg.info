@@ -293,10 +293,8 @@ async function fraymInit(withDocumentEvents, updateHash) {
         fraymFileUploadApply(this);
     });
 
-    _('input[type="text"], input[type="password"], textarea').each(function () {
-        if (_(this).is('[placehold]')) {
-            fraymPlaceholder(this);
-        }
+    _('input[type="text"][placehold], input[type="password"][placehold], textarea[placehold]').each(function () {
+        fraymPlaceholder(this);
     });
 
     if (el('.dpkr') || el('.dpkr_time')) {

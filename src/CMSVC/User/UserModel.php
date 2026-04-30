@@ -127,7 +127,7 @@ class UserModel extends BaseModel
     public Item\Hidden $login;
 
     #[Attribute\Password(
-        repeatPasswordFieldName: 'pass2',
+        repeatPasswordFieldName: 'password_hashed2',
         minChar: 3,
         maxChar: 20,
         context: [self::CONTEXT, self::REGISTER_CONTEXT],
@@ -140,7 +140,7 @@ class UserModel extends BaseModel
         noData: true,
         context: [self::CONTEXT, self::REGISTER_CONTEXT],
     )]
-    public Item\Password $pass2;
+    public Item\Password $password_hashed2;
 
     #[Attribute\Checkbox(
         defaultValue: true,

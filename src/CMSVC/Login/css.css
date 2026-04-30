@@ -76,7 +76,7 @@ div.or_use_social_network_list a:last-child {
 
 div.or_use_social_network_list .sbi {
     width: 3em;
-    height: auto;
+    height: 3em;
     display: inline-block;
     background-size: contain;
     vertical-align: middle;

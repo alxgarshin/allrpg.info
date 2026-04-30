@@ -156,7 +156,7 @@
         "shownName": "Contraseña",
         "helpText": "Mínimo de 3 y máximo de 20 símbolos."
       },
-      "pass2": {
+      "password_hashed2": {
         "shownName": "Repetir contraseña"
       },
       "h1_2": {

@@ -40,7 +40,7 @@
         "shownName": "Password",
         "helpText": "No less than 3 and no more than 20 symbols."
       },
-      "pass2": {
+      "password_hashed2": {
         "shownName": "Repeat password"
       },
       "fio": {
