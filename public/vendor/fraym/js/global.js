@@ -116,7 +116,7 @@ let touchstartY = 0;
 let touchendY = 0;
 let swipeTimeDiff = 0;
 let swipeTimeThreshold = 200;
-let swipeDiffThreshold = 130;
+let swipeDiffThreshold = 50;
 
 /** Переменные для автоподгрузки svg из бэкграундов в DOM (для управления через css) */
 const sbiSelector = '.sbi:not(.loading):not(.loaded)';
@@ -2670,9 +2670,9 @@ function handleSwipe(elem) {
                         const anchor = selectedControl.find('a[id]');
                         const ahref = selectedControl.find('a[href]');
 
-                        if (ahref.asDomElement()) {
+                        if (ahref?.asDomElement()) {
                             updateState(ahref.attr('href'));
-                        } else if (anchor.asDomElement()) {
+                        } else if (anchor?.asDomElement()) {
                             selectedControl.click();
                         }
                     });
@@ -2988,18 +2988,30 @@ window.fetch = new Proxy(window.fetch, {
             }
         }
 
-        if (isLocalUrl) {
-            if (!jwtToken && !options.headers.Authorization) {
-                if (jwtTokenRefreshing) {
-                    await jwtTokenRefreshing.catch(() => { });
-                } else {
-                    jwtTokenRefreshing = fetch(jwtTokenRefreshUrl, { method: 'GET' })
-                        .then(r => r.text())
-                        .then(token => { jwtToken = token; })
-                        .finally(() => { jwtTokenRefreshing = null; });
+        /** Обновление jwtToken (с защитой от параллельных запросов) */
+        const refreshJwtToken = async function () {
+            if (jwtTokenRefreshing) {
+                await jwtTokenRefreshing.catch(() => { });
+                return;
+            }
 
-                    await jwtTokenRefreshing.catch(() => { });
-                }
+            jwtTokenRefreshing = fetch(jwtTokenRefreshUrl, { method: 'GET' })
+                .then(r => r.ok ? r.text() : null)
+                .then(token => { if (token) jwtToken = token; })
+                .finally(() => { jwtTokenRefreshing = null; });
+
+            await jwtTokenRefreshing.catch(() => { });
+        }
+
+        const localUrl = isLocalUrl(url);
+
+        /** Запрос на сам refresh не проксируем — иначе бесконечный цикл при 401 */
+        const refreshUrlString = (typeof url === 'string' ? url : url.url);
+        const isRefreshRequest = refreshUrlString && refreshUrlString.indexOf(jwtTokenRefreshUrl) === 0;
+
+        if (localUrl && !isRefreshRequest) {
+            if (!jwtToken && !options.headers.Authorization) {
+                await refreshJwtToken();
             }
 
             if (jwtToken) {
@@ -3012,6 +3024,22 @@ window.fetch = new Proxy(window.fetch, {
             response = await fetch.apply(thisArg, [url, options]);
         } catch {
             return new Response(null, { status: 0, statusText: "NetworkError" });
+        }
+
+        /** Если токен протух (401) — сбросить, обновить и повторить запрос один раз */
+        if (localUrl && !isRefreshRequest && response.status === 401) {
+            jwtToken = undefined;
+            await refreshJwtToken();
+
+            if (jwtToken) {
+                options.headers.Authorization = 'Bearer ' + jwtToken;
+
+                try {
+                    response = await fetch.apply(thisArg, [url, options]);
+                } catch {
+                    return new Response(null, { status: 0, statusText: "NetworkError" });
+                }
+            }
         }
 
         return response;
