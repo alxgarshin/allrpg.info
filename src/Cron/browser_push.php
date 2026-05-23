@@ -7,6 +7,13 @@ use Minishlink\WebPush\{MessageSentReport, Subscription, WebPush};
 
 require_once __DIR__ . '/../../public/fraym.php';
 
+/**
+ * Бюджет времени общий с subs.php (когда инклудимся из него).
+ * При самостоятельном запуске инициализируем сами.
+ */
+$startTime ??= microtime(true);
+$timeBudget ??= 50.0;
+
 $auth = [
     'VAPID' => [
         'subject' => 'mailto:' . $_ENV['NOTIFY_EMAIL'],
@@ -24,6 +31,11 @@ $counter = 0;
 $result = DB->query('SELECT s.*, u.subs_type, u.subs_objects, ups.endpoint, ups.p256dh, ups.auth, ups.content_encoding FROM subscription_push s LEFT JOIN user u ON u.id=s.user_id LEFT JOIN user__push_subscriptions ups ON ups.user_id=s.user_id', []);
 
 foreach ($result as $data) {
+    /** Превысили бюджет — уже поставленные в очередь $webPush уведомления улетят на flush() ниже */
+    if (microtime(true) - $startTime > $timeBudget) {
+        break;
+    }
+
     if (DataHelper::clearBraces($data['obj_type']) === 'application/application') {
         $data['obj_type'] = 'application';
     }

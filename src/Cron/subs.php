@@ -7,6 +7,26 @@ use Fraym\Helper\{DataHelper, EmailHelper};
 
 require_once __DIR__ . '/../../public/fraym.php';
 
+/**
+ * Лок против параллельного запуска: если предыдущий крон ещё работает
+ * (массовая рассылка не уложилась в минуту) — молча выходим, чтобы
+ * не разослать одни и те же сообщения повторно.
+ */
+$lockFile = __DIR__ . '/../../var/log/cron/subs.lock';
+$lockHandle = fopen($lockFile, 'c');
+
+if ($lockHandle === false || !flock($lockHandle, LOCK_EX | LOCK_NB)) {
+    exit;
+}
+
+/**
+ * Бюджет времени на цепочку subs.php + browser_push.php.
+ * Останавливаем рассылку чуть раньше минуты, чтобы крон следующей минуты
+ * мог взять лок и продолжить с остатка очереди.
+ */
+$startTime = microtime(true);
+$timeBudget = 50.0;
+
 /** Выставляем счетчик количества писем */
 $counter = 0;
 
@@ -14,6 +34,11 @@ $counter = 0;
 $result = DB->query('SELECT s.*, u.subs_type, u.subs_objects, u.em, u.em_verified FROM subscription s LEFT JOIN user u ON u.id=s.user_id', []);
 
 foreach ($result as $data) {
+    /** Превысили бюджет — остаток обработает следующий крон */
+    if (microtime(true) - $startTime > $timeBudget) {
+        break;
+    }
+
     /** Проверяем не выставлена ли у пользователя подписка = "никогда" */
     if ($data['subs_type'] !== 10 && $data['em'] !== '' && $data['em_verified'] === '1') {
         /** Проверяем, хочет ли пользователь получать оповещения сразу */
