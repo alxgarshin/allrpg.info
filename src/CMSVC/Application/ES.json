@@ -82,14 +82,14 @@
       "transfer_application_cancel_success": "Oferta de solicitud cancelada.",
       "application_autonewrole_success": "Solicitud separada correctamente para un nuevo personaje en los mismos grupos.",
       "application_change_to_gamemasters_subject": "El Gamemaster cambió la solicitud «%s» en el proyecto «%s»",
-      "application_change_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%speople\/%s\/\">«%s»<\/a> ha sido modificada por <a href=\"%speople\/%s\/\">el gamemaster «%s»<\/a>.",
+      "application_change_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%s\/application\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%s\/people\/%s\/\">«%s»<\/a> ha sido modificada por <a href=\"%s\/people\/%s\/\">el gamemaster «%s»<\/a>.",
       "application_change_to_player_subject": "Tu solicitud «%s» en el proyecto «%s» ha sido modificada",
-      "application_change_to_player_message": "¡Buen día!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Tu solicitud «%s»<\/a> ha sido modificada Modificado <a href=\"%speople\/%s\/\">por el gamemaster «%s»<\/a>.",
+      "application_change_to_player_message": "¡Buen día!<br>\r\n<a href=\"%s\/myapplication\/%s\/\">Tu solicitud «%s»<\/a> ha sido modificada Modificado <a href=\"%s\/people\/%s\/\">por el gamemaster «%s»<\/a>.",
       "application_deleted_success": "La solicitud se eliminó correctamente de la lista de solicitudes y el jugador recibió una notificación por correo electrónico.",
       "application_delete_to_gamemasters_subject": "El gamemaster eliminó la solicitud «%s» en el proyecto «%s».",
-      "application_delete_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%speople\/%s\/\">«%s»<\/a> ha sido eliminada por el <a href=\"%speople\/%s\/\">gamemaster «%s»<\/a>.",
+      "application_delete_to_gamemasters_message": "¡Buen día!<br>\r\n<a href=\"%s\/application\/%s\/act=edit&project_id=%s\">La solicitud «%s»<\/a> del participante <a href=\"%s\/people\/%s\/\">«%s»<\/a> ha sido eliminada por el <a href=\"%s\/people\/%s\/\">gamemaster «%s»<\/a>.",
       "application_delete_to_player_subject": "Tu aplicación «%s» en el proyecto «%s» ha sido eliminada",
-      "application_delete_to_player_message": "¡Buen día!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Tu aplicación «%s»<\/a> ha sido eliminada <a href=\"%speople\/%s\/\">por gamemaster «%s»<\/a>.",
+      "application_delete_to_player_message": "¡Buen día!<br>\r\n<a href=\"%s\/myapplication\/%s\/\">Tu aplicación «%s»<\/a> ha sido eliminada <a href=\"%s\/people\/%s\/\">por gamemaster «%s»<\/a>.",
       "application_declined": "El usuario rechazó la oferta de la aplicación."
     }
   },

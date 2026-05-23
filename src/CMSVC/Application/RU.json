@@ -82,14 +82,14 @@
       "transfer_application_cancel_success": "Предложение заявки другому игроку было отменено.",
       "application_autonewrole_success": "Заявка успешно выделена в нового персонажа в тех же группах.",
       "application_change_to_gamemasters_subject": "Мастером изменена заявка «%s» проекта «%s»",
-      "application_change_to_gamemasters_message": "Добрый день.<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Заявка «%s»<\/a> игрока <a href=\"%speople\/%s\/\">«%s»<\/a> была изменена <a href=\"%speople\/%s\/\">мастером «%s»<\/a>.",
+      "application_change_to_gamemasters_message": "Добрый день.<br>\r\n<a href=\"%s\/application\/%s\/act=edit&project_id=%s\">Заявка «%s»<\/a> игрока <a href=\"%s\/people\/%s\/\">«%s»<\/a> была изменена <a href=\"%s\/people\/%s\/\">мастером «%s»<\/a>.",
       "application_change_to_player_subject": "Ваша заявка «%s» проекта «%s» была изменена",
-      "application_change_to_player_message": "Добрый день.<br>\r\n<a href=\"%smyapplication\/%s\/\">Ваша заявка «%s»<\/a> была изменена <a href=\"%speople\/%s\/\">мастером «%s»<\/a>.",
+      "application_change_to_player_message": "Добрый день.<br>\r\n<a href=\"%s\/myapplication\/%s\/\">Ваша заявка «%s»<\/a> была изменена <a href=\"%s\/people\/%s\/\">мастером «%s»<\/a>.",
       "application_deleted_success": "Заявка успешно удалена из списка заявок, игроку отправлено e-mail оповещение.",
       "application_delete_to_gamemasters_subject": "Мастером удалена заявка «%s» проекта «%s»",
-      "application_delete_to_gamemasters_message": "Добрый день.<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Заявка «%s»<\/a> игрока <a href=\"%speople\/%s\/\">«%s»<\/a> была удалена <a href=\"%speople\/%s\/\">мастером «%s»<\/a>.",
+      "application_delete_to_gamemasters_message": "Добрый день.<br>\r\n<a href=\"%s\/application\/%s\/act=edit&project_id=%s\">Заявка «%s»<\/a> игрока <a href=\"%s\/people\/%s\/\">«%s»<\/a> была удалена <a href=\"%s\/people\/%s\/\">мастером «%s»<\/a>.",
       "application_delete_to_player_subject": "Ваша заявка «%s» проекта «%s» была удалена",
-      "application_delete_to_player_message": "Добрый день.<br>\r\n<a href=\"%smyapplication\/%s\/\">Ваша заявка «%s»<\/a> была удалена <a href=\"%speople\/%s\/\">мастером «%s»<\/a>.",
+      "application_delete_to_player_message": "Добрый день.<br>\r\n<a href=\"%s\/myapplication\/%s\/\">Ваша заявка «%s»<\/a> была удалена <a href=\"%s\/people\/%s\/\">мастером «%s»<\/a>.",
       "application_declined": "Предложение заявки было отклонено игроком."
     }
   },

@@ -82,14 +82,14 @@
       "transfer_application_cancel_success": "Application offer was canceled.",
       "application_autonewrole_success": "Application was successfully separated into a new character in same groups.",
       "application_change_to_gamemasters_subject": "Gamemaster changed application «%s» in project «%s»",
-      "application_change_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%speople\/%s\/\">«%s»<\/a> has been changed by <a href=\"%speople\/%s\/\">gamemaster «%s»<\/a>.",
+      "application_change_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%s\/application\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%s\/people\/%s\/\">«%s»<\/a> has been changed by <a href=\"%s\/people\/%s\/\">gamemaster «%s»<\/a>.",
       "application_change_to_player_subject": "Your application «%s» in project «%s» has been changed",
-      "application_change_to_player_message": "Good day!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Your application «%s»<\/a> has been changed <a href=\"%speople\/%s\/\">by gamemaster «%s»<\/a>.",
+      "application_change_to_player_message": "Good day!<br>\r\n<a href=\"%s\/myapplication\/%s\/\">Your application «%s»<\/a> has been changed <a href=\"%s\/people\/%s\/\">by gamemaster «%s»<\/a>.",
       "application_deleted_success": "Application was successfully removed from applications list, player was notified by e-mail.",
       "application_delete_to_gamemasters_subject": "Gamemaster deleted application «%s» in project «%s»",
-      "application_delete_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%sapplication\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%speople\/%s\/\">«%s»<\/a> has been deleted by <a href=\"%speople\/%s\/\">gamemaster «%s»<\/a>.",
+      "application_delete_to_gamemasters_message": "Good day!<br>\r\n<a href=\"%s\/application\/%s\/act=edit&project_id=%s\">Application «%s»<\/a> of participant <a href=\"%s\/people\/%s\/\">«%s»<\/a> has been deleted by <a href=\"%s\/people\/%s\/\">gamemaster «%s»<\/a>.",
       "application_delete_to_player_subject": "Your application «%s» in project «%s» has been deleted",
-      "application_delete_to_player_message": "Good day!<br>\r\n<a href=\"%s%smyapplication\/%s\/\">Your application «%s»<\/a> has been deleted <a href=\"%speople\/%s\/\">by gamemaster «%s»<\/a>.",
+      "application_delete_to_player_message": "Good day!<br>\r\n<a href=\"%s\/myapplication\/%s\/\">Your application «%s»<\/a> has been deleted <a href=\"%s\/people\/%s\/\">by gamemaster «%s»<\/a>.",
       "application_declined": "Application offer was declined by user."
     }
   },
