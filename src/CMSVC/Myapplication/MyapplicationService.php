@@ -186,14 +186,14 @@ class MyapplicationService extends BaseService
 
                 if (($checkPkPaymentType['id'] ?? null) === $projectPaymentTypeData['id']) {
                     //оплата PayKeeper
-                    $serverPaykeeper = $projectData['paykeeper_server'];
+                    $serverPaykeeper = $projectData->paykeeper_server->get();
 
                     /* получение токена */
                     $pkToken = false;
                     $pkHeaders = [];
                     $pkHeaders[] = 'Content-Type: application/x-www-form-urlencoded';
                     $pkHeaders[] = 'Authorization: Basic ' . base64_encode(
-                        $projectData['paykeeper_login'] . ':' . $projectData['paykeeper_pass'],
+                        $projectData->paykeeper_login->get() . ':' . $projectData->paykeeper_pass->get(),
                     );
 
                     $ch = curl_init();
@@ -285,8 +285,8 @@ class MyapplicationService extends BaseService
                     curl_close($ch);
                 } elseif (($checkYkPaymentType['id'] ?? null) === $projectPaymentTypeData['id']) {
                     //оплата Юkassа
-                    $appId = $projectData['yk_acc_id'];
-                    $appSecret = $projectData['yk_code'];
+                    $appId = $projectData->yk_acc_id->get();
+                    $appSecret = $projectData->yk_code->get();
 
                     $fields = [
                         'amount' => [
@@ -356,7 +356,7 @@ class MyapplicationService extends BaseService
                         'paymentSystem.limitIds' => (string) $_ENV['PAW_UNIT_ID'],
                     ];
                     $orderData['MNT_SIGNATURE'] = md5(
-                        $orderData['MNT_ID'] . $orderData['MNT_TRANSACTION_ID'] . $orderData['MNT_AMOUNT'] . ($projectData->currency->get() === 'RUR' ? 'RUB' : $projectData->currency->get()) . $orderData['MNT_SUBSCRIBER_ID'] . '0' . $projectData['paw_code'],
+                        $orderData['MNT_ID'] . $orderData['MNT_TRANSACTION_ID'] . $orderData['MNT_AMOUNT'] . ($projectData->currency->get() === 'RUR' ? 'RUB' : $projectData->currency->get()) . $orderData['MNT_SUBSCRIBER_ID'] . '0' . $projectData->paw_code->get(),
                     );
                     $redirectTo = $_ENV['PAW_PAYMENT_FORM'] . '?' . http_build_query($orderData);
                 } else {
@@ -563,8 +563,10 @@ class MyapplicationService extends BaseService
             if ($checkApplicationPresent && !($projectData['oneorderfromplayer'] !== '1' && $characterId > 0)) {
                 ResponseHelper::redirect(ABSOLUTE_PATH . '/' . KIND . '/' . $checkApplicationPresent->id->get() . '/');
             } else {
+                $characterData = [];
+
                 if ($characterId > 0) {
-                    $characterData = DB->findObjectById($characterId, 'project_character');
+                    $characterData = DB->findObjectById($characterId, 'project_character') ?? [];
                 }
 
                 ResponseHelper::redirect(
@@ -1101,7 +1103,7 @@ class MyapplicationService extends BaseService
                 data: array_merge(
                     [
                         'money' => $money,
-                        'money_paid' => (int) $money > 0 && $newApplicationModel->money_provided->get() >= (int) $money ? '1' : '0',
+                        'money_paid' => (string) (int) $money > 0 && $newApplicationModel->money_provided->get() >= (int) $money ? '1' : '0',
                     ],
                     $feeUpdate,
                 ),

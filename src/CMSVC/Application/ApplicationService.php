@@ -1122,7 +1122,7 @@ class ApplicationService extends BaseService
             DB->update(
                 tableName: 'project_application',
                 data: [
-                    'money_paid' => (int) ($currentApplication->money_provided->get() >= $currentApplication->money->get()),
+                    'money_paid' => (string) (int) ($currentApplication->money_provided->get() >= $currentApplication->money->get()),
                 ],
                 criteria: [
                     'id' => $successfulResultsId,
