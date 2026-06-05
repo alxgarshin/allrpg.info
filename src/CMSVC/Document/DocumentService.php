@@ -10,7 +10,7 @@ use App\CMSVC\Trait\{ProjectDataTrait};
 use App\CMSVC\User\UserService;
 use Fraym\BaseObject\{BaseService, Controller, DependencyInjection};
 use Fraym\Element\{Attribute, Item};
-use Fraym\Helper\DataHelper;
+use Fraym\Helper\{DataHelper, ObjectsHelper};
 use Fraym\Interface\ElementItem;
 
 /** @extends BaseService<DocumentModel> */
@@ -130,6 +130,9 @@ class DocumentService extends BaseService
                 ],
             );
 
+            /** Короткое имя класса модели для ключа кэша _MODELINSTANCES (см. освобождение ниже) */
+            $userModelClass = ObjectsHelper::getClassShortNameFromCMSVCObject($this->userService->model);
+
             foreach ($result as $applicationData) {
                 $userModelInstance = $this->userService->arrayToModel($applicationData);
 
@@ -137,6 +140,16 @@ class DocumentService extends BaseService
                     $applicationData['project_application_id'],
                     DataHelper::escapeOutput($applicationData['sorter']) . ' (' . $this->userService->showNameWithId($userModelInstance, false) . ')',
                 ];
+
+                /**
+                 * arrayToModel() сохраняет модель в CACHE['_MODELINSTANCES'][$userModelClass][$id]
+                 * навсегда — обычный unset() не освобождает память, т.к. кэш держит ссылку.
+                 * На больших проектах это N клонов UserModel = утечка. Принудительно
+                 * освобождаем слот кэша (метода удаления в CacheService нет, перезаписываем на null).
+                 */
+                if (isset($applicationData['id'])) {
+                    CACHE->setToCache('_MODELINSTANCES', $applicationData['id'], null, $userModelClass);
+                }
 
                 unset($userModelInstance);
 
