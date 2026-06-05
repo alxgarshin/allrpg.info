@@ -108,15 +108,20 @@ class DocumentView extends BaseView
 
 <body>';
 
+        /** Шапку отдаём сразу: документы стримим по одному, чтобы не держать в памяти весь результат и весь вывод разом */
+        echo($RESPONSE_DATA);
+        $RESPONSE_DATA = '';
+
         if ($templateData->content->get()) {
-            $fullApplicationsData = $this->service->fullApplicationsData;
             $fields = $this->service->fields;
             $fieldsShowIf = $this->service->fieldsShowIf;
             $plotService = $this->service->plotService;
 
             $templateContent = $templateData->content->get();
 
-            foreach ($fullApplicationsData as $applicationRequestedId => $data) {
+            foreach ($this->service->getApplicationsData() as $applicationData) {
+                /** Разворачиваем allinfo только здесь и только для одной заявки — пик памяти держится на одной строке */
+                $data = array_merge($applicationData, DataHelper::unmakeVirtual($applicationData['allinfo']));
                 $applicationRequestedId = $data['project_application_id'];
                 $document = $templateContent;
 
@@ -125,7 +130,7 @@ class DocumentView extends BaseView
                         if ($field->name === 'plots_data') {
                             $field->set($plotService->generateAllPlots($this->service->getActivatedProjectId(), '{application}', $applicationRequestedId, true));
                         } else {
-                            $fieldData = $fullApplicationsData[$applicationRequestedId][$field->name] ?? null;
+                            $fieldData = $data[$field->name] ?? null;
 
                             if ($fieldData) {
                                 /** @phpstan-ignore-next-line */
@@ -141,7 +146,7 @@ class DocumentView extends BaseView
 
                             $showConditions = $fieldsShowIf[$field->name];
 
-                            $projectGroupIdsData = DataHelper::multiselectToArray($fullApplicationsData[$applicationRequestedId]['project_group_ids']);
+                            $projectGroupIdsData = DataHelper::multiselectToArray($data['project_group_ids']);
 
                             foreach ($showConditions as $fieldData) {
                                 unset($match);
@@ -155,10 +160,10 @@ class DocumentView extends BaseView
                                         $changeToValue = true;
                                     }
                                 } else {
-                                    if (($fullApplicationsData[$applicationRequestedId]['virtual' . $key] ?? null) === $value) {
+                                    if (($data['virtual' . $key] ?? null) === $value) {
                                         $changeToValue = true;
                                     } else {
-                                        $virtualFieldData = DataHelper::multiselectToArray($fullApplicationsData[$applicationRequestedId]['virtual' . $key]);
+                                        $virtualFieldData = DataHelper::multiselectToArray($data['virtual' . $key]);
 
                                         if (in_array($value, $virtualFieldData)) {
                                             $changeToValue = true;
@@ -175,14 +180,15 @@ class DocumentView extends BaseView
                         );
                     }
                 }
-                $RESPONSE_DATA .= $document;
+
+                echo($document);
+
+                unset($data, $document);
             }
         }
 
-        $RESPONSE_DATA .= '</body>
-</html>';
-
-        echo($RESPONSE_DATA);
+        echo('</body>
+</html>');
         exit;
     }
 }

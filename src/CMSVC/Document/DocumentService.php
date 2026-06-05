@@ -22,8 +22,6 @@ class DocumentService extends BaseService
     /** @var ElementItem[] */
     public array $fields = [];
     public array $fieldsShowIf = [];
-    public array $listOfRolesValues = [];
-    public array $fullApplicationsData = [];
     public string $fieldsSet = '';
     public array $fieldsNames = [];
 
@@ -43,8 +41,6 @@ class DocumentService extends BaseService
         /** Собираем список всех допустимых полей для подсказки */
         $fields = [];
         $fieldsShowIf = [];
-        $listOfRolesValues = [];
-        $fullApplicationsData = [];
 
         $projectGroupsData = DB->getTreeOfItems(
             false,
@@ -105,59 +101,6 @@ class DocumentService extends BaseService
                     }
                 }
             }
-
-            $searchQuerySql = $this->applicationService->entity->filters->getPreparedSearchQuerySql('application');
-
-            $result = DB->query(
-                "SELECT
-		t1.*,
-		u.*,
-		t1.id AS project_application_id
-	FROM
-		project_application AS t1 LEFT JOIN
-		user AS u ON u.id=t1.creator_id
-	WHERE
-		t1.project_id=:project_id AND
-		t1.status != 4 AND
-		t1.deleted_by_player='0' AND
-		t1.deleted_by_gamemaster='0'" . ($this->getApplicationsByFilter() ? ($searchQuerySql ? " AND " . $searchQuerySql : "") : (count($this->getAapplicationsByIds()) > 0 ? " AND t1.id IN (" . implode(",", $this->getAapplicationsByIds()) . ")" : "")) . "
-	ORDER BY
-		t1.team_application,
-		t1.sorter",
-                [
-                    ['project_id', $this->getActivatedProjectId()],
-                    ...$this->applicationService->entity->filters->getPreparedSearchQueryParams('application'),
-                ],
-            );
-
-            /** Короткое имя класса модели для ключа кэша _MODELINSTANCES (см. освобождение ниже) */
-            $userModelClass = ObjectsHelper::getClassShortNameFromCMSVCObject($this->userService->model);
-
-            foreach ($result as $applicationData) {
-                $userModelInstance = $this->userService->arrayToModel($applicationData);
-
-                $listOfRolesValues[] = [
-                    $applicationData['project_application_id'],
-                    DataHelper::escapeOutput($applicationData['sorter']) . ' (' . $this->userService->showNameWithId($userModelInstance, false) . ')',
-                ];
-
-                /**
-                 * arrayToModel() сохраняет модель в CACHE['_MODELINSTANCES'][$userModelClass][$id]
-                 * навсегда — обычный unset() не освобождает память, т.к. кэш держит ссылку.
-                 * На больших проектах это N клонов UserModel = утечка. Принудительно
-                 * освобождаем слот кэша (метода удаления в CacheService нет, перезаписываем на null).
-                 */
-                if (isset($applicationData['id'])) {
-                    CACHE->setToCache('_MODELINSTANCES', $applicationData['id'], null, $userModelClass);
-                }
-
-                unset($userModelInstance);
-
-                $fullApplicationsData[$applicationData['project_application_id']] = array_merge(
-                    $applicationData,
-                    DataHelper::unmakeVirtual($applicationData['allinfo']),
-                );
-            }
         }
 
         $fieldsNames = [];
@@ -174,12 +117,53 @@ class DocumentService extends BaseService
 
         $this->fields = $fields;
         $this->fieldsShowIf = $fieldsShowIf;
-        $this->listOfRolesValues = $listOfRolesValues;
-        $this->fullApplicationsData = $fullApplicationsData;
         $this->fieldsSet = $fieldsSet;
         $this->fieldsNames = $fieldsNames;
 
         return parent::init();
+    }
+
+    /**
+     * Тяжёлая выборка заявок проекта — один и тот же набор нужен и для списка ролей (getListOfRolesElem),
+     * и для генерации документов (DocumentView). Намеренно НЕ кэшируется в свойство сервиса и НЕ
+     * вызывается из init(): каждый из двух сценариев дёргает её сам, по требованию, и разворачивает
+     * только то, что ему нужно (имена / allinfo). Это держит пик памяти на одном наборе, а не на нескольких.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getApplicationsData(): array
+    {
+        $projectData = $this->getProjectData();
+
+        if (!$projectData) {
+            return [];
+        }
+
+        $searchQuerySql = $this->applicationService->entity->filters->getPreparedSearchQuerySql('application');
+
+        $result = DB->query(
+            "SELECT
+		t1.*,
+		u.*,
+		t1.id AS project_application_id
+	FROM
+		project_application AS t1 LEFT JOIN
+		user AS u ON u.id=t1.creator_id
+	WHERE
+		t1.project_id=:project_id AND
+		t1.status != 4 AND
+		t1.deleted_by_player='0' AND
+		t1.deleted_by_gamemaster='0'" . ($this->getApplicationsByFilter() ? ($searchQuerySql ? " AND " . $searchQuerySql : "") : (count($this->getAapplicationsByIds()) > 0 ? " AND t1.id IN (" . implode(",", $this->getAapplicationsByIds()) . ")" : "")) . "
+	ORDER BY
+		t1.team_application,
+		t1.sorter",
+            [
+                ['project_id', $this->getActivatedProjectId()],
+                ...$this->applicationService->entity->filters->getPreparedSearchQueryParams('application'),
+            ],
+        );
+
+        return $result ?: [];
     }
 
     public function getApplicationsByFilter(): bool
@@ -216,9 +200,35 @@ class DocumentService extends BaseService
 
     public function getListOfRolesElem(): Item\Multiselect
     {
+        $listOfRolesValues = [];
+
+        /** Короткое имя класса модели для ключа кэша _MODELINSTANCES (см. освобождение ниже) */
+        $userModelClass = ObjectsHelper::getClassShortNameFromCMSVCObject($this->userService->model);
+
+        foreach ($this->getApplicationsData() as $applicationData) {
+            $userModelInstance = $this->userService->arrayToModel($applicationData);
+
+            $listOfRolesValues[] = [
+                $applicationData['project_application_id'],
+                DataHelper::escapeOutput($applicationData['sorter']) . ' (' . $this->userService->showNameWithId($userModelInstance, false) . ')',
+            ];
+
+            /**
+             * arrayToModel() сохраняет модель в CACHE['_MODELINSTANCES'][$userModelClass][$id]
+             * навсегда — обычный unset() не освобождает память, т.к. кэш держит ссылку.
+             * На больших проектах это N клонов UserModel = утечка. Принудительно
+             * освобождаем слот кэша (метода удаления в CacheService нет, перезаписываем на null).
+             */
+            if (isset($applicationData['id'])) {
+                CACHE->setToCache('_MODELINSTANCES', $applicationData['id'], null, $userModelClass);
+            }
+
+            unset($userModelInstance);
+        }
+
         $listOfRoles = new Item\Multiselect();
         $attribute = new Attribute\Multiselect(
-            values: $this->listOfRolesValues,
+            values: $listOfRolesValues,
             search: true,
             lineNumber: 0,
         );
