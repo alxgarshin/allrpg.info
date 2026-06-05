@@ -131,10 +131,15 @@ class DocumentService extends BaseService
             );
 
             foreach ($result as $applicationData) {
+                $userModelInstance = $this->userService->arrayToModel($applicationData);
+
                 $listOfRolesValues[] = [
                     $applicationData['project_application_id'],
-                    DataHelper::escapeOutput($applicationData['sorter']) . ' (' . $this->userService->showNameWithId($this->userService->arrayToModel($applicationData), false) . ')',
+                    DataHelper::escapeOutput($applicationData['sorter']) . ' (' . $this->userService->showNameWithId($userModelInstance, false) . ')',
                 ];
+
+                unset($userModelInstance);
+
                 $fullApplicationsData[$applicationData['project_application_id']] = array_merge(
                     $applicationData,
                     DataHelper::unmakeVirtual($applicationData['allinfo']),
