@@ -106,6 +106,7 @@ class CalendarEventModel extends BaseModel
     public Item\Calendar $date_to;
 
     #[Attribute\Calendar(
+        defaultValue: 'getDateFromDefault',
         obligatory: true,
     )]
     public Item\Calendar $date_arrival;

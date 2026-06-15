@@ -489,7 +489,7 @@ class ProjectService extends BaseService
 
                 foreach ($_REQUEST['user_id'][0] as $key => $value) {
                     if ($value === 'on' && $key !== CURRENT_USER->id()) {
-                        $conversationService->sendInvitation('{project}', $id, $key);
+                        $conversationService->sendInvitation('{project}', (int) $id, $key);
                     }
                 }
             }
@@ -503,7 +503,7 @@ class ProjectService extends BaseService
                     'field_mustbe' => '0',
                     'field_rights' => 4,
                     'field_code' => 1,
-                    'application_type' => 0,
+                    'application_type' => '0',
                     'created_at' => time(),
                     'updated_at' => time(),
                 ],
@@ -518,7 +518,7 @@ class ProjectService extends BaseService
                     'field_mustbe' => '1',
                     'field_rights' => 4,
                     'field_code' => 2,
-                    'application_type' => 0,
+                    'application_type' => '0',
                     'created_at' => time(),
                     'updated_at' => time(),
                 ],
