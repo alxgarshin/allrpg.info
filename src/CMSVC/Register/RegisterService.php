@@ -83,7 +83,7 @@ class RegisterService extends BaseService
                     'subs_type' => 1,
                     'subs_objects' => DataHelper::arrayToMultiselect($this->userService->getSubsObjectsList()),
                     'bazecount' => 50,
-                    'hidesome' => '-2-',
+                    'hidesome' => DataHelper::arrayToMultiselect([2]),
                     'created_at' => DateHelper::getNow(),
                 ],
                 criteria: [
