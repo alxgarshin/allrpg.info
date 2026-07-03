@@ -1003,8 +1003,10 @@ class ProjectService extends BaseService
 
     public function getSorterValues(): Generator|array
     {
-        if (DataHelper::getId() > 0) {
-            return DB->getArrayOfItems('project_application_field WHERE project_id=' . DataHelper::getId() . " AND field_type='text' AND application_type='0' ORDER BY id ASC", 'id', 'field_name');
+        $projectId = (int) DataHelper::getId();
+
+        if ($projectId > 0) {
+            return DB->getArrayOfItems('project_application_field WHERE project_id=' . $projectId . " AND field_type='text' AND application_type='0' ORDER BY id ASC", 'id', 'field_name');
         }
 
         return [];
@@ -1012,8 +1014,10 @@ class ProjectService extends BaseService
 
     public function getSorter2Values(): Generator|array
     {
-        if (DataHelper::getId() > 0) {
-            return DB->getArrayOfItems('project_application_field WHERE project_id=' . DataHelper::getId() . " AND field_type='text' AND application_type='1' ORDER BY id ASC", 'id', 'field_name');
+        $projectId = (int) DataHelper::getId();
+
+        if ($projectId > 0) {
+            return DB->getArrayOfItems('project_application_field WHERE project_id=' . $projectId . " AND field_type='text' AND application_type='1' ORDER BY id ASC", 'id', 'field_name');
         }
 
         return [];
