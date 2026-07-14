@@ -894,23 +894,6 @@ class MyapplicationService extends BaseService
         return [];
     }
 
-    public function getProjectIdValues(): array
-    {
-        $projectIdValues = [];
-        $myProjectsData = DB->query(
-            "SELECT DISTINCT p.id, p.name FROM project AS p LEFT JOIN project_application AS pa ON p.id=pa.project_id WHERE pa.creator_id=:creator_id",
-            [
-                ['creator_id', CURRENT_USER->id()],
-            ],
-        );
-
-        foreach ($myProjectsData as $myProjectData) {
-            $projectIdValues[] = [$myProjectData['id'], DataHelper::escapeOutput($myProjectData['name'])];
-        }
-
-        return $projectIdValues;
-    }
-
     public function getCreatorIdValues(): array
     {
         return [];

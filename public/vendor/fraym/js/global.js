@@ -11,10 +11,12 @@
 const showTimeMode = false;
 let startTime = new Date().getTime();
 
-/** Токен авторизации */
-let jwtToken;
+/** JWT хранится в httpOnly cookie authToken (JS его не видит). Single-flight guard обновления токена. */
 let jwtTokenRefreshing = null;
 const jwtTokenRefreshUrl = `${absolutePath()}/login/action=refresh_token`;
+
+const FRAYM_JS_VERSION = '3.0.0';
+let fraymVersionWarned = false;
 
 /** Переменная локали */
 let LOCALE = {};
@@ -30,6 +32,7 @@ let doDropfieldRefresh = true;
 let doSubmit = false;
 let blockDefaultSubmit = false;
 let popStateChanging = false;
+let navigationToken = 0;
 let currentHref = document.location.href;
 let hrefAfterModalClose = null;
 const filesDirProtectRegexp = document.location.protocol + '//' + document.location.hostname + '/uploads/';
@@ -2723,7 +2726,6 @@ function updateState(newHref, replacedDiv, form) {
             } else {
                 //хэш точно такой же, значит, где-то баг с управлением историей
                 console.error('popStateChanging, но хэш не изменился');
-                console.trace();
             }
         } else {
             if ("pushState" in history) {
@@ -2757,10 +2759,28 @@ function updateState(newHref, replacedDiv, form) {
 
                 showExecutionTime('updateState before request');
 
+                const thisNavigation = ++navigationToken;
+
                 fetchData(link, { method: (doSubmit ? 'POST' : 'GET'), json: true }, data).then(result => {
                     showExecutionTime('updateState beginning of success');
 
+                    if (thisNavigation !== navigationToken) {
+                        return false;
+                    }
+
+                    const hasHtml = typeof result?.html === 'string';
+                    const hasRedirect = typeof result?.redirect === 'string' && result.redirect !== '';
+
+                    if (!hasHtml && !hasRedirect) {
+                        throw new Error('Invalid navigation response: missing html and redirect');
+                    }
+
                     showMessagesFromJson(result);
+
+                    if (result.fraymVersion && !fraymVersionWarned && String(result.fraymVersion).split('.')[0] !== FRAYM_JS_VERSION.split('.')[0]) {
+                        fraymVersionWarned = true;
+                        console.warn(`Fraym version mismatch: backend ${result.fraymVersion} vs frontend ${FRAYM_JS_VERSION}. Re-copy global.js and global.min.js.`);
+                    }
 
                     if (result.redirect !== undefined && result.redirect !== '') {
                         updateState(result.redirect, replacedDiv);
@@ -2815,10 +2835,24 @@ function updateState(newHref, replacedDiv, form) {
                         const scripts = _(replacedDiv).asDomElement()?.getElementsByTagName('script');
 
                         if (scripts) {
-                            for (let ix = 0; ix < scripts.length; ix++) {
+                            /** Снапшот: appendChild может мутировать живую HTMLCollection. */
+                            for (const oldScript of Array.from(scripts)) {
                                 const newScript = document.createElement('script');
 
-                                newScript.text = scripts[ix].text;
+                                if (oldScript.src) {
+                                    /** Внешний скрипт: переносим src/type, чтобы он реально загрузился (раньше игнорировался). */
+                                    newScript.src = oldScript.src;
+
+                                    if (oldScript.type) {
+                                        newScript.type = oldScript.type;
+                                    }
+                                } else {
+                                    /** Инлайн-скрипт: оборачиваем в IIFE — top-level const/let становятся локальными,
+                                     *  иначе повторное объявление при повторном визите → SyntaxError.
+                                     *  \n перед })(); защищает от хвостового // line-комментария. */
+                                    newScript.text = '(function(){\n' + oldScript.text + '\n})();';
+                                }
+
                                 document.head.appendChild(newScript);
                                 newScript.remove();
                             }
@@ -2937,10 +2971,6 @@ async function fetchData(url, options = {}, data = null) {
             'Fraym-Request': true
         };
 
-        if (jwtToken) {
-            headers.Authorization = 'Bearer ' + jwtToken;
-        }
-
         if (window['csrfToken']) {
             headers['X-CSRF-Token'] = window['csrfToken'];
         }
@@ -2988,16 +3018,15 @@ window.fetch = new Proxy(window.fetch, {
             }
         }
 
-        /** Обновление jwtToken (с защитой от параллельных запросов) */
-        const refreshJwtToken = async function () {
+        /** JWT в httpOnly cookie authToken (JS его не читает) — refresh-эндпоинт выставляет свежую cookie.
+         *  Single-flight против параллельных refresh на одновременных 401. */
+        const refreshAuthToken = async function () {
             if (jwtTokenRefreshing) {
                 await jwtTokenRefreshing.catch(() => { });
                 return;
             }
 
             jwtTokenRefreshing = fetch(jwtTokenRefreshUrl, { method: 'GET' })
-                .then(r => r.ok ? r.text() : null)
-                .then(token => { if (token) jwtToken = token; })
                 .finally(() => { jwtTokenRefreshing = null; });
 
             await jwtTokenRefreshing.catch(() => { });
@@ -3009,16 +3038,6 @@ window.fetch = new Proxy(window.fetch, {
         const refreshUrlString = (typeof url === 'string' ? url : url.url);
         const isRefreshRequest = refreshUrlString && refreshUrlString.indexOf(jwtTokenRefreshUrl) === 0;
 
-        if (localUrl && !isRefreshRequest) {
-            if (!jwtToken && !options.headers.Authorization) {
-                await refreshJwtToken();
-            }
-
-            if (jwtToken) {
-                options.headers.Authorization = 'Bearer ' + jwtToken;
-            }
-        }
-
         let response;
         try {
             response = await fetch.apply(thisArg, [url, options]);
@@ -3026,18 +3045,23 @@ window.fetch = new Proxy(window.fetch, {
             return new Response(null, { status: 0, statusText: "NetworkError" });
         }
 
-        /** Если токен протух (401) — сбросить, обновить и повторить запрос один раз */
+        /** Токен протух (401) — обновляем cookie и повторяем запрос один раз */
         if (localUrl && !isRefreshRequest && response.status === 401) {
-            jwtToken = undefined;
-            await refreshJwtToken();
+            await refreshAuthToken();
 
-            if (jwtToken) {
-                options.headers.Authorization = 'Bearer ' + jwtToken;
+            try {
+                response = await fetch.apply(thisArg, [url, options]);
+            } catch {
+                return new Response(null, { status: 0, statusText: "NetworkError" });
+            }
 
-                try {
-                    response = await fetch.apply(thisArg, [url, options]);
-                } catch {
-                    return new Response(null, { status: 0, statusText: "NetworkError" });
+            /** Refresh не восстановил сессию — уходим на login (не молча). */
+            if (response.status === 401) {
+                const loginUrl = `${absolutePath()}/login/`;
+
+                if (!window.location.href.startsWith(loginUrl)) {
+                    console.warn('Auth refresh failed after 401 — redirecting to login');
+                    window.location = loginUrl;
                 }
             }
         }
@@ -3047,7 +3071,7 @@ window.fetch = new Proxy(window.fetch, {
 });
 
 /** Функция проверки подгруженности элемента данных */
-function dataElementLoad(dataName, element, loadingFunction, loadedFunction, options, dataElementCategory) {
+function dataElementLoad(dataName, element, loadingFunction, loadedFunction, options, dataElementCategory, attempt) {
     if (
         dataName === undefined ||
         element === undefined ||
@@ -3058,6 +3082,7 @@ function dataElementLoad(dataName, element, loadingFunction, loadedFunction, opt
     }
 
     dataElementCategory = defaultFor(dataElementCategory, 'libraries');
+    attempt = defaultFor(attempt, 0);
 
     if (dataLoaded[dataElementCategory][dataName] === undefined) {
         dataLoaded[dataElementCategory][dataName] = false;
@@ -3065,9 +3090,15 @@ function dataElementLoad(dataName, element, loadingFunction, loadedFunction, opt
     }
 
     if (dataLoaded[dataElementCategory][dataName] === false) {
+        if (attempt >= 100) {
+            console.error(`dataElementLoad: timeout loading "${dataName}" (${dataElementCategory}) — script did not load`);
+
+            return;
+        }
+
         delay(50)
             .then(() => {
-                dataElementLoad(dataName, element, loadingFunction, loadedFunction, options, dataElementCategory);
+                dataElementLoad(dataName, element, loadingFunction, loadedFunction, options, dataElementCategory, attempt + 1);
             });
     } else if (dataLoaded[dataElementCategory][dataName] === true) {
         loadedFunction.call(element, options);
@@ -3252,14 +3283,8 @@ function actionRequest(params, target) {
         data = params;
     }
 
-    let headers = {};
-    if (jwtToken != '') {
-        headers.Authorization = 'Bearer ' + jwtToken;
-    }
-
     fetchData(url, {
         method: 'POST',
-        headers: headers,
         json: true
     }, data).then(function (jsonData) {
         if (el('div.fullpage_cover')) {
@@ -3267,13 +3292,21 @@ function actionRequest(params, target) {
         }
 
         if (jsonData['response'] === 'success') {
-            actionRequestCallbacks.success[params.action](jsonData, params, target);
+            if (typeof actionRequestCallbacks.success[params.action] === 'function') {
+                actionRequestCallbacks.success[params.action](jsonData, params, target);
+            } else {
+                console.warn('actionRequest: no success callback for action "' + params.action + '"');
+            }
         } else {
             if (!actionRequestSupressErrorForActions.includes(params.action) && navigator.onLine) {
                 showMessageFromJsonData(jsonData);
             }
 
-            actionRequestCallbacks.error[params.action](jsonData, params, target);
+            if (typeof actionRequestCallbacks.error[params.action] === 'function') {
+                actionRequestCallbacks.error[params.action](jsonData, params, target);
+            } else {
+                console.warn('actionRequest: no error callback for action "' + params.action + '"');
+            }
         }
     }).catch(function (error) {
         if (el('div.fullpage_cover')) {
@@ -3291,15 +3324,19 @@ function actionRequest(params, target) {
             });
         }
 
-        actionRequestCallbacks.error[params.action](null, params, target, error);
+        if (typeof actionRequestCallbacks.error[params.action] === 'function') {
+            actionRequestCallbacks.error[params.action](null, params, target, error);
+        }
+    }).finally(function () {
+        /** Re-enable кнопок и снятие loader'а — ПОСЛЕ завершения запроса (в .finally),
+         *  а не синхронно: иначе возможен double-submit и мигание loader'а. */
+        if (params.dynamicForm && target) {
+            target.find('button.main')?.each(function () {
+                _(this, { noCache: true }).enable().destroy();
+                removeLoader(this);
+            });
+        }
     });
-
-    if (params.dynamicForm && target) {
-        target.find('button.main')?.each(function () {
-            _(this, { noCache: true }).enable().destroy();
-            removeLoader(this);
-        });
-    }
 }
 
 /** ВАЛИДАЦИИ */

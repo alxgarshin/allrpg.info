@@ -16,7 +16,7 @@ trait GetUpdatedAtCustomAsHTMLRendererTrait
         $userService = $this->getUserService();
 
         $value = $item->get()->getTimestamp();
-        $name = $item->name . $item->getLineNumberWrapped();
+        $name = $item->name . $item->lineNumberWrapped;
         $html = '';
 
         if ($item->getShowInObjects()) {

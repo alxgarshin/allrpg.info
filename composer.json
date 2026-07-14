@@ -5,7 +5,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.4.0",
-    "alxgarshin/fraym": "^0.9",
+    "alxgarshin/fraym": "^0.10",
     "minishlink/web-push": "^9.0"
   },
   "config": {

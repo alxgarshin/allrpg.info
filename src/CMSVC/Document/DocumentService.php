@@ -230,11 +230,11 @@ class DocumentService extends BaseService
         $attribute = new Attribute\Multiselect(
             values: $listOfRolesValues,
             search: true,
-            lineNumber: 0,
         );
         $listOfRoles->setAttribute($attribute);
         $listOfRoles->name = 'application_id';
         $listOfRoles->shownName = '';
+        $listOfRoles->lineNumber = 0;
 
         return $listOfRoles;
     }

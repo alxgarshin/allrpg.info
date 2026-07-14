@@ -14,6 +14,8 @@ class FraymStyler {
         const self = _(element);
 
         if (element.tagName === 'INPUT' && self.attr('type') === 'file' && !self.hasClass('fraymStylerApplied') && !self.hasClass('filepond')) {
+            self.addClass('fraymStylerApplied');
+
             const id = (self.attr('id') !== null && self.attr('id') !== '') ? self.attr('id') + '-styler' : null;
             const title = self.attr('title');
             const classes = self.attr('class');

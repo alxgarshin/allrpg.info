@@ -217,6 +217,12 @@ trait ApplicationServiceTrait
                     ],
                 ),
             );
+
+            foreach ($this->applicationFields as $applicationField) {
+                if ($applicationField instanceof Item\Multiselect) {
+                    $applicationField->getAttribute()->legacySearch = true;
+                }
+            }
         }
 
         return $this->applicationFields;
@@ -549,6 +555,23 @@ trait ApplicationServiceTrait
     public function getProjectCharacterIdsValues(): ?array
     {
         return $this->getProjectCharacterIds();
+    }
+
+    public function getProjectIdValues(): array
+    {
+        $projectIdValues = [];
+        $myProjectsData = DB->query(
+            "SELECT DISTINCT p.id, p.name FROM project AS p LEFT JOIN project_application AS pa ON p.id=pa.project_id WHERE pa.creator_id=:creator_id",
+            [
+                ['creator_id', CURRENT_USER->id()],
+            ],
+        );
+
+        foreach ($myProjectsData as $myProjectData) {
+            $projectIdValues[] = [$myProjectData['id'], DataHelper::escapeOutput($myProjectData['name'])];
+        }
+
+        return $projectIdValues;
     }
 
     public function getProjectCharacterDefault(): ?int
@@ -951,7 +974,19 @@ trait ApplicationServiceTrait
                 ->changeElementsOrder('team_application_myapplication', 'status');
 
             $model->getElement('responsible_gamemaster_id')->getAttribute()->useInFilters = false;
-            $model->getElement('sorter')->getAttribute()->useInFilters = true;
+            $model->getElement('creator_id')->getAttribute()->useInFilters = false;
+            $model->getElement('player_registered')->getAttribute()->useInFilters = false;
+            $model->getElement('money')->getAttribute()->useInFilters = false;
+            $model->getElement('money_provided')->getAttribute()->useInFilters = false;
+            $model->getElement('eco_money_paid')->getAttribute()->useInFilters = false;
+            $model->getElement('project_character_id')->getAttribute()->useInFilters = false;
+            $model->getElement('project_group_ids')->getAttribute()->useInFilters = false;
+            $model->getElement('user_requested_project_group_ids')->getAttribute()->useInFilters = false;
+            $model->getElement('distributed_item_ids')->getAttribute()->useInFilters = false;
+            $model->getElement('qrpg_key')->getAttribute()->useInFilters = false;
+            $model->getElement('player_got_info')->getAttribute()->useInFilters = false;
+            $model->getElement('deleted_by_player')->getAttribute()->useInFilters = false;
+            $model->getElement('registration_comments')->getAttribute()->useInFilters = false;
         }
 
         if ($this->getHistoryView()) {

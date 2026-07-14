@@ -6,7 +6,7 @@ namespace App\CMSVC\Login;
 
 use App\Helper\DesignHelper;
 use Fraym\BaseObject\{BaseView, Controller};
-use Fraym\Helper\LocaleHelper;
+use Fraym\Helper\{AuthHelper, LocaleHelper};
 use Fraym\Interface\Response;
 
 #[Controller(LoginController::class)]
@@ -18,12 +18,15 @@ class LoginView extends BaseView
         $LOCALE_REGISTER = LocaleHelper::getLocale(['register', 'global']);
         $PAGETITLE = DesignHelper::changePageHeaderTextToLink($LOCALE['title']);
 
+        $preAuthCsrf = AuthHelper::generatePreAuthCsrfToken();
+
         $RESPONSE_DATA = '<div class="maincontent_data kind_' . KIND . '">
 <div class="mainpage_login">
 <div id="login_choices">
 <div class="text">' . $LOCALE['enter'] . '</div>
 <form action="' . ABSOLUTE_PATH . '/login/" method="POST" enctype="multipart/form-data" id="login_form" no_dynamic_content>
 <input type="hidden" name="action" value="login">
+<input type="hidden" name="' . AuthHelper::PRE_AUTH_CSRF_COOKIE . '" value="' . $preAuthCsrf . '">
 <input type="text" name="login" id="login_global" placehold="' . $LOCALE['email'] . '" tabindex="1">
 <input type="password" name="password" id="pass_global" placehold="' . $LOCALE['password'] . '" tabindex="2">
 <a class="nonimportant" id="btn_remind">' . $LOCALE['remind_button'] . '</a>
@@ -49,6 +52,7 @@ class LoginView extends BaseView
 <div class="text">' . $LOCALE['remind'] . '</div>
 <form action="' . ABSOLUTE_PATH . '/login/" method="POST" enctype="multipart/form-data" id="remind_form">
 <input type="hidden" name="action" value="remind">
+<input type="hidden" name="' . AuthHelper::PRE_AUTH_CSRF_COOKIE . '" value="' . $preAuthCsrf . '">
 <input type="text" name="em" id="em_global" placehold="' . $LOCALE['input_your_email'] . '">
 <div class="buttons">
     <button class="main" id="btn_make_remind">' . $LOCALE['do_remind'] . '</button>

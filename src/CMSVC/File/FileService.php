@@ -1498,17 +1498,23 @@ class FileService extends BaseService
                     $libraryHtml .= '<a class="trash careful file_delete" title="' . $LOCALE_FRAYM['classes']['file']['delete'] . '" href="'
                         . ABSOLUTE_PATH . $_ENV['UPLOADS_PATH'] . 'files/?attachments=' . $matches[2][$key] . '&type=' . $uploadType . '" post_action="delete_library_file" post_action_id="' . $matches[1][$key] . ':' . $matches[2][$key] . '"></a><a class="edit_file" title="' . $LOCALE_FRAYM['classes']['file']['edit'] . '"></a>';
                 }
+
                 $libraryHtml .= '<a href="' . ABSOLUTE_PATH . '/' . $_ENV['UPLOADS'][$uploadType]['path'] . $matches[2][$key] . '" target="_blank" class="bold_link">' .
                     DataHelper::escapeOutput($matches[1][$key], EscapeModeEnum::plainHTML) . '</a><span class="bold_link_size"> ' .
                     FileHelper::getFileSize(INNER_PATH . $_ENV['UPLOADS'][$uploadType]['path'] . $matches[2][$key]) . '</span><span class="uploaded_file_info">' .
                     $userService->showNameExtended($userService->get($libraryFileData['creator_id']), true, true) . ' | ' .
                     DateHelper::showDateTime($libraryFileData['updated_at']) . '</span>';
 
-                if (trim(DataHelper::escapeOutput($libraryFileData['description'])) !== '') {
-                    $libraryHtml .= '<span class="uploaded_file_description">' . trim(
-                        DataHelper::escapeOutput($libraryFileData['description'], EscapeModeEnum::forHTMLforceNewLines),
-                    ) . '</span>';
+                $description = DataHelper::escapeOutput($libraryFileData['description'], EscapeModeEnum::forHTMLforceNewLines);
+
+                if ($description) {
+                    $description = trim($description);
                 }
+
+                if ($description !== '') {
+                    $libraryHtml .= '<span class="uploaded_file_description">' . $description . '</span>';
+                }
+
                 $libraryHtml .= '</div>';
             }
             preg_match_all('#{external:([^:]+):([^}]+)}#', $libraryFileData[$row], $matches);

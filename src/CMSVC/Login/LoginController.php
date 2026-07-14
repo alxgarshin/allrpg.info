@@ -33,12 +33,16 @@ class LoginController extends BaseController
     /** Восстановление пароля */
     public function remind(): void
     {
+        if (!AuthHelper::validatePreAuthCsrfToken()) {
+            ResponseHelper::response403();
+        }
+
         /** @var LoginService $loginService */
         $loginService = $this->CMSVC->service;
         $loginService->remindPassword();
     }
 
-    /** Получение JWT-токена */
+    /** Обновление JWT: пишет токен в httpOnly cookie authToken (тело ответа пустое — токен недоступен JS) */
     public function refreshToken(): void
     {
         $refreshToken = AuthHelper::getRefreshTokenCookie();
@@ -53,9 +57,10 @@ class LoginController extends BaseController
                     DB->update('user', [['refresh_token_exp', new DateTime('+30 days')]], ['id' => CURRENT_USER->id()]);
                 }
 
-                echo AuthHelper::generateAuthToken();
+                AuthHelper::setAuthTokenCookie(AuthHelper::generateAuthToken());
             } else {
                 AuthHelper::removeRefreshTokenCookie();
+                AuthHelper::removeAuthTokenCookie();
             }
         }
         exit;

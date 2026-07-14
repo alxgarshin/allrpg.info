@@ -1015,6 +1015,14 @@ class ApplicationService extends BaseService
 
     public function getCreatorIdValues(): array
     {
+        if ($this->act === ActEnum::list) {
+            if (is_null($this->usersDataTableViewShort)) {
+                $this->getUsersDataTableViewShort();
+            }
+
+            return $this->usersDataTableViewShort;
+        }
+
         if (is_null($this->usersDataApplicationView)) {
             $this->getUsersDataApplicationViewAndMedicalSickness();
         }

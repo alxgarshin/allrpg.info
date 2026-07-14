@@ -524,7 +524,7 @@ async function projectInit(withDocumentEvents, updateHash) {
 
         /** Антибот */
         _(document).on('click', 'a#approvement_link', function () {
-            _('input[name="approvement[0]"]').val(justAnotherVar);
+            _('input[name="approvement[0]"]').val(typeof justAnotherVar !== 'undefined' ? justAnotherVar : '');
             _('form[id^="form_"]').find('button.main').click();
         });
 

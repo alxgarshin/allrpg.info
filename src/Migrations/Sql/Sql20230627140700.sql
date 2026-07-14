@@ -233,7 +233,7 @@ CREATE TABLE `publication` (
   PRIMARY KEY (`id`),
   KEY `active` (`active`),
   FULLTEXT KEY `tags` (`tags`)
-) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1977,8 +1977,8 @@ INSERT INTO project (creator_id,`type`,group_type,name,parent,annotation,descrip
 	 (2,'{open}',NULL,'Тестовый проект',NULL,'<p>Краткое</p><p><strong>описание</strong></p><p><em>тестового</em></p><p>проекта</p>','<p>Полное</p><p><em>описание</em></p><p><strong>тестового</strong></p><p>проекта</p>',NULL,'2023-09-20','2035-09-20',NULL,NULL,NULL,NULL,2,NULL,'RUR',100,'0','1','0','0','0',NULL,'0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0',NULL,1758395283,1758395283);
 
 INSERT INTO project_application (project_id,creator_id,offer_to_user_id,offer_denied,team_application,project_character_id,money,project_fee_ids,money_provided,money_need_approve,money_paid,sorter,project_group_ids,user_requested_project_group_ids,allinfo,status,last_update_user_id,deleted_by_player,deleted_by_gamemaster,player_got_info,player_registered,eco_money_paid,registration_comments,application_team_count,distributed_item_ids,qrpg_key,signtochange,signtocomments,responsible_gamemaster_id,created_at,updated_at) VALUES
-	 (1,3,NULL,'0','0',2,100,'[2]',0,'0','0','Индивидуальный персонаж','[1,2]',NULL,'[virtual2][Индивидуальный персонаж]&lt;br&gt;',1,3,'0','0','0','0','0',NULL,NULL,NULL,NULL,'0','0',2,1758471526,1758471526),
-	 (1,4,NULL,'0','1',1,100,'[2]',10,'0','0','Командный персонаж','[1]',NULL,'[virtual4][Командный персонаж]&lt;br&gt;',2,2,'0','0','0','0','0',NULL,10,NULL,NULL,'0','0',2,1758471914,1758472805);
+	 (1,3,NULL,'0','0',2,100,'[2]',0,'0','0','Индивидуальный персонаж','[1,2]',NULL,'[virtual2][Индивидуальный персонаж]\r\n',1,3,'0','0','0','0','0',NULL,NULL,NULL,NULL,'0','0',2,1758471526,1758471526),
+	 (1,4,NULL,'0','1',1,100,'[2]',10,'0','0','Командный персонаж','[1]',NULL,'[virtual4][Командный персонаж]\r\n',2,2,'0','0','0','0','0',NULL,10,NULL,NULL,'0','0',2,1758471914,1758472805);
 
 INSERT INTO project_application_field (project_id,field_name,field_type,field_mustbe,field_default,field_rights,show_if,field_help,field_values,field_code,field_width,field_height,ingame_settings,show_in_filters,show_in_table,hide_field_on_application_create,application_type,created_at,updated_at) VALUES
 	 (1,'Персонаж','h1','0',NULL,4,NULL,NULL,NULL,1,NULL,NULL,NULL,'0','0','0','0',1758395283,1758395283),
@@ -1987,7 +1987,7 @@ INSERT INTO project_application_field (project_id,field_name,field_type,field_mu
 	 (1,'Название команды','text','1',NULL,3,NULL,NULL,NULL,2,NULL,0,NULL,'1','0','0','1',1758395975,1758395975);
 
 INSERT INTO project_application_history (project_application_id,creator_id,allinfo,project_character_id,money,money_paid,project_group_ids,status,deleted_by_player,player_got_info,created_at,updated_at) VALUES
-	 (2,4,'[virtual4][Командный персонаж]&lt;br&gt;',1,100,'0','[1]',1,'0','0',1758471914,1758471914);
+	 (2,4,'[virtual4][Командный персонаж]\r\n',1,100,'0','[1]',1,'0','0',1758471914,1758471914);
 
 INSERT INTO project_character (project_group_ids,setparentgroups,team_character,name,applications_needed_count,auto_new_character_creation,team_applications_needed_count,maybetaken,taken,hide_applications,disallow_applications,content,comments,project_id,last_update_user_id,created_at,updated_at) VALUES
 	 ('[1]','1','1','Командный персонаж',1,'0',10,NULL,NULL,'0','0','Описание
