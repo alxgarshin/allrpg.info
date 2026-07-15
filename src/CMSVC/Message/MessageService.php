@@ -572,7 +572,7 @@ class MessageService extends BaseService
                         }
                         $objId = $conversationData['obj_id'];
 
-                        if (!is_null($parentObjService) && $parentObjTable !== '') {
+                        if (!is_null($parentObjService)) {
                             $parentObjData = DB->select($parentObjTable, ['id' => $objId], true);
 
                             $id = $objId;
@@ -1739,7 +1739,7 @@ class MessageService extends BaseService
                         if ($value !== '') {
                             preg_match('#{([^:]+):([^}:]+)}#', $value, $matches);
 
-                            if ($matches && ($matches[1] ?? false) && ($matches[2] ?? false)) {
+                            if ($matches) {
                                 $path = '{external:' . $matches[1] . ':/' . $_ENV['UPLOADS'][1]['path'] . $matches[2] . '}';
                                 DB->insert(
                                     'library',
@@ -1834,7 +1834,7 @@ class MessageService extends BaseService
                     if ($value !== '') {
                         preg_match('#{([^:]+):([^}:]+)}#', $value, $matches);
 
-                        if ($matches && ($matches[1] ?? false) && ($matches[2] ?? false)) {
+                        if ($matches) {
                             $path = '{external:' . $matches[1] . ':/' . $_ENV['UPLOADS'][FileHelper::getUploadNumByType($type)]['path'] . $matches[2] . '}';
                             DB->insert(
                                 'library',
@@ -1859,29 +1859,27 @@ class MessageService extends BaseService
                 // отсылка приглашений в объект упомянутым в сообщении людям
                 $usersInvitedDirectly = false;
 
-                if ($type !== '') {
-                    preg_match_all('#@([^\[]+)\[(\d+)]#', DataHelper::escapeOutput($content), $matches);
+                preg_match_all('#@([^\[]+)\[(\d+)]#', DataHelper::escapeOutput($content), $matches);
 
-                    foreach ($matches[2] as $match) {
-                        if ((int) $match > 0) {
-                            /* нужно высылать приглашение на id, а выдается sid */
-                            $invitedUserData = $userService->get(null, ['sid' => $match]);
+                foreach ($matches[2] as $match) {
+                    if ((int) $match > 0) {
+                        /* нужно высылать приглашение на id, а выдается sid */
+                        $invitedUserData = $userService->get(null, ['sid' => $match]);
 
-                            if ($invitedUserData->id->getAsInt() > 0) {
-                                if ($type === 'project_application') {
-                                    $users[] = $invitedUserData->id->getAsInt();
-                                } else {
-                                    /** @var ConversationService $conversationService */
-                                    $conversationService = CMSVCHelper::getService('conversation');
+                        if ($invitedUserData->id->getAsInt() > 0) {
+                            if ($type === 'project_application') {
+                                $users[] = $invitedUserData->id->getAsInt();
+                            } else {
+                                /** @var ConversationService $conversationService */
+                                $conversationService = CMSVCHelper::getService('conversation');
 
-                                    $conversationService->sendInvitation(
-                                        DataHelper::addBraces($type),
-                                        $objId,
-                                        $invitedUserData->id->getAsInt(),
-                                    );
-                                }
-                                $usersInvitedDirectly = true;
+                                $conversationService->sendInvitation(
+                                    DataHelper::addBraces($type),
+                                    $objId,
+                                    $invitedUserData->id->getAsInt(),
+                                );
                             }
+                            $usersInvitedDirectly = true;
                         }
                     }
                 }

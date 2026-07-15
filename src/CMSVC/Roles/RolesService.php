@@ -791,7 +791,7 @@ class RolesService extends BaseService
 
         $path = '';
 
-        if (isset($this->projectGroupsList) && isset($this->projectGroupsList[$groupKey])) {
+        if (isset($this->projectGroupsList[$groupKey])) {
             $theLevel = $this->projectGroupsList[$groupKey][2];
             $parentKey = $groupKey;
 
@@ -883,7 +883,7 @@ class RolesService extends BaseService
             $GLOBALS['kind'] = 'roles_gamemaster'; // чтобы в именах пользователей показывались все возможные данные
         }
 
-        if ($applicationData['group_rights'] !== '1' && ($applicationData['character_hide_applications'] ?? false) !== '1') {
+        if (($applicationData['group_rights'] ?? false) !== '1' && ($applicationData['character_hide_applications'] ?? false) !== '1') {
             if ($applicationData['id'] !== null && (!$this->showOnlyAcceptedRoles || $applicationData['application_status'] === '3')) {
                 $userModel = $this->getUserService()->arrayToModel($applicationData);
 
@@ -944,7 +944,7 @@ class RolesService extends BaseService
 
         $result = '';
 
-        if ($applicationData['group_rights'] !== '1') {
+        if (($applicationData['group_rights'] ?? false) !== '1') {
             if ($this->projectGamemaster) {
                 $GLOBALS['kind'] = 'roles_gamemaster'; // чтобы в именах пользователей показывались все возможные данные
             }
