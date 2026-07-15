@@ -394,7 +394,7 @@ class GroupService extends BaseService
                     [],
                     [
                         'obj_type' => '{project_application_conversation}',
-                        'obj_id' => $conversationMessageData['obj_id'],
+                        'parent' => $conversationMessageData['parent'],
                         'sub_obj_type' => '{to_player}',
                     ],
                     '',
