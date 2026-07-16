@@ -182,7 +182,7 @@ class ApplicationService extends BaseService
                     if ($gamemasterFiltersSearchQuerySql !== '') {
                         $checkIdsQuery = DB->query(
                             'SELECT t1.id FROM project_application AS t1 WHERE ' . $gamemasterFiltersSearchQuerySql,
-                            CookieHelper::getCookie('gamemasterFiltersSearchQueryParams' . $fixedFiltersetId, true),
+                            CookieHelper::getCookie('gamemasterFiltersSearchQueryParams_' . $fixedFiltersetId, true),
                         );
 
                         foreach ($checkIdsQuery as $checkIdsData) {
