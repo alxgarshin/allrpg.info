@@ -397,7 +397,7 @@ class StartView extends BaseView
             $filepath = $userService->photoUrl($userModel, true);
             $inFilePath = ABSOLUTE_PATH . '/thumbnails' . $_ENV['UPLOADS_PATH'] . $_ENV['UPLOADS'][16]['path'] . $exchangeItemData['exchange_item_id'] . '.jpg';
 
-            if (FileHelper::checkImageExists($inFilePath)) {
+            if (file_exists(INNER_PATH . 'public' . $_ENV['UPLOADS_PATH'] . $_ENV['UPLOADS'][16]['path'] . $exchangeItemData['exchange_item_id'] . '.jpg')) {
                 $filepath = $inFilePath;
             }
 
