@@ -181,6 +181,57 @@ docker rm -v $(docker ps -aq -f status=exited) # Все неактивные
 ---
 
 Создание SSL сертификата
-*   https://medium.com/nuances-of-programming/%D0%BA%D0%B0%D0%BA-%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C-%D0%BD%D0%B0%D0%B4%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5-ssl-%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D1%8B-%D0%B4%D0%BB%D1%8F-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B8-8f73f76df3d4
 
+1. **Перевыпуск корневого сертификата (CA):**
+
+```bash
+openssl req -x509 -nodes -new -sha512 \
+  -days 365 -newkey rsa:4096 -keyout ca.key \
+  -out ca.pem -subj "/C=US/CN=MY-CA"
+
+openssl x509 -outform pem -in ca.pem -out ca.crt
+
+```
+
+
+2. **Создание файла расширений (v3.ext):**
+
+```bash
+cat > v3.ext <<-EOF
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = localhost
+DNS.2 = 127.0.0.1
+DNS.3 = ::1
+DNS.4 = allrpg.loc
+DNS.5 = www.allrpg.loc
+EOF
+
+```
+
+
+3. **Генерация и подпись сертификата для allrpg.loc:**
+Создаем запрос на подпись (CSR) с правильным `CN` и получаем готовый сертификат `allrpg.loc.crt`:
+
+```bash
+openssl req -new -nodes -newkey rsa:4096 \
+  -keyout allrpg.loc.key -out allrpg.loc.csr \
+  -subj "/C=US/ST=State/L=City/O=Some-Organization-Name/CN=allrpg.loc"
+
+openssl x509 -req -sha512 -days 365 \
+  -extfile v3.ext \
+  -CA ca.crt -CAkey ca.key -CAcreateserial \
+  -in allrpg.loc.csr \
+  -out allrpg.loc.crt
+
+```
+
+
+4. **Настройка доверия и веб-сервера:**
+1. Добавьте файл `ca.crt` в хранилище доверенных корневых сертификатов вашей ОС и укажите **Доверять всегда**.
+2. В конфигурации вашего локального веб-сервера укажите пути к новым файлам: `allrpg.loc.crt` (сертификат) и `allrpg.loc.key` (приватный ключ).
 ---
