@@ -10,6 +10,7 @@ use App\CMSVC\Trait\{ProjectDataTrait};
 use App\CMSVC\User\UserService;
 use Fraym\BaseObject\{BaseService, Controller, DependencyInjection};
 use Fraym\Element\{Attribute, Item};
+use Fraym\Enum\EscapeModeEnum;
 use Fraym\Helper\{DataHelper, ObjectsHelper};
 use Fraym\Interface\ElementItem;
 
@@ -196,6 +197,19 @@ class DocumentService extends BaseService
         $result = '<table><tr><td>' . $this->fieldsNames[0] . ': [' . $this->fieldsNames[0] . ']</td><td>' . $this->fieldsNames[1] . ': [' . $this->fieldsNames[1] . ']</td></tr><tr><td>[' . $this->fieldsNames[2] . ']</td><td>' . $this->fieldsNames[3] . ':<br>[' . $this->fieldsNames[3] . ']</td></tr></table>';
 
         return $result;
+    }
+
+    public function getContentCustomAsHTMLRenderer(Item\Wysiwyg $item, bool $editableFormat, bool $removeHtmlFromValue = false): string
+    {
+        $html = $item->usualAsHTMLRenderer($editableFormat, $removeHtmlFromValue);
+
+        if ($editableFormat) {
+            $rawSource = (string) DataHelper::escapeOutput((string) $item->get(), EscapeModeEnum::forHTML);
+
+            $html .= '<textarea class="wysiwyg_raw_source hidden" data-raw-for="' . $item->name . $item->lineNumberWrapped . '">' . $rawSource . '</textarea>';
+        }
+
+        return $html;
     }
 
     public function getListOfRolesElem(): Item\Multiselect

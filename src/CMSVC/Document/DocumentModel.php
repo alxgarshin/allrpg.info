@@ -32,6 +32,7 @@ class DocumentModel extends BaseModel
 
     #[Attribute\Wysiwyg(
         defaultValue: 'getContentDefault',
+        customAsHTMLRenderer: 'getContentCustomAsHTMLRenderer',
     )]
     public Item\Wysiwyg $content;
 
