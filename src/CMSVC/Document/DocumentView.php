@@ -43,7 +43,6 @@ class DocumentView extends BaseView
 
             $content = '<br>
 <form action="/document/" method="POST" enctype="multipart/form-data" id="form_generate_documents" no_dynamic_content target="_blank">
-<input type="hidden" name="kind" value="document">
 <input type="hidden" name="action" value="generate_documents">
 <input type="hidden" name="template_id" value="' . DataHelper::getId() . '">
 <div class="field" id="field_application_id[0]"><div class="fieldname" id="name_application_id[0]" tabindex="1">' . $LOCALE['list_of_roles_name'] . '</div><div class="fieldvalue" id="div_application_id[0]">' . $listOfRoles->asHTML(true) . '</div></div>
@@ -64,12 +63,6 @@ class DocumentView extends BaseView
     {
         $RESPONSE_DATA = '';
 
-        /** ПРОБЛЕМЫ:
-         * 1) почему-то при обновлении страницы мы не остаемся в результате перенесения шаблона, а попадаем на список шаблонов
-         * 2) /document/template_id=151&action=generate_documents&application_id[0][52092]=on
-         * 3) /document/template_id=151&action=generate_documents&application_id[0]=filter
-         */
-
         /** Генерируем документы на основе шаблона */
         $templateData = $this->service->get(
             id: (int) $_REQUEST['template_id'],
@@ -86,7 +79,7 @@ class DocumentView extends BaseView
 		page-break-before: always;
 	}
 	span#qrpg_key {
-	display: block;
+	    display: block;
 	}
 	span#qrpg_key img:first-of-type:before {
 	    content: " ";
@@ -96,6 +89,22 @@ class DocumentView extends BaseView
 	    max-width: 3em;
 	    vertical-align: middle;
 	}
+    .sbi {
+        background-size: contain;
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        text-align: center;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .sbi.sbi-check {
+        background-image: url(../vendor/fraym/design/sbi/check.svg);
+    }
+    .sbi.sbi-times {
+        background-image: url(../vendor/fraym/design/sbi/times.svg);
+    }
 </style>
 ';
 
@@ -130,12 +139,7 @@ class DocumentView extends BaseView
                         if ($field->name === 'plots_data') {
                             $field->set($plotService->generateAllPlots($this->service->getActivatedProjectId(), '{application}', $applicationRequestedId, true));
                         } else {
-                            $fieldData = $data[$field->name] ?? null;
-
-                            if ($fieldData) {
-                                /** @phpstan-ignore-next-line */
-                                $field->set($fieldData);
-                            }
+                            $field->set($data[$field->name] ?? null);
                         }
 
                         /** Проверка наличия условий по полям */
