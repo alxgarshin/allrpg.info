@@ -1085,6 +1085,32 @@ trait ApplicationServiceTrait
             $model = $model->changeElementsOrder($applicationField->name, 'plots');
         }
 
+        /** Поля, от которых зависит показ других полей, игрок часто не может менять: тогда они выводятся текстом, и скрипт
+         * показа-скрытия не видит выбранного в них значения. Оборачиваем каждое выведенное значение в span с id вида
+         * name[0][value] — по нему скрипт значение и находит */
+        if ($this->entity->name === 'myapplication') {
+            $dependencyFieldsNames = [];
+
+            foreach ($this->getDependentFields() ?? [] as $dependentFieldData) {
+                foreach ($dependentFieldData['dependentFields'] as $dependentField) {
+                    $dependencyFieldsNames[$dependentField['name']] = true;
+                }
+            }
+
+            $writeContext = 'myapplication:' . ($this->act === ActEnum::add ? 'create' : 'update');
+
+            foreach ($this->getApplicationFields() as $applicationField) {
+                $fieldName = $applicationField->name . '[0]';
+
+                if (
+                    ($dependencyFieldsNames[$fieldName] ?? false)
+                    && !in_array($writeContext, $applicationField->getAttribute()->context, true)
+                ) {
+                    $applicationField->getAttribute()->linkAt = new Item\LinkAt('<span id="' . $fieldName . '[{value}]">', '</span>');
+                }
+            }
+        }
+
         /** Если это действие сохранения и у нас есть поля, зависящие от других, нам надо снять с них обязательность перед сохранением, если вдруг они не видны из-за выборов, а после сохранения данных вернуть на место */
         if (in_array(ACTION, [ActionEnum::create, ActionEnum::change])) {
             $dependentFieldsToEnsureMustbe = $this->getDependentFieldsToEnsureMustbe();

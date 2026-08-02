@@ -759,10 +759,7 @@ class MyapplicationService extends BaseService
 
         foreach ($this->getApplicationFields() as $elem) {
             if (!in_array('myapplication:update', $elem->getAttribute()->context) && !$elem instanceof Item\H1) {
-                $reencodeData = $gamemastersAllinfo[$elem->name] ?? '';
-                $reencodeData = str_replace('[', '&open;', $reencodeData);
-                $reencodeData = str_replace(']', '&close;', $reencodeData);
-                $gamemastersAllinfoData .= '[' . $elem->name . '][' . $reencodeData . ']' . chr(13) . chr(10);
+                $gamemastersAllinfoData .= '[' . $elem->name . '][' . ($gamemastersAllinfo[$elem->name] ?? '') . ']' . chr(13) . chr(10);
             }
         }
 
