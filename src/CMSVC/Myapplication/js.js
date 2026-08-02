@@ -43,12 +43,22 @@ loadJsComponent('application').then(function () {
         _('select[name="project_payment_type_id[0]"]').change();
 
         /** Выставление групп в соответствии с выбранным персонажем */
-        _('input[name="project_character_id[0]"]').on('change, load', function () {
+        _('input[name="project_character_id[0]"]').on('change', function () {
             const self = _(this);
 
             actionRequest({
                 action: 'myapplication/get_list_of_groups',
-                obj_id: self.val()
+                obj_id: self.val(),
+                clear_all: true
+            });
+        });
+        _('input[name="project_character_id[0]"]').on('load', function () {
+            const self = _(this);
+
+            actionRequest({
+                action: 'myapplication/get_list_of_groups',
+                obj_id: self.val(),
+                clear_all: true
             });
         });
         _('input[name="project_character_id[0]"]:checked').trigger('load');
