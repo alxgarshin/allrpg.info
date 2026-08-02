@@ -3637,18 +3637,34 @@ function toggleDynamicFields(element = null) {
                     const elem = _(domElem);
 
                     elem.hide();
-                    elem.find('input[type="text"], select, textarea')?.val('').trigger('change');
                     doDropfieldRefresh = false;
-                    elem.find('input:checked:not(:disabled)')?.each(function () {
-                        _(this, { noCache: true })
-                            .checked(false)
-                            .change()
-                            .destroy();
+                    /** Значения скрытого поля не стираем, а отключаем: так на сервер они не уйдут, но при обратном показе поля
+                     * пользователь увидит и введённое им ранее, и значение по умолчанию. Отключаем только то, что не было
+                     * отключено до нас — чужие блокировки помечены не будут и при показе поля останутся на месте */
+                    elem.find('input, select, textarea')?.each(function () {
+                        if (!this.disabled) {
+                            this.setAttribute('data-dynamic-disabled', '1');
+                            this.disabled = true;
+                            _(this, { noCache: true }).change().destroy();
+                        }
                     })
                     doDropfieldRefresh = true;
                     _(`[id="selected_${item.name}"]`).trigger('refresh');
                 } else if (element) {
-                    _(domElem).show().trigger('change');
+                    const elem = _(domElem);
+                    const enabledElements = [];
+
+                    doDropfieldRefresh = false;
+                    elem.find('[data-dynamic-disabled]')?.each(function () {
+                        this.disabled = false;
+                        this.removeAttribute('data-dynamic-disabled');
+                        enabledElements.push(this);
+                    })
+                    doDropfieldRefresh = true;
+                    _(`[id="selected_${item.name}"]`).trigger('refresh');
+                    elem.show().trigger('change');
+                    /** Значения вернулись в игру только сейчас, поэтому и поля, зависящие уже от этого поля, пересчитываем после показа */
+                    _each(enabledElements, enabledElement => _(enabledElement, { noCache: true }).change().destroy());
                 }
             }
         }
@@ -3662,13 +3678,16 @@ function getDependencyItemsMapElementValues(elemName) {
     const checkSelect = el(`select[name="${elemName}"]`);
 
     if (checkSelect) {
-        value.push(checkSelect.value);
+        /** Поле, скрытое по зависимости, отключено нами: его значение сохраняется в форме, но для показа других полей уже не действует */
+        if (!checkSelect.hasAttribute('data-dynamic-disabled')) {
+            value.push(checkSelect.value);
+        }
     } else {
         const checkMultiselect = elAll(`input[type="checkbox"][name^="${elemName}["]`);
 
         if (checkMultiselect.length > 0) {
             checkMultiselect.forEach(input => {
-                if (input.checked) {
+                if (input.checked && !input.hasAttribute('data-dynamic-disabled')) {
                     const match = input.getAttribute('name').match(/\[(\d+)\]$/);
 
                     if (match) {
@@ -3680,7 +3699,7 @@ function getDependencyItemsMapElementValues(elemName) {
             const checkMultiselectRadio = el(`input[type="radio"][name="${elemName}"]`);
 
             if (checkMultiselectRadio) {
-                value.push(el(`input[type="radio"][name="${elemName}"]:checked`)?.value);
+                value.push(el(`input[type="radio"][name="${elemName}"]:checked:not([data-dynamic-disabled])`)?.value);
             } else {
                 const staticElements = elAll(`[id^="${elemName}["]`);
 

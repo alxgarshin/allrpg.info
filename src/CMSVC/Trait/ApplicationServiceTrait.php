@@ -253,7 +253,7 @@ trait ApplicationServiceTrait
                             if ($match[1] === 'locat') {
                                 if (
                                     in_array(ACTION, [ActionEnum::create, ActionEnum::change]) &&
-                                    ($_REQUEST['project_group_ids'][0][$value] ?? false) === 'on'
+                                    in_array($value, $this->getDependencyFieldSelectedValues($model->getElement('project_group_ids'), 'project_group_ids'), true)
                                 ) {
                                     $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
                                 }
@@ -266,15 +266,10 @@ trait ApplicationServiceTrait
                             } else {
                                 $dependingOnField = $model->getElement('virtual' . $key);
 
-                                $virtualFieldData = $_REQUEST['virtual' . $key][0] ?? null;
-
                                 if (
                                     in_array(ACTION, [ActionEnum::create, ActionEnum::change])
-                                    && $virtualFieldData
-                                    && (
-                                        ($dependingOnField instanceof Item\Multiselect && ($virtualFieldData[$value] ?? null) === 'on') ||
-                                        ($dependingOnField instanceof Item\Select && $virtualFieldData === $value)
-                                    )
+                                    && ($dependingOnField instanceof Item\Multiselect || $dependingOnField instanceof Item\Select)
+                                    && in_array($value, $this->getDependencyFieldSelectedValues($dependingOnField, 'virtual' . $key), true)
                                 ) {
                                     $this->dependentFieldsToEnsureMustbe[$applicationField->name] = true;
                                 }
@@ -1555,6 +1550,36 @@ trait ApplicationServiceTrait
                 }
             }
         }
+    }
+
+    /** Значения, выбранные в поле, от которого зависит показ другого поля. Поля, недоступные для изменения в текущем
+     * контексте, в запрос не попадают вовсе — для них берём то, что уже сохранено в заявке
+     * @return array<int, string>
+     */
+    private function getDependencyFieldSelectedValues(?ElementItem $dependencyField, string $dependencyFieldName): array
+    {
+        $writeContext = $this->entity->name . ':' . (ACTION === ActionEnum::create ? 'create' : 'update');
+
+        if (is_null($dependencyField) || in_array($writeContext, $dependencyField->getAttribute()->context, true)) {
+            $requestedValue = $_REQUEST[$dependencyFieldName][0] ?? null;
+
+            if (is_array($requestedValue)) {
+                return array_map('strval', array_keys(array_filter($requestedValue, static fn (mixed $value): bool => $value === 'on')));
+            }
+
+            return is_null($requestedValue) || $requestedValue === '' ? [] : [(string) $requestedValue];
+        }
+
+        $applicationData = $this->getApplicationData() ?? [];
+        $savedValue = $applicationData[$dependencyFieldName]
+            ?? DataHelper::unmakeVirtual($applicationData['allinfo'] ?? '')[$dependencyFieldName]
+            ?? null;
+
+        if ($dependencyField instanceof Item\Multiselect) {
+            return array_map('strval', DataHelper::multiselectToArray($savedValue));
+        }
+
+        return is_null($savedValue) || $savedValue === '' ? [] : [(string) $savedValue];
     }
 
     /** Просмотр истории заявок */
