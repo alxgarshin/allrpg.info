@@ -80,15 +80,19 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
                 }
             }
 
-            self::redirectIfNoProjectRights();
+            return self::redirectIfNoProjectRights();
         }
 
         return true;
     }
 
     /** Редирект в случае отсутствия доступа к проекту */
-    public static function redirectIfNoProjectRights(): void
+    public static function redirectIfNoProjectRights(): bool
     {
+        if (REQUEST_TYPE->isApiRequest()) {
+            return false;
+        }
+
         if (is_int($_REQUEST['project_id'] ?? false) && $_REQUEST['project_id'] > 0) {
             ResponseHelper::redirect(
                 '/project/' . (int) $_REQUEST['project_id'] . '/' .
@@ -97,6 +101,8 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
         } else {
             ResponseHelper::redirect('/project/');
         }
+
+        return false;
     }
 
     /** Проверка прав проекта и установки переменной project_id. Чаще всего используется так: $projectRights = RightsHelper::checkProjectRights(); */

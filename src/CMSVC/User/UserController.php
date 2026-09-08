@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\User;
 
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\ApiParamTypeEnum;
 use Fraym\Helper\LocaleHelper;
 use Fraym\Interface\Response;
 
@@ -32,15 +33,22 @@ class UserController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('deviceId', ApiParamTypeEnum::string, obligatory: true),
+        new ApiParam('endpoint', ApiParamTypeEnum::string, obligatory: true),
+        new ApiParam('p256dh', ApiParamTypeEnum::string, obligatory: true),
+        new ApiParam('auth', ApiParamTypeEnum::string, obligatory: true),
+        new ApiParam('contentEncoding', ApiParamTypeEnum::string, default: 'aesgcm'),
+    ])]
     public function webpushSubscribe(): ?Response
     {
         return $this->asArray(
             $this->service->webpushSubscribe(
-                $_REQUEST['deviceId'] ?? null,
-                $_REQUEST['endpoint'] ?? null,
-                $_REQUEST['p256dh'] ?? null,
-                $_REQUEST['auth'] ?? null,
-                $_REQUEST['contentEncoding'] ?? null,
+                $this->param('deviceId'),
+                $this->param('endpoint'),
+                $this->param('p256dh'),
+                $this->param('auth'),
+                $this->param('contentEncoding'),
             ),
         );
     }
@@ -78,20 +86,17 @@ class UserController extends BaseController
     #[IsAccessible]
     public function getNewEvents(): ?Response
     {
-        return $this->asArray(
-            array_merge(
-                $this->service->getContactsOnlineExtended(
-                    ($_REQUEST['show_list'] ?? '') === 'true',
-                    ($_REQUEST['get_opened_dialogs'] ?? '') === 'true',
-                ),
-                $this->service->getNewEvents(
-                    OBJ_ID,
-                    OBJ_TYPE,
-                    ($_REQUEST['get_opened_dialogs'] ?? '') === 'true',
-                    ($_REQUEST['show_list'] ?? '') === 'true',
-                ),
-            ),
-        );
+        $showList = ($_REQUEST['show_list'] ?? '') === 'true';
+        $getOpenedDialogs = ($_REQUEST['get_opened_dialogs'] ?? '') === 'true';
+
+        $contactsData = $this->service->getContactsOnlineExtended($showList, $getOpenedDialogs);
+        $newEventsData = $this->service->getNewEvents(OBJ_ID, OBJ_TYPE, $getOpenedDialogs, $showList);
+
+        return $this->asArray([
+            'response' => 'success',
+            'response_text' => $contactsData['response_text'],
+            'response_data' => array_merge($contactsData['response_data'], $newEventsData['response_data']),
+        ]);
     }
 
     public function loadUsersList(): ?Response

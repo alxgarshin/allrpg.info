@@ -338,8 +338,10 @@ class GroupService extends BaseService
                 $returnArr = [
                     'response' => 'success',
                     'response_text' => $LOCALE_APPLICATION['messages']['group_request_accepted'],
-                    'response_data' => '<div class="done">' . $LOCALE_CONVERSATION['actions']['request_done'] . '</div>',
-                    'response_group' => $actionData[2],
+                    'response_data' => [
+                        'html' => '<div class="done">' . $LOCALE_CONVERSATION['actions']['request_done'] . '</div>',
+                        'group_id' => $actionData[2],
+                    ],
                 ];
             }
         }
@@ -604,8 +606,10 @@ class GroupService extends BaseService
 
         return [
             'response' => 'success',
-            'response_data' => $groupsList,
-            'response_data_selected' => $responseDataSelected,
+            'response_data' => [
+                'groups' => $groupsList,
+                'selected' => $responseDataSelected,
+            ],
         ];
     }
 

@@ -150,7 +150,7 @@ class FraymAutocomplete {
 					autocomplete.data = [];
 					autocomplete.resultsContainerElement.empty();
 
-					data.forEach((item) => {
+					responseData(data).forEach((item) => {
 						if (autocomplete.options.conditionalSearch) {
 							item.currentPosition = currentPosition;
 							item.closestIndice = closestIndice;

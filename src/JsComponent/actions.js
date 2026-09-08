@@ -84,10 +84,12 @@ if (withDocumentEvents) {
     _arSuccess('confirm_group_request', function (jsonData, params, target) {
         showMessageFromJsonData(jsonData);
 
-        target.closest('div.commands').html(jsonData['response_data']);
+        const groupRequestData = responseData(jsonData);
 
-        if (parseInt(jsonData['response_group']) > 0) {
-            _(`input[name="project_group_ids[0][${jsonData['response_group']}]"]`).checked(true).change();
+        target.closest('div.commands').html(groupRequestData['html']);
+
+        if (parseInt(groupRequestData['group_id']) > 0) {
+            _(`input[name="project_group_ids[0][${groupRequestData['group_id']}]"]`).checked(true).change();
         }
     })
 
@@ -136,10 +138,12 @@ if (withDocumentEvents) {
 
         notyDialog?.close();
 
+        const dialogData = responseData(jsonData);
+
         if (params.additionalTarget.closest('div.actions_list_items')) {
-            updateState(`/conversation/${jsonData['conversation_id']}/#bottom`);
+            updateState(`/conversation/${dialogData['conversation_id']}/#bottom`);
         } else {
-            if (params['obj_id'] == jsonData['conversation_id']) {
+            if (params['obj_id'] == dialogData['conversation_id']) {
                 const dialogWindow = _(`div.conversations_widget_message_container[obj_id=${params['obj_id']}]`);
 
                 actionRequest({
@@ -151,8 +155,8 @@ if (withDocumentEvents) {
             } else {
                 actionRequest({
                     action: 'conversation/get_dialog',
-                    obj_id: jsonData['conversation_id'],
-                    user_id: jsonData['user_id']
+                    obj_id: dialogData['conversation_id'],
+                    user_id: dialogData['user_id']
                 });
             }
         }

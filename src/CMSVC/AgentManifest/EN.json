@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Agent API manifest"
+  },
+  "instructions": "This is a machine-readable description of the project API, assembled by the framework from its own metadata. The index lists the modules; the details for a single module are available at /agent_manifest/cmsvc={name}. Request details only for the modules your task needs: a real project's full manifest does not fit into context. Rights are resolved per request, so the same address returns a different amount of data with and without a token. Before writing data, read the conventions section: the wire format cannot be inferred from the field descriptions.",
+  "module_unavailable": "The module description could not be assembled: initialising its models failed. The field and action lists here are incomplete and must not be relied upon.",
+  "auth": {
+    "token_endpoint": "/login/action=api_token",
+    "refresh_endpoint": "/login/action=api_refresh_token",
+    "scheme": "Send login and password to token_endpoint and receive an access_token (a JWT valid for one hour) and a refresh_token (valid for 30 days). Then add the header \"Authorization: Bearer {access_token}\" to every request. When the access_token expires, send the refresh_token to refresh_endpoint — there is no need to store the password. Token issuing is rate limited: after five failed attempts the address answers with the rate_limited code and a Retry-After header.",
+    "csrf": "A request carrying the Authorization: Bearer header is exempt from the CSRF check. A cookie-authorised client must send the X-CSRF-Token header."
+  },
+  "conventions": [
+    "Field values carry an object index: name[0], tipe[0]. The index runs from 0 to n — the format is built for submitting several objects in one request. A bare scalar (name=Test) is rejected with the wrong_data_format code.",
+    "Field groups inside an object use a nested index: field[0][g].",
+    "Deletion: action=delete with an array of identifiers — id[]=2&id[]=3.",
+    "Parameters may be passed in path form: /{kind}/{param}={value}&{param}={value}. A trailing slash corrupts the last parameter value: /helper/input=Mos filters correctly, while /helper/input=Mos/ returns the whole reference list with no sign of an error. Do not add a trailing slash.",
+    "Fields from joined tables arrive in a list response as \"table__field\", with two underscores.",
+    "Every answer arrives in a single envelope: response (success or error), response_text, response_data with the payload, ids with the identifiers of created or changed objects, fields with the names of the offending fields in wire format, and response_error_code with the machine-readable error code.",
+    "On a validation error the fields key gives field names exactly as they must be sent back: fix the values and repeat the request."
+  ],
+  "errors": {
+    "validation_failed": "The data failed validation. The offending field names are in the fields key; fix them and repeat the request.",
+    "unauthorized": "There is no valid authorisation. Obtain a token or refresh it with the refresh_token.",
+    "forbidden": "This action is not permitted. Repeating will not help.",
+    "not_found": "The module, object or action was not found.",
+    "wrong_action": "The module has no such action. Check the actions list in the module details.",
+    "wrong_data_format": "The data is not in the format the framework expects. Most often this is a value without an object index: it must be name[0], not name.",
+    "duplicate": "Such a record already exists. Repeated saving was blocked.",
+    "rate_limited": "Too many requests. Wait as many seconds as the Retry-After header says.",
+    "internal_error": "A server-side error. The request may be repeated later."
+  },
+  "crud": {
+    "list": "The list of the module's objects.",
+    "view": "A single object of the module by its identifier.",
+    "create": "Creates an object. The identifiers of the created records are returned in the ids key.",
+    "change": "Changes an object. The identifier of the record being changed is passed as id[0].",
+    "delete": "Deletes objects by an array of identifiers id[].",
+    "lookup": "A reference list: returns identifier and label pairs. The term parameter filters the output."
+  }
+}

@@ -23,6 +23,21 @@ class RegisterService extends BaseService
         return UniversalHelper::getCaptcha()['hash'];
     }
 
+    public function getRightsContext(): array
+    {
+        return $this->userService->getRightsContext();
+    }
+
+    public function getSubsObjectsList(): array
+    {
+        return $this->userService->getSubsObjectsList();
+    }
+
+    public function getSidDefault(): ?int
+    {
+        return $this->userService->getSidDefault();
+    }
+
     public function preCreate(): void
     {
         $LOCALE = $this->LOCALE['messages'];

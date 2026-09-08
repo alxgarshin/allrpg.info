@@ -319,8 +319,9 @@ if (withDocumentEvents) {
     _arSuccess('create_folder', function (jsonData, params, target) {
         showMessageFromJsonData(jsonData);
 
+        const folderId = responseData(jsonData)['id'];
         const name = target.find('input[name="create_folder_name"]');
-        const newDiv = elFromHTML(`<div class="uploaded_file folder" obj_id="${jsonData['id']}"><a class="edit_file" title="${LOCALE.edit}"></a><a class="trash careful action_request" title="${LOCALE.delete}" action_request="file/delete_folder" obj_id="${jsonData[`id`]}"></a> <a class="bold_link">${name.val()}</a></div>`);
+        const newDiv = elFromHTML(`<div class="uploaded_file folder" obj_id="${folderId}"><a class="edit_file" title="${LOCALE.edit}"></a><a class="trash careful action_request" title="${LOCALE.delete}" action_request="file/delete_folder" obj_id="${folderId}"></a> <a class="bold_link">${name.val()}</a></div>`);
 
         if (params.additionalTarget.find('span.links')) {
             params.additionalTarget.find('span.links').insert(newDiv, 'after');
@@ -390,8 +391,10 @@ if (withDocumentEvents) {
     _arSuccess('change_folder_rights', function (jsonData, params, target) {
         showMessageFromJsonData(jsonData);
 
-        if (jsonData['button_text'].length) {
-            _('[id$="_library_show_rights_wrapper"] > span').text(jsonData['button_text']);
+        const buttonText = responseData(jsonData)['button_text'];
+
+        if (buttonText.length) {
+            _('[id$="_library_show_rights_wrapper"] > span').text(buttonText);
         }
 
         target.hide();

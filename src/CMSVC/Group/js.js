@@ -81,11 +81,13 @@ if (withDocumentEvents) {
 
         target.empty();
 
-        _each(jsonData['response_data'], function (value, key) {
+        const childGroupsData = responseData(jsonData);
+
+        _each(childGroupsData['groups'], function (value, key) {
             target.insert(`<option value="${key}">${value}</option>`, 'append');
         });
 
-        target.val(parseInt(jsonData['response_data_selected']));
+        target.val(parseInt(childGroupsData['selected']));
     })
 
     _arSuccess('get_responsible_gamemaster', function (jsonData, params, target) {

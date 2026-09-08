@@ -435,6 +435,7 @@ if (withDocumentEvents) {
         })
 
         _arSuccess('get_dialog', function (jsonData, params, target) {
+            const dialogData = responseData(jsonData);
             const selector = `[user_id="${params['user_id']}"]${((params['obj_id'] > 0 && params['obj_id'] != 'new') ? `[obj_id="${params['obj_id']}"]` : ``)}`;
 
             if (el(`div.conversations_widget_message_container${selector}`)) {
@@ -455,7 +456,7 @@ if (withDocumentEvents) {
                     });
                 }
             } else {
-                target = _(elFromHTML(`<div class="conversations_widget_message_container on_start" obj_id="${params[`obj_id`]}" user_id="${params[`user_id`]}"><div class="conversations_widget_message_header"><div class="conversations_widget_list_close sbi"></div><div class="conversations_widget_list_sound"></div><div class="conversations_widget_list_functions"></div><a href="/conversation/${params[`obj_id`]}/#bottom">${jsonData[`name`]}</a></div><div class="conversations_widget_message_functions"><a class="conversations_widget_message_functions_add_people">${LOCALE.conversationWidgetFunctionsAddPeople}</a>${(jsonData[`is_group`] === `true` ? `<a class="conversations_widget_message_functions_rename">${LOCALE.rename}</a><a class="conversations_widget_message_functions_leave careful" action_request="conversation/leave_dialog" obj_id="${params['obj_id']}">${LOCALE.conversationWidgetFunctionsLeave}</a>` : ``)}</div><div class="conversations_widget_message_scroll" limit="10"></div><div class="conversations_widget_message_conversation_form"><textarea id="dialog_new_message" placeholder="${LOCALE.conversationWidgetInputText}" obj_id="${params[`obj_id`]}" user_id="${params[`user_id`]}"></textarea><button></button></div></div>`));
+                target = _(elFromHTML(`<div class="conversations_widget_message_container on_start" obj_id="${params[`obj_id`]}" user_id="${params[`user_id`]}"><div class="conversations_widget_message_header"><div class="conversations_widget_list_close sbi"></div><div class="conversations_widget_list_sound"></div><div class="conversations_widget_list_functions"></div><a href="/conversation/${params[`obj_id`]}/#bottom">${dialogData['name']}</a></div><div class="conversations_widget_message_functions"><a class="conversations_widget_message_functions_add_people">${LOCALE.conversationWidgetFunctionsAddPeople}</a>${(dialogData['is_group'] === `true` ? `<a class="conversations_widget_message_functions_rename">${LOCALE.rename}</a><a class="conversations_widget_message_functions_leave careful" action_request="conversation/leave_dialog" obj_id="${params['obj_id']}">${LOCALE.conversationWidgetFunctionsLeave}</a>` : ``)}</div><div class="conversations_widget_message_scroll" limit="10"></div><div class="conversations_widget_message_conversation_form"><textarea id="dialog_new_message" placeholder="${LOCALE.conversationWidgetInputText}" obj_id="${params[`obj_id`]}" user_id="${params[`user_id`]}"></textarea><button></button></div></div>`));
 
                 fraymDragDropApply(target, {
                     handler: target.find('.conversations_widget_message_header').asDomElement(),
@@ -499,39 +500,39 @@ if (withDocumentEvents) {
                 _('div.conversations_widget_message_container').css('zIndex', 10499);
 
                 target.css('zIndex', 10500);
-                target.css('left', jsonData['left']).css('top', jsonData['top']);
+                target.css('left', dialogData['left']).css('top', dialogData['top']);
 
-                if (jsonData['left'] !== '' || jsonData['top'] !== '') {
+                if (dialogData['left'] !== '' || dialogData['top'] !== '') {
                     target.removeClass('on_start');
                 }
 
-                target.find('.conversations_widget_list_sound').toggleClass('mute', jsonData['sound'] == 'mute');
+                target.find('.conversations_widget_list_sound').toggleClass('mute', dialogData['sound'] == 'mute');
             }
 
             const scroll = target.find('div.conversations_widget_message_scroll');
 
             if (params['limit']) {
-                scroll.attr('limit', jsonData['limit']);
+                scroll.attr('limit', dialogData['limit']);
 
-                if (jsonData['dialog']) {
+                if (dialogData['dialog']) {
                     const scHeight = scroll.asDomElement().scrollHeight;
 
-                    scroll.html(jsonData['dialog'] + scroll.html());
+                    scroll.html(dialogData['dialog'] + scroll.html());
                     scroll.scrollTop(scroll.asDomElement().scrollHeight - scHeight);
                 } else {
                     scroll.attr('limit', 'done');
                 }
             } else if (params['time']) {
-                if (jsonData['dialog']) {
-                    scroll.html(scroll.html() + jsonData['dialog']);
+                if (dialogData['dialog']) {
+                    scroll.html(scroll.html() + dialogData['dialog']);
                     scroll.scrollTop(scroll.asDomElement().scrollHeight);
                 }
 
-                if (jsonData['time'] != 'keep') {
-                    target.attr('time', jsonData['time']);
+                if (dialogData['time'] != 'keep') {
+                    target.attr('time', dialogData['time']);
                 }
 
-                if (jsonData['messages_marked_read'] > 0) {
+                if (dialogData['messages_marked_read'] > 0) {
                     if (target.find('div.conversations_widget_list_sound').hasClass('mute')) {
                         //
                     } else {
@@ -539,10 +540,10 @@ if (withDocumentEvents) {
                     }
                 }
             } else {
-                target.attr('time', jsonData['time']);
-                scroll.html(jsonData['dialog']);
+                target.attr('time', dialogData['time']);
+                scroll.html(dialogData['dialog']);
 
-                if (jsonData['visible'] == 'notset' || jsonData['visible'] === true) {
+                if (dialogData['visible'] == 'notset' || dialogData['visible'] === true) {
                     actionRequest({
                         action: 'conversation/get_dialog',
                         obj_id: params['obj_id'],

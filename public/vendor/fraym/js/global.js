@@ -810,7 +810,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
                                 method: 'DELETE'
                             }).then(function (result) {
 
-                                for (let key in result) {
+                                for (let key in responseData(result)) {
                                     _(`a[href$="${key}"]`).parent().remove();
                                 }
 
@@ -1084,7 +1084,7 @@ async function fraymInit(withDocumentEvents, updateHash) {
 
                     let addedOptions = false;
 
-                    _each(jsonData, (value) => {
+                    _each(responseData(jsonData), (value) => {
                         if (value['id'] !== undefined && value['value'] !== undefined) {
                             target.insert(`<option value="${value['id']}">${value['value']}</option>`, 'end');
                             addedOptions = true;
@@ -2994,6 +2994,14 @@ async function fetchData(url, options = {}, data = null) {
         const response = await fetch(url, requestOptions);
 
         if (!response.ok) {
+            /** Ошибочный статус несёт конверт с response_text, response_error_code и fields —
+             *  отдаём тело вызывающему, иначе на месте внятного сообщения окажется общая ошибка */
+            if (options.json) {
+                try {
+                    return await response.json();
+                } catch { }
+            }
+
             return new Response(null, { status: 0, statusText: "NetworkError" });
         }
 
@@ -3034,9 +3042,11 @@ window.fetch = new Proxy(window.fetch, {
 
         const localUrl = isLocalUrl(url);
 
-        /** Запрос на сам refresh не проксируем — иначе бесконечный цикл при 401 */
+        /** Запросы к модулю авторизации не проксируем: на самом refresh это дало бы бесконечный цикл,
+         *  а на входе по логину и паролю 401 означает неверный пароль, а не протухший токен —
+         *  обновлять нечего, а повтор запроса был бы вторым вводом пароля */
         const refreshUrlString = (typeof url === 'string' ? url : url.url);
-        const isRefreshRequest = refreshUrlString && refreshUrlString.indexOf(jwtTokenRefreshUrl) === 0;
+        const isAuthRequest = refreshUrlString && refreshUrlString.indexOf(`${absolutePath()}/login/`) === 0;
 
         let response;
         try {
@@ -3046,7 +3056,7 @@ window.fetch = new Proxy(window.fetch, {
         }
 
         /** Токен протух (401) — обновляем cookie и повторяем запрос один раз */
-        if (localUrl && !isRefreshRequest && response.status === 401) {
+        if (localUrl && !isAuthRequest && response.status === 401) {
             await refreshAuthToken();
 
             try {
@@ -4497,6 +4507,13 @@ function showMessages() {
         });
     }
     messages = [];
+}
+
+/** Данные из конверта ответа: служебные ключи лежат в корне, полезная нагрузка — в response_data **/
+function responseData(jsonData) {
+    return jsonData !== null && typeof jsonData === 'object' && jsonData['response_data'] !== undefined
+        ? jsonData['response_data']
+        : jsonData;
 }
 
 /** Вывод сообщений-нотификаций из JSON-ответа **/

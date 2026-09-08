@@ -748,5 +748,17 @@
         "values": null
       }
     }
+  },
+  "fraym_actions": {
+    "webpush_subscribe": {
+      "description": "Suscribir un dispositivo a las notificaciones del navegador.",
+      "params": {
+        "deviceId": "Identificador del dispositivo (lo genera el navegador y se guarda en el cliente)",
+        "endpoint": "Dirección del servicio push de la suscripción del navegador",
+        "p256dh": "Clave pública de la suscripción, base64",
+        "auth": "Secreto de la suscripción, base64",
+        "contentEncoding": "Método de cifrado del contenido; aesgcm por defecto"
+      }
+    }
   }
 }

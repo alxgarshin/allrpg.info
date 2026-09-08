@@ -21,5 +21,20 @@
       "no_email_found_in_db": "Указанного e-mail'а в базе не обнаружено.",
       "need_to_login_or_register_for_that": "Необходимо войти или зарегистрироваться, после чего Вы будете перенаправлены в нужный раздел."
     }
+  },
+  "fraym_actions": {
+    "api_token": {
+      "description": "Выдать токены внешнему клиенту по логину и паролю. Отвечает access_token (JWT на час), refresh_token (30 суток) и expires_in. Попытки ограничены по частоте.",
+      "params": {
+        "login": "Логин пользователя",
+        "password": "Пароль пользователя"
+      }
+    },
+    "api_refresh_token": {
+      "description": "Обменять refresh-токен на новый JWT, не пересылая пароль. Прежний refresh-токен при этом отзывается.",
+      "params": {
+        "refresh_token": "Действующий refresh-токен, полученный ранее"
+      }
+    }
   }
 }

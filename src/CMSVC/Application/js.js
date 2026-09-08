@@ -318,10 +318,12 @@ loadJsComponent('application').then(function () {
         _arSuccess('confirm_payment', function (jsonData, params, target) {
             showMessageFromJsonData(jsonData);
 
-            target.closest('div.commands').html(jsonData['response_data']);
+            const paymentData = responseData(jsonData);
 
-            if (parseInt(jsonData['response_amount']) > 0) {
-                _('input[name="money_provided[0]"]').val((parseInt(_('input[name="money_provided[0]"]').val()) || 0) + parseInt(jsonData['response_amount']));
+            target.closest('div.commands').html(paymentData['html']);
+
+            if (parseInt(paymentData['amount']) > 0) {
+                _('input[name="money_provided[0]"]').val((parseInt(_('input[name="money_provided[0]"]').val()) || 0) + parseInt(paymentData['amount']));
             }
         })
 

@@ -140,10 +140,12 @@ if (withDocumentEvents) {
             removeLoader(this);
         });
 
-        if (jsonData['html'] && jsonData['html'] != 'reload') {
+        const commentData = responseData(jsonData);
+
+        if (commentData['html'] && commentData['html'] != 'reload') {
             const comment_type = target.find('[name="obj_type"]').val();
             let appendToBlock = null;
-            let result = elFromHTML(jsonData['html']);
+            let result = elFromHTML(commentData['html']);
 
             if (comment_type == '{task_comment}' || comment_type == '{event_comment}') {
                 appendToBlock = _('[class$="_comment_form"]').closest('div.block');
@@ -203,7 +205,7 @@ if (withDocumentEvents) {
 
                 if (comment_type == '{project_application_conversation}') {
                     //так как мы, сохраняя комментарий к заявке, сдвигаем updated_at заявки, нам нужно его выправить в полях: иначе она не будет сохраняться
-                    _('input[name="updated_at[0]"]').val(parseInt(jsonData['response_updated_at']) + 20);
+                    _('input[name="updated_at[0]"]').val(parseInt(commentData['response_updated_at']) + 20);
                 }
             } else if (comment_type == '{conversation_message}') {
                 const checkForQrpg = target.closest('div.qrpg_description');
@@ -211,7 +213,7 @@ if (withDocumentEvents) {
                 if (checkForQrpg) {
                     showMessageFromJsonData(jsonData);
                 } else {
-                    const conversationBlock = _(`div.message[c_id="${jsonData['c_id']}"]`);
+                    const conversationBlock = _(`div.message[c_id="${commentData['c_id']}"]`);
                     const dt = new Date();
 
                     appendToBlock = _('a#bottom');
@@ -261,7 +263,7 @@ if (withDocumentEvents) {
                 obj_id: loadLibraryBtn.attr('obj_id'),
                 external: 'false'
             }, _(loadLibraryLink));
-        } else if (jsonData['html'] == 'reload') {
+        } else if (commentData['html'] == 'reload') {
             updateState(currentHref);
         } else {
             showMessagesFromJson(jsonData);

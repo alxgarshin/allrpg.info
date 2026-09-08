@@ -640,40 +640,42 @@ async function projectInit(withDocumentEvents, updateHash) {
         actionRequestSupressErrorForActions.push('get_new_events');
 
         _arSuccess('get_new_events', function (jsonData, params) {
+            const eventsData = responseData(jsonData);
+
             _('div.conversations_widget').find('span.value').text(jsonData['response_text']);
 
-            if (jsonData['online_array'] !== undefined) {
+            if (eventsData['online_array'] !== undefined) {
                 _('div.photoName').each(function () {
                     const self = _(this);
                     const userId = self.attr('user_id');
 
-                    self.toggleClass('online_marker', jsonData['online_array'][userId] !== undefined);
+                    self.toggleClass('online_marker', eventsData['online_array'][userId] !== undefined);
                 })
             }
 
             if (params['show_list'] == true) {
-                let html = `<div class="conversations_widget_list_header"><div class="conversations_widget_list_close sbi"></div>${jsonData['response_data']['online']['count']['count']} ${LOCALE.contactsCount}${jsonData['response_data']['online']['count']['ending']} ${LOCALE.contactsOnline}</div><div class="conversations_widget_list_scroll">`;
+                let html = `<div class="conversations_widget_list_header"><div class="conversations_widget_list_close sbi"></div>${eventsData['contacts']['online']['count']['count']} ${LOCALE.contactsCount}${eventsData['contacts']['online']['count']['ending']} ${LOCALE.contactsOnline}</div><div class="conversations_widget_list_scroll">`;
 
-                _each(jsonData['response_data']['online'], function (value, key) {
+                _each(eventsData['contacts']['online'], function (value, key) {
                     if (key !== 'count') {
                         html += `<div class="conversations_widget_list_item online" obj_id="${value[`obj_id`]}" user_id="${value[`user_id`]}"><div class="conversations_widget_list_photos">${value['photoNameLink']}</div><div class="conversations_widget_list_item_name">${value[`dialog_name`]}</div><div class="clear"></div></div>`;
                     }
                 })
 
-                if (jsonData['response_data']['group']['count']['count'] > 0) {
-                    html += `<div class="conversations_widget_list_item_separator">${jsonData['response_data']['group']['count']['count']} ${LOCALE.groupCount}${jsonData['response_data']['group']['count']['ending']} ${LOCALE.groupCount2}${jsonData['response_data']['group']['count']['ending2']}</div>`;
+                if (eventsData['contacts']['group']['count']['count'] > 0) {
+                    html += `<div class="conversations_widget_list_item_separator">${eventsData['contacts']['group']['count']['count']} ${LOCALE.groupCount}${eventsData['contacts']['group']['count']['ending']} ${LOCALE.groupCount2}${eventsData['contacts']['group']['count']['ending2']}</div>`;
 
-                    _each(jsonData['response_data']['group'], function (value, key) {
+                    _each(eventsData['contacts']['group'], function (value, key) {
                         if (key != 'count') {
                             html += `<div class="conversations_widget_list_item group" obj_id="${value[`obj_id`]}" user_id="${value[`user_id`]}"><div class="conversations_widget_list_photos">${value['photoNameLink']}</div><div class="conversations_widget_list_item_name">${value[`dialog_name`]}</div><div class="clear"></div></div>`;
                         }
                     })
                 }
 
-                if (jsonData['response_data']['offline']['count']['count'] > 0) {
-                    html += `<div class="conversations_widget_list_item_separator">${jsonData['response_data']['offline']['count']['count']} ${LOCALE.contactsCount}${jsonData['response_data']['offline']['count']['ending']} ${LOCALE.contactsOffline}</div>`;
+                if (eventsData['contacts']['offline']['count']['count'] > 0) {
+                    html += `<div class="conversations_widget_list_item_separator">${eventsData['contacts']['offline']['count']['count']} ${LOCALE.contactsCount}${eventsData['contacts']['offline']['count']['ending']} ${LOCALE.contactsOffline}</div>`;
 
-                    _each(jsonData['response_data']['offline'], function (value, key) {
+                    _each(eventsData['contacts']['offline'], function (value, key) {
                         if (key != 'count') {
                             html += `<div class="conversations_widget_list_item offline" obj_id="${value[`obj_id`]}" user_id="${value[`user_id`]}"><div class="conversations_widget_list_photos">${value['photoNameLink']}</div><div class="conversations_widget_list_item_name">${value[`dialog_name`]}</div><div class="clear"></div></div>`;
                         }
@@ -688,8 +690,8 @@ async function projectInit(withDocumentEvents, updateHash) {
 
                 fraymPlaceholder('#conversations_widget_list_search_input');
             } else if (params['get_opened_dialogs'] == true) {
-                if (jsonData['response_data'] !== undefined) {
-                    _each(jsonData['response_data'], function (value, key) {
+                if (eventsData['opened_dialogs'] !== undefined) {
+                    _each(eventsData['opened_dialogs'], function (value, key) {
                         if (_(`div.conversations_widget_message_container[user_id="${value['user_id']}"]`).is(':visible')) {
                             //
                         } else {
@@ -706,7 +708,7 @@ async function projectInit(withDocumentEvents, updateHash) {
 
             let playSound = false;
 
-            _each(jsonData['new_events']['conversation'], function (value, key) {
+            _each(eventsData['new_events']['conversation'], function (value, key) {
                 const messageDiv = _(`div.message[c_id="${key}"]`);
 
                 //предпринимаем активные действия, только если в диалоге есть непрочтенные сообщения
@@ -724,7 +726,7 @@ async function projectInit(withDocumentEvents, updateHash) {
                             dynamic_load: true
                         }, _('a#bottom'));
 
-                        jsonData['new_events_counters']['conversation'] -= value['count'];
+                        eventsData['new_events_counters']['conversation'] -= value['count'];
                     } else {
                         //конкретно в этом случае ориентируемся жестко на key=obj_id, потому как могут оказаться два диалога с одним и тем же набором участников (через выход или добавление)
                         const unreadMessagesDivNode = el(`div.conversations_widget_container_avatar_unread_messages[obj_id="${key}"]`);
@@ -810,7 +812,7 @@ async function projectInit(withDocumentEvents, updateHash) {
             _('div.conversations_widget_container_avatar_unread_messages').each(function () {
                 const self = _(this);
 
-                if (self.text() != '' && (jsonData['new_events']['conversation'][self.attr('obj_id')] === undefined || jsonData['new_events']['conversation'][self.attr('obj_id')]['count'] == '-1')) {
+                if (self.text() != '' && (eventsData['new_events']['conversation'][self.attr('obj_id')] === undefined || eventsData['new_events']['conversation'][self.attr('obj_id')]['count'] == '-1')) {
                     const divMessage = _(`div.message[c_id="${self.attr('obj_id')}"]`);
 
                     self.text('').hide();
@@ -821,14 +823,14 @@ async function projectInit(withDocumentEvents, updateHash) {
                 }
             });
 
-            if (jsonData['new_events_counters']['conversation'] > 0) {
-                _('span#new_messages_counter').show().text(jsonData['new_events_counters']['conversation']);
+            if (eventsData['new_events_counters']['conversation'] > 0) {
+                _('span#new_messages_counter').show().text(eventsData['new_events_counters']['conversation']);
             } else {
                 _('span#new_messages_counter').hide().text('');
             }
 
             //если выставлен block_sound, меняем интервал обновления на 5 минут
-            if (jsonData['block_sound'] === true) {
+            if (eventsData['block_sound'] === true) {
                 getNewEventsTimeoutTimer = 300000;
                 loadTasksTimeoutTimer = 300000;
             } else {
@@ -837,7 +839,7 @@ async function projectInit(withDocumentEvents, updateHash) {
             }
 
             //если выставлен block_sound, не играем звук
-            if (playSound && jsonData['block_sound'] === true) {
+            if (playSound && eventsData['block_sound'] === true) {
                 playSound = false;
             }
 
@@ -845,9 +847,9 @@ async function projectInit(withDocumentEvents, updateHash) {
                 el('#new_message_alert').play();
             }
 
-            const newConversationsCounter = jsonData['new_events_counters']['project_conversation'] + jsonData['new_events_counters']['community_conversation'];
-            const newWallCounter = jsonData['new_events_counters']['project_wall'] + jsonData['new_events_counters']['community_wall'];
-            const newTasksCounter = jsonData['new_events_counters']['task_comment'];
+            const newConversationsCounter = eventsData['new_events_counters']['project_conversation'] + eventsData['new_events_counters']['community_conversation'];
+            const newWallCounter = eventsData['new_events_counters']['project_wall'] + eventsData['new_events_counters']['community_wall'];
+            const newTasksCounter = eventsData['new_events_counters']['task_comment'];
             const newApplicationsCounter = 0;
             const newPersonalCounter = newConversationsCounter + newWallCounter + newTasksCounter;
 
@@ -867,7 +869,7 @@ async function projectInit(withDocumentEvents, updateHash) {
                 (el('div.kind_project') && params['obj_id'] == projectControlId) ||
                 (el('div.kind_tasklist') && params['obj_id'] == 'all')
             ) {
-                const tasksByTypes = jsonData['new_events_counters']['task_comment_by_types'];
+                const tasksByTypes = eventsData['new_events_counters']['task_comment_by_types'];
 
                 showHideByValue('sup#new_tasks_counter_mine', tasksByTypes['mine']);
                 showHideByValue('sup#new_tasks_counter_membered', tasksByTypes['membered']);
@@ -878,7 +880,7 @@ async function projectInit(withDocumentEvents, updateHash) {
             /** Оповещения о новых комментариях в заявках */
             let oneTimePlay = true;
 
-            _each(jsonData['new_events']['application_comments'], function (data) {
+            _each(eventsData['new_events']['application_comments'], function (data) {
                 if (newApplicationCommentsIds.includes(data.comment_id)) {
                 } else {
                     if (oneTimePlay) {
@@ -930,7 +932,7 @@ async function projectInit(withDocumentEvents, updateHash) {
             /** Оповещения о новых комментариях в модуле игрока */
             oneTimePlay = true;
 
-            _each(jsonData['new_events']['ingame_application_comments'], function (data) {
+            _each(eventsData['new_events']['ingame_application_comments'], function (data) {
                 if (newIngameApplicationCommentsIds.includes(data.comment_id)) {
                 } else {
                     if (oneTimePlay) {
@@ -991,8 +993,10 @@ async function projectInit(withDocumentEvents, updateHash) {
         })
 
         _arSuccess('get_captcha', function (jsonData, params, target) {
-            _('input[name="hash[0]"]').val(jsonData['hash']);
-            _('div[id="field_regstamp[0]"]').find('img')?.attr('src', `/scripts/captcha/hash=${jsonData['hash']}`);
+            const hash = responseData(jsonData)['hash'];
+
+            _('input[name="hash[0]"]').val(hash);
+            _('div[id="field_regstamp[0]"]').find('img')?.attr('src', `/scripts/captcha/hash=${hash}`);
         })
 
         _arSuccess('load_users_list', function (jsonData, params, target) {

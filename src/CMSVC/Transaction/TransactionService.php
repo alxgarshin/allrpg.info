@@ -132,8 +132,10 @@ class TransactionService extends BaseService
                 $returnArr = [
                     'response' => 'success',
                     'response_text' => $LOCALE['payment_provided_accepted'],
-                    'response_data' => '<div class="done">' . $LOCALE_CONVERSATION['actions']['request_done'] . '</div>',
-                    'response_amount' => $transactionData['amount'],
+                    'response_data' => [
+                        'html' => '<div class="done">' . $LOCALE_CONVERSATION['actions']['request_done'] . '</div>',
+                        'amount' => $transactionData['amount'],
+                    ],
                 ];
             }
         }

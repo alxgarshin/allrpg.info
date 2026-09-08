@@ -377,14 +377,15 @@ if (withDocumentEvents) {
         }
 
         const type = target.hasClass('conversation_message') ? 'conversation' : 'wall';
+        const deleteType = responseData(jsonData)['delete_type'];
 
-        if (jsonData['delete_type'] == 'leave message') {
+        if (deleteType == 'leave message') {
             target.find(`div.${type}_message_content`)?.html(LOCALE.messageDeleted).show();
             target.find(`a.${type}_message_edit_cancel`)?.text(LOCALE.editCapitalized).removeClass(`${type}_message_edit_cancel`).addClass(`${type}_message_edit`);
             target.find(`div.${type}_message_edit`)?.remove();
-        } else if (jsonData['delete_type'] == 'delete message') {
+        } else if (deleteType == 'delete message') {
             target.remove();
-        } else if (jsonData['delete_type'] == 'delete all') {
+        } else if (deleteType == 'delete all') {
             target.closest('div[class*="_message_container"]')?.remove();
         }
     })

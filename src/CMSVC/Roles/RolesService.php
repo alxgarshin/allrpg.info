@@ -127,7 +127,6 @@ class RolesService extends BaseService
 
         ini_set('memory_limit', '500M');
 
-        $responseTimer = microtime(true);
         $responseTimerData = [];
         $responseData = '';
 
@@ -676,13 +675,9 @@ class RolesService extends BaseService
                 }
             }
 
-            $responseTime = number_format(microtime(true) - $responseTimer, 10);
-
             $returnArr = [
                 'response' => 'success',
                 'response_data' => $responseData,
-                'response_time' => $responseTime,
-                // 'response_timer_data' => print_r($responseTimerData, true)
             ];
 
             if ($this->getExcelView()) {

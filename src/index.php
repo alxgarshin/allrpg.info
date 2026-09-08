@@ -9,7 +9,7 @@ use App\CMSVC\Error404\Error404Controller;
 use App\Helper\RightsHelper;
 use App\Template\{BannersTemplate, LoginTemplate, MainTemplate};
 use Fraym\BaseObject\{BaseController, BaseHelper};
-use Fraym\Enum\ActionEnum;
+use Fraym\Enum\{ActionEnum, ResponseErrorCodeEnum};
 use Fraym\Helper\{AuthHelper, CookieHelper, DataHelper, LocaleHelper, ResponseHelper, TextHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\{ArrayResponse, HtmlResponse};
@@ -74,11 +74,11 @@ if (class_exists($controllerName)) {
                 $RESPONSE_DATA = $controller->{ACTION}();
             }
         } else {
-            $LOCALE_CONVERSATION = LocaleHelper::getLocale(['conversation', 'global']);
+            $BASEFUNC_LOCALE = LocaleHelper::getLocale(['fraym', 'basefunc']);
             $RESPONSE_DATA = new ArrayResponse([
                 'response' => 'error',
-                'response_error_code' => 'wrong_action',
-                'response_text' => $LOCALE_CONVERSATION['messages']['wrong_action'],
+                'response_error_code' => ResponseErrorCodeEnum::wrongAction->value,
+                'response_text' => $BASEFUNC_LOCALE['wrong_action'] ?? null,
             ]);
         }
     }
@@ -102,6 +102,10 @@ if (is_null($RESPONSE_DATA)) {
 
 /** Если в результате обработки контента нет, ошибка 404 */
 if (!($RESPONSE_DATA instanceof Response)) {
+    if (REQUEST_TYPE->isApiRequest()) {
+        ResponseHelper::response404();
+    }
+
     $RESPONSE_DATA = (new Error404Controller())->construct(CMSVCinit: false)->init()->Default();
 }
 
@@ -126,7 +130,7 @@ if ($RESPONSE_DATA instanceof ArrayResponse) {
         $RESPONSE_RESULT['executionTime'] = GLOBALTIMER->getTimerDiff();
     }
     ResponseHelper::setCorsHeaders();
-    echo DataHelper::jsonFixedEncode($RESPONSE_RESULT);
+    echo DataHelper::jsonFixedEncode(ResponseHelper::buildEnvelope($RESPONSE_RESULT));
 } elseif ($RESPONSE_DATA instanceof HtmlResponse) {
     /** Если предоставлено альтернативное название страницы, убеждаемся, что оно идет с большой буквы */
     $PAGETITLE = $RESPONSE_DATA->getPagetitle();

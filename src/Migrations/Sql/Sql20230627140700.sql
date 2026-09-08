@@ -904,15 +904,51 @@ CREATE TABLE `user` (
   `agreement` enum('0','1') NOT NULL DEFAULT '0',
   `block_save_referer` enum('0','1') NOT NULL DEFAULT '0',
   `block_auto_redirect` enum('0','1') NOT NULL DEFAULT '0',
-  `refresh_token` text,
-  `refresh_token_exp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `sid` (`sid`) USING BTREE,
   KEY `city` (`city`),
   KEY `subs_type` (`subs_type`),
-  KEY `user_ingroup_IDX` (`ingroup`) USING BTREE,
-  FULLTEXT KEY `user_refresh_token_IDX` (`refresh_token`)
+  KEY `user_ingroup_IDX` (`ingroup`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `auth_token`
+--
+
+DROP TABLE IF EXISTS `auth_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_token` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `refresh_token` varchar(255) NOT NULL,
+  `refresh_token_exp` int(11) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_auth_token_refresh_token` (`refresh_token`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `auth_attempt`
+--
+
+DROP TABLE IF EXISTS `auth_attempt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_attempt` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `attempt_key` varchar(64) NOT NULL,
+  `attempts` int(11) NOT NULL DEFAULT 0,
+  `window_started_at` int(11) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_auth_attempt_key` (`attempt_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2140,8 +2176,8 @@ INSERT INTO tag (creator_id,parent,name,content,code,updated_at,created_at) VALU
 INSERT INTO task_and_event (creator_id,name,place,description,date_from,date_to,do_not_count_as_busy,percentage,real_date_from,real_date_to,status,priority,repeat_mode,repeat_until,attachments,`result`,tags,color,google_id,updated_at,created_at) VALUES
 	 (2,'Тестовая задача проекта',NULL,NULL,'2025-09-20 23:08:00','2025-09-21 00:08:00','0',0,NULL,NULL,'{new}',4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1758395801,1758395801);
 
-INSERT INTO `user` (sid,login,pass,fio,nick,gender,birth,city,em,em_verified,phone,telegram,icq,skype,jabber,vkontakte,vkontakte_visible,twitter,livejournal,googleplus,facebook,facebook_visible,linkedin,photo,additional,sickness,prefer,prefer2,prefer3,prefer4,speciality,ingroup,bazecount,hidesome,subs_type,subs_objects,rights,status,calendarstyle,last_activity,last_get_new_events,updated_at,created_at,agreement,block_save_referer,block_auto_redirect,refresh_token,refresh_token_exp) VALUES
-	 (1,'admin@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Админ allrpg.info',NULL,NULL,'2006-10-01',2,'admin@allrpg.info','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'{identicon.png:181f610603474c5ce405283b2e3c9792.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,50,'[2]',1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]','["admin","help","send_images"]',NULL,'0',NULL,1758395109,1758395113,1758310785,'1','0','0','d8dfcab423999acacb25ced35b6c091fd7f905198e518517713325d9ddad17872b77b31668569ea571ac8e5c56ff11fdade5da94f70394ed701939e35c525e52a41f34a1bbf6c94aabd29ff32ef9209e87b4b2244b52522f1695bc1a51d652db88d8d1a1','2025-10-20 22:01:39'),
-	 (2,'master@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Мастер allrpg.info',NULL,NULL,'2006-01-01',2,'master@allrpg.info','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'{identicon.png:da679feedd9e5527f1a2182071a50494.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,50,'[2]',1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]',NULL,NULL,'0',NULL,1758475827,1758475827,1758395205,'1','0','0','5b92a75993fa47c98aeb0e49b71de633f2cd923f3ec3ef7d65a0a9eff9cbc1f4b6989a01dab28b7b6db9806026a9398ac78ef8819128d42b626c6e4cd714b7aa0a6cf9eba7ffeba2b7fd7d199246d5bcc1693347e0eb0c9fa2f7a806d3031fc78b645a03','2025-10-21 19:50:59'),
-	 (3,'player1@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Игрок1 allrpg.info','',NULL,'2006-01-01',2,'player1@allrpg.info','1','','',NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,'',NULL,'{identicon.png:f64e47414799b0520bcfbc4f5b5fcad0.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]',NULL,NULL,'0',NULL,1758471729,1758471738,1758470573,'1','0','0','3347a5df245da7a3cba6e96690346af95204808a45685ed52db6bc6e34e7803e393a60c52da2e98b8c9cdc0baac78d45c7273f8dcd22e22e65bf34edf01fb31cad84540bfe8ebccea008f13b081490c6f3922929f96ca11392b28f2bc72000262e52310d','2025-10-21 19:10:23'),
-	 (4,'player2@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Игрок2 allrpg.info','',NULL,'2006-01-01',2,'player2@allrpg.info','1','','',NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,'',NULL,'{identicon.png:79ea2372a5cdc1538fc640bd2f9ac6af.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]',NULL,NULL,'0',NULL,1758472762,1758472780,1758471808,'1','0','0','35a590b19ea5c4dc077a4bf4d7ce047f6c27cdb906ad3e8d36abeb526f26c06f2a1ed051b9956cdb6962f4d242f95da628a17615a89c07b940f41ca097338c5f50fd705ccb2deefb8dc534f501ffdba83818a1c8262da4a9c7317f462766c41d15609b4b','2025-10-21 19:38:22');
+INSERT INTO `user` (sid,login,pass,fio,nick,gender,birth,city,em,em_verified,phone,telegram,icq,skype,jabber,vkontakte,vkontakte_visible,twitter,livejournal,googleplus,facebook,facebook_visible,linkedin,photo,additional,sickness,prefer,prefer2,prefer3,prefer4,speciality,ingroup,bazecount,hidesome,subs_type,subs_objects,rights,status,calendarstyle,last_activity,last_get_new_events,updated_at,created_at,agreement,block_save_referer,block_auto_redirect) VALUES
+	 (1,'admin@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Админ allrpg.info',NULL,NULL,'2006-10-01',2,'admin@allrpg.info','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'{identicon.png:181f610603474c5ce405283b2e3c9792.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,50,'[2]',1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]','["admin","help","send_images"]',NULL,'0',NULL,1758395109,1758395113,1758310785,'1','0','0'),
+	 (2,'master@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Мастер allrpg.info',NULL,NULL,'2006-01-01',2,'master@allrpg.info','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'{identicon.png:da679feedd9e5527f1a2182071a50494.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,50,'[2]',1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]',NULL,NULL,'0',NULL,1758475827,1758475827,1758395205,'1','0','0'),
+	 (3,'player1@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Игрок1 allrpg.info','',NULL,'2006-01-01',2,'player1@allrpg.info','1','','',NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,'',NULL,'{identicon.png:f64e47414799b0520bcfbc4f5b5fcad0.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]',NULL,NULL,'0',NULL,1758471729,1758471738,1758470573,'1','0','0'),
+	 (4,'player2@allrpg.info','992f3c4e7ec9a0e96173284c816612bd','Игрок2 allrpg.info','',NULL,'2006-01-01',2,'player2@allrpg.info','1','','',NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,'',NULL,'{identicon.png:79ea2372a5cdc1538fc640bd2f9ac6af.png}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'["{conversation}","{task}","{event}","{project_wall}","{project_conversation}","{community_wall}","{community_conversation}"]',NULL,NULL,'0',NULL,1758472762,1758472780,1758471808,'1','0','0');

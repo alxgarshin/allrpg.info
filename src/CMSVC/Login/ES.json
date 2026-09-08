@@ -21,5 +21,20 @@
       "no_email_found_in_db": "El correo electrónico solicitado no existe en la base de datos.",
       "need_to_login_or_register_for_that": "Debe registrarse o iniciar sesión. Después, será redirigido a la página correspondiente."
     }
+  },
+  "fraym_actions": {
+    "api_token": {
+      "description": "Emitir tokens a un cliente externo con login y contraseña. Devuelve access_token (JWT de una hora), refresh_token (30 días) y expires_in. Los intentos están limitados en frecuencia.",
+      "params": {
+        "login": "Login del usuario",
+        "password": "Contraseña del usuario"
+      }
+    },
+    "api_refresh_token": {
+      "description": "Intercambiar el refresh token por un nuevo JWT sin enviar la contraseña. El refresh token anterior se revoca.",
+      "params": {
+        "refresh_token": "Un refresh token válido obtenido anteriormente"
+      }
+    }
   }
 }

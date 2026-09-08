@@ -1,0 +1,41 @@
+{
+  "global": {
+    "title": "Manifiesto de API para el agente"
+  },
+  "instructions": "Esta es una descripción legible por máquina de la API del proyecto, generada por el framework a partir de sus propios metadatos. El índice enumera los módulos; el detalle de un módulo está disponible en /agent_manifest/cmsvc={nombre}. Solicita el detalle solo de los módulos que necesita tu tarea: el manifiesto completo de un proyecto real no cabe en el contexto. Los permisos se calculan en cada petición, por lo que la misma dirección devuelve distinta cantidad de datos con y sin token. Antes de escribir datos, lee la sección conventions: el formato de transmisión no se deduce de la descripción de los campos.",
+  "module_unavailable": "No se pudo generar la descripción del módulo: la inicialización de sus modelos falló. Las listas de campos y acciones están incompletas y no deben usarse como referencia.",
+  "auth": {
+    "token_endpoint": "/login/action=api_token",
+    "refresh_endpoint": "/login/action=api_refresh_token",
+    "scheme": "Envía login y password a token_endpoint y recibirás un access_token (JWT con una hora de vida) y un refresh_token (30 días). Después añade la cabecera «Authorization: Bearer {access_token}» a cada petición. Cuando el access_token caduque, envía el refresh_token a refresh_endpoint: no hace falta guardar la contraseña. La emisión de tokens está limitada en frecuencia: tras cinco intentos fallidos la dirección responde con el código rate_limited y la cabecera Retry-After.",
+    "csrf": "Una petición con la cabecera Authorization: Bearer queda exenta de la comprobación CSRF. Un cliente autorizado por cookie debe enviar la cabecera X-CSRF-Token."
+  },
+  "conventions": [
+    "Los valores de los campos llevan un índice de objeto: name[0], tipe[0]. El índice va de 0 a n: el formato está pensado para enviar varios objetos en una sola petición. Un escalar sin índice (name=Test) se rechaza con el código wrong_data_format.",
+    "Los grupos de campos dentro de un objeto usan un índice anidado: field[0][g].",
+    "Borrado: action=delete con un array de identificadores — id[]=2&id[]=3.",
+    "Los parámetros pueden ir en forma de ruta: /{kind}/{param}={value}&{param}={value}. Una barra final corrompe el valor del último parámetro: /helper/input=Mos filtra correctamente, mientras que /helper/input=Mos/ devuelve todo el listado sin ninguna señal de error. No pongas barra al final.",
+    "Los campos de tablas unidas llegan en la respuesta de lista como «tabla__campo», con dos guiones bajos.",
+    "La respuesta siempre llega en un único sobre: response (success o error), response_text, response_data con la carga útil, ids con los identificadores de los objetos creados o modificados, fields con los nombres de los campos problemáticos en formato de transmisión y response_error_code con el código de error legible por máquina.",
+    "En caso de error de validación, la clave fields da los nombres de los campos tal como deben reenviarse: corrige los valores y repite la petición."
+  ],
+  "errors": {
+    "validation_failed": "Los datos no pasaron la validación. Los nombres de los campos problemáticos están en la clave fields; corrígelos y repite la petición.",
+    "unauthorized": "No hay una autorización válida. Obtén un token o renuévalo con el refresh_token.",
+    "forbidden": "No hay permisos para esta acción. Repetir no ayudará.",
+    "not_found": "No se encontró el módulo, el objeto o la acción.",
+    "wrong_action": "El módulo no tiene esa acción. Consulta la lista actions en el detalle del módulo.",
+    "wrong_data_format": "Los datos no vienen en el formato que espera el framework. Lo más frecuente es un valor sin índice de objeto: debe ser name[0], no name.",
+    "duplicate": "Ese registro ya existe. Se bloqueó el guardado repetido.",
+    "rate_limited": "Demasiadas peticiones. Espera tantos segundos como indique la cabecera Retry-After.",
+    "internal_error": "Error del lado del servidor. La petición puede repetirse más tarde."
+  },
+  "crud": {
+    "list": "La lista de objetos del módulo.",
+    "view": "Un objeto del módulo por su identificador.",
+    "create": "Crea un objeto. Los identificadores de los registros creados se devuelven en la clave ids.",
+    "change": "Modifica un objeto. El identificador del registro se pasa como id[0].",
+    "delete": "Elimina objetos por un array de identificadores id[].",
+    "lookup": "Listado de referencia: devuelve pares identificador y etiqueta. El parámetro term filtra la salida."
+  }
+}

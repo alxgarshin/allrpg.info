@@ -1711,8 +1711,10 @@ class UserService extends BaseService
             $returnArr = [
                 'response' => 'success',
                 'response_text' => $contactsOnline,
-                'response_data' => $contactsList,
-                'online_array' => $onlineUsersArray,
+                'response_data' => [
+                    'contacts' => $contactsList,
+                    'online_array' => $onlineUsersArray,
+                ],
             ];
         } elseif ($getOpenedDialogs) {
             /** @var ConversationService */
@@ -1721,14 +1723,18 @@ class UserService extends BaseService
             $returnArr = [
                 'response' => 'success',
                 'response_text' => $contactsOnline,
-                'response_data' => $conversationService->getOpenedDialogsData(),
-                'online_array' => $onlineUsersArray,
+                'response_data' => [
+                    'opened_dialogs' => $conversationService->getOpenedDialogsData(),
+                    'online_array' => $onlineUsersArray,
+                ],
             ];
         } else {
             $returnArr = [
                 'response' => 'success',
                 'response_text' => $contactsOnline,
-                'online_array' => $onlineUsersArray,
+                'response_data' => [
+                    'online_array' => $onlineUsersArray,
+                ],
             ];
         }
 
@@ -2237,9 +2243,11 @@ class UserService extends BaseService
 
         return [
             'response' => 'success',
-            'new_events' => $newEvents,
-            'new_events_counters' => $newEventsCounters,
-            'block_sound' => $blockSound,
+            'response_data' => [
+                'new_events' => $newEvents,
+                'new_events_counters' => $newEventsCounters,
+                'block_sound' => $blockSound,
+            ],
         ];
     }
 
