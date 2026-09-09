@@ -25,5 +25,21 @@
     "add_character": "create a character",
     "change_order": "move",
     "filter": "enter a text here to find a location \/ group \/ character"
+  },
+  "fraym_actions": {
+    "switch_show_roleslist": {
+      "description": "Turn the public role list of the project on or off: when it is on, the project applications and characters are visible to everyone, including logged-out visitors. Every call flips the setting.",
+      "params": []
+    },
+    "get_roles_list": {
+      "description": "Get the project role list — by group, by plot or for the whole project at once. Changes nothing. Used by the embeddable widget on external sites and by the Excel export.",
+      "params": {
+        "obj_type": "Breakdown of the list: group — by group, plot — by plot, character — by character",
+        "obj_id": "ID of the object of the chosen breakdown, or all for every object of that type in the project",
+        "command": "Widget command; create builds the list",
+        "project_id": "ID of the project whose roles are requested",
+        "excel": "1 returns the list as an Excel export instead of HTML"
+      }
+    }
   }
 }

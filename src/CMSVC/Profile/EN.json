@@ -22,5 +22,13 @@
       "Account information changed successfully.",
       "Account information deleted successfully."
     ]
+  },
+  "fraym_actions": {
+    "verify_em": {
+      "description": "Confirm the email address by the link from the letter: with a correct code the email is marked as verified.",
+      "params": {
+        "verify_id": "Confirmation code from the letter"
+      }
+    }
   }
 }

@@ -86,5 +86,36 @@
         "shownName": "Last change"
       }
     }
+  },
+  "fraym_actions": {
+    "get_child_groups": {
+      "description": "Get the list of positions a group can take inside the given parent group, plus the current position of the group being edited. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the parent group; empty means top-level groups",
+        "group_id": "ID of the group being edited, to exclude it from the list and return its current position; 0 for a new group"
+      }
+    },
+    "get_responsible_gamemaster": {
+      "description": "Get the ID of the gamemaster responsible for the given project group. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the project group"
+      }
+    },
+    "change_character_code": {
+      "description": "Reorder a character inside a project group: it takes the position right after the given character and the order of the rest is recalculated.",
+      "params": {
+        "obj_id": "ID of the character being moved",
+        "group_id": "ID of the group whose order is changed",
+        "after_obj_id": "ID of the character it is placed after; 0 means place it first"
+      }
+    },
+    "change_group_code": {
+      "description": "Move a project group within the group tree: make it a child or a sibling of the given group. Codes and nesting of the other groups are recalculated.",
+      "params": {
+        "obj_id": "ID of the group being moved",
+        "level": "Where to place it relative to after_obj_id: child — inside it, sibling — next to it on the same level",
+        "after_obj_id": "ID of the group the move is relative to; 0 means place it first at the top level"
+      }
+    }
   }
 }

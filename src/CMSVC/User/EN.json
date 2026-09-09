@@ -750,6 +750,89 @@
     }
   },
   "fraym_actions": {
+    "change_status": {
+      "description": "Change the status of the current user — the short line shown next to their name.",
+      "params": {
+        "value": "Status text"
+      }
+    },
+    "webpush_unsubscribe": {
+      "description": "Unsubscribe a device from browser notifications.",
+      "params": {
+        "deviceId": "Device identifier used when subscribing"
+      }
+    },
+    "become_friends": {
+      "description": "Add a user to your contacts: they receive a request and become a contact once they accept it.",
+      "params": {
+        "obj_id": "User ID"
+      }
+    },
+    "remove_friend": {
+      "description": "Remove a user from your contacts.",
+      "params": {
+        "obj_id": "User ID"
+      }
+    },
+    "get_new_events": {
+      "description": "Get the summary of what is new for the current user: unread dialogs and tasks, new application comments and the online status of contacts. Changes nothing; the interface calls it regularly.",
+      "params": {
+        "obj_id": "ID of the object the events are requested for; 0 means all of them",
+        "obj_type": "Type of the object the events are requested for",
+        "show_list": "true returns expanded lists instead of counters only",
+        "get_opened_dialogs": "true also returns the contents of the open dialog windows"
+      }
+    },
+    "load_users_list": {
+      "description": "Get the list of users bound to an object: the members of a project, community or dialog, or the contacts of a user. Changes nothing.",
+      "params": {
+        "obj_id": "Object ID",
+        "obj_type": "Object type: project, community, conversation, user and other site object types",
+        "limit": "How many users to return",
+        "shown_limit": "How many users are already shown — paging continues from there",
+        "sub_obj_type": "Selection refinement: for example the rights branch or the role in the object"
+      }
+    },
+    "get_captcha": {
+      "description": "Get a captcha image and its identifier for forms protected by a captcha. Changes nothing.",
+      "params": []
+    },
+    "add_rights": {
+      "description": "Grant a user rights on an object: make them a member, moderator, assignee or gamemaster, depending on the rights type.",
+      "params": {
+        "obj_type": "Object type: project, community, task, conversation and other site object types",
+        "obj_id": "Object ID",
+        "user_id": "ID of the user the rights are granted to",
+        "rights_type": "Rights type: member, moderator, responsible, gamemaster, admin"
+      }
+    },
+    "remove_rights": {
+      "description": "Revoke a user's rights on an object.",
+      "params": {
+        "obj_type": "Object type: project, community, task, conversation and other site object types",
+        "obj_id": "Object ID",
+        "user_id": "ID of the user the rights are revoked from",
+        "rights_type": "Rights type: member, moderator, responsible, gamemaster, admin"
+      }
+    },
+    "subscribe": {
+      "description": "Subscribe to the updates of an object: notifications about new messages and changes will arrive.",
+      "params": {
+        "obj_type": "Object type: project, community, calendar_event and other site object types",
+        "obj_id": "Object ID"
+      }
+    },
+    "unsubscribe": {
+      "description": "Unsubscribe from the updates of an object.",
+      "params": {
+        "obj_type": "Object type: project, community, calendar_event and other site object types",
+        "obj_id": "Object ID"
+      }
+    },
+    "reverify_em": {
+      "description": "Send yourself another email address confirmation letter.",
+      "params": []
+    },
     "webpush_subscribe": {
       "description": "Subscribe a device to browser notifications.",
       "params": {

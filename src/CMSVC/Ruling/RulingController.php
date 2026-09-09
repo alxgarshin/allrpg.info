@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Ruling;
 
 use App\CMSVC\Trait\RequestCheckSearchTrait;
-use Fraym\BaseObject\{BaseController, CMSVC};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC};
+use Fraym\Enum\ApiParamTypeEnum;
 use Fraym\Interface\Response;
 
 /** @extends BaseController<RulingService> */
@@ -31,6 +32,7 @@ class RulingController extends BaseController
         );
     }
 
+    #[ApiAction]
     public function Fillform(): ?Response
     {
         /** @var RulingView $view */
@@ -44,11 +46,14 @@ class RulingController extends BaseController
         );
     }
 
+    #[ApiAction(params: [
+        new ApiParam('print_mode', ApiParamTypeEnum::bool, default: false),
+    ])]
     public function Generate(): ?Response
     {
         /** @var RulingView $view */
         $view = $this->CMSVC->view;
 
-        return $view->Generate(($_REQUEST['print_mode'] ?? false) === '1');
+        return $view->Generate($this->param('print_mode'));
     }
 }

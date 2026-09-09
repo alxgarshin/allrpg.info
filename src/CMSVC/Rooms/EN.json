@@ -37,5 +37,14 @@
         "shownName": "Taken of places total"
       }
     }
+  },
+  "fraym_actions": {
+    "add_neighboor": {
+      "description": "Accommodate a player's application in the given project room. The previous accommodation of that application is removed — a player can occupy only one room.",
+      "params": {
+        "obj_id": "ID of the project room",
+        "application_id": "ID of the application being accommodated"
+      }
+    }
   }
 }

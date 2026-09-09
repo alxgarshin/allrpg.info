@@ -132,6 +132,10 @@ class RolesService extends BaseService
 
         $projectData = $this->getProjectData($projectId);
 
+        if (is_null($projectData)) {
+            return $returnArr;
+        }
+
         if (is_numeric($objId)) {
             $objId = [$objId];
         } elseif (str_contains((string) $objId, '&open;')) {

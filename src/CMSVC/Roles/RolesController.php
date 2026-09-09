@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Roles;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\DataHelper;
 use Fraym\Interface\Response;
 
@@ -27,6 +28,7 @@ class RolesController extends BaseController
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectKindAccessAndRedirect',
     )]
+    #[ApiAction(mutating: true)]
     public function switchShowRoleslist(): ?Response
     {
         if (RightsHelper::checkAllowProjectActions(PROJECT_RIGHTS, null)) {
@@ -49,16 +51,23 @@ class RolesController extends BaseController
         );
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('command', ApiParamTypeEnum::string, obligatory: true, default: ''),
+        new ApiParam('project_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+        new ApiParam('excel', ApiParamTypeEnum::bool, default: false),
+    ])]
     public function getRolesList(): ?Response
     {
-        if (($_REQUEST['command'] ?? '') !== '' && (int) ($_REQUEST['project_id'] ?? false) > 0 && OBJ_TYPE && OBJ_ID) {
+        if ($this->param('command') !== '' && $this->param('project_id') > 0 && OBJ_TYPE && OBJ_ID) {
             return $this->asArray(
                 $this->service->getRolesList(
                     OBJ_TYPE,
                     OBJ_ID,
-                    $_REQUEST['command'] ?? '',
-                    (int) ($_REQUEST['project_id'] ?? false),
-                    ($_REQUEST['excel'] ?? '') === '1',
+                    $this->param('command'),
+                    $this->param('project_id'),
+                    $this->param('excel'),
                 ),
             );
         }

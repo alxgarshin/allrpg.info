@@ -12,5 +12,38 @@
     "th_header_register": "Registro",
     "payment_type_name": "Registro: ",
     "eco_money_name": "Cuota ecológica"
+  },
+  "fraym_actions": {
+    "get_registration_player": {
+      "description": "Buscar solicitudes del proyecto en el mostrador de registro por nombre del jugador, apodo o nombre del personaje. No modifica nada.",
+      "params": {
+        "obj_name": "Cadena de búsqueda: nombre, apodo, login del jugador o nombre del personaje"
+      }
+    },
+    "set_registration_player": {
+      "description": "Marcar al jugador como registrado en el terreno de juego.",
+      "params": {
+        "obj_id": "ID de la solicitud del jugador"
+      }
+    },
+    "set_registration_player_money": {
+      "description": "Cobrar la cuota del jugador en el propio registro: crea un pago con el tipo de pago «Registro» del máster actual y lo abona a la solicitud.",
+      "params": {
+        "obj_id": "ID de la solicitud del jugador"
+      }
+    },
+    "set_registration_eco_money": {
+      "description": "Marcar que el jugador ha pagado la fianza ecológica en el registro.",
+      "params": {
+        "obj_id": "ID de la solicitud del jugador"
+      }
+    },
+    "set_registration_comments": {
+      "description": "Guardar una nota del registrador sobre la solicitud, por ejemplo sobre una fianza dejada o el equipo entregado.",
+      "params": {
+        "obj_id": "ID de la solicitud del jugador",
+        "value": "Texto de la nota"
+      }
+    }
   }
 }

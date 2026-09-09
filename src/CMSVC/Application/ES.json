@@ -245,5 +245,64 @@
         "shownName": "Fecha de envío de la solicitud"
       }
     }
+  },
+  "fraym_actions": {
+    "get_applications_table": {
+      "description": "Buscar solicitudes del proyecto activo por nombre del jugador, apodo o nombre del personaje. No modifica nada, devuelve una tabla con las solicitudes encontradas.",
+      "params": {
+        "obj_name": "Cadena de búsqueda: nombre, apodo, login del jugador o nombre del personaje"
+      }
+    },
+    "get_applications_comments_table": {
+      "description": "Buscar solicitudes del proyecto activo por el texto de sus comentarios. No modifica nada, devuelve una tabla con las solicitudes encontradas.",
+      "params": {
+        "obj_name": "Cadena de búsqueda por el texto de los comentarios de las solicitudes"
+      }
+    },
+    "set_special_group": {
+      "description": "Añadir al grupo indicado del proyecto todas las solicitudes que cumplan el filtro actual de la lista. Las solicitudes que ya pertenecen al grupo se omiten. Junto con el grupo, las solicitudes reciben los objetos asignados a él de forma automática.",
+      "params": {
+        "obj_id": "ID del grupo del proyecto al que se añaden las solicitudes",
+        "filter": "Modo de la lista de solicitudes que define la selección: deleted_view — eliminadas, noreply_view — sin respuesta del máster, needresponse_view — que requieren respuesta, payment_approve_view — con pago sin confirmar, nofilloblig_view — con campos obligatorios sin rellenar, nonsettled_view — sin alojamiento. Vacío significa todas las solicitudes activas del proyecto."
+      }
+    },
+    "fix_character_name_by_sorter": {
+      "description": "Renombrar un personaje del proyecto activo, normalmente para que su nombre coincida con el indicado por el jugador en la solicitud.",
+      "params": {
+        "obj_id": "ID del personaje del proyecto",
+        "name": "Nuevo nombre del personaje"
+      }
+    },
+    "transfer_application": {
+      "description": "Ofrecer la solicitud a otro usuario. La solicitud permanece con su propietario actual hasta que el destinatario acepte la oferta.",
+      "params": {
+        "obj_id": "ID de la solicitud",
+        "user_id": "ID del usuario al que se ofrece la solicitud"
+      }
+    },
+    "transfer_application_cancel": {
+      "description": "Cancelar una oferta previa de transferir la solicitud a otro usuario.",
+      "params": {
+        "obj_id": "ID de la solicitud"
+      }
+    },
+    "get_list_of_room_neighboors": {
+      "description": "Obtener la lista de jugadores alojados en la ubicación indicada del proyecto. No modifica nada.",
+      "params": {
+        "obj_id": "ID de la ubicación (habitación) del proyecto"
+      }
+    },
+    "confirm_group_request": {
+      "description": "Aceptar la solicitud de un jugador para unirse a un grupo del proyecto: la solicitud se añade al grupo y el autor recibe una notificación.",
+      "params": {
+        "obj_id": "ID del mensaje con la petición de unirse al grupo"
+      }
+    },
+    "decline_group_request": {
+      "description": "Rechazar la solicitud de un jugador para unirse a un grupo del proyecto. El autor recibe una notificación del rechazo.",
+      "params": {
+        "obj_id": "ID del mensaje con la petición de unirse al grupo"
+      }
+    }
   }
 }

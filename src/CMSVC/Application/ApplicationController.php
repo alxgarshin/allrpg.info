@@ -6,7 +6,8 @@ namespace App\CMSVC\Application;
 
 use App\CMSVC\Group\GroupService;
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\CMSVCHelper;
 use Fraym\Interface\Response;
 
@@ -28,31 +29,41 @@ use Fraym\Interface\Response;
 )]
 class ApplicationController extends BaseController
 {
+    #[ApiAction(params: [
+        new ApiParam('obj_name', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function getApplicationsTable(): ?Response
     {
         return $this->asArray(
             $this->service->getApplicationsTable(
-                $_REQUEST['obj_name'] ?? '',
+                $this->param('obj_name'),
             ),
         );
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_name', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function getApplicationsCommentsTable(): ?Response
     {
         return $this->asArray(
             $this->service->getApplicationsCommentsTable(
-                $_REQUEST['obj_name'] ?? '',
+                $this->param('obj_name'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('filter', ApiParamTypeEnum::string),
+    ])]
     public function setSpecialGroup(): ?Response
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
                 $this->service->setSpecialGroup(
                     OBJ_ID,
-                    $_REQUEST['filter'] ?? null,
+                    $this->param('filter'),
                 ),
             );
         }
@@ -60,13 +71,17 @@ class ApplicationController extends BaseController
         return null;
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('name', ApiParamTypeEnum::string, obligatory: true),
+    ])]
     public function fixCharacterNameBySorter(): ?Response
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
                 $this->service->fixCharacterNameBySorter(
                     OBJ_ID,
-                    $_REQUEST['name'] ?? null,
+                    $this->param('name'),
                 ),
             );
         }
@@ -74,13 +89,17 @@ class ApplicationController extends BaseController
         return null;
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function transferApplication(): ?Response
     {
-        if (OBJ_ID > 0 && (int) ($_REQUEST['user_id'] ?? null) > 0) {
+        if (OBJ_ID > 0 && $this->param('user_id') > 0) {
             return $this->asArray(
                 $this->service->transferApplication(
                     OBJ_ID,
-                    (int) ($_REQUEST['user_id'] ?? null),
+                    $this->param('user_id'),
                 ),
             );
         }
@@ -88,6 +107,9 @@ class ApplicationController extends BaseController
         return null;
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function transferApplicationCancel(): ?Response
     {
         if (OBJ_ID > 0) {
@@ -101,6 +123,9 @@ class ApplicationController extends BaseController
         return null;
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getListOfRoomNeighboors(): ?Response
     {
         return $this->asArray(
@@ -110,6 +135,9 @@ class ApplicationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function confirmGroupRequest(): ?Response
     {
         /** @var GroupService */
@@ -120,6 +148,9 @@ class ApplicationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function declineGroupRequest(): ?Response
     {
         /** @var GroupService */

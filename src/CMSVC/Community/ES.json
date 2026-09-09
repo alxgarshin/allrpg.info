@@ -166,5 +166,19 @@
         "shownName": "Volver al grupo después de guardar"
       }
     }
+  },
+  "fraym_actions": {
+    "get_access": {
+      "description": "Unirse a una comunidad. A una comunidad abierta se entra de inmediato; en una cerrada se envía una petición a los moderadores mediante una conversación. Si el usuario venía por un objeto hijo de la comunidad, también se le concede acceso a él.",
+      "params": {
+        "id": "ID de la comunidad"
+      }
+    },
+    "remove_access": {
+      "description": "Salir de la comunidad: se retiran al usuario actual los derechos de participante y se cierra la conversación de ingreso.",
+      "params": {
+        "id": "ID de la comunidad"
+      }
+    }
   }
 }

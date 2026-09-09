@@ -67,5 +67,62 @@
       "please_destroy": "Destroy codes",
       "destroy_following_codes": "Please, destroy certificates of following codes since it's prohibited to use them more than once: %s."
     }
+  },
+  "fraym_actions": {
+    "create_transaction": {
+      "description": "Transfer in-game money from your own application account to another application of the same project. The amount is checked against the account balance and the project transfer rules, which may change the credited amount or forbid the transfer.",
+      "params": {
+        "to_project_application_id[0]": "ID of the recipient application (in-game account number)",
+        "from_bank_currency_id[0]": "ID of the in-game currency debited from your account",
+        "amount_from[0]": "Amount to debit",
+        "bank_currency_id[0]": "ID of the in-game currency credited to the recipient",
+        "name[0]": "Purpose of the transfer"
+      }
+    },
+    "qrpg_hacking_start": {
+      "description": "Start hacking a QR code: marks the attempt as started and returns the mini-game board (matrix, target sequences) and the time limit. Has no effect on an already started attempt.",
+      "params": {
+        "qha_id": "ID of the registered hacking attempt"
+      }
+    },
+    "qrpg_bank_pay": {
+      "description": "Make an in-game payment against a scanned banking QR code: debits the amount from your application account and credits it to the recipient.",
+      "params": {
+        "account_num_to": "In-game account number of the recipient (their application ID)",
+        "bank_currency_id": "ID of the in-game payment currency",
+        "amount": "Payment amount",
+        "name": "Purpose of the payment"
+      }
+    },
+    "prepare_q_rpg_bank_code": {
+      "description": "Build a banking QR code requesting a payment to yourself: another player scans it and confirms the transfer. Debits and credits nothing on its own.",
+      "params": {
+        "bank_currency_id": "ID of the in-game currency the payment is requested in",
+        "amount": "Requested amount",
+        "name": "Purpose of the payment"
+      }
+    },
+    "set_geoposition": {
+      "description": "Record the player's current geoposition for their active application. Every call appends a new point to the movement history.",
+      "params": {
+        "lat": "Latitude",
+        "long": "Longitude",
+        "acc": "Coordinate accuracy in metres"
+      }
+    },
+    "qrpg_get_keys_and_properties": {
+      "description": "Get the in-game keys and properties available through the current user's active application. Changes nothing.",
+      "params": []
+    },
+    "qrpg_decode": {
+      "description": "Process a scanned project QR code: hand out the keys, properties or payment bound to it, or continue a started hacking attempt or access-code entry. Writes the result into the QRPG usage history.",
+      "params": {
+        "data": "QR code content as a JSON string: p — project ID, c — code ID, h — checksum, r, cu, a, n — recipient application, currency, amount and purpose for banking codes",
+        "hacking_sequence": "Sequence entered while hacking, as a JSON string",
+        "qha_id": "ID of the hacking attempt, if the code is opened by hacking",
+        "text_to_access": "Entered access code, if the code is opened by typing text",
+        "qhi_id": "ID of the QRPG usage history record the entered access code belongs to"
+      }
+    }
   }
 }

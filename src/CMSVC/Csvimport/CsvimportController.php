@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Csvimport;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\ApiParamTypeEnum;
 use Fraym\Helper\ResponseHelper;
 use Fraym\Interface\Response;
 
@@ -25,10 +26,13 @@ use Fraym\Interface\Response;
 )]
 class CsvimportController extends BaseController
 {
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('attachments', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function importCharacters(): ?Response
     {
         if (PRE_REQUEST_CHECK) {
-            if ($_REQUEST['attachments'] ?? false) {
+            if ($this->param('attachments') !== '') {
                 return ResponseHelper::response([], 'submit');
             } else {
                 $LOCALE = $this->LOCALE;
@@ -41,10 +45,13 @@ class CsvimportController extends BaseController
         return $this->CMSVC->view->Response();
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('attachments', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function importApplications(): ?Response
     {
         if (PRE_REQUEST_CHECK) {
-            if ($_REQUEST['attachments'] ?? false) {
+            if ($this->param('attachments') !== '') {
                 return ResponseHelper::response([], 'submit');
             } else {
                 $LOCALE = $this->LOCALE;

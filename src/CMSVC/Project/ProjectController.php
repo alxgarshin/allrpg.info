@@ -6,8 +6,8 @@ namespace App\CMSVC\Project;
 
 use App\CMSVC\Trait\RequestCheckSearchTrait;
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
-use Fraym\Enum\{ActEnum, ActionEnum};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ActEnum, ActionEnum, ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\{CookieHelper, DataHelper, ResponseHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\ArrayResponse;
@@ -59,6 +59,9 @@ class ProjectController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getAccess(): ?Response
     {
         $result = RightsHelper::getAccess(KIND);
@@ -79,11 +82,19 @@ class ProjectController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function removeAccess(): void
     {
         RightsHelper::removeAccess(KIND);
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('limit', ApiParamTypeEnum::int, default: 0),
+        new ApiParam('search_string', ApiParamTypeEnum::string, default: ''),
+    ])]
     public function loadProjectsCommunitiesList(): ?Response
     {
         if (OBJ_TYPE) {
@@ -92,8 +103,8 @@ class ProjectController extends BaseController
             return $this->asArray(
                 $projectService->loadProjectsCommunitiesList(
                     OBJ_TYPE,
-                    (int) ($_REQUEST['limit'] ?? false),
-                    $_REQUEST['search_string'] ?? null,
+                    $this->param('limit'),
+                    $this->param('search_string'),
                 ),
             );
         }
@@ -101,6 +112,10 @@ class ProjectController extends BaseController
         return null;
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getCommunityOrProjectMembersList(): ?Response
     {
         if (CURRENT_USER->isLogged()) {
@@ -117,16 +132,22 @@ class ProjectController extends BaseController
         return null;
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('task_id', ApiParamTypeEnum::int, default: 0),
+    ])]
     public function getCommunityOrProjectTasksList(): ?Response
     {
         if (CURRENT_USER->isLogged()) {
             $projectService = $this->service;
+            $taskId = $this->param('task_id');
 
             return $this->asArray(
                 $projectService->getCommunityOrProjectTasksList(
                     OBJ_ID,
                     OBJ_TYPE,
-                    ($_REQUEST['task_id'] ?? false) ? (int) $_REQUEST['task_id'] : null,
+                    $taskId > 0 ? $taskId : null,
                 ),
             );
         }
@@ -135,6 +156,9 @@ class ProjectController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function switchProjectStatus(): ?Response
     {
         if (ALLOW_PROJECT_ACTIONS) {

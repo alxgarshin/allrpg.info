@@ -18,5 +18,17 @@
     "generation_link": "link to this rules set",
     "conversation": "The model discussion"
   },
-  "fraym_model": {}
+  "fraym_model": {},
+  "fraym_actions": {
+    "fillform": {
+      "description": "Get the project questionnaire as a fillable form — with every rules question, optional ones included. Changes nothing.",
+      "params": []
+    },
+    "generate": {
+      "description": "Assemble the project rules into a single document for reading or printing. Changes nothing.",
+      "params": {
+        "print_mode": "1 returns the variant prepared for printing"
+      }
+    }
+  }
 }

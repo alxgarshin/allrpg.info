@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Setup;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
-use Fraym\Enum\ActEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ActEnum, ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\{DataHelper, ResponseHelper};
 use Fraym\Interface\Response;
 
@@ -41,6 +41,10 @@ class SetupController extends BaseController
         return parent::Response();
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('code', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function changeProjectFieldCode(): ?Response
     {
         $setupService = $this->service;
@@ -48,7 +52,7 @@ class SetupController extends BaseController
         return $this->asArray(
             $setupService->changeProjectFieldCode(
                 OBJ_ID,
-                (int) $_REQUEST['code'],
+                $this->param('code'),
             ),
         );
     }

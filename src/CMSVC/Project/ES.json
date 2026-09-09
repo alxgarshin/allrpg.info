@@ -363,5 +363,48 @@
         "shownName": "Ocultar el campo «Tomado» en el carácter configuración"
       }
     }
+  },
+  "fraym_actions": {
+    "get_access": {
+      "description": "Unirse a un proyecto. A un proyecto abierto se entra de inmediato; en uno cerrado se envía una petición a los másters mediante una conversación. Si el usuario venía por un objeto hijo del proyecto, también se le concede acceso a él.",
+      "params": {
+        "id": "ID del proyecto"
+      }
+    },
+    "remove_access": {
+      "description": "Salir del proyecto: se retiran al usuario actual los derechos de participante y se cierra la conversación de ingreso.",
+      "params": {
+        "id": "ID del proyecto"
+      }
+    },
+    "load_projects_communities_list": {
+      "description": "Obtener una lista de proyectos o comunidades, con búsqueda opcional por nombre. No modifica nada.",
+      "params": {
+        "obj_type": "Qué se solicita: project — proyectos, community — comunidades",
+        "limit": "Cuántos registros devolver",
+        "search_string": "Cadena de búsqueda por nombre; vacío devuelve la lista completa"
+      }
+    },
+    "get_community_or_project_members_list": {
+      "description": "Obtener la lista de participantes de un proyecto o una comunidad. Sin objeto indicado devuelve los colegas del usuario actual. No modifica nada.",
+      "params": {
+        "obj_type": "Tipo de objeto: project, community o project_{ID} para un proyecto concreto; vacío significa los colegas del usuario actual",
+        "obj_id": "ID del proyecto o de la comunidad"
+      }
+    },
+    "get_community_or_project_tasks_list": {
+      "description": "Obtener la lista de tareas de un proyecto o una comunidad. Si se indica una tarea, devuelve su entorno: la tarea padre, las hijas, las precedentes y la siguiente. No modifica nada.",
+      "params": {
+        "obj_id": "ID del proyecto o de la comunidad",
+        "obj_type": "Tipo de objeto: project o community",
+        "task_id": "ID de la tarea cuyo entorno se solicita; 0 devuelve la lista completa"
+      }
+    },
+    "switch_project_status": {
+      "description": "Cambiar el estado del proyecto entre activo y finalizado. Sin proyecto indicado se cambia el proyecto activo del usuario actual.",
+      "params": {
+        "obj_id": "ID del proyecto; 0 significa el proyecto activo de la cookie"
+      }
+    }
   }
 }

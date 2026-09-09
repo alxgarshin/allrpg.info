@@ -750,6 +750,89 @@
     }
   },
   "fraym_actions": {
+    "change_status": {
+      "description": "Cambiar el estado del usuario actual: la línea breve que se muestra junto a su nombre.",
+      "params": {
+        "value": "Texto del estado"
+      }
+    },
+    "webpush_unsubscribe": {
+      "description": "Dar de baja a un dispositivo de las notificaciones del navegador.",
+      "params": {
+        "deviceId": "Identificador del dispositivo usado al suscribirse"
+      }
+    },
+    "become_friends": {
+      "description": "Añadir a un usuario a tus contactos: recibe una solicitud y, al aceptarla, pasa a ser contacto.",
+      "params": {
+        "obj_id": "ID del usuario"
+      }
+    },
+    "remove_friend": {
+      "description": "Eliminar a un usuario de tus contactos.",
+      "params": {
+        "obj_id": "ID del usuario"
+      }
+    },
+    "get_new_events": {
+      "description": "Obtener el resumen de novedades para el usuario actual: conversaciones y tareas sin leer, nuevos comentarios en solicitudes y el estado en línea de los contactos. No modifica nada; la interfaz lo llama periódicamente.",
+      "params": {
+        "obj_id": "ID del objeto cuyos eventos se solicitan; 0 significa todos",
+        "obj_type": "Tipo del objeto cuyos eventos se solicitan",
+        "show_list": "true devuelve listas desplegadas en lugar de solo contadores",
+        "get_opened_dialogs": "true devuelve además el contenido de las ventanas de conversación abiertas"
+      }
+    },
+    "load_users_list": {
+      "description": "Obtener la lista de usuarios vinculados a un objeto: participantes de un proyecto, una comunidad o una conversación, o los contactos de un usuario. No modifica nada.",
+      "params": {
+        "obj_id": "ID del objeto",
+        "obj_type": "Tipo de objeto: project, community, conversation, user y otros tipos de objetos del sitio",
+        "limit": "Cuántos usuarios devolver",
+        "shown_limit": "Cuántos usuarios ya se muestran: la carga continúa desde ahí",
+        "sub_obj_type": "Precisión de la selección: por ejemplo la rama de derechos o el rol en el objeto"
+      }
+    },
+    "get_captcha": {
+      "description": "Obtener la imagen del código de verificación y su identificador para formularios protegidos con captcha. No modifica nada.",
+      "params": []
+    },
+    "add_rights": {
+      "description": "Conceder a un usuario derechos sobre un objeto: hacerlo participante, moderador, responsable o máster, según el tipo de derechos.",
+      "params": {
+        "obj_type": "Tipo de objeto: project, community, task, conversation y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto",
+        "user_id": "ID del usuario al que se conceden los derechos",
+        "rights_type": "Tipo de derechos: member, moderator, responsible, gamemaster, admin"
+      }
+    },
+    "remove_rights": {
+      "description": "Retirar a un usuario los derechos sobre un objeto.",
+      "params": {
+        "obj_type": "Tipo de objeto: project, community, task, conversation y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto",
+        "user_id": "ID del usuario al que se retiran los derechos",
+        "rights_type": "Tipo de derechos: member, moderator, responsible, gamemaster, admin"
+      }
+    },
+    "subscribe": {
+      "description": "Suscribirse a las novedades de un objeto: llegarán notificaciones de mensajes y cambios nuevos.",
+      "params": {
+        "obj_type": "Tipo de objeto: project, community, calendar_event y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto"
+      }
+    },
+    "unsubscribe": {
+      "description": "Cancelar la suscripción a las novedades de un objeto.",
+      "params": {
+        "obj_type": "Tipo de objeto: project, community, calendar_event y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto"
+      }
+    },
+    "reverify_em": {
+      "description": "Enviarte de nuevo el mensaje de confirmación de la dirección de correo.",
+      "params": []
+    },
     "webpush_subscribe": {
       "description": "Suscribir un dispositivo a las notificaciones del navegador.",
       "params": {

@@ -30,5 +30,14 @@
         "helpText": "se incluye automáticamente durante la generación del documento."
       }
     }
+  },
+  "fraym_actions": {
+    "generate_documents": {
+      "description": "Generar documentos a partir de una plantilla del proyecto para las solicitudes elegidas, por ejemplo pases o listados. No modifica nada y entrega los documentos ya generados en flujo.",
+      "params": {
+        "template_id": "ID de la plantilla de documento del proyecto",
+        "application_id[0]": "Solicitudes para las que generar documentos: el valor filter significa todas las del filtro actual de la lista; en caso contrario, un conjunto de IDs de solicitudes"
+      }
+    }
   }
 }

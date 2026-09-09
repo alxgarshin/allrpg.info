@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\CMSVC\User;
 
 use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
-use Fraym\Enum\ApiParamTypeEnum;
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\LocaleHelper;
 use Fraym\Interface\Response;
 
@@ -23,11 +23,14 @@ class UserController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('value', ApiParamTypeEnum::string, obligatory: true),
+    ])]
     public function changeStatus(): ?Response
     {
         return $this->asArray(
             $this->service->changeStatus(
-                $_REQUEST['value'] ?? null,
+                $this->param('value'),
             ),
         );
     }
@@ -54,16 +57,22 @@ class UserController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('deviceId', ApiParamTypeEnum::string, obligatory: true),
+    ])]
     public function webpushUnsubscribe(): ?Response
     {
         return $this->asArray(
             $this->service->webpushUnsubscribe(
-                $_REQUEST['deviceId'] ?? null,
+                $this->param('deviceId'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function becomeFriends(): ?Response
     {
         return $this->asArray(
@@ -74,6 +83,9 @@ class UserController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function removeFriend(): ?Response
     {
         return $this->asArray(
@@ -84,10 +96,16 @@ class UserController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('obj_type', ApiParamTypeEnum::string, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('show_list', ApiParamTypeEnum::bool, default: false),
+        new ApiParam('get_opened_dialogs', ApiParamTypeEnum::bool, default: false),
+    ])]
     public function getNewEvents(): ?Response
     {
-        $showList = ($_REQUEST['show_list'] ?? '') === 'true';
-        $getOpenedDialogs = ($_REQUEST['get_opened_dialogs'] ?? '') === 'true';
+        $showList = $this->param('show_list');
+        $getOpenedDialogs = $this->param('get_opened_dialogs');
 
         $contactsData = $this->service->getContactsOnlineExtended($showList, $getOpenedDialogs);
         $newEventsData = $this->service->getNewEvents(OBJ_ID, OBJ_TYPE, $getOpenedDialogs, $showList);
@@ -99,19 +117,27 @@ class UserController extends BaseController
         ]);
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('limit', ApiParamTypeEnum::int, default: 0),
+        new ApiParam('shown_limit', ApiParamTypeEnum::int, default: 0),
+        new ApiParam('sub_obj_type', ApiParamTypeEnum::string, default: ''),
+    ])]
     public function loadUsersList(): ?Response
     {
         return $this->asArray(
             $this->service->loadUsersList(
                 OBJ_ID,
                 OBJ_TYPE,
-                (int) ($_REQUEST['limit'] ?? 0),
-                (int) ($_REQUEST['shown_limit'] ?? 0),
-                $_REQUEST['sub_obj_type'] ?? '',
+                $this->param('limit'),
+                $this->param('shown_limit'),
+                $this->param('sub_obj_type'),
             ),
         );
     }
 
+    #[ApiAction]
     public function getCaptcha(): ?Response
     {
         return $this->asArray(
@@ -119,31 +145,47 @@ class UserController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+        new ApiParam('rights_type', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function addRights(): ?Response
     {
         return $this->asArray(
             $this->service->dynamicAddRights(
                 OBJ_TYPE,
                 OBJ_ID,
-                $_REQUEST['user_id'] ?? null,
-                $_REQUEST['rights_type'] ?? false,
+                $this->param('user_id'),
+                $this->param('rights_type'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+        new ApiParam('rights_type', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function removeRights(): ?Response
     {
         return $this->asArray(
             $this->service->dynamicRemoveRights(
                 OBJ_TYPE,
                 OBJ_ID,
-                $_REQUEST['user_id'] ?? null,
-                $_REQUEST['rights_type'] ?? false,
+                $this->param('user_id'),
+                $this->param('rights_type'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function subscribe(): ?Response
     {
         if (!empty(OBJ_TYPE) && OBJ_ID !== '') {
@@ -164,6 +206,10 @@ class UserController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function unsubscribe(): ?Response
     {
         if (!empty(OBJ_TYPE) && OBJ_ID !== '') {
@@ -184,6 +230,7 @@ class UserController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true)]
     public function reverifyEm(): ?Response
     {
         return $this->asArray(

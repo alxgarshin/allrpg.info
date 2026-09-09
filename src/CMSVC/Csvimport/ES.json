@@ -14,5 +14,19 @@
       "application_no_name": "El campo obligatorio «Nombre del personaje» no está definido en la cadena %s.",
       "application_already_present": "Ya existe una aplicación con el nombre de la cadena %s en el proyecto: <a href=\"\/application\/%s\/\" target=\"_blank\">%s<\/a>."
     }
+  },
+  "fraym_actions": {
+    "import_characters": {
+      "description": "Importar los personajes del proyecto desde un archivo CSV subido. Crea los personajes y los grupos asociados; la respuesta incluye un informe del análisis del archivo.",
+      "params": {
+        "attachments": "Identificador del archivo CSV subido"
+      }
+    },
+    "import_applications": {
+      "description": "Importar las solicitudes del proyecto desde un archivo CSV subido. Crea las solicitudes y, si hace falta, los usuarios; la respuesta incluye un informe del análisis del archivo.",
+      "params": {
+        "attachments": "Identificador del archivo CSV subido"
+      }
+    }
   }
 }

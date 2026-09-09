@@ -1,0 +1,10 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Directorio geográfico para autocompletar: busca ciudades por nombre y las devuelve junto con su región. No modifica nada.",
+      "params": {
+        "input": "Parte del nombre de la ciudad; un valor vacío devuelve todo el directorio"
+      }
+    }
+  }
+}

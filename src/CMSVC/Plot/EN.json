@@ -86,5 +86,20 @@
         "shownName": "Last change"
       }
     }
+  },
+  "fraym_actions": {
+    "get_list_of_plot_sides": {
+      "description": "Get the list of applications involved in the given project plot — used to pick the plot sides. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the project plot"
+      }
+    },
+    "get_list_of_groups_by_character_or_application": {
+      "description": "Get the list of groups the given character or application belongs to. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the character or the application",
+        "obj_type": "Object type: application — an application, anything else — a project character"
+      }
+    }
   }
 }

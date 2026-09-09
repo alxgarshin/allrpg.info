@@ -7,17 +7,21 @@ namespace App\CMSVC\HelperSearch;
 use App\CMSVC\Event\EventService;
 use App\CMSVC\Task\TaskService;
 use App\CMSVC\User\{UserModel, UserService};
-use Fraym\BaseObject\{BaseHelper, BaseModel};
-use Fraym\Enum\OperandEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseHelper, BaseModel};
+use Fraym\Enum\{ApiParamTypeEnum, OperandEnum};
 use Fraym\Helper\{CMSVCHelper, DataHelper, MultiselectSqlHelper};
 use Fraym\Interface\Response;
 
 class HelperSearchController extends BaseHelper
 {
+    #[ApiAction(params: [
+        new ApiParam('input', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('term', ApiParamTypeEnum::string, default: ''),
+    ])]
     public function Response(): ?Response
     {
-        $input = ($_REQUEST['input'] ?? null) ?? $_REQUEST['term'] ?? null;
-        $input = str_replace([':', ',', '.', '-'], '', (string) $input);
+        $input = $this->param('input') ?: $this->param('term');
+        $input = str_replace([':', ',', '.', '-'], '', $input);
         $isInputInt = is_numeric($input);
 
         $returnArr = [];

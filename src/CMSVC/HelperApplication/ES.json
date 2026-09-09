@@ -1,0 +1,13 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Directorio de solicitudes para autocompletar: busca solicitudes del proyecto por nombre del jugador, apodo, identificador numérico o nombre del personaje. La búsqueda empieza a partir de tres caracteres, o de inmediato si la consulta es numérica. No modifica nada.",
+      "params": {
+        "input": "Cadena de búsqueda: nombre o apodo del jugador, nombre del personaje o identificador numérico",
+        "term": "Lo mismo que input: el nombre con el que el autocompletado envía la cadena de búsqueda",
+        "nochar": "1 — devolver solo las solicitudes sin personaje elegido",
+        "obj_id": "ID de la solicitud desde la que se busca: limita el resultado al proyecto de esa solicitud y excluye al propio jugador"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "User lookup for autocompletion: finds people by name, nickname or numeric identifier and returns identifier-label pairs. The search starts from three characters, or immediately for a numeric query. Changes nothing.",
+      "params": {
+        "input": "Search string: part of a name, a nickname or the numeric user identifier",
+        "term": "Same as input: the name the autocompletion sends the search string under",
+        "no_id": "1 — return labels without the numeric user identifier",
+        "full_search": "1 — search every profile field, not only the visible ones; always available to a site administrator",
+        "obj_type": "Type of the object the search is limited to: project, community, conversation and other site object types",
+        "obj_id": "Object ID: only its members are returned"
+      }
+    }
+  }
+}

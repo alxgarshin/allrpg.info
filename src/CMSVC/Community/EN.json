@@ -166,5 +166,19 @@
         "shownName": "Return to group after saving"
       }
     }
+  },
+  "fraym_actions": {
+    "get_access": {
+      "description": "Join a community. An open community is joined immediately, a closed one sends a request to the moderators through a conversation. If the user came for a child object of the community, access to it is granted as well.",
+      "params": {
+        "id": "Community ID"
+      }
+    },
+    "remove_access": {
+      "description": "Leave a community: the member rights are removed from the current user and the joining conversation is closed.",
+      "params": {
+        "id": "Community ID"
+      }
+    }
   }
 }

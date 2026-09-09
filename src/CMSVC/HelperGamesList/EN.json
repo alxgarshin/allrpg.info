@@ -1,0 +1,10 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Calendar game lookup for autocompletion: finds events by title and returns them together with their dates. Changes nothing.",
+      "params": {
+        "input": "Part of the game title; an empty value returns the whole directory"
+      }
+    }
+  }
+}

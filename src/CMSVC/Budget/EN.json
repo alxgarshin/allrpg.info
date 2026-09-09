@@ -57,5 +57,14 @@
         "shownName": "Last change"
       }
     }
+  },
+  "fraym_actions": {
+    "change_budget_code": {
+      "description": "Move a project budget item to a new place in the list: it receives the code right after the given item and the codes of the remaining items are recalculated.",
+      "params": {
+        "obj_id": "ID of the budget item being moved",
+        "after_obj_id": "ID of the item it is placed after; 0 means place it first"
+      }
+    }
   }
 }

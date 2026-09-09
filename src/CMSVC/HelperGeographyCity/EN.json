@@ -1,0 +1,10 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Geography lookup for autocompletion: finds cities by name and returns them together with their region. Changes nothing.",
+      "params": {
+        "input": "Part of the city name; an empty value returns the whole directory"
+      }
+    }
+  }
+}

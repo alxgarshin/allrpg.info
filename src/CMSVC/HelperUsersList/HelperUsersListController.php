@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\CMSVC\HelperUsersList;
 
 use App\CMSVC\User\{UserModel, UserService};
-use Fraym\BaseObject\{BaseHelper, BaseModel};
-use Fraym\Helper\{CMSVCHelper, DataHelper, RightsHelper};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseHelper, BaseModel};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
+use Fraym\Helper\{CMSVCHelper, DataHelper, MultiselectSqlHelper, RightsHelper};
 use Fraym\Interface\Response;
 
 class HelperUsersListController extends BaseHelper
@@ -17,13 +18,21 @@ class HelperUsersListController extends BaseHelper
     private const SID = 'sid';
     private const HIDESOME = 'hidesome';
 
+    #[ApiAction(params: [
+        new ApiParam('input', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('term', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('no_id', ApiParamTypeEnum::bool, default: false),
+        new ApiParam('full_search', ApiParamTypeEnum::bool, default: false),
+        new ApiParam('obj_type', ApiParamTypeEnum::string, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function Response(): ?Response
     {
-        $input = $_REQUEST['input'] ?? $_REQUEST['term'] ?? '';
-        $input = str_replace([':', ',', '.', '-'], '', (string) $input);
+        $input = $this->param('input') ?: $this->param('term');
+        $input = str_replace([':', ',', '.', '-'], '', $input);
         $isInputInt = is_numeric($input);
-        $noId = (int) ($_REQUEST['no_id'] ?? null) === 1;
-        $fullSearch = (int) ($_REQUEST['full_search'] ?? null) === 1 || CURRENT_USER->isAdmin();
+        $noId = $this->param('no_id');
+        $fullSearch = $this->param('full_search') || CURRENT_USER->isAdmin();
 
         $returnArr = [];
         $sort = [];
@@ -72,10 +81,14 @@ class HelperUsersListController extends BaseHelper
                 $possibleUsersIds = array_merge($possibleUsersIds, $colleagues);
             }
 
+            if (!$fullSearch && $possibleUsersIds === []) {
+                $possibleUsersIds = [0];
+            }
+
             $entityData = DB->query(
                 'SELECT * FROM ' . self::TABLE . ' ' . ($input === 'base' && $fullSearch ? 'ORDER BY sid DESC LIMIT 5' : 'WHERE' .
                     ($fullSearch ? '' : ' id IN (:possibleUsersIds)') .
-                    ($input === 'base' ? '' : ($fullSearch ? '' : ' AND') . ($isInputInt ? ' ' . self::SID . '=:sid' : ' ((LOWER(' . self::NAME . ') LIKE :input1 AND ' . self::HIDESOME . ' NOT LIKE \'%-10-%\') OR (LOWER(' . self::NICKNAME . ') LIKE :input2 AND ' . self::HIDESOME . ' NOT LIKE \'%-0-%\'))'))),
+                    ($input === 'base' ? '' : ($fullSearch ? '' : ' AND') . ($isInputInt ? ' ' . self::SID . '=:sid' : ' ((LOWER(' . self::NAME . ') LIKE :input1 AND ' . MultiselectSqlHelper::notContains(self::HIDESOME, MultiselectSqlHelper::jsonLiteral(10)) . ') OR (LOWER(' . self::NICKNAME . ') LIKE :input2 AND ' . MultiselectSqlHelper::notContains(self::HIDESOME, MultiselectSqlHelper::jsonLiteral(0)) . '))'))),
                 [
                     ['sid', $input],
                     ['input1', '%' . mb_strtolower($input) . '%'],

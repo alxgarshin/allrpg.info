@@ -256,5 +256,75 @@
         "shownName": "Return to project after saving"
       }
     }
+  },
+  "fraym_actions": {
+    "load_tasks_list": {
+      "description": "Get the task list of an object as a table. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the project or community whose tasks are requested; all means tasks across every object of the user",
+        "obj_group": "Object type: project or community; empty means resolve it from obj_id"
+      }
+    },
+    "load_tasks": {
+      "description": "Get the tasks of an object in the chosen form: a table, a Gantt chart or a compact widget. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the project or community whose tasks are requested; all means tasks across every object of the user",
+        "obj_group": "Object type: project or community; empty means resolve it from obj_id",
+        "show_list": "true returns the task list, otherwise the chart data",
+        "widget_style": "true returns the compact form for the task widget"
+      }
+    },
+    "check_dates_availability": {
+      "description": "Check whether the given dates are free for the participants of a task or an event: returns those who are busy in that period. Changes nothing.",
+      "params": {
+        "obj_type": "Object type: task or event",
+        "obj_id": "ID of the task or the event",
+        "responsible_id": "ID of the assignee whose availability must be checked",
+        "user_ids": "Comma-separated IDs of the other participants to check",
+        "date_from": "Start of the checked period",
+        "date_to": "End of the checked period"
+      }
+    },
+    "add_task": {
+      "description": "Quickly create a task from its name alone: it gets the new status, the default priority and the current user as its author.",
+      "params": {
+        "name": "Task name"
+      }
+    },
+    "change_task_dates": {
+      "description": "Change the dates of a task or an event — for example when its bar is dragged on the Gantt chart. The change is posted as a message in the task conversation.",
+      "params": {
+        "obj_type": "Object type: task or event",
+        "obj_id": "ID of the task or the event",
+        "date_from": "New start",
+        "date_to": "New end"
+      }
+    },
+    "outdent_task": {
+      "description": "Move a task one level up in the task tree, detaching it from its parent.",
+      "params": {
+        "obj_id": "ID of the task being moved",
+        "parent_task_id": "ID of the current parent task"
+      }
+    },
+    "indent_task": {
+      "description": "Nest a task inside another one, making it a subtask. Both tasks must belong to the same object.",
+      "params": {
+        "obj_id": "ID of the task being moved",
+        "parent_task_id": "ID of the task it is nested into"
+      }
+    },
+    "get_access": {
+      "description": "Join a task: the current user becomes its participant and sees its conversation.",
+      "params": {
+        "id": "Task ID"
+      }
+    },
+    "remove_access": {
+      "description": "Leave a task: the participant rights are removed from the current user.",
+      "params": {
+        "id": "Task ID"
+      }
+    }
   }
 }

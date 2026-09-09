@@ -23,6 +23,12 @@
     }
   },
   "fraym_actions": {
+    "remind": {
+      "description": "Send a new password to the given email address. The password is generated anew and the previous one stops working. The request is protected by a form check token.",
+      "params": {
+        "em": "Email address given in the profile"
+      }
+    },
     "api_token": {
       "description": "Issue tokens to an external client by login and password. Returns access_token (a JWT valid for an hour), refresh_token (30 days) and expires_in. Attempts are rate limited.",
       "params": {

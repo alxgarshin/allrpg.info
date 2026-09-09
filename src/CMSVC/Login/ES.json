@@ -23,6 +23,12 @@
     }
   },
   "fraym_actions": {
+    "remind": {
+      "description": "Enviar una contraseña nueva a la dirección de correo indicada. La contraseña se genera de nuevo y la anterior deja de funcionar. La petición está protegida por un token de verificación del formulario.",
+      "params": {
+        "em": "Dirección de correo indicada en el perfil"
+      }
+    },
     "api_token": {
       "description": "Emitir tokens a un cliente externo con login y contraseña. Devuelve access_token (JWT de una hora), refresh_token (30 días) y expires_in. Los intentos están limitados en frecuencia.",
       "params": {

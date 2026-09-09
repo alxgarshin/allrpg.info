@@ -10,5 +10,27 @@
       "notion_save_success": "Notion changed successfully.",
       "notion_delete_success": "Notion deleted successfully."
     }
+  },
+  "fraym_actions": {
+    "notion_message_save": {
+      "description": "Edit your own review of an event: its text and rating. Works only on a review authored by the current user.",
+      "params": {
+        "obj_id": "Review ID",
+        "text": "New review text",
+        "rating": "New event rating"
+      }
+    },
+    "notion_message_delete": {
+      "description": "Delete your own review of an event. Works only on a review authored by the current user.",
+      "params": {
+        "obj_id": "Review ID"
+      }
+    },
+    "show_hide_notion": {
+      "description": "Hide a review on the event page or show it again. Available to the event organizers; every call flips the visibility.",
+      "params": {
+        "obj_id": "Review ID"
+      }
+    }
   }
 }

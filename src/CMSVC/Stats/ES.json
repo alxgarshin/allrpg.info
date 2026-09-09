@@ -44,5 +44,25 @@
       "communities_and_projects_not_filled": "Seleccione al menos un proyecto o grupo.",
       "competences_not_filled": "Seleccione al menos una competencia."
     }
+  },
+  "fraym_actions": {
+    "export_to_excel": {
+      "description": "Exportar a Excel la lista de usuarios seleccionada por el filtro actual de estadísticas. No modifica nada. Solo para administradores del sitio.",
+      "params": {
+        "additional_ids": "Array JSON con los IDs de los campos adicionales del perfil que deben incluirse en la exportación"
+      }
+    },
+    "set_status": {
+      "description": "Asignar un estado a todos los usuarios que cumplen el filtro actual de estadísticas. Solo para administradores del sitio.",
+      "params": {
+        "obj_id": "ID del estado que se asigna"
+      }
+    },
+    "set_additional_groups": {
+      "description": "Añadir a todos los usuarios que cumplen el filtro actual de estadísticas al grupo de derechos del sitio indicado. Solo para administradores del sitio.",
+      "params": {
+        "obj_id": "ID del grupo de derechos del sitio"
+      }
+    }
   }
 }

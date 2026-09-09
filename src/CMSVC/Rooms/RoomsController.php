@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Rooms;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Interface\Response;
 
 /** @extends BaseController<RoomsService> */
@@ -26,13 +27,17 @@ use Fraym\Interface\Response;
 )]
 class RoomsController extends BaseController
 {
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('application_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function addNeighboor(): ?Response
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
                 $this->service->addNeighboor(
                     (int) OBJ_ID,
-                    (int) ($_REQUEST['application_id'] ?? false),
+                    $this->param('application_id'),
                 ),
             );
         }

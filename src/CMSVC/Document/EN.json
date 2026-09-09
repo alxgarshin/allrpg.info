@@ -30,5 +30,14 @@
         "helpText": "is automatically included during document generation."
       }
     }
+  },
+  "fraym_actions": {
+    "generate_documents": {
+      "description": "Build documents from a project template for the chosen applications — for example passes or sheets. Changes nothing, streams the finished documents.",
+      "params": {
+        "template_id": "ID of the project document template",
+        "application_id[0]": "Applications to build documents for: the value filter means every application of the current list filter, otherwise a set of application IDs"
+      }
+    }
   }
 }

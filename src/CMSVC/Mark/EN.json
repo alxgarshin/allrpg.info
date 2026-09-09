@@ -13,5 +13,38 @@
       "message_marked_read_success": "The message marked as read successfully.",
       "message_marked_read_fail": "The message was not marked as read."
     }
+  },
+  "fraym_actions": {
+    "mark_need_response": {
+      "description": "Mark a message as awaiting a reply: it appears in the list of messages needing a reaction for the conversation members.",
+      "params": {
+        "obj_id": "ID of the conversation message"
+      }
+    },
+    "mark_has_response": {
+      "description": "Remove the awaiting-a-reply mark from a message.",
+      "params": {
+        "obj_id": "ID of the conversation message"
+      }
+    },
+    "mark_read_message": {
+      "description": "Mark a message as read by the current user and return the updated unread counters.",
+      "params": {
+        "obj_id": "ID of the conversation message"
+      }
+    },
+    "mark_read": {
+      "description": "Mark a message as read by the current user, without recalculating the counters in the response.",
+      "params": {
+        "obj_id": "ID of the conversation message"
+      }
+    },
+    "mark_important": {
+      "description": "Toggle the important mark on an object for the current user: if it was set, it is removed, otherwise it is added.",
+      "params": {
+        "obj_type": "Object type: message, task, application and other site object types",
+        "obj_id": "Object ID"
+      }
+    }
   }
 }

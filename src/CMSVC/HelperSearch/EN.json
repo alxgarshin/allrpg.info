@@ -1,0 +1,11 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "General lookup for autocompletion: finds users, tasks and events available to the current user. The search starts from three characters, or immediately for a numeric query. Changes nothing.",
+      "params": {
+        "input": "Search string: a name, a title or a numeric identifier",
+        "term": "Same as input: the name the autocompletion sends the search string under"
+      }
+    }
+  }
+}

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\Conversation;
 
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
-use Fraym\Enum\{ActEnum, ActionEnum};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ActEnum, ActionEnum, ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\DataHelper;
 use Fraym\Interface\Response;
 
@@ -35,6 +35,12 @@ class ConversationController extends BaseController
         return $this->CMSVC->view->Response();
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::string),
+        new ApiParam('limit', ApiParamTypeEnum::int, default: 0),
+        new ApiParam('time', ApiParamTypeEnum::string),
+    ])]
     public function getDialog(): ?Response
     {
         $conversationService = $this->service;
@@ -42,13 +48,17 @@ class ConversationController extends BaseController
         return $this->asArray(
             $conversationService->getDialog(
                 OBJ_ID,
-                $_REQUEST['user_id'] ?? null,
-                (int) ($_REQUEST['limit'] ?? 0),
-                $_REQUEST['time'] ?? null,
+                $this->param('user_id'),
+                $this->param('limit'),
+                $this->param('time'),
             ),
         );
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::string, obligatory: true),
+    ])]
     public function getDialogAvatar(): ?Response
     {
         $conversationService = $this->service;
@@ -56,7 +66,7 @@ class ConversationController extends BaseController
         return $this->asArray(
             $conversationService->getDialogAvatar(
                 OBJ_ID,
-                $_REQUEST['user_id'] ?? null,
+                $this->param('user_id'),
             ),
         );
     }
@@ -88,6 +98,13 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('obj_limit', ApiParamTypeEnum::int, default: 0),
+        new ApiParam('dynamic_load', ApiParamTypeEnum::bool, default: false),
+        new ApiParam('search_string', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('show_limit', ApiParamTypeEnum::int, default: 0),
+    ])]
     public function loadConversation(): ?Response
     {
         $conversationService = $this->service;
@@ -95,14 +112,19 @@ class ConversationController extends BaseController
         return $this->asArray(
             $conversationService->loadConversation(
                 (int) OBJ_ID,
-                (int) ($_REQUEST['obj_limit'] ?? 0),
-                ($_REQUEST['dynamic_load'] ?? '') === 'true',
-                $_REQUEST['search_string'] ?? '',
-                (int) ($_REQUEST['show_limit'] ?? 0),
+                $this->param('obj_limit'),
+                $this->param('dynamic_load'),
+                $this->param('search_string'),
+                $this->param('show_limit'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::string),
+        new ApiParam('value', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function dialogNewMessage(): ?Response
     {
         $conversationService = $this->service;
@@ -110,12 +132,16 @@ class ConversationController extends BaseController
         return $this->asArray(
             $conversationService->dialogNewMessage(
                 OBJ_ID,
-                $_REQUEST['user_id'] ?? null,
-                $_REQUEST['value'] ?? '',
+                $this->param('user_id'),
+                $this->param('value'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('text', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function messageSave(): ?Response
     {
         $conversationService = $this->service;
@@ -123,11 +149,14 @@ class ConversationController extends BaseController
         return $this->asArray(
             $conversationService->messageSave(
                 OBJ_ID,
-                $_REQUEST['text'] ?? '',
+                $this->param('text'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function wallMessageDelete(): ?Response
     {
         $conversationService = $this->service;
@@ -139,6 +168,9 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function conversationMessageDelete(): ?Response
     {
         $conversationService = $this->service;
@@ -150,13 +182,19 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('user', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function contact(): null
     {
         $conversationService = $this->service;
 
-        return $conversationService->contact((int) ($_REQUEST['user'] ?? 0));
+        return $conversationService->contact($this->param('user'));
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function grantAccess(): ?Response
     {
         $conversationService = $this->service;
@@ -169,6 +207,9 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function denyAccess(): ?Response
     {
         $conversationService = $this->service;
@@ -181,6 +222,9 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function acceptInvitation(): ?Response
     {
         $conversationService = $this->service;
@@ -193,6 +237,9 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function declineInvitation(): ?Response
     {
         $conversationService = $this->service;
@@ -205,6 +252,9 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function acceptFriend(): ?Response
     {
         $conversationService = $this->service;
@@ -217,6 +267,9 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function declineFriend(): ?Response
     {
         $conversationService = $this->service;
@@ -229,6 +282,9 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function leaveDialog(): ?Response
     {
         $conversationService = $this->service;
@@ -240,6 +296,11 @@ class ConversationController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::string, obligatory: true),
+    ])]
     public function sendInvitation(): ?Response
     {
         $conversationService = $this->service;
@@ -248,11 +309,15 @@ class ConversationController extends BaseController
             $conversationService->sendInvitation(
                 OBJ_TYPE,
                 OBJ_ID,
-                $_REQUEST['user_id'] ?? null,
+                $this->param('user_id'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('user_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function addUserToDialog(): ?Response
     {
         $conversationService = $this->service;
@@ -260,11 +325,15 @@ class ConversationController extends BaseController
         return $this->asArray(
             $conversationService->addUserToDialog(
                 OBJ_ID,
-                (int) ($_REQUEST['user_id'] ?? null),
+                $this->param('user_id'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('value', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function conversationRename(): ?Response
     {
         $conversationService = $this->service;
@@ -272,11 +341,14 @@ class ConversationController extends BaseController
         return $this->asArray(
             $conversationService->conversationRename(
                 OBJ_ID,
-                $_REQUEST['value'] ?? '',
+                $this->param('value'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function switchUseNamesType(): ?Response
     {
         $conversationService = $this->service;

@@ -2012,6 +2012,10 @@ class TaskService extends BaseService
 
     public function checkChangeRights(): bool
     {
+        if (is_null(DataHelper::getId())) {
+            return false;
+        }
+
         $taskData = $this->getTaskData();
 
         return CURRENT_USER->isLogged() && (RightsHelper::checkRights(['{admin}', '{responsible}'], '{task}', DataHelper::getId()) || ($taskData['creator_id'] ?? false) === CURRENT_USER->id());

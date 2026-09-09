@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Group;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Interface\Response;
 
 /** @extends BaseController<GroupService> */
@@ -26,6 +27,10 @@ use Fraym\Interface\Response;
 )]
 class GroupController extends BaseController
 {
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, source: ApiParamSourceEnum::global),
+        new ApiParam('group_id', ApiParamTypeEnum::int, default: 0),
+    ])]
     public function getChildGroups(): ?Response
     {
         $groupService = $this->service;
@@ -33,11 +38,14 @@ class GroupController extends BaseController
         return $this->asArray(
             $groupService->getChildGroups(
                 is_null(OBJ_ID) ? null : (int) OBJ_ID,
-                (int) ($_REQUEST['group_id'] ?? false),
+                $this->param('group_id'),
             ),
         );
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getResponsibleGamemaster(): ?Response
     {
         $groupService = $this->service;
@@ -47,6 +55,11 @@ class GroupController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('group_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+        new ApiParam('after_obj_id', ApiParamTypeEnum::int, default: 0),
+    ])]
     public function changeCharacterCode(): ?Response
     {
         $groupService = $this->service;
@@ -54,12 +67,17 @@ class GroupController extends BaseController
         return $this->asArray(
             $groupService->changeCharacterCode(
                 OBJ_ID,
-                (int) ($_REQUEST['group_id'] ?? false),
-                (int) ($_REQUEST['after_obj_id'] ?? false),
+                $this->param('group_id'),
+                $this->param('after_obj_id'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('level', ApiParamTypeEnum::string, obligatory: true, default: ''),
+        new ApiParam('after_obj_id', ApiParamTypeEnum::int, default: 0),
+    ])]
     public function changeGroupCode(): ?Response
     {
         $groupService = $this->service;
@@ -67,8 +85,8 @@ class GroupController extends BaseController
         return $this->asArray(
             $groupService->changeGroupCode(
                 OBJ_ID,
-                $_REQUEST['level'] ?? false,
-                (int) ($_REQUEST['after_obj_id'] ?? false),
+                $this->param('level'),
+                $this->param('after_obj_id'),
             ),
         );
     }

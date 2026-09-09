@@ -10,5 +10,27 @@
       "notion_save_success": "Noción modificada correctamente.",
       "notion_delete_success": "Noción eliminada correctamente."
     }
+  },
+  "fraym_actions": {
+    "notion_message_save": {
+      "description": "Editar tu propia reseña de un evento: su texto y su valoración. Solo funciona con una reseña escrita por el usuario actual.",
+      "params": {
+        "obj_id": "ID de la reseña",
+        "text": "Nuevo texto de la reseña",
+        "rating": "Nueva valoración del evento"
+      }
+    },
+    "notion_message_delete": {
+      "description": "Eliminar tu propia reseña de un evento. Solo funciona con una reseña escrita por el usuario actual.",
+      "params": {
+        "obj_id": "ID de la reseña"
+      }
+    },
+    "show_hide_notion": {
+      "description": "Ocultar una reseña en la página del evento o volver a mostrarla. Disponible para los organizadores; cada llamada invierte la visibilidad.",
+      "params": {
+        "obj_id": "ID de la reseña"
+      }
+    }
   }
 }

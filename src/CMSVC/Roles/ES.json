@@ -25,5 +25,21 @@
     "add_character": "crear un personaje",
     "change_order": "mover",
     "filter": "introduce un texto aquí para buscar una ubicación \/grupo \/personaje"
+  },
+  "fraym_actions": {
+    "switch_show_roleslist": {
+      "description": "Activar o desactivar la lista pública de roles del proyecto: con la lista activada, las solicitudes y los personajes del proyecto son visibles para todos, incluidos los visitantes no registrados. Cada llamada invierte el ajuste.",
+      "params": []
+    },
+    "get_roles_list": {
+      "description": "Obtener la lista de roles del proyecto: por grupo, por trama o de todo el proyecto a la vez. No modifica nada. La usan el widget insertable en sitios externos y la exportación a Excel.",
+      "params": {
+        "obj_type": "Criterio de la lista: group — por grupo, plot — por trama, character — por personaje",
+        "obj_id": "ID del objeto del criterio elegido, o all para todos los objetos de ese tipo del proyecto",
+        "command": "Comando del widget; create construye la lista",
+        "project_id": "ID del proyecto cuyos roles se solicitan",
+        "excel": "1 devuelve la lista como exportación a Excel en lugar de HTML"
+      }
+    }
   }
 }

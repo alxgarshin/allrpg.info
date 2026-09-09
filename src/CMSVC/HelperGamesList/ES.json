@@ -1,0 +1,10 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Directorio de juegos del calendario para autocompletar: busca eventos por título y los devuelve junto con sus fechas. No modifica nada.",
+      "params": {
+        "input": "Parte del título del juego; un valor vacío devuelve todo el directorio"
+      }
+    }
+  }
+}

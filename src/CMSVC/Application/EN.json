@@ -245,5 +245,64 @@
         "shownName": "Application submission date"
       }
     }
+  },
+  "fraym_actions": {
+    "get_applications_table": {
+      "description": "Find applications of the active project by player name, nickname or character name. Changes nothing, returns a table of the applications found.",
+      "params": {
+        "obj_name": "Search string: player name, nickname, login or character name"
+      }
+    },
+    "get_applications_comments_table": {
+      "description": "Find applications of the active project by the text of their comments. Changes nothing, returns a table of the applications found.",
+      "params": {
+        "obj_name": "Search string matched against the text of application comments"
+      }
+    },
+    "set_special_group": {
+      "description": "Add every application matching the current list filter to the given project group. Applications already in the group are skipped. Along with the group, applications receive the items attached to it for automatic distribution.",
+      "params": {
+        "obj_id": "ID of the project group the applications are added to",
+        "filter": "Application list mode defining the selection: deleted_view — deleted, noreply_view — without a gamemaster reply, needresponse_view — awaiting a response, payment_approve_view — with unconfirmed payment, nofilloblig_view — with empty obligatory fields, nonsettled_view — without accommodation. Empty means all active applications of the project."
+      }
+    },
+    "fix_character_name_by_sorter": {
+      "description": "Rename a character of the active project — usually to make the character name match the name the player gave in the application.",
+      "params": {
+        "obj_id": "ID of the project character",
+        "name": "New character name"
+      }
+    },
+    "transfer_application": {
+      "description": "Offer the application to another user. The application stays with its current owner until the recipient accepts the offer.",
+      "params": {
+        "obj_id": "Application ID",
+        "user_id": "ID of the user the application is offered to"
+      }
+    },
+    "transfer_application_cancel": {
+      "description": "Cancel a previously made offer to transfer the application to another user.",
+      "params": {
+        "obj_id": "Application ID"
+      }
+    },
+    "get_list_of_room_neighboors": {
+      "description": "Get the list of players accommodated in the given project room. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the project room"
+      }
+    },
+    "confirm_group_request": {
+      "description": "Approve a player's request to join a project group: the application is added to the group and the requester is notified.",
+      "params": {
+        "obj_id": "ID of the message holding the group join request"
+      }
+    },
+    "decline_group_request": {
+      "description": "Reject a player's request to join a project group. The requester is notified of the refusal.",
+      "params": {
+        "obj_id": "ID of the message holding the group join request"
+      }
+    }
   }
 }

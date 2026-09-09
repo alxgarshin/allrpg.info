@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\HelperGeographyCity;
 
-use Fraym\BaseObject\{BaseHelper, BaseModel};
-use Fraym\Enum\OperandEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseHelper, BaseModel};
+use Fraym\Enum\{ApiParamTypeEnum, OperandEnum};
 use Fraym\Helper\DataHelper;
 use Fraym\Interface\Response;
 
@@ -16,9 +16,12 @@ class HelperGeographyCityController extends BaseHelper
     private const NAME = 'name';
     private const ORDERBY = 'name';
 
+    #[ApiAction(params: [
+        new ApiParam('input', ApiParamTypeEnum::string, default: ''),
+    ])]
     public function Response(): ?Response
     {
-        $input = $_REQUEST['input'] ?? '';
+        $input = $this->param('input');
 
         $returnArr = [];
 

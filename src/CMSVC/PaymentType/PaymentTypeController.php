@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\CMSVC\PaymentType;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, BaseController, CMSVC, IsAccessible};
 use Fraym\Interface\Response;
 
 /** @extends BaseController<PaymentTypeService> */
@@ -25,21 +25,25 @@ use Fraym\Interface\Response;
 )]
 class PaymentTypeController extends BaseController
 {
+    #[ApiAction(mutating: true)]
     public function pmAdd(): ?Response
     {
         return $this->service->paymentTypeAdd('paymaster');
     }
 
+    #[ApiAction(mutating: true)]
     public function pkAdd(): ?Response
     {
         return $this->service->paymentTypeAdd('paykeeper');
     }
 
+    #[ApiAction(mutating: true)]
     public function ykAdd(): ?Response
     {
         return $this->service->paymentTypeAdd('yandex');
     }
 
+    #[ApiAction(mutating: true)]
     public function pawAdd(): ?Response
     {
         return $this->service->paymentTypeAdd('payanyway');

@@ -57,5 +57,14 @@
         "shownName": "Último cambio"
       }
     }
+  },
+  "fraym_actions": {
+    "change_budget_code": {
+      "description": "Mover una partida del presupuesto del proyecto a otro lugar de la lista: recibe el código inmediatamente posterior al de la partida indicada y los códigos de las demás se recalculan.",
+      "params": {
+        "obj_id": "ID de la partida presupuestaria que se mueve",
+        "after_obj_id": "ID de la partida tras la cual se coloca; 0 significa colocarla la primera"
+      }
+    }
   }
 }

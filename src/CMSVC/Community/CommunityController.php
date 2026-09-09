@@ -6,8 +6,8 @@ namespace App\CMSVC\Community;
 
 use App\CMSVC\Trait\RequestCheckSearchTrait;
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
-use Fraym\Enum\{ActEnum, ActionEnum};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ActEnum, ActionEnum, ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\{CookieHelper, DataHelper, ResponseHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\ArrayResponse;
@@ -53,6 +53,9 @@ class CommunityController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getAccess(): ?Response
     {
         $result = RightsHelper::getAccess(KIND);
@@ -73,6 +76,9 @@ class CommunityController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function removeAccess(): void
     {
         RightsHelper::removeAccess(KIND);

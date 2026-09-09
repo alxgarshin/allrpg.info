@@ -211,5 +211,136 @@
         "shownName": "Attachments"
       }
     }
+  },
+  "fraym_actions": {
+    "get_dialog": {
+      "description": "Get the contents of a dialog window: messages, participants and window data. Changes nothing.",
+      "params": {
+        "obj_id": "Dialog ID, or new for a dialog with the given interlocutor that does not exist yet",
+        "user_id": "ID of the interlocutor, or several comma-separated IDs, for a dialog that does not exist yet",
+        "limit": "How many messages to return",
+        "time": "keep — return the messages without moving the last-seen mark"
+      }
+    },
+    "get_dialog_avatar": {
+      "description": "Get the avatar and the display name of the interlocutor for the dialog window. Changes nothing.",
+      "params": {
+        "obj_id": "Dialog ID",
+        "user_id": "ID of the interlocutor, or several comma-separated IDs"
+      }
+    },
+    "load_conversation": {
+      "description": "Load dialog messages in portions, with a full-text search. Changes nothing.",
+      "params": {
+        "obj_id": "Dialog ID",
+        "obj_limit": "Selection offset when loading in portions",
+        "dynamic_load": "true — load the next portion below the already shown messages",
+        "search_string": "Search string matched against message text",
+        "show_limit": "How many messages to return"
+      }
+    },
+    "dialog_new_message": {
+      "description": "Send a message into a dialog. If no dialog with the given interlocutors exists yet, it is created.",
+      "params": {
+        "obj_id": "Dialog ID, or new to create one",
+        "user_id": "ID of the interlocutor, or several comma-separated IDs, for a new dialog",
+        "value": "Message text"
+      }
+    },
+    "message_save": {
+      "description": "Edit the text of your own message on a wall or in a dialog.",
+      "params": {
+        "obj_id": "Message ID",
+        "text": "New message text"
+      }
+    },
+    "wall_message_delete": {
+      "description": "Delete a wall message. Available to the message author and to the owners of the object the wall belongs to.",
+      "params": {
+        "obj_id": "ID of the wall message"
+      }
+    },
+    "conversation_message_delete": {
+      "description": "Delete your own message in a dialog.",
+      "params": {
+        "obj_id": "ID of the dialog message"
+      }
+    },
+    "contact": {
+      "description": "Add a user to your contacts: sends a friend request, or opens a dialog if the user is already a contact.",
+      "params": {
+        "user": "User ID"
+      }
+    },
+    "grant_access": {
+      "description": "Approve a join request that arrived as a message: the requester receives member rights for the project, community, task or event the request was about.",
+      "params": {
+        "obj_id": "ID of the message holding the join request"
+      }
+    },
+    "deny_access": {
+      "description": "Reject a join request that arrived as a message. The requester is notified of the refusal.",
+      "params": {
+        "obj_id": "ID of the message holding the join request"
+      }
+    },
+    "accept_invitation": {
+      "description": "Accept an invitation that arrived as a message: the current user becomes a member of the object they were invited to.",
+      "params": {
+        "obj_id": "ID of the message holding the invitation"
+      }
+    },
+    "decline_invitation": {
+      "description": "Decline an invitation that arrived as a message. The inviter is notified.",
+      "params": {
+        "obj_id": "ID of the message holding the invitation"
+      }
+    },
+    "accept_friend": {
+      "description": "Accept a contact request: the users become each other's contacts.",
+      "params": {
+        "obj_id": "ID of the message holding the contact request"
+      }
+    },
+    "decline_friend": {
+      "description": "Decline a contact request.",
+      "params": {
+        "obj_id": "ID of the message holding the contact request"
+      }
+    },
+    "leave_dialog": {
+      "description": "Leave a group dialog: the current user stops being a participant and no longer receives its messages.",
+      "params": {
+        "obj_id": "Dialog ID"
+      }
+    },
+    "send_invitation": {
+      "description": "Invite a user to a project, community, task or event. The invitation arrives as a message they can accept or decline.",
+      "params": {
+        "obj_type": "Type of the object the user is invited to: project, community, task, event",
+        "obj_id": "ID of the object the user is invited to",
+        "user_id": "ID of the invited user, or several comma-separated IDs"
+      }
+    },
+    "add_user_to_dialog": {
+      "description": "Add a user to an existing dialog: they become a participant and see the following messages.",
+      "params": {
+        "obj_id": "Dialog ID",
+        "user_id": "ID of the user being added"
+      }
+    },
+    "conversation_rename": {
+      "description": "Rename a dialog.",
+      "params": {
+        "obj_id": "Dialog ID",
+        "value": "New dialog name"
+      }
+    },
+    "switch_use_names_type": {
+      "description": "Switch which names the participants of a dialog are signed with: their real names or their in-game nicknames. Every call flips the mode.",
+      "params": {
+        "obj_id": "Dialog ID"
+      }
+    }
   }
 }

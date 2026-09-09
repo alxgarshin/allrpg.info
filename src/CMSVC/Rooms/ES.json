@@ -37,5 +37,14 @@
         "shownName": "Total de plazas ocupadas"
       }
     }
+  },
+  "fraym_actions": {
+    "add_neighboor": {
+      "description": "Alojar la solicitud de un jugador en la ubicación indicada del proyecto. Se retira el alojamiento anterior de esa solicitud: un jugador solo puede ocupar una ubicación.",
+      "params": {
+        "obj_id": "ID de la ubicación (habitación) del proyecto",
+        "application_id": "ID de la solicitud que se aloja"
+      }
+    }
   }
 }

@@ -3,5 +3,11 @@
     "title": "Players geoposition",
     "type_data_to_search": "Search: type in a participant id, name or nickname or a main application field text",
     "center": "center map"
+  },
+  "fraym_actions": {
+    "get_players_geoposition": {
+      "description": "Get the last known coordinates of the players of the active project who reported them through the in-game section. Changes nothing; the contents depend on the project rights.",
+      "params": []
+    }
   }
 }

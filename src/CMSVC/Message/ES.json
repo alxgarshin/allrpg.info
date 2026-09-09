@@ -1,0 +1,47 @@
+{
+  "fraym_actions": {
+    "load_wall": {
+      "description": "Cargar un flujo de mensajes: el muro de un objeto, la lista de conversaciones del usuario, comentarios o reseñas, según el tipo de objeto. No modifica nada; admite carga por partes y búsqueda por texto.",
+      "params": {
+        "obj_type": "Tipo de flujo: main_conversation — lista de conversaciones del usuario, main_conversation_on_main_page — su variante reducida, conversation — mensajes de una conversación, project, community, user, calendar_event y otros tipos de objeto — el muro del objeto",
+        "obj_id": "ID del objeto cuyo flujo se solicita",
+        "last_shown_conversation_id": "ID del último elemento ya mostrado: la carga continúa a partir de él",
+        "obj_limit": "Desplazamiento de la selección al cargar por partes",
+        "show_limit": "Cuántos elementos devolver",
+        "search_string": "Cadena de búsqueda por el texto de los mensajes",
+        "sub_obj_type": "Precisión de la rama de la conversación: por ejemplo from_player o gamemaster en la conversación de una solicitud"
+      }
+    },
+    "add_comment": {
+      "description": "Enviar un mensaje: un comentario al muro, un mensaje en una conversación, una reseña con valoración o una votación. Algunos campos solo se usan para tareas (estado, prioridad, plazo, responsable) y solo para votaciones (pregunta y opciones de respuesta).",
+      "params": {
+        "obj_type": "Tipo del objeto al que se dirige el mensaje: conversation, project, community, task, application, calendar_event_notion, user_notion y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto al que se dirige el mensaje",
+        "sub_obj_type": "Precisión de la rama de la conversación: por ejemplo from_player o gamemaster en la conversación de una solicitud",
+        "name": "Título del mensaje; se usa donde el mensaje tiene asunto",
+        "content": "Texto del mensaje",
+        "rating": "Valoración para una reseña",
+        "conversation_id": "ID de la conversación a la que va el mensaje; 0 significa deducirla del objeto",
+        "use_group_name": "on — firmar el mensaje con el nombre del grupo en lugar del nombre del usuario",
+        "parent": "ID del mensaje al que responde este; 0 significa mensaje de primer nivel",
+        "vote_name": "Pregunta de la votación: convierte el mensaje en una votación",
+        "vote_answer": "Opciones de respuesta de la votación: vote_answer[0], vote_answer[1], etc.",
+        "attachments": "Archivos adjuntos al mensaje",
+        "parent_obj_type": "Tipo del objeto padre si el mensaje se crea junto con un objeto nuevo",
+        "parent_obj_id": "ID del objeto padre",
+        "status": "Estado de la tarea que se crea",
+        "priority": "Prioridad de la tarea que se crea",
+        "date_to": "Plazo de la tarea que se crea",
+        "responsible": "ID del responsable de la tarea que se crea"
+      }
+    },
+    "vote": {
+      "description": "Votar en una votación publicada como mensaje. Se registra el voto del usuario actual y se devuelven los resultados actualizados.",
+      "params": {
+        "m_id": "ID del mensaje con la votación",
+        "value": "Número de la opción de respuesta elegida",
+        "type": "Tipo de votación, indicado por la interfaz al enviar el voto"
+      }
+    }
+  }
+}

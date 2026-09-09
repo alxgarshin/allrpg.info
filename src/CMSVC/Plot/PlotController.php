@@ -6,7 +6,8 @@ namespace App\CMSVC\Plot;
 
 use App\CMSVC\Group\GroupService;
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\CMSVCHelper;
 use Fraym\Interface\Response;
 
@@ -29,6 +30,9 @@ use Fraym\Interface\Response;
 )]
 class PlotController extends BaseController
 {
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getListOfPlotSides(): ?Response
     {
         return $this->asArray(
@@ -39,6 +43,10 @@ class PlotController extends BaseController
         );
     }
 
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+    ])]
     public function getListOfGroupsByCharacterOrApplication(): ?Response
     {
         /** @var GroupService */

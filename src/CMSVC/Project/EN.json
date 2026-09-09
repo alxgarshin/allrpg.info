@@ -363,5 +363,48 @@
         "shownName": "Hide «Taken» field in character setup"
       }
     }
+  },
+  "fraym_actions": {
+    "get_access": {
+      "description": "Join a project. An open project is joined immediately, a closed one sends a request to the gamemasters through a conversation. If the user came for a child object of the project, access to it is granted as well.",
+      "params": {
+        "id": "Project ID"
+      }
+    },
+    "remove_access": {
+      "description": "Leave a project: the member rights are removed from the current user and the joining conversation is closed.",
+      "params": {
+        "id": "Project ID"
+      }
+    },
+    "load_projects_communities_list": {
+      "description": "Get a list of projects or communities with an optional search by name. Changes nothing.",
+      "params": {
+        "obj_type": "What is requested: project — projects, community — communities",
+        "limit": "How many records to return",
+        "search_string": "Name search string; empty returns the whole list"
+      }
+    },
+    "get_community_or_project_members_list": {
+      "description": "Get the member list of a project or a community. With no object given it returns the colleagues of the current user. Changes nothing.",
+      "params": {
+        "obj_type": "Object type: project, community, or project_{ID} for a specific project; empty means the colleagues of the current user",
+        "obj_id": "ID of the project or the community"
+      }
+    },
+    "get_community_or_project_tasks_list": {
+      "description": "Get the task list of a project or a community. When a task is given, returns its surroundings: the parent, child, preceding and following tasks. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the project or the community",
+        "obj_type": "Object type: project or community",
+        "task_id": "ID of the task whose surroundings are requested; 0 returns the whole list"
+      }
+    },
+    "switch_project_status": {
+      "description": "Switch the project status between active and finished. With no project given, the active project of the current user is switched.",
+      "params": {
+        "obj_id": "Project ID; 0 means the active project from the cookie"
+      }
+    }
   }
 }

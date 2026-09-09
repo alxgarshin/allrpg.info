@@ -6,8 +6,8 @@ namespace App\CMSVC\Kogdaigra;
 
 use App\CMSVC\User\UserService;
 use App\Helper\DateHelper;
-use Fraym\BaseObject\{BaseController, CMSVC};
-use Fraym\Enum\OperandEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC};
+use Fraym\Enum\{ApiParamTypeEnum, OperandEnum};
 use Fraym\Helper\{CMSVCHelper, DataHelper};
 use Fraym\Interface\Response;
 
@@ -182,19 +182,25 @@ class KogdaigraController extends BaseController
         exit;
     }
 
+    #[ApiAction(params: [
+        new ApiParam('datestart', ApiParamTypeEnum::string),
+        new ApiParam('datefinish', ApiParamTypeEnum::string),
+        new ApiParam('game_id', ApiParamTypeEnum::int),
+        new ApiParam('open_list', ApiParamTypeEnum::string),
+        new ApiParam('kogdaigra_id', ApiParamTypeEnum::int),
+    ])]
     public function externalData(): void
     {
-        $datestart = $_REQUEST['datestart'] ?? null;
-        $datefinish = $_REQUEST['datefinish'] ?? null;
-        $gameId = $_REQUEST['game_id'] ?? null;
-        $openList = $_REQUEST['open_list'] ?? null;
-        $kogdaigraId = $_REQUEST['kogdaigra_id'] ?? null;
+        $datestart = $this->param('datestart');
+        $datefinish = $this->param('datefinish');
+        $gameId = $this->param('game_id');
+        $openList = $this->param('open_list');
+        $kogdaigraId = $this->param('kogdaigra_id');
 
         $games = [];
 
         if ($kogdaigraId || ($datestart && $datefinish)) {
             if ($kogdaigraId) {
-                $kogdaigraId = (int) $kogdaigraId;
                 $result = DB->select(
                     tableName: 'calendar_event',
                     criteria: [
@@ -303,7 +309,7 @@ class KogdaigraController extends BaseController
                     ['date_to', date('Y-m-d'), OperandEnum::MORE_OR_EQUAL],
                 ],
                 order: [
-                    'title',
+                    'name',
                 ],
             );
 

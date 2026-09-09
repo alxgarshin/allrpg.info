@@ -104,5 +104,19 @@
         "shownName": "Volver al proyecto \/ grupo después de guardar"
       }
     }
+  },
+  "fraym_actions": {
+    "get_access": {
+      "description": "Unirse a un evento. A un evento abierto se entra de inmediato; en uno cerrado se envía una petición a los organizadores mediante una conversación.",
+      "params": {
+        "id": "ID del evento"
+      }
+    },
+    "remove_access": {
+      "description": "Salir de un evento: se retiran al usuario actual los derechos de participante.",
+      "params": {
+        "id": "ID del evento"
+      }
+    }
   }
 }

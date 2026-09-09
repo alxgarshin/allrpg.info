@@ -14,5 +14,62 @@
         "shownName": ""
       }
     }
+  },
+  "fraym_actions": {
+    "get_unread_people": {
+      "description": "Obtener la lista de participantes de la conversación que aún no han leído el mensaje indicado. No modifica nada.",
+      "params": {
+        "obj_id": "ID del mensaje de la conversación"
+      }
+    },
+    "get_task_unread_people": {
+      "description": "Obtener la lista de participantes de la tarea que aún no han leído el mensaje indicado. No modifica nada.",
+      "params": {
+        "obj_id": "ID del mensaje de la tarea"
+      }
+    },
+    "get_application_unread_people": {
+      "description": "Obtener la lista de másters y jugadores que aún no han leído el comentario indicado de la solicitud. No modifica nada.",
+      "params": {
+        "obj_id": "ID del mensaje en la conversación de la solicitud"
+      }
+    },
+    "get_vote": {
+      "description": "Obtener la lista de usuarios que votaron un mensaje con la opción indicada. No modifica nada.",
+      "params": {
+        "obj_id": "ID del mensaje",
+        "value": "Opción de voto por la que se seleccionan los votantes"
+      }
+    },
+    "get_important": {
+      "description": "Obtener la lista de usuarios que marcaron el objeto como importante. No modifica nada.",
+      "params": {
+        "obj_type": "Tipo de objeto: message, task, application y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto"
+      }
+    },
+    "get_authors": {
+      "description": "Obtener la lista de propietarios del objeto: usuarios con derechos de administrador sobre él. No modifica nada.",
+      "params": {
+        "obj_type": "Tipo de objeto: project, community, task y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto"
+      }
+    },
+    "show_user_info": {
+      "description": "Obtener una ficha breve del usuario, limitada por los derechos de quien la consulta. No modifica nada.",
+      "params": {
+        "obj_type": "Contexto de visualización: roleslist — desde la lista de roles del proyecto, cualquier otro valor — ficha normal",
+        "obj_id": "ID del usuario",
+        "value": "ID del proyecto respecto al cual se comprueban los derechos de visualización"
+      }
+    },
+    "show_user_info_from_rolelist": {
+      "description": "Igual que show_user_info, pero invocada desde la lista de roles insertable del proyecto. No modifica nada.",
+      "params": {
+        "obj_type": "Contexto de visualización: roleslist — desde la lista de roles del proyecto, cualquier otro valor — ficha normal",
+        "obj_id": "ID del usuario",
+        "value": "ID del proyecto respecto al cual se comprueban los derechos de visualización"
+      }
+    }
   }
 }

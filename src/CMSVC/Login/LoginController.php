@@ -32,6 +32,9 @@ class LoginController extends BaseController
     }
 
     /** Восстановление пароля */
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('em', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function remind(): void
     {
         if (!AuthHelper::validatePreAuthCsrfToken()) {

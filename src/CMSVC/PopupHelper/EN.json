@@ -14,5 +14,62 @@
         "shownName": ""
       }
     }
+  },
+  "fraym_actions": {
+    "get_unread_people": {
+      "description": "Get the list of conversation members who have not read the given message yet. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the conversation message"
+      }
+    },
+    "get_task_unread_people": {
+      "description": "Get the list of task participants who have not read the given task message yet. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the task message"
+      }
+    },
+    "get_application_unread_people": {
+      "description": "Get the list of gamemasters and players who have not read the given application comment yet. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the message in the application conversation"
+      }
+    },
+    "get_vote": {
+      "description": "Get the list of users who voted for a message with the given option. Changes nothing.",
+      "params": {
+        "obj_id": "Message ID",
+        "value": "The vote option the voters are selected by"
+      }
+    },
+    "get_important": {
+      "description": "Get the list of users who marked the object as important. Changes nothing.",
+      "params": {
+        "obj_type": "Object type: message, task, application and other site object types",
+        "obj_id": "Object ID"
+      }
+    },
+    "get_authors": {
+      "description": "Get the list of the object owners — users holding administrator rights on it. Changes nothing.",
+      "params": {
+        "obj_type": "Object type: project, community, task and other site object types",
+        "obj_id": "Object ID"
+      }
+    },
+    "show_user_info": {
+      "description": "Get a short user card, limited by the rights of the viewer. Changes nothing.",
+      "params": {
+        "obj_type": "Display context: roleslist — from the project role list, anything else — a regular card",
+        "obj_id": "User ID",
+        "value": "ID of the project the display rights are checked against"
+      }
+    },
+    "show_user_info_from_rolelist": {
+      "description": "Same as show_user_info, but called from the embeddable project role list. Changes nothing.",
+      "params": {
+        "obj_type": "Display context: roleslist — from the project role list, anything else — a regular card",
+        "obj_id": "User ID",
+        "value": "ID of the project the display rights are checked against"
+      }
+    }
   }
 }

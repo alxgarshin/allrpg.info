@@ -1,0 +1,14 @@
+{
+  "fraym_actions": {
+    "external_data": {
+      "description": "External game directory for partner sites: games within a period, games by their Kogda-igra identifier, a single game card with its gamemasters and their specialities, or the list of projects with open registration. Changes nothing.",
+      "params": {
+        "datestart": "Period start in YYYY-MM-DD format; together with datefinish returns the games of that period",
+        "datefinish": "Period end in YYYY-MM-DD format",
+        "game_id": "ID of the game in the allrpg.info calendar: return its card with gamemasters",
+        "open_list": "Any non-empty value: return projects with open registration and an unfinished date",
+        "kogdaigra_id": "ID of the game in the Kogda-igra directory: find the matching calendar games"
+      }
+    }
+  }
+}

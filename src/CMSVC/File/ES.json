@@ -20,5 +20,97 @@
         }
       }
     }
+  },
+  "fraym_actions": {
+    "edit_file_or_folder_name": {
+      "description": "Renombrar un archivo o una carpeta del almacenamiento de archivos del objeto y cambiar su descripción.",
+      "params": {
+        "obj_id": "ID de la carpeta o identificador del archivo",
+        "obj_type": "Tipo de objeto: folder — carpeta, cualquier otro valor — archivo",
+        "name": "Nuevo nombre",
+        "description": "Nueva descripción"
+      }
+    },
+    "new_library_file": {
+      "description": "Registrar un archivo subido en la biblioteca multimedia del objeto: vincula un archivo ya aceptado a una carpeta o a un objeto y define su nombre visible.",
+      "params": {
+        "obj_id": "ID del objeto o la carpeta donde se añade el archivo",
+        "obj_type": "Tipo de objeto: project, community, user, folder y otros tipos de objetos del sitio",
+        "name": "Nombre del archivo en el almacenamiento",
+        "name_shown": "Nombre visible del archivo"
+      }
+    },
+    "delete_library_file": {
+      "description": "Eliminar un archivo de la biblioteca multimedia junto con el archivo en disco.",
+      "params": {
+        "obj_id": "Identificador del archivo en el almacenamiento"
+      }
+    },
+    "delete_conversation_file": {
+      "description": "Eliminar un archivo adjunto a un mensaje: se desvincula del mensaje y se borra del disco.",
+      "params": {
+        "obj_id": "Identificador del archivo en el almacenamiento"
+      }
+    },
+    "create_folder": {
+      "description": "Crear una carpeta en el almacenamiento de archivos del objeto.",
+      "params": {
+        "obj_id": "ID del objeto o de la carpeta padre",
+        "obj_type": "Tipo de objeto: project, community, user, folder y otros tipos de objetos del sitio",
+        "name": "Nombre de la carpeta"
+      }
+    },
+    "delete_folder": {
+      "description": "Eliminar una carpeta del almacenamiento junto con su contenido.",
+      "params": {
+        "obj_id": "ID de la carpeta"
+      }
+    },
+    "add_link": {
+      "description": "Añadir al almacenamiento de archivos del objeto un enlace a un recurso externo: se muestra junto a los archivos.",
+      "params": {
+        "obj_id": "ID del objeto o la carpeta donde se añade el enlace",
+        "obj_type": "Tipo de objeto: project, community, user, folder y otros tipos de objetos del sitio",
+        "name": "Título del enlace",
+        "link": "Dirección del enlace"
+      }
+    },
+    "delete_link": {
+      "description": "Eliminar un enlace del almacenamiento de archivos del objeto.",
+      "params": {
+        "obj_id": "ID del enlace"
+      }
+    },
+    "load_disk": {
+      "description": "Obtener el contenido del almacenamiento de archivos del objeto: carpetas, archivos y enlaces accesibles al usuario actual. No modifica nada.",
+      "params": {
+        "obj_id": "ID del objeto o de la carpeta",
+        "obj_type": "Tipo de objeto: project, community, user, folder y otros tipos de objetos del sitio",
+        "sub_obj_type": "Precisión de la sección del almacenamiento"
+      }
+    },
+    "load_library": {
+      "description": "Obtener la biblioteca multimedia del objeto: fotos y vídeos. No modifica nada.",
+      "params": {
+        "obj_id": "ID del objeto",
+        "obj_type": "Tipo de objeto: project, community, user, calendar_event y otros tipos de objetos del sitio",
+        "external": "true devuelve la biblioteca en el formato para insertar en una página externa"
+      }
+    },
+    "move_file_to_folder": {
+      "description": "Mover un archivo a otra carpeta del almacenamiento.",
+      "params": {
+        "file_id": "ID del archivo que se mueve",
+        "folder_id": "ID de la carpeta de destino",
+        "parent_obj": "true — mover a la raíz del almacenamiento del objeto en lugar de a una carpeta anidada"
+      }
+    },
+    "change_folder_rights": {
+      "description": "Definir la lista de usuarios con acceso a la carpeta. La lista enviada sustituye a la anterior.",
+      "params": {
+        "obj_id": "ID de la carpeta",
+        "users_list": "IDs de los usuarios que reciben acceso"
+      }
+    }
   }
 }

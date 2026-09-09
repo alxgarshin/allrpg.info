@@ -55,5 +55,43 @@
         "shownName": "Last change"
       }
     }
+  },
+  "fraym_actions": {
+    "change_comission": {
+      "description": "Set the commission on a project payment: either a percentage or an amount. The other value is recalculated automatically from the payment sum.",
+      "params": {
+        "obj_id": "ID of the project payment",
+        "obj_type": "What is being set: comission_percent — commission percentage, any other value — commission as an amount",
+        "value": "The value being set: a percentage or an amount, depending on obj_type"
+      }
+    },
+    "nullify_fees": {
+      "description": "Reset the whole financial picture of the project: paid sums, payment marks and confirmation flags are cleared on every application, payment type budgets are zeroed. The action cannot be undone.",
+      "params": []
+    },
+    "confirm_payment": {
+      "description": "Confirm a fee payment reported by a player: the payment is credited to the application and the player is notified.",
+      "params": {
+        "obj_id": "ID of the payment message in the application conversation"
+      }
+    },
+    "decline_payment": {
+      "description": "Reject a fee payment reported by a player: nothing is credited and the player is notified.",
+      "params": {
+        "obj_id": "ID of the payment message in the application conversation"
+      }
+    },
+    "verify_transaction": {
+      "description": "Mark a project payment as verified and post it to the budget of the corresponding payment type.",
+      "params": {
+        "obj_id": "ID of the project payment"
+      }
+    },
+    "un_verify_transaction": {
+      "description": "Remove the verified mark from a project payment.",
+      "params": {
+        "obj_id": "ID of the project payment"
+      }
+    }
   }
 }

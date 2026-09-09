@@ -104,5 +104,19 @@
         "shownName": "Return to project \/ group after saving"
       }
     }
+  },
+  "fraym_actions": {
+    "get_access": {
+      "description": "Join an event. An open event is joined immediately, a closed one sends a request to the organizers through a conversation.",
+      "params": {
+        "id": "Event ID"
+      }
+    },
+    "remove_access": {
+      "description": "Leave an event: the member rights are removed from the current user.",
+      "params": {
+        "id": "Event ID"
+      }
+    }
   }
 }

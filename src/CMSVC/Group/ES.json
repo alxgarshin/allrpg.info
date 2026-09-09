@@ -86,5 +86,36 @@
         "shownName": "Último cambio"
       }
     }
+  },
+  "fraym_actions": {
+    "get_child_groups": {
+      "description": "Obtener la lista de posiciones que puede ocupar un grupo dentro del grupo padre indicado, y la posición actual del grupo que se edita. No modifica nada.",
+      "params": {
+        "obj_id": "ID del grupo padre; vacío significa grupos de primer nivel",
+        "group_id": "ID del grupo que se edita, para excluirlo de la lista y devolver su posición actual; 0 para un grupo nuevo"
+      }
+    },
+    "get_responsible_gamemaster": {
+      "description": "Obtener el ID del máster responsable del grupo indicado del proyecto. No modifica nada.",
+      "params": {
+        "obj_id": "ID del grupo del proyecto"
+      }
+    },
+    "change_character_code": {
+      "description": "Reordenar un personaje dentro de un grupo del proyecto: pasa a ocupar la posición siguiente al personaje indicado y el orden de los demás se recalcula.",
+      "params": {
+        "obj_id": "ID del personaje que se mueve",
+        "group_id": "ID del grupo cuyo orden se modifica",
+        "after_obj_id": "ID del personaje tras el cual se coloca; 0 significa colocarlo el primero"
+      }
+    },
+    "change_group_code": {
+      "description": "Mover un grupo del proyecto dentro del árbol de grupos: convertirlo en hijo o en hermano del grupo indicado. Los códigos y la anidación de los demás grupos se recalculan.",
+      "params": {
+        "obj_id": "ID del grupo que se mueve",
+        "level": "Dónde colocarlo respecto a after_obj_id: child — dentro de él, sibling — junto a él en el mismo nivel",
+        "after_obj_id": "ID del grupo de referencia para el movimiento; 0 significa colocarlo al principio del primer nivel"
+      }
+    }
   }
 }

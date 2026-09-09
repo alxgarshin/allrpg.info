@@ -211,5 +211,136 @@
         "shownName": "Adjuntos"
       }
     }
+  },
+  "fraym_actions": {
+    "get_dialog": {
+      "description": "Obtener el contenido de una conversación para la ventana de mensajes: mensajes, participantes y datos de la ventana. No modifica nada.",
+      "params": {
+        "obj_id": "ID de la conversación, o new para una conversación aún inexistente con el interlocutor indicado",
+        "user_id": "ID del interlocutor, o varios IDs separados por comas, para una conversación aún no creada",
+        "limit": "Cuántos mensajes devolver",
+        "time": "keep — devolver los mensajes sin mover la marca de última lectura"
+      }
+    },
+    "get_dialog_avatar": {
+      "description": "Obtener el avatar y el nombre mostrado del interlocutor para la ventana de la conversación. No modifica nada.",
+      "params": {
+        "obj_id": "ID de la conversación",
+        "user_id": "ID del interlocutor, o varios IDs separados por comas"
+      }
+    },
+    "load_conversation": {
+      "description": "Cargar los mensajes de una conversación por partes, con búsqueda por texto. No modifica nada.",
+      "params": {
+        "obj_id": "ID de la conversación",
+        "obj_limit": "Desplazamiento de la selección al cargar por partes",
+        "dynamic_load": "true — cargar la siguiente parte bajo los mensajes ya mostrados",
+        "search_string": "Cadena de búsqueda por el texto de los mensajes",
+        "show_limit": "Cuántos mensajes devolver"
+      }
+    },
+    "dialog_new_message": {
+      "description": "Enviar un mensaje a una conversación. Si aún no existe una con los interlocutores indicados, se crea.",
+      "params": {
+        "obj_id": "ID de la conversación, o new para crear una nueva",
+        "user_id": "ID del interlocutor, o varios IDs separados por comas, para una conversación nueva",
+        "value": "Texto del mensaje"
+      }
+    },
+    "message_save": {
+      "description": "Editar el texto de tu propio mensaje en un muro o en una conversación.",
+      "params": {
+        "obj_id": "ID del mensaje",
+        "text": "Nuevo texto del mensaje"
+      }
+    },
+    "wall_message_delete": {
+      "description": "Eliminar un mensaje del muro. Disponible para el autor del mensaje y para los propietarios del objeto al que pertenece el muro.",
+      "params": {
+        "obj_id": "ID del mensaje del muro"
+      }
+    },
+    "conversation_message_delete": {
+      "description": "Eliminar tu propio mensaje en una conversación.",
+      "params": {
+        "obj_id": "ID del mensaje de la conversación"
+      }
+    },
+    "contact": {
+      "description": "Añadir a un usuario a tus contactos: envía una solicitud de amistad o, si ya es contacto, abre una conversación con él.",
+      "params": {
+        "user": "ID del usuario"
+      }
+    },
+    "grant_access": {
+      "description": "Aprobar una petición de ingreso recibida como mensaje: el solicitante obtiene derechos de participante en el proyecto, la comunidad, la tarea o el evento correspondiente.",
+      "params": {
+        "obj_id": "ID del mensaje con la petición de ingreso"
+      }
+    },
+    "deny_access": {
+      "description": "Rechazar una petición de ingreso recibida como mensaje. El solicitante recibe una notificación del rechazo.",
+      "params": {
+        "obj_id": "ID del mensaje con la petición de ingreso"
+      }
+    },
+    "accept_invitation": {
+      "description": "Aceptar una invitación recibida como mensaje: el usuario actual pasa a ser participante del objeto al que se le invitó.",
+      "params": {
+        "obj_id": "ID del mensaje con la invitación"
+      }
+    },
+    "decline_invitation": {
+      "description": "Rechazar una invitación recibida como mensaje. Quien invitó recibe una notificación.",
+      "params": {
+        "obj_id": "ID del mensaje con la invitación"
+      }
+    },
+    "accept_friend": {
+      "description": "Aceptar una solicitud de contacto: los usuarios pasan a ser contactos mutuos.",
+      "params": {
+        "obj_id": "ID del mensaje con la solicitud de contacto"
+      }
+    },
+    "decline_friend": {
+      "description": "Rechazar una solicitud de contacto.",
+      "params": {
+        "obj_id": "ID del mensaje con la solicitud de contacto"
+      }
+    },
+    "leave_dialog": {
+      "description": "Salir de una conversación de grupo: el usuario actual deja de ser participante y de recibir sus mensajes.",
+      "params": {
+        "obj_id": "ID de la conversación"
+      }
+    },
+    "send_invitation": {
+      "description": "Invitar a un usuario a un proyecto, comunidad, tarea o evento. La invitación le llega como mensaje y puede aceptarla o rechazarla.",
+      "params": {
+        "obj_type": "Tipo del objeto al que se invita: project, community, task, event",
+        "obj_id": "ID del objeto al que se invita",
+        "user_id": "ID del usuario invitado, o varios IDs separados por comas"
+      }
+    },
+    "add_user_to_dialog": {
+      "description": "Añadir un usuario a una conversación existente: pasa a ser participante y ve los mensajes siguientes.",
+      "params": {
+        "obj_id": "ID de la conversación",
+        "user_id": "ID del usuario que se añade"
+      }
+    },
+    "conversation_rename": {
+      "description": "Renombrar una conversación.",
+      "params": {
+        "obj_id": "ID de la conversación",
+        "value": "Nuevo nombre de la conversación"
+      }
+    },
+    "switch_use_names_type": {
+      "description": "Cambiar con qué nombres se firman los participantes de la conversación: nombres reales o apodos del juego. Cada llamada invierte el modo.",
+      "params": {
+        "obj_id": "ID de la conversación"
+      }
+    }
   }
 }

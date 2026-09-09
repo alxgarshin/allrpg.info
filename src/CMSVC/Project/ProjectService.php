@@ -310,9 +310,10 @@ class ProjectService extends BaseService
 
                 if ($searchString !== '') {
                     $allObjectsData = DB->query(
-                        'SELECT * FROM ' . DataHelper::clearBraces($objType) . ' WHERE (LOWER(name) LIKE :search_string OR ' . $descriptionField . ' LIKE :search_string) ORDER BY name',
+                        'SELECT * FROM ' . DataHelper::clearBraces($objType) . ' WHERE (LOWER(name) LIKE :search_string_name OR ' . $descriptionField . ' LIKE :search_string_description) ORDER BY name',
                         [
-                            ['search_string', mb_strtolower('"%' . $searchString . '%"')],
+                            ['search_string_name', mb_strtolower('"%' . $searchString . '%"')],
+                            ['search_string_description', mb_strtolower('"%' . $searchString . '%"')],
                         ],
                     );
                     unset($responseData[DataHelper::clearBraces($objType)]['mine']);

@@ -37,5 +37,23 @@
         "shownName": "Last change"
       }
     }
+  },
+  "fraym_actions": {
+    "pm_add": {
+      "description": "Enable payments through PayMaster for the project: creates the corresponding payment type if it does not exist yet and returns the registration link of the payment service.",
+      "params": []
+    },
+    "pk_add": {
+      "description": "Enable payments through PayKeeper for the project: creates the corresponding payment type if it does not exist yet and returns the registration link of the payment service.",
+      "params": []
+    },
+    "yk_add": {
+      "description": "Enable payments through YooKassa for the project: creates the corresponding payment type if it does not exist yet and returns the registration link of the payment service.",
+      "params": []
+    },
+    "paw_add": {
+      "description": "Enable payments through PayAnyWay for the project: creates the corresponding payment type if it does not exist yet and returns the registration link of the payment service.",
+      "params": []
+    }
   }
 }

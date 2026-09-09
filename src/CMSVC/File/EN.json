@@ -20,5 +20,97 @@
         }
       }
     }
+  },
+  "fraym_actions": {
+    "edit_file_or_folder_name": {
+      "description": "Rename a file or a folder in the object's file storage and change its description.",
+      "params": {
+        "obj_id": "ID of the folder or the identifier of the file",
+        "obj_type": "Object type: folder — a folder, anything else — a file",
+        "name": "New name",
+        "description": "New description"
+      }
+    },
+    "new_library_file": {
+      "description": "Register an uploaded file in the object's media library: binds an already accepted file to a folder or an object and sets its display name.",
+      "params": {
+        "obj_id": "ID of the object or folder the file is added to",
+        "obj_type": "Object type: project, community, user, folder and other site object types",
+        "name": "File name in the storage",
+        "name_shown": "Display name of the file"
+      }
+    },
+    "delete_library_file": {
+      "description": "Delete a file from the media library together with the file on disk.",
+      "params": {
+        "obj_id": "Identifier of the file in the storage"
+      }
+    },
+    "delete_conversation_file": {
+      "description": "Delete a file attached to a message: it is detached from the message and removed from disk.",
+      "params": {
+        "obj_id": "Identifier of the file in the storage"
+      }
+    },
+    "create_folder": {
+      "description": "Create a folder in the object's file storage.",
+      "params": {
+        "obj_id": "ID of the object or the parent folder",
+        "obj_type": "Object type: project, community, user, folder and other site object types",
+        "name": "Folder name"
+      }
+    },
+    "delete_folder": {
+      "description": "Delete a file storage folder together with its contents.",
+      "params": {
+        "obj_id": "Folder ID"
+      }
+    },
+    "add_link": {
+      "description": "Add a link to an external resource into the object's file storage — it is shown next to the files.",
+      "params": {
+        "obj_id": "ID of the object or folder the link is added to",
+        "obj_type": "Object type: project, community, user, folder and other site object types",
+        "name": "Link title",
+        "link": "Link address"
+      }
+    },
+    "delete_link": {
+      "description": "Delete a link from the object's file storage.",
+      "params": {
+        "obj_id": "Link ID"
+      }
+    },
+    "load_disk": {
+      "description": "Get the contents of the object's file storage: folders, files and links available to the current user. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the object or the folder",
+        "obj_type": "Object type: project, community, user, folder and other site object types",
+        "sub_obj_type": "Refinement of the storage section"
+      }
+    },
+    "load_library": {
+      "description": "Get the object's media library — photos and videos. Changes nothing.",
+      "params": {
+        "obj_id": "Object ID",
+        "obj_type": "Object type: project, community, user, calendar_event and other site object types",
+        "external": "true returns the library in the form used for embedding on an external page"
+      }
+    },
+    "move_file_to_folder": {
+      "description": "Move a file into another folder of the file storage.",
+      "params": {
+        "file_id": "ID of the file being moved",
+        "folder_id": "ID of the destination folder",
+        "parent_obj": "true — move to the storage root of the object instead of a nested folder"
+      }
+    },
+    "change_folder_rights": {
+      "description": "Set the list of users granted access to a folder. The list given replaces the previous one.",
+      "params": {
+        "obj_id": "Folder ID",
+        "users_list": "IDs of the users being granted access"
+      }
+    }
   }
 }

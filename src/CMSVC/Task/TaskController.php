@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Task;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
-use Fraym\Enum\ActionEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ActionEnum, ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\{DataHelper, ResponseHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\ArrayResponse;
@@ -69,13 +69,17 @@ class TaskController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_group', ApiParamTypeEnum::string, default: ''),
+    ])]
     public function loadTasksList(): ?Response
     {
         $taskService = $this->service;
 
         return $this->asArray(
             $taskService->loadTasks(
-                $_REQUEST['obj_group'] ?? '',
+                $this->param('obj_group'),
                 false,
                 false,
             ),
@@ -83,20 +87,34 @@ class TaskController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_group', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('show_list', ApiParamTypeEnum::bool, default: false),
+        new ApiParam('widget_style', ApiParamTypeEnum::bool, default: false),
+    ])]
     public function loadTasks(): ?Response
     {
         $taskService = $this->service;
 
         return $this->asArray(
             $taskService->loadTasks(
-                $_REQUEST['obj_group'] ?? '',
-                ($_REQUEST['show_list'] ?? '') === 'true',
-                ($_REQUEST['widget_style'] ?? '') === 'true',
+                $this->param('obj_group'),
+                $this->param('show_list'),
+                $this->param('widget_style'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('responsible_id', ApiParamTypeEnum::int),
+        new ApiParam('user_ids', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('date_from', ApiParamTypeEnum::string),
+        new ApiParam('date_to', ApiParamTypeEnum::string),
+    ])]
     public function checkDatesAvailability(): ?Response
     {
         $taskService = $this->service;
@@ -105,63 +123,83 @@ class TaskController extends BaseController
             $taskService->checkDatesAvailability(
                 OBJ_TYPE,
                 OBJ_ID,
-                is_null($_REQUEST['responsible_id'] ?? null) ? null : (int) $_REQUEST['responsible_id'],
-                explode(',', $_REQUEST['user_ids'] ?? []),
-                $_REQUEST['date_from'] ?? null,
-                $_REQUEST['date_to'] ?? null,
+                $this->param('responsible_id'),
+                explode(',', $this->param('user_ids')),
+                $this->param('date_from'),
+                $this->param('date_to'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('name', ApiParamTypeEnum::string, obligatory: true),
+    ])]
     public function addTask(): ?Response
     {
         $taskService = $this->service;
 
         return $this->asArray(
             $taskService->addTask(
-                $_REQUEST['name'] ?? null,
+                $this->param('name'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('date_from', ApiParamTypeEnum::string, obligatory: true, default: ''),
+        new ApiParam('date_to', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function changeTaskDates(): ?Response
     {
         $taskService = $this->service;
 
         return $this->asArray(
             $taskService->changeTaskDates(
-                $_REQUEST['date_from'] ?? '',
-                $_REQUEST['date_to'] ?? '',
+                $this->param('date_from'),
+                $this->param('date_to'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('parent_task_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function outdentTask(): ?Response
     {
         $taskService = $this->service;
 
         return $this->asArray(
             $taskService->outdentTask(
-                (int) ($_REQUEST['parent_task_id'] ?? false),
+                $this->param('parent_task_id'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('parent_task_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function indentTask(): ?Response
     {
         $taskService = $this->service;
 
         return $this->asArray(
             $taskService->indentTask(
-                (int) ($_REQUEST['parent_task_id'] ?? false),
+                $this->param('parent_task_id'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getAccess(): ?Response
     {
         $result = RightsHelper::getAccess(KIND);
@@ -169,6 +207,9 @@ class TaskController extends BaseController
         return new ArrayResponse(is_array($result) ? $result : []);
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function removeAccess(): void
     {
         RightsHelper::removeAccess(KIND);

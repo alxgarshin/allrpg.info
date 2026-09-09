@@ -1,0 +1,15 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Directorio de usuarios para autocompletar: busca personas por nombre, apodo o identificador numérico y devuelve pares identificador-etiqueta. La búsqueda empieza a partir de tres caracteres, o de inmediato si la consulta es numérica. No modifica nada.",
+      "params": {
+        "input": "Cadena de búsqueda: parte del nombre, del apodo o el identificador numérico del usuario",
+        "term": "Lo mismo que input: el nombre con el que el autocompletado envía la cadena de búsqueda",
+        "no_id": "1 — devolver las etiquetas sin el identificador numérico del usuario",
+        "full_search": "1 — buscar en todos los campos del perfil, no solo en los visibles; el administrador del sitio lo tiene siempre",
+        "obj_type": "Tipo de objeto al que se limita la búsqueda: project, community, conversation y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto: solo se devuelven sus participantes"
+      }
+    }
+  }
+}

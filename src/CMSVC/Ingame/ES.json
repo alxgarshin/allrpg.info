@@ -67,5 +67,62 @@
       "please_destroy": "Destruir códigos.",
       "destroy_following_codes": "Por favor, destruya los certificados de los siguientes códigos, ya que está prohibido usarlos más de una vez: %s."
     }
+  },
+  "fraym_actions": {
+    "create_transaction": {
+      "description": "Transferir dinero del juego desde la cuenta de tu solicitud a la de otra solicitud del mismo proyecto. El importe se comprueba con el saldo de la cuenta y con las reglas de transferencia del proyecto, que pueden modificar la cantidad abonada o prohibir la transferencia.",
+      "params": {
+        "to_project_application_id[0]": "ID de la solicitud destinataria (número de cuenta en el juego)",
+        "from_bank_currency_id[0]": "ID de la moneda del juego que se descuenta de tu cuenta",
+        "amount_from[0]": "Importe a descontar",
+        "bank_currency_id[0]": "ID de la moneda del juego en la que se abona al destinatario",
+        "name[0]": "Concepto de la transferencia"
+      }
+    },
+    "qrpg_hacking_start": {
+      "description": "Iniciar el hackeo de un código QR: marca el intento como iniciado y devuelve el tablero del minijuego (matriz, secuencias buscadas) y el tiempo disponible. No surte efecto en un intento ya iniciado.",
+      "params": {
+        "qha_id": "ID del intento de hackeo registrado"
+      }
+    },
+    "qrpg_bank_pay": {
+      "description": "Realizar un pago del juego con un código QR bancario escaneado: descuenta el importe de la cuenta de tu solicitud y lo abona al destinatario.",
+      "params": {
+        "account_num_to": "Número de cuenta del destinatario en el juego (ID de su solicitud)",
+        "bank_currency_id": "ID de la moneda del juego del pago",
+        "amount": "Importe del pago",
+        "name": "Concepto del pago"
+      }
+    },
+    "prepare_q_rpg_bank_code": {
+      "description": "Generar un código QR bancario para recibir un pago a tu favor: otro jugador lo escanea y confirma la transferencia. Por sí mismo no descuenta ni abona nada.",
+      "params": {
+        "bank_currency_id": "ID de la moneda del juego en la que se solicita el pago",
+        "amount": "Importe solicitado",
+        "name": "Concepto del pago"
+      }
+    },
+    "set_geoposition": {
+      "description": "Registrar la geoposición actual del jugador para su solicitud activa. Cada llamada añade un nuevo punto al historial de desplazamientos.",
+      "params": {
+        "lat": "Latitud",
+        "long": "Longitud",
+        "acc": "Precisión de las coordenadas en metros"
+      }
+    },
+    "qrpg_get_keys_and_properties": {
+      "description": "Obtener las llaves y propiedades del juego disponibles mediante la solicitud activa del usuario actual. No modifica nada.",
+      "params": []
+    },
+    "qrpg_decode": {
+      "description": "Procesar un código QR del proyecto escaneado: entregar las llaves, propiedades o el pago asociados, o continuar un hackeo iniciado o la introducción de un código de acceso. Registra el resultado en el historial de uso de QRPG.",
+      "params": {
+        "data": "Contenido del código QR como cadena JSON: p — ID del proyecto, c — ID del código, h — suma de control, r, cu, a, n — solicitud destinataria, moneda, importe y concepto para códigos bancarios",
+        "hacking_sequence": "Secuencia introducida durante el hackeo, como cadena JSON",
+        "qha_id": "ID del intento de hackeo, si el código se abre mediante hackeo",
+        "text_to_access": "Código de acceso introducido, si el código se abre escribiendo un texto",
+        "qhi_id": "ID del registro del historial de uso de QRPG al que corresponde el código de acceso introducido"
+      }
+    }
   }
 }

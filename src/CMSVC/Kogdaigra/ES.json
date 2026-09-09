@@ -1,0 +1,14 @@
+{
+  "fraym_actions": {
+    "external_data": {
+      "description": "Directorio externo de juegos para sitios asociados: juegos de un periodo, juegos por su identificador en Kogda-igra, la ficha de un juego con sus másters y sus especialidades, o la lista de proyectos con inscripción abierta. No modifica nada.",
+      "params": {
+        "datestart": "Inicio del periodo en formato AAAA-MM-DD; junto con datefinish devuelve los juegos de ese periodo",
+        "datefinish": "Fin del periodo en formato AAAA-MM-DD",
+        "game_id": "ID del juego en el calendario de allrpg.info: devolver su ficha con los másters",
+        "open_list": "Cualquier valor no vacío: devolver los proyectos con inscripción abierta y fecha no finalizada",
+        "kogdaigra_id": "ID del juego en el directorio Kogda-igra: buscar los juegos correspondientes del calendario"
+      }
+    }
+  }
+}

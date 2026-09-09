@@ -3,5 +3,11 @@
     "title": "Geoposición de jugadores",
     "type_data_to_search": "Buscar: introducir el ID, nombre o apodo de un participante, o el texto del campo principal de la aplicación",
     "center": "centrar mapa"
+  },
+  "fraym_actions": {
+    "get_players_geoposition": {
+      "description": "Obtener las últimas coordenadas conocidas de los jugadores del proyecto activo que las han comunicado desde la sección de juego. No modifica nada; el contenido depende de los derechos en el proyecto.",
+      "params": []
+    }
   }
 }

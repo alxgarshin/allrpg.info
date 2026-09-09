@@ -37,5 +37,23 @@
         "shownName": "Último cambio"
       }
     }
+  },
+  "fraym_actions": {
+    "pm_add": {
+      "description": "Habilitar los pagos mediante PayMaster para el proyecto: crea el tipo de pago correspondiente si aún no existe y devuelve el enlace de registro en la pasarela.",
+      "params": []
+    },
+    "pk_add": {
+      "description": "Habilitar los pagos mediante PayKeeper para el proyecto: crea el tipo de pago correspondiente si aún no existe y devuelve el enlace de registro en la pasarela.",
+      "params": []
+    },
+    "yk_add": {
+      "description": "Habilitar los pagos mediante YooKassa para el proyecto: crea el tipo de pago correspondiente si aún no existe y devuelve el enlace de registro en la pasarela.",
+      "params": []
+    },
+    "paw_add": {
+      "description": "Habilitar los pagos mediante PayAnyWay para el proyecto: crea el tipo de pago correspondiente si aún no existe y devuelve el enlace de registro en la pasarela.",
+      "params": []
+    }
   }
 }

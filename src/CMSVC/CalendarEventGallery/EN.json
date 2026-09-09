@@ -5,5 +5,33 @@
       "photo_video_changed": "Data changed successfully.",
       "photo_video_deleted": "Data deleted successfully."
     }
+  },
+  "fraym_actions": {
+    "add_calendar_event_gallery": {
+      "description": "Add a link to an external album or photo into the event photo gallery.",
+      "params": {
+        "obj_id": "ID of the calendar event",
+        "link": "Address of the album or the photo",
+        "name": "Album title",
+        "thumb": "Address of the thumbnail image",
+        "author": "Author of the photos"
+      }
+    },
+    "change_calendar_event_gallery": {
+      "description": "Edit an entry of the event photo gallery.",
+      "params": {
+        "obj_id": "ID of the gallery entry",
+        "link": "New address of the album or the photo",
+        "name": "New album title",
+        "thumb": "New address of the thumbnail image",
+        "author": "New author of the photos"
+      }
+    },
+    "delete_calendar_event_gallery": {
+      "description": "Delete an entry from the event photo gallery.",
+      "params": {
+        "obj_id": "ID of the gallery entry"
+      }
+    }
   }
 }

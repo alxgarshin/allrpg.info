@@ -55,5 +55,43 @@
         "shownName": "Último cambio"
       }
     }
+  },
+  "fraym_actions": {
+    "change_comission": {
+      "description": "Fijar la comisión de un pago del proyecto: porcentaje o importe. El otro valor se recalcula automáticamente a partir del importe del pago.",
+      "params": {
+        "obj_id": "ID del pago del proyecto",
+        "obj_type": "Qué se fija: comission_percent — porcentaje de comisión, cualquier otro valor — comisión como importe",
+        "value": "Valor que se fija: porcentaje o importe, según obj_type"
+      }
+    },
+    "nullify_fees": {
+      "description": "Poner a cero toda la contabilidad del proyecto: en todas las solicitudes se borran las sumas aportadas, la marca de pago y la petición de confirmación, y los presupuestos de los tipos de pago quedan a cero. La acción es irreversible.",
+      "params": []
+    },
+    "confirm_payment": {
+      "description": "Confirmar el pago de cuota declarado por un jugador: el pago se abona a la solicitud y el jugador recibe una notificación.",
+      "params": {
+        "obj_id": "ID del mensaje de pago en la conversación de la solicitud"
+      }
+    },
+    "decline_payment": {
+      "description": "Rechazar el pago de cuota declarado por un jugador: no se abona nada y el jugador recibe una notificación.",
+      "params": {
+        "obj_id": "ID del mensaje de pago en la conversación de la solicitud"
+      }
+    },
+    "verify_transaction": {
+      "description": "Marcar un pago del proyecto como verificado y registrarlo en el presupuesto del tipo de pago correspondiente.",
+      "params": {
+        "obj_id": "ID del pago del proyecto"
+      }
+    },
+    "un_verify_transaction": {
+      "description": "Quitar la marca de verificado de un pago del proyecto.",
+      "params": {
+        "obj_id": "ID del pago del proyecto"
+      }
+    }
   }
 }

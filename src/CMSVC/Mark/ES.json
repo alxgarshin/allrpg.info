@@ -13,5 +13,38 @@
       "message_marked_read_success": "El mensaje se marcó correctamente como leído.",
       "message_marked_read_fail": "El mensaje no se marcó como leído."
     }
+  },
+  "fraym_actions": {
+    "mark_need_response": {
+      "description": "Marcar un mensaje como pendiente de respuesta: aparece en la lista de mensajes que requieren reacción de los participantes de la conversación.",
+      "params": {
+        "obj_id": "ID del mensaje de la conversación"
+      }
+    },
+    "mark_has_response": {
+      "description": "Quitar de un mensaje la marca de pendiente de respuesta.",
+      "params": {
+        "obj_id": "ID del mensaje de la conversación"
+      }
+    },
+    "mark_read_message": {
+      "description": "Marcar un mensaje como leído por el usuario actual y devolver los contadores de no leídos actualizados.",
+      "params": {
+        "obj_id": "ID del mensaje de la conversación"
+      }
+    },
+    "mark_read": {
+      "description": "Marcar un mensaje como leído por el usuario actual, sin recalcular los contadores en la respuesta.",
+      "params": {
+        "obj_id": "ID del mensaje de la conversación"
+      }
+    },
+    "mark_important": {
+      "description": "Alternar la marca de importante en un objeto para el usuario actual: si estaba puesta se quita, y si no, se pone.",
+      "params": {
+        "obj_type": "Tipo de objeto: message, task, application y otros tipos de objetos del sitio",
+        "obj_id": "ID del objeto"
+      }
+    }
   }
 }

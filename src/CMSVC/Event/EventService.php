@@ -438,6 +438,10 @@ class EventService extends BaseService
 
     public function checkChangeRights(): bool
     {
+        if (is_null(DataHelper::getId())) {
+            return false;
+        }
+
         return RightsHelper::checkRights('{admin}', '{event}', DataHelper::getId());
     }
 

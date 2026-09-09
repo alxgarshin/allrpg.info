@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\CMSVC\Mark;
 
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Interface\Response;
 
 /** @extends BaseController<MarkService> */
@@ -14,6 +15,9 @@ use Fraym\Interface\Response;
 class MarkController extends BaseController
 {
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function markNeedResponse(): ?Response
     {
         $markService = $this->service;
@@ -26,6 +30,9 @@ class MarkController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function markHasResponse(): ?Response
     {
         $markService = $this->service;
@@ -38,6 +45,9 @@ class MarkController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function markReadMessage(): ?Response
     {
         $markService = $this->service;
@@ -49,6 +59,9 @@ class MarkController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function markRead(): ?Response
     {
         $markService = $this->service;
@@ -60,6 +73,10 @@ class MarkController extends BaseController
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function markImportant(): ?Response
     {
         $markService = $this->service;

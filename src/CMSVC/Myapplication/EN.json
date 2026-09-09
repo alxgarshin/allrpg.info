@@ -119,5 +119,50 @@
         "helpText": null
       }
     }
+  },
+  "fraym_actions": {
+    "create_transaction": {
+      "description": "Report a fee payment for your own application. Creates a payment transaction, marks the application as awaiting payment confirmation by a gamemaster and posts a payment message into the application conversation.",
+      "params": {
+        "project_application_id_hidden[0]": "ID of the application the payment is made for",
+        "project_payment_type_id[0]": "ID of the project payment type (how the money was sent)",
+        "amount[0]": "Payment amount in the project currency",
+        "payment_datetime[0]": "Date and time of the payment; obligatory if the project asks for them",
+        "content[0]": "Free-form comment about the payment for the gamemaster"
+      }
+    },
+    "accept_application": {
+      "description": "Accept an application transferred to you by another player: the application becomes yours. Works only if the offer is addressed to you and has not been declined yet.",
+      "params": {
+        "obj_id": "ID of the application being transferred"
+      }
+    },
+    "decline_application": {
+      "description": "Decline an offer to take over someone else's application. The application stays with its current owner.",
+      "params": {
+        "obj_id": "ID of the application being transferred"
+      }
+    },
+    "get_list_of_room_neighboors": {
+      "description": "Get the list of players accommodated in the given project room. Changes nothing.",
+      "params": {
+        "obj_id": "ID of the project room"
+      }
+    },
+    "add_neighboor_request": {
+      "description": "Invite another player to share your room. Checks that the application is yours, that the room is chosen in your application and that it has free places; the invitee receives a request.",
+      "params": {
+        "application_id": "ID of your application",
+        "user_id": "ID of the invited user",
+        "room_id": "ID of the room the player is invited to"
+      }
+    },
+    "get_list_of_groups": {
+      "description": "Get the lists of groups that will be added and removed when a character is selected in the application. Changes nothing — used to recalculate groups on a character switch.",
+      "params": {
+        "obj_id": "ID of the project character being selected",
+        "prev_obj_id": "ID of the previously selected character whose groups must be removed"
+      }
+    }
   }
 }

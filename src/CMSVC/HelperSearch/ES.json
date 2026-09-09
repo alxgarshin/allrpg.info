@@ -1,0 +1,11 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Búsqueda general para autocompletar: encuentra usuarios, tareas y eventos accesibles al usuario actual. La búsqueda empieza a partir de tres caracteres, o de inmediato si la consulta es numérica. No modifica nada.",
+      "params": {
+        "input": "Cadena de búsqueda: un nombre, un título o un identificador numérico",
+        "term": "Lo mismo que input: el nombre con el que el autocompletado envía la cadena de búsqueda"
+      }
+    }
+  }
+}

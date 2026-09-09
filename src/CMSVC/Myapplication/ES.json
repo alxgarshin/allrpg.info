@@ -119,5 +119,50 @@
         "Texto_de_ayuda": null
       }
     }
+  },
+  "fraym_actions": {
+    "create_transaction": {
+      "description": "Informar del pago de una cuota de tu propia solicitud. Crea una transacción de pago, marca la solicitud como pendiente de confirmación por el máster y publica un mensaje del pago en la conversación de la solicitud.",
+      "params": {
+        "project_application_id_hidden[0]": "ID de la solicitud por la que se realiza el pago",
+        "project_payment_type_id[0]": "ID del tipo de pago del proyecto (forma en que se envió el dinero)",
+        "amount[0]": "Importe del pago en la moneda del proyecto",
+        "payment_datetime[0]": "Fecha y hora del pago; obligatorias si el proyecto las solicita",
+        "content[0]": "Comentario libre sobre el pago para el máster"
+      }
+    },
+    "accept_application": {
+      "description": "Aceptar una solicitud transferida por otro jugador: la solicitud pasa a ser tuya. Solo funciona si la oferta va dirigida a ti y aún no ha sido rechazada.",
+      "params": {
+        "obj_id": "ID de la solicitud transferida"
+      }
+    },
+    "decline_application": {
+      "description": "Rechazar la oferta de hacerse cargo de la solicitud de otro jugador. La solicitud permanece con su propietario actual.",
+      "params": {
+        "obj_id": "ID de la solicitud transferida"
+      }
+    },
+    "get_list_of_room_neighboors": {
+      "description": "Obtener la lista de jugadores alojados en la ubicación indicada del proyecto. No modifica nada.",
+      "params": {
+        "obj_id": "ID de la ubicación (habitación) del proyecto"
+      }
+    },
+    "add_neighboor_request": {
+      "description": "Invitar a otro jugador a alojarse en tu ubicación. Se comprueba que la solicitud sea tuya, que la ubicación esté elegida en tu solicitud y que tenga plazas libres; el invitado recibe una petición.",
+      "params": {
+        "application_id": "ID de tu solicitud",
+        "user_id": "ID del usuario invitado",
+        "room_id": "ID de la ubicación (habitación) a la que se invita"
+      }
+    },
+    "get_list_of_groups": {
+      "description": "Obtener las listas de grupos que se añadirán y se quitarán al elegir un personaje en la solicitud. No modifica nada: sirve para recalcular los grupos al cambiar de personaje.",
+      "params": {
+        "obj_id": "ID del personaje del proyecto que se elige",
+        "prev_obj_id": "ID del personaje elegido anteriormente cuyos grupos deben quitarse"
+      }
+    }
   }
 }

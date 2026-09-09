@@ -134,5 +134,14 @@
         "helpText": "Si la casilla está marcada, el jugador no verá este campo durante la creación de la aplicación. Este campo no puede ser obligatorio."
       }
     }
+  },
+  "fraym_actions": {
+    "change_project_field_code": {
+      "description": "Cambiar el número de orden de un campo del cuestionario del proyecto: define la posición del campo en el formulario de solicitud.",
+      "params": {
+        "obj_id": "ID del campo del cuestionario del proyecto",
+        "code": "Nuevo número de orden del campo"
+      }
+    }
   }
 }

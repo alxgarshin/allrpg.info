@@ -1,0 +1,47 @@
+{
+  "fraym_actions": {
+    "load_wall": {
+      "description": "Load a message feed: the wall of an object, the user's conversation list, comments or reviews — depending on the object type. Changes nothing, supports paging and full-text search.",
+      "params": {
+        "obj_type": "Feed type: main_conversation — the user's conversation list, main_conversation_on_main_page — its shortened variant, conversation — the messages of a conversation, project, community, user, calendar_event and other object types — the object wall",
+        "obj_id": "ID of the object whose feed is requested",
+        "last_shown_conversation_id": "ID of the last item already shown — paging continues from it",
+        "obj_limit": "Selection offset when loading in portions",
+        "show_limit": "How many items to return",
+        "search_string": "Search string matched against message text",
+        "sub_obj_type": "Conversation branch refinement: for example from_player or gamemaster in an application conversation"
+      }
+    },
+    "add_comment": {
+      "description": "Post a message: a wall comment, a conversation message, a review with a rating or a poll. Some fields apply only to tasks (status, priority, due date, assignee) and only to polls (question and answer options).",
+      "params": {
+        "obj_type": "Type of the object the message is addressed to: conversation, project, community, task, application, calendar_event_notion, user_notion and other site object types",
+        "obj_id": "ID of the object the message is addressed to",
+        "sub_obj_type": "Conversation branch refinement: for example from_player or gamemaster in an application conversation",
+        "name": "Message title; used where a message has a subject",
+        "content": "Message text",
+        "rating": "Rating for a review",
+        "conversation_id": "ID of the conversation the message goes to; 0 means resolve it from the object",
+        "use_group_name": "on — sign the message with the group name instead of the user name",
+        "parent": "ID of the message this one replies to; 0 means a top-level message",
+        "vote_name": "Poll question — turns the message into a poll",
+        "vote_answer": "Poll answer options: vote_answer[0], vote_answer[1] and so on",
+        "attachments": "Files attached to the message",
+        "parent_obj_type": "Type of the parent object if the message is created together with a new object",
+        "parent_obj_id": "ID of the parent object",
+        "status": "Status of the task being created",
+        "priority": "Priority of the task being created",
+        "date_to": "Due date of the task being created",
+        "responsible": "ID of the person responsible for the task being created"
+      }
+    },
+    "vote": {
+      "description": "Cast a vote in a poll posted as a message. The vote of the current user is recorded and the updated results are returned.",
+      "params": {
+        "m_id": "ID of the message holding the poll",
+        "value": "Number of the chosen answer option",
+        "type": "Poll kind, set by the interface when the vote is sent"
+      }
+    }
+  }
+}

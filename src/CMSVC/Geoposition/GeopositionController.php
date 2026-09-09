@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\CMSVC\Geoposition;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, BaseController, CMSVC, IsAccessible};
 use Fraym\Interface\Response;
 
 /** @extends BaseController<GeopositionService> */
@@ -24,6 +24,7 @@ use Fraym\Interface\Response;
 )]
 class GeopositionController extends BaseController
 {
+    #[ApiAction]
     public function getPlayersGeoposition(): ?Response
     {
         return $this->asArray(

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Event;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC};
-use Fraym\Enum\ActionEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC};
+use Fraym\Enum\{ActionEnum, ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\{DataHelper, ResponseHelper};
 use Fraym\Interface\Response;
 use Fraym\Response\ArrayResponse;
@@ -67,6 +67,9 @@ class EventController extends BaseController
         return parent::Response();
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getAccess(): ?Response
     {
         $result = RightsHelper::getAccess(KIND);
@@ -74,6 +77,9 @@ class EventController extends BaseController
         return new ArrayResponse(is_array($result) ? $result : []);
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function removeAccess(): void
     {
         RightsHelper::removeAccess(KIND);

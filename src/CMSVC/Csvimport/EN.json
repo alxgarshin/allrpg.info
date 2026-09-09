@@ -14,5 +14,19 @@
       "application_no_name": "Mandatory field «Character name» not set in string %s.",
       "application_already_present": "An application with such name from string %s is already present in project: <a href=\"\/application\/%s\/\" target=\"_blank\">%s<\/a>."
     }
+  },
+  "fraym_actions": {
+    "import_characters": {
+      "description": "Import project characters from an uploaded CSV file. Creates the characters and the groups bound to them; the response carries a report on parsing the file.",
+      "params": {
+        "attachments": "Identifier of the uploaded CSV file"
+      }
+    },
+    "import_applications": {
+      "description": "Import project applications from an uploaded CSV file. Creates the applications and, where needed, the users; the response carries a report on parsing the file.",
+      "params": {
+        "attachments": "Identifier of the uploaded CSV file"
+      }
+    }
   }
 }

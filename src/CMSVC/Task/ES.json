@@ -256,5 +256,75 @@
         "shownName": "Volver al proyecto después de guardar"
       }
     }
+  },
+  "fraym_actions": {
+    "load_tasks_list": {
+      "description": "Obtener la lista de tareas de un objeto en forma de tabla. No modifica nada.",
+      "params": {
+        "obj_id": "ID del proyecto o la comunidad cuyas tareas se solicitan; all significa las tareas de todos los objetos del usuario",
+        "obj_group": "Tipo de objeto: project o community; vacío significa deducirlo de obj_id"
+      }
+    },
+    "load_tasks": {
+      "description": "Obtener las tareas de un objeto en el formato elegido: tabla, diagrama de Gantt o widget compacto. No modifica nada.",
+      "params": {
+        "obj_id": "ID del proyecto o la comunidad cuyas tareas se solicitan; all significa las tareas de todos los objetos del usuario",
+        "obj_group": "Tipo de objeto: project o community; vacío significa deducirlo de obj_id",
+        "show_list": "true devuelve la lista de tareas; en caso contrario, los datos del diagrama",
+        "widget_style": "true devuelve la vista compacta para el widget de tareas"
+      }
+    },
+    "check_dates_availability": {
+      "description": "Comprobar si las fechas indicadas están libres para los participantes de una tarea o un evento: devuelve quiénes están ocupados en ese periodo. No modifica nada.",
+      "params": {
+        "obj_type": "Tipo de objeto: task o event",
+        "obj_id": "ID de la tarea o del evento",
+        "responsible_id": "ID del responsable cuya disponibilidad se comprueba",
+        "user_ids": "IDs de los demás participantes a comprobar, separados por comas",
+        "date_from": "Inicio del periodo comprobado",
+        "date_to": "Fin del periodo comprobado"
+      }
+    },
+    "add_task": {
+      "description": "Crear rápidamente una tarea solo con su nombre: recibe el estado «nueva», la prioridad por defecto y al usuario actual como autor.",
+      "params": {
+        "name": "Nombre de la tarea"
+      }
+    },
+    "change_task_dates": {
+      "description": "Cambiar las fechas de una tarea o un evento, por ejemplo al arrastrar su barra en el diagrama de Gantt. El cambio se publica como mensaje en la conversación de la tarea.",
+      "params": {
+        "obj_type": "Tipo de objeto: task o event",
+        "obj_id": "ID de la tarea o del evento",
+        "date_from": "Nuevo inicio",
+        "date_to": "Nuevo fin"
+      }
+    },
+    "outdent_task": {
+      "description": "Subir una tarea un nivel en el árbol de tareas, desvinculándola de su tarea padre.",
+      "params": {
+        "obj_id": "ID de la tarea que se mueve",
+        "parent_task_id": "ID de la tarea padre actual"
+      }
+    },
+    "indent_task": {
+      "description": "Anidar una tarea dentro de otra, convirtiéndola en subtarea. Ambas deben pertenecer al mismo objeto.",
+      "params": {
+        "obj_id": "ID de la tarea que se mueve",
+        "parent_task_id": "ID de la tarea dentro de la cual se anida"
+      }
+    },
+    "get_access": {
+      "description": "Unirse a una tarea: el usuario actual pasa a ser participante y ve su conversación.",
+      "params": {
+        "id": "ID de la tarea"
+      }
+    },
+    "remove_access": {
+      "description": "Salir de una tarea: se retiran al usuario actual los derechos de participante.",
+      "params": {
+        "id": "ID de la tarea"
+      }
+    }
   }
 }

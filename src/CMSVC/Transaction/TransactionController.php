@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Transaction;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Interface\Response;
 
 /** @extends BaseController<TransactionService> */
@@ -57,6 +58,11 @@ class TransactionController extends BaseController
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectActionAccessBudget',
     )]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('obj_type', ApiParamTypeEnum::string, obligatory: true, default: '', source: ApiParamSourceEnum::global),
+        new ApiParam('value', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function changeComission(): ?Response
     {
         $transactionService = $this->service;
@@ -65,7 +71,7 @@ class TransactionController extends BaseController
             $transactionService->changeComission(
                 OBJ_ID,
                 OBJ_TYPE,
-                (int) ($_REQUEST['value'] ?? 0),
+                $this->param('value'),
             ),
         );
     }
@@ -74,6 +80,7 @@ class TransactionController extends BaseController
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectActionAccessBudget',
     )]
+    #[ApiAction(mutating: true)]
     public function nullifyFees(): ?Response
     {
         $transactionService = $this->service;
@@ -87,6 +94,9 @@ class TransactionController extends BaseController
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectActionAccessFee',
     )]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function confirmPayment(): ?Response
     {
         $transactionService = $this->service;
@@ -102,6 +112,9 @@ class TransactionController extends BaseController
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectActionAccessFee',
     )]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function declinePayment(): ?Response
     {
         $transactionService = $this->service;
@@ -117,6 +130,9 @@ class TransactionController extends BaseController
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectActionAccessBudget',
     )]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function verifyTransaction(): ?Response
     {
         $transactionService = $this->service;
@@ -132,6 +148,9 @@ class TransactionController extends BaseController
         additionalCheckAccessHelper: RightsHelper::class,
         additionalCheckAccessMethod: 'checkProjectActionAccessBudget',
     )]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function unVerifyTransaction(): ?Response
     {
         $transactionService = $this->service;

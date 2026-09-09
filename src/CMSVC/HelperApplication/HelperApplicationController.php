@@ -9,8 +9,8 @@ use App\CMSVC\Character\{CharacterModel, CharacterService};
 use App\CMSVC\Trait\UserServiceTrait;
 use App\CMSVC\User\{UserModel, UserService};
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseHelper, BaseModel};
-use Fraym\Enum\OperandEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseHelper, BaseModel};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum, OperandEnum};
 use Fraym\Helper\{CMSVCHelper, CookieHelper, DataHelper};
 use Fraym\Interface\Response;
 
@@ -18,12 +18,18 @@ class HelperApplicationController extends BaseHelper
 {
     use UserServiceTrait;
 
+    #[ApiAction(params: [
+        new ApiParam('input', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('term', ApiParamTypeEnum::string, default: ''),
+        new ApiParam('nochar', ApiParamTypeEnum::bool, default: false),
+        new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function Response(): ?Response
     {
-        $input = $_REQUEST['input'] ?? $_REQUEST['term'] ?? '';
-        $input = str_replace([':', ',', '.', '-'], '', (string) $input);
+        $input = $this->param('input') ?: $this->param('term');
+        $input = str_replace([':', ',', '.', '-'], '', $input);
         $isInputInt = is_numeric($input);
-        $noCharacter = '1' === ($_REQUEST['nochar'] ?? false);
+        $noCharacter = $this->param('nochar');
 
         $returnArr = [];
         $sort = [];

@@ -18,5 +18,17 @@
     "generation_link": "Enlace a este conjunto de reglas",
     "conversation": "La discusión del modelo"
   },
-  "fraym_model": {}
+  "fraym_model": {},
+  "fraym_actions": {
+    "fillform": {
+      "description": "Obtener el cuestionario del proyecto como formulario rellenable, con todas las preguntas de las reglas, incluidas las opcionales. No modifica nada.",
+      "params": []
+    },
+    "generate": {
+      "description": "Reunir las reglas del proyecto en un único documento para leer o imprimir. No modifica nada.",
+      "params": {
+        "print_mode": "1 devuelve la versión preparada para imprimir"
+      }
+    }
+  }
 }

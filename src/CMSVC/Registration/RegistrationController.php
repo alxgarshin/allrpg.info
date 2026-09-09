@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\CMSVC\Registration;
 
 use App\Helper\RightsHelper;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Interface\Response;
 
 /** @extends BaseController<RegistrationService> */
@@ -24,15 +25,21 @@ use Fraym\Interface\Response;
 )]
 class RegistrationController extends BaseController
 {
+    #[ApiAction(params: [
+        new ApiParam('obj_name', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function getRegistrationPlayer(): ?Response
     {
         return $this->asArray(
             $this->service->getRegistrationPlayer(
-                $_REQUEST['obj_name'] ?? '',
+                $this->param('obj_name'),
             ),
         );
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function setRegistrationPlayer(): ?Response
     {
         if (OBJ_ID > 0) {
@@ -46,6 +53,9 @@ class RegistrationController extends BaseController
         return null;
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function setRegistrationPlayerMoney(): ?Response
     {
         if (OBJ_ID > 0) {
@@ -59,6 +69,9 @@ class RegistrationController extends BaseController
         return null;
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function setRegistrationEcoMoney(): ?Response
     {
         if (OBJ_ID > 0) {
@@ -72,13 +85,17 @@ class RegistrationController extends BaseController
         return null;
     }
 
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('value', ApiParamTypeEnum::string, obligatory: true, default: ''),
+    ])]
     public function setRegistrationComments(): ?Response
     {
         if (OBJ_ID > 0) {
             return $this->asArray(
                 $this->service->setRegistrationComments(
                     OBJ_ID,
-                    $_REQUEST['value'] ?? '',
+                    $this->param('value'),
                 ),
             );
         }

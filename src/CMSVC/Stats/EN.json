@@ -44,5 +44,25 @@
       "communities_and_projects_not_filled": "Please, select at least one project or group.",
       "competences_not_filled": "Please, select at least one competence."
     }
+  },
+  "fraym_actions": {
+    "export_to_excel": {
+      "description": "Export to Excel the list of users selected by the current statistics filter. Changes nothing. Site administrators only.",
+      "params": {
+        "additional_ids": "JSON array of the IDs of additional profile fields to include in the export"
+      }
+    },
+    "set_status": {
+      "description": "Assign a status to every user matching the current statistics filter. Site administrators only.",
+      "params": {
+        "obj_id": "ID of the status being assigned"
+      }
+    },
+    "set_additional_groups": {
+      "description": "Add every user matching the current statistics filter to the given site rights group. Site administrators only.",
+      "params": {
+        "obj_id": "ID of the site rights group"
+      }
+    }
   }
 }

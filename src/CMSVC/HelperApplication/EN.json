@@ -1,0 +1,13 @@
+{
+  "fraym_actions": {
+    "response": {
+      "description": "Application lookup for autocompletion: finds project applications by player name, nickname, numeric identifier or character name. The search starts from three characters, or immediately for a numeric query. Changes nothing.",
+      "params": {
+        "input": "Search string: player name or nickname, character name, or a numeric identifier",
+        "term": "Same as input: the name the autocompletion sends the search string under",
+        "nochar": "1 — return only applications with no character chosen",
+        "obj_id": "ID of the application the search is made from: limits the result to that application's project and drops the player themselves"
+      }
+    }
+  }
+}

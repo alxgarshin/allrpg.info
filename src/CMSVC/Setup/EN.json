@@ -134,5 +134,14 @@
         "helpText": "if checkbox is set, player will not see this field during application creation. Such field cannot be mandatory."
       }
     }
+  },
+  "fraym_actions": {
+    "change_project_field_code": {
+      "description": "Change the order number of a project questionnaire field — it defines the position of the field in the application form.",
+      "params": {
+        "obj_id": "ID of the project questionnaire field",
+        "code": "New order number of the field"
+      }
+    }
   }
 }

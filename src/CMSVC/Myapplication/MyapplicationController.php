@@ -6,8 +6,8 @@ namespace App\CMSVC\Myapplication;
 
 use App\CMSVC\Application\ApplicationModel;
 use App\CMSVC\User\UserService;
-use Fraym\BaseObject\{BaseController, CMSVC, IsAccessible};
-use Fraym\Enum\ActEnum;
+use Fraym\BaseObject\{ApiAction, ApiParam, BaseController, CMSVC, IsAccessible};
+use Fraym\Enum\{ActEnum, ApiParamSourceEnum, ApiParamTypeEnum};
 use Fraym\Helper\{CMSVCHelper, DataHelper, ResponseHelper};
 use Fraym\Interface\Response;
 
@@ -61,12 +61,22 @@ class MyapplicationController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('project_application_id_hidden[0]', ApiParamTypeEnum::int, obligatory: true),
+        new ApiParam('project_payment_type_id[0]', ApiParamTypeEnum::int, obligatory: true),
+        new ApiParam('amount[0]', ApiParamTypeEnum::int, obligatory: true),
+        new ApiParam('payment_datetime[0]', ApiParamTypeEnum::string),
+        new ApiParam('content[0]', ApiParamTypeEnum::string),
+    ])]
     public function createTransaction(): ?Response
     {
         return $this->service->createTransaction();
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function acceptApplication(): ?Response
     {
         if (OBJ_ID > 0) {
@@ -79,6 +89,9 @@ class MyapplicationController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function declineApplication(): ?Response
     {
         if (OBJ_ID > 0) {
@@ -91,6 +104,9 @@ class MyapplicationController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+    ])]
     public function getListOfRoomNeighboors(): ?Response
     {
         return $this->asArray(
@@ -101,24 +117,33 @@ class MyapplicationController extends BaseController
     }
 
     #[IsAccessible]
+    #[ApiAction(mutating: true, params: [
+        new ApiParam('application_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+        new ApiParam('user_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+        new ApiParam('room_id', ApiParamTypeEnum::int, obligatory: true, default: 0),
+    ])]
     public function addNeighboorRequest(): ?Response
     {
         return $this->asArray(
             $this->service->addNeighboorRequest(
-                (int) ($_REQUEST['application_id'] ?? false),
-                (int) ($_REQUEST['user_id'] ?? false),
-                (int) ($_REQUEST['room_id'] ?? false),
+                $this->param('application_id'),
+                $this->param('user_id'),
+                $this->param('room_id'),
             ),
         );
     }
 
     #[IsAccessible]
+    #[ApiAction(params: [
+        new ApiParam('obj_id', ApiParamTypeEnum::int, obligatory: true, default: 0, source: ApiParamSourceEnum::global),
+        new ApiParam('prev_obj_id', ApiParamTypeEnum::int, default: 0),
+    ])]
     public function getListOfGroups(): ?Response
     {
         return $this->asArray(
             $this->service->getListOfGroups(
                 OBJ_ID,
-                (int) ($_REQUEST['prev_obj_id'] ?? false),
+                $this->param('prev_obj_id'),
             ),
         );
     }

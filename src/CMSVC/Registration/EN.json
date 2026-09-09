@@ -12,5 +12,38 @@
     "th_header_register": "Register",
     "payment_type_name": "Registration: ",
     "eco_money_name": "Eco fee"
+  },
+  "fraym_actions": {
+    "get_registration_player": {
+      "description": "Find project applications at the registration desk by player name, nickname or character name. Changes nothing.",
+      "params": {
+        "obj_name": "Search string: player name, nickname, login or character name"
+      }
+    },
+    "set_registration_player": {
+      "description": "Mark the player as registered on site.",
+      "params": {
+        "obj_id": "ID of the player application"
+      }
+    },
+    "set_registration_player_money": {
+      "description": "Accept the player fee right at the registration desk: creates a payment under the current gamemaster's registration payment type and credits it to the application.",
+      "params": {
+        "obj_id": "ID of the player application"
+      }
+    },
+    "set_registration_eco_money": {
+      "description": "Mark that the player has paid the ecological deposit at the registration desk.",
+      "params": {
+        "obj_id": "ID of the player application"
+      }
+    },
+    "set_registration_comments": {
+      "description": "Save a registrar note on the application — for example about a deposit left or equipment handed out.",
+      "params": {
+        "obj_id": "ID of the player application",
+        "value": "Note text"
+      }
+    }
   }
 }
