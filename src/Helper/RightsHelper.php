@@ -61,7 +61,7 @@ abstract class RightsHelper extends \Fraym\Helper\RightsHelper
     /** Базовая логика редиректа после проверки прав доступа пользователя в проект */
     public static function checkProjectKindAccessAndRedirect(): bool
     {
-        if (!self::checkAllowProjectActions(PROJECT_RIGHTS, ['{gamemaster}', DataHelper::addBraces(KIND)])) {
+        if (!self::checkAllowProjectActions(PROJECT_RIGHTS, ['{gamemaster}', DataHelper::addBraces(CMSVC)])) {
             /** Если определен id объекта, находим объект и смотрим его project_id */
             if (!is_null(DataHelper::getId())) {
                 $possibleView = CMSVCHelper::getView(KIND);
