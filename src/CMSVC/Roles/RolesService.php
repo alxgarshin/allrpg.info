@@ -520,7 +520,7 @@ class RolesService extends BaseService
                         if (
                             $roleData['application_id'] > 0
                             && $this->showOnlyAcceptedRoles
-                            && $roleData['application_status'] !== '3'
+                            && $roleData['application_status'] !== 3
                             && is_array($charactersGroupsToRolesData[$roleData['group_id']] ?? null)
                             && in_array($roleData['character_id'] ?? null, $charactersGroupsToRolesData[$roleData['group_id']])
                         ) {
@@ -882,8 +882,8 @@ class RolesService extends BaseService
             $GLOBALS['kind'] = 'roles_gamemaster'; // чтобы в именах пользователей показывались все возможные данные
         }
 
-        if (($applicationData['group_rights'] ?? false) !== '1' && ($applicationData['character_hide_applications'] ?? false) !== '1') {
-            if ($applicationData['id'] !== null && (!$this->showOnlyAcceptedRoles || $applicationData['application_status'] === '3')) {
+        if (($applicationData['group_rights'] ?? null) !== 1 && ($applicationData['character_hide_applications'] ?? false) !== '1') {
+            if ($applicationData['id'] !== null && (!$this->showOnlyAcceptedRoles || $applicationData['application_status'] === 3)) {
                 $userModel = $this->getUserService()->arrayToModel($applicationData);
 
                 $result .= '<div class="allrpgRolesListApplicationsListApplication" data-obj-type="application" data-obj-id="' . $applicationData['application_id'] . '">' . ($applicationData['application_id'] !== '' ? '<a class="sbi sbi-info" obj_id="' . $applicationData['id'] . '" obj_type="roleslist" value="' . $projectData->id->getAsInt() . '"></a>' . ($this->projectGamemaster ? '<a href="' . ABSOLUTE_PATH . '/application/' . $applicationData['application_id'] . '/">' . $this->getUserService()->showNameWithId($userModel) . '</a>' : $this->getUserService()->showName($userModel, true)) . ($applicationData['application_status'] !== 3 ? $LOCALE['question'] : '') : '') .
@@ -943,7 +943,7 @@ class RolesService extends BaseService
 
         $result = '';
 
-        if (($applicationData['group_rights'] ?? false) !== '1') {
+        if (($applicationData['group_rights'] ?? null) !== 1) {
             if ($this->projectGamemaster) {
                 $GLOBALS['kind'] = 'roles_gamemaster'; // чтобы в именах пользователей показывались все возможные данные
             }
@@ -969,7 +969,7 @@ class RolesService extends BaseService
             $statusText = '';
 
             foreach ($LOCALE_APPLICATION_ELEMENTS['status']['values'] as $statusValue) {
-                if ($statusValue[0] === $applicationData['application_status']) {
+                if ((int) $statusValue[0] === $applicationData['application_status']) {
                     $statusText = $statusValue[1];
                     break;
                 }
