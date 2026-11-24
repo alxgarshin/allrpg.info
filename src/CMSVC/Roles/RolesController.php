@@ -60,6 +60,8 @@ class RolesController extends BaseController
     ])]
     public function getRolesList(): ?Response
     {
+        header('Access-Control-Allow-Origin: *');
+
         if ($this->param('command') !== '' && $this->param('project_id') > 0 && OBJ_TYPE && OBJ_ID) {
             return $this->asArray(
                 $this->service->getRolesList(
