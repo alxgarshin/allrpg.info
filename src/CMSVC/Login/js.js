@@ -1,8 +1,16 @@
 /** Логин */
 
 if (el('div.mainpage_login')) {
+    const toggleLoginButton = function () {
+        if (_('#login_global').val() != '') {
+            _('#btn_login').enable();
+        } else {
+            _('#btn_login').disable();
+        }
+    };
+
     _('#btn_make_remind').disable();
-    _('#btn_login').disable();
+    toggleLoginButton();
 
     _('#btn_remind').on('click', function (e) {
         e.stopPropagation();
@@ -16,13 +24,7 @@ if (el('div.mainpage_login')) {
         })
     });
 
-    _('#login_global, #pass_global').on('change keyup', function () {
-        if (_('#login_global').val() != '') {
-            _('#btn_login').enable();
-        } else {
-            _('#btn_login').disable();
-        }
-    });
+    _('#login_global, #pass_global').on('change keyup input', toggleLoginButton);
 
     _(document).on('change keyup', 'input#login_global', function () {
         const regex = /^([а-яёa-zA-Z0-9_.\-+])+@(([а-яёa-zA-Z0-9\-])+\.)+([а-яёa-zA-Z0-9]{2,4})+$/;
