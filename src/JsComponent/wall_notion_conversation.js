@@ -223,7 +223,7 @@ if (withDocumentEvents) {
     });
 
     _arSuccess('load_wall', function (jsonData, params, target) {
-        if (jsonData['response_text'] == '') {
+        if (!jsonData['response_text']) {
             jsonData['response_text'] = '<span></span>';
         }
 
