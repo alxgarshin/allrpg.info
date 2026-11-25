@@ -3,7 +3,7 @@
     "load_wall": {
       "description": "Cargar un flujo de mensajes: el muro de un objeto, la lista de conversaciones del usuario, comentarios o reseñas, según el tipo de objeto. No modifica nada; admite carga por partes y búsqueda por texto.",
       "params": {
-        "obj_type": "Tipo de flujo: main_conversation — lista de conversaciones del usuario, main_conversation_on_main_page — su variante reducida, conversation — mensajes de una conversación, project, community, user, calendar_event y otros tipos de objeto — el muro del objeto",
+        "obj_type": "Tipo de flujo: main_conversation — lista de conversaciones del usuario, main_conversation_on_main_page — su variante reducida, main_wall — el flujo combinado de los muros de los proyectos y comunidades del usuario, project_wall, community_wall, publication_wall, ruling_item_wall — el muro del objeto, task_comment, event_comment — comentarios de una tarea o evento, project_application_conversation — comentarios de una solicitud (el gamemaster necesita activar el proyecto de la solicitud, el jugador ve los comentarios de su propia solicitud)",
         "obj_id": "ID del objeto cuyo flujo se solicita",
         "last_shown_conversation_id": "ID del último elemento ya mostrado: la carga continúa a partir de él",
         "obj_limit": "Desplazamiento de la selección al cargar por partes",
@@ -15,7 +15,7 @@
     "add_comment": {
       "description": "Enviar un mensaje: un comentario al muro, un mensaje en una conversación, una reseña con valoración o una votación. Algunos campos solo se usan para tareas (estado, prioridad, plazo, responsable) y solo para votaciones (pregunta y opciones de respuesta).",
       "params": {
-        "obj_type": "Tipo del objeto al que se dirige el mensaje: conversation, project, community, task, application, calendar_event_notion, user_notion y otros tipos de objetos del sitio",
+        "obj_type": "A dónde se dirige el mensaje: project_wall, community_wall, publication_wall, ruling_item_wall — el muro del objeto, task_comment, event_comment — comentario de una tarea o evento, project_conversation, community_conversation — discusión de un proyecto o comunidad, project_application_conversation — comentario de una solicitud (la rama se indica con sub_obj_type), conversation_message — mensaje en una conversación personal (obj_id es el ID de la conversación), calendar_event_notion, user_notion — reseña de un evento del calendario o de un usuario",
         "obj_id": "ID del objeto al que se dirige el mensaje",
         "sub_obj_type": "Precisión de la rama de la conversación: por ejemplo from_player o gamemaster en la conversación de una solicitud",
         "name": "Título del mensaje; se usa donde el mensaje tiene asunto",

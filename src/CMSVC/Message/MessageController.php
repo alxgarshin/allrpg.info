@@ -19,7 +19,7 @@ class MessageController extends BaseController
         new ApiParam('obj_id', ApiParamTypeEnum::int, default: 0, source: ApiParamSourceEnum::global),
         new ApiParam('last_shown_conversation_id', ApiParamTypeEnum::int, default: 0),
         new ApiParam('obj_limit', ApiParamTypeEnum::int, default: 0),
-        new ApiParam('show_limit', ApiParamTypeEnum::int, default: 0),
+        new ApiParam('show_limit', ApiParamTypeEnum::int, default: 20),
         new ApiParam('search_string', ApiParamTypeEnum::string, default: ''),
         new ApiParam('sub_obj_type', ApiParamTypeEnum::string, default: ''),
     ])]

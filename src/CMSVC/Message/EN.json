@@ -3,7 +3,7 @@
     "load_wall": {
       "description": "Load a message feed: the wall of an object, the user's conversation list, comments or reviews — depending on the object type. Changes nothing, supports paging and full-text search.",
       "params": {
-        "obj_type": "Feed type: main_conversation — the user's conversation list, main_conversation_on_main_page — its shortened variant, conversation — the messages of a conversation, project, community, user, calendar_event and other object types — the object wall",
+        "obj_type": "Feed type: main_conversation — the user's conversation list, main_conversation_on_main_page — its shortened variant, main_wall — the combined feed of the user's project and community walls, project_wall, community_wall, publication_wall, ruling_item_wall — the object wall, task_comment, event_comment — comments on a task or event, project_application_conversation — comments on an application (a gamemaster needs the application's project activated, a player sees comments on their own application)",
         "obj_id": "ID of the object whose feed is requested",
         "last_shown_conversation_id": "ID of the last item already shown — paging continues from it",
         "obj_limit": "Selection offset when loading in portions",
@@ -15,7 +15,7 @@
     "add_comment": {
       "description": "Post a message: a wall comment, a conversation message, a review with a rating or a poll. Some fields apply only to tasks (status, priority, due date, assignee) and only to polls (question and answer options).",
       "params": {
-        "obj_type": "Type of the object the message is addressed to: conversation, project, community, task, application, calendar_event_notion, user_notion and other site object types",
+        "obj_type": "Where the message is addressed: project_wall, community_wall, publication_wall, ruling_item_wall — the object wall, task_comment, event_comment — a comment on a task or event, project_conversation, community_conversation — a project or community discussion, project_application_conversation — a comment on an application (the branch is set by sub_obj_type), conversation_message — a message in a personal conversation (obj_id is the conversation ID), calendar_event_notion, user_notion — a review of a calendar event or of a user",
         "obj_id": "ID of the object the message is addressed to",
         "sub_obj_type": "Conversation branch refinement: for example from_player or gamemaster in an application conversation",
         "name": "Message title; used where a message has a subject",

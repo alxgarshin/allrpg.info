@@ -103,6 +103,7 @@
       "access_granted_extended": "Access to %s granted.",
       "access_denied": "Access denied.",
       "access_denied_extended": "Access to %s denied.",
+      "wrong_obj_type": "This object type is not supported.",
       "invitation_accepted": "Invitation accepted",
       "invitation_accepted_extended": "Invitation accepted.",
       "invitation_declined": "Invitation declined",

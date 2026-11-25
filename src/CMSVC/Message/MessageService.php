@@ -16,13 +16,26 @@ use App\CMSVC\Task\TaskService;
 use App\CMSVC\Trait\UserServiceTrait;
 use App\Helper\{DateHelper, FileHelper, MessageHelper, RightsHelper, TextHelper};
 use Fraym\BaseObject\{BaseService, Controller};
-use Fraym\Enum\{EscapeModeEnum, OperandEnum};
+use Fraym\Enum\{EscapeModeEnum, OperandEnum, ResponseErrorCodeEnum};
 use Fraym\Helper\{CMSVCHelper, CookieHelper, DataHelper, LocaleHelper, ResponseHelper};
 
 #[Controller(MessageController::class)]
 class MessageService extends BaseService
 {
     use UserServiceTrait;
+
+    private const LOAD_WALL_OBJ_TYPES = [
+        '{main_conversation}',
+        '{main_conversation_on_main_page}',
+        '{main_wall}',
+        '{project_wall}',
+        '{community_wall}',
+        '{publication_wall}',
+        '{ruling_item_wall}',
+        '{task_comment}',
+        '{event_comment}',
+        '{project_application_conversation}',
+    ];
 
     private array $messages = [];
 
@@ -57,6 +70,10 @@ class MessageService extends BaseService
 
         $objLimit = (REQUEST_TYPE->isApiRequest() ? $lastShownConversationId : $objLimit);
         $objType = DataHelper::addBraces($objType);
+
+        if (!in_array($objType, self::LOAD_WALL_OBJ_TYPES, true)) {
+            return $this->getWrongObjTypeResponse();
+        }
 
         if (in_array($objType, ['{main_conversation}', '{main_conversation_on_main_page}']) && CURRENT_USER->isLogged()) {
             $text = '';
@@ -415,10 +432,12 @@ class MessageService extends BaseService
             } else {
                 $returnArr = ['response' => 'success', 'response_text' => $text];
             }
+        } elseif ($objType === '{project_application_conversation}') {
+            $returnArr = $this->loadApplicationConversations((int) $objId, $subObjType);
         } else {
             $objParentType = DataHelper::addBraces(str_replace(['_wall', '_comment'], '', $objType));
 
-            if ($objType !== '' && ($objId !== '' || $objParentType === '{main}')) {
+            if ($objId !== null || ($objParentType === '{main}' && CURRENT_USER->isLogged())) {
                 if ($objParentType === '{main}' && CURRENT_USER->isLogged()) {
                     $subObjType = DataHelper::clearBraces($subObjType);
 
@@ -624,6 +643,8 @@ class MessageService extends BaseService
                                     'response_text' => $LOCALE_WALL['no_projects_or_communities'],
                                 ];
                             }
+                        } else {
+                            $returnArr = ['response' => 'success', 'response_data' => $responseData];
                         }
                     } else {
                         if ($gotSome > 0 && $counter === 10 && $subObjType !== 'new_messages') {
@@ -872,14 +893,10 @@ class MessageService extends BaseService
                     $parentObjectType = 'conversation';
                     break;
                 default:
-                    $parentObjectType = '';
-                    break;
+                    return $this->getWrongObjTypeResponse();
             }
 
-            if (
-                ($objId === null || RightsHelper::checkAnyRights($parentObjectType, $objId) || CURRENT_USER->isAdmin() || $alternativeCheckOfRights)
-                && $parentObjectType
-            ) {
+            if ($objId === null || RightsHelper::checkAnyRights($parentObjectType, $objId) || CURRENT_USER->isAdmin() || $alternativeCheckOfRights) {
                 if ($clearedObjType === 'project_application_conversation_filter') {
                     // parent - доп.фильтры в себе несет
                     $listOfIds = [];
@@ -2180,5 +2197,70 @@ class MessageService extends BaseService
                 'response_text' => $LOCALE['vote_parameters_error'],
             ];
         }
+    }
+
+    /** Комментарии к заявке: мастеру проекта — все ветки, автору заявки — без внутримастерской {gamemaster} */
+    private function loadApplicationConversations(int $applicationId, string $subObjType): array
+    {
+        $applicationData = DB->findObjectById($applicationId, 'project_application');
+        $allowedSubObjTypes = $this->getAllowedApplicationSubObjTypes($applicationData);
+        $requestedSubObjTypes = $subObjType === '' ? $allowedSubObjTypes : array_intersect([DataHelper::addBraces($subObjType)], $allowedSubObjTypes);
+
+        if (count($requestedSubObjTypes) === 0) {
+            return [
+                'response' => 'error',
+                'response_error_code' => ResponseErrorCodeEnum::forbidden->value,
+                'response_text' => $this->LOCALE['messages']['access_denied'],
+            ];
+        }
+
+        $conversationsData = DB->query(
+            "SELECT c.id FROM conversation AS c INNER JOIN conversation_message AS cm ON cm.conversation_id=c.id WHERE c.obj_type='{project_application_conversation}' AND c.obj_id=:obj_id AND (c.sub_obj_type IN (:sub_obj_types)" . ($subObjType === '' ? ' OR c.sub_obj_type IS NULL' : '') . ') GROUP BY c.id ORDER BY MAX(cm.updated_at) DESC',
+            [
+                ['obj_id', $applicationId],
+                ['sub_obj_types', array_values($requestedSubObjTypes)],
+            ],
+        );
+
+        /** @var ApplicationService $applicationService */
+        $applicationService = CMSVCHelper::getService('application');
+        $applicationModel = $applicationService->arrayToModel($applicationData);
+
+        $responseData = [];
+
+        foreach ($conversationsData as $conversationData) {
+            $responseData[$conversationData['id']] = MessageHelper::conversationTree($conversationData['id'], 0, 1, '{project_application}', $applicationModel);
+        }
+
+        return ['response' => 'success', 'response_data' => $responseData];
+    }
+
+    private function getWrongObjTypeResponse(): array
+    {
+        return [
+            'response' => 'error',
+            'response_error_code' => ResponseErrorCodeEnum::validationFailed->value,
+            'response_text' => $this->LOCALE['messages']['wrong_obj_type'],
+        ];
+    }
+
+    private function getAllowedApplicationSubObjTypes(?array $applicationData): array
+    {
+        if (!$applicationData) {
+            return [];
+        }
+
+        if (
+            $applicationData['project_id'] === RightsHelper::getActivatedProjectId()
+            && RightsHelper::checkAllowProjectActions(PROJECT_RIGHTS, ['{gamemaster}', '{application}'])
+        ) {
+            return ['{from_player}', '{to_player}', '{gamemaster}'];
+        }
+
+        if ($applicationData['creator_id'] === CURRENT_USER->id()) {
+            return ['{from_player}', '{to_player}'];
+        }
+
+        return [];
     }
 }

@@ -103,6 +103,7 @@
       "access_granted_extended": "Доступ к %s предоставлен.",
       "access_denied": "В доступе отказано.",
       "access_denied_extended": "В доступе к %s отказано.",
+      "wrong_obj_type": "Такой тип объекта не поддерживается.",
       "invitation_accepted": "Приглашение принял",
       "invitation_accepted_extended": "Приглашение принято.",
       "invitation_declined": "Приглашение отклонил",
